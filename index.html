@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en-NZ">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A low-barrier mental health care finder for people in Aotearoa New Zealand."
+    />
+    <title>Care Finder Aotearoa</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#guided-contact">Skip to guided contact</a>
+
+    <div class="urgent-strip" role="banner">
+      <strong>Need to talk now?</strong>
+      <span>Free call or text <a href="tel:1737">1737</a> anytime, 24/7.</span>
+      <span>If someone is unsafe right now, call <a href="tel:111">111</a>.</span>
+    </div>
+
+    <header class="hero">
+      <div class="hero__image" aria-hidden="true">
+        <div class="aotearoa-shape aotearoa-shape--north"></div>
+        <div class="aotearoa-shape aotearoa-shape--south"></div>
+        <div class="route route--one"></div>
+        <div class="route route--two"></div>
+      </div>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="#guided-contact">Guided contact</a>
+        <a href="#funding">Funding</a>
+        <a href="#options">Care options</a>
+        <a href="#barriers">Barriers</a>
+      </nav>
+      <section class="hero__content">
+        <p class="eyebrow">Mental health care in New Zealand</p>
+        <h1>Contact someone who can help.</h1>
+        <p>
+          Pick a reachable service, use a gentle message template, and make first
+          contact without needing the perfect words.
+        </p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="#guided-contact">Start guided contact</a>
+          <a class="button button--quiet" href="https://www.healthnz.govt.nz/health-topics/mental-health/where-to-get-help">Health NZ help page</a>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="safety-band" aria-label="Urgent help">
+        <div>
+          <h2>When it feels urgent</h2>
+          <p>
+            If you might hurt yourself or someone else, or you feel unable to stay safe,
+            call 111, go to the nearest emergency department, or contact your local
+            mental health crisis team. If you can stay safe but need someone now, call
+            or text 1737.
+          </p>
+        </div>
+        <a class="button button--light" href="tel:1737">Call 1737</a>
+      </section>
+
+      <section id="guided-contact" class="guided-contact">
+        <div class="section-heading">
+          <p class="eyebrow">Guided first contact</p>
+          <h2>Tell us enough, choose someone, send the first message</h2>
+          <p>
+            No account, no diagnosis required. Your answers shape the provider
+            matches and the message template, so the next step is ready to use.
+          </p>
+        </div>
+
+        <div class="guided-grid">
+          <form class="intake" id="intakeForm" aria-label="Guide questions">
+            <div class="flow-step">1. A few guide questions</div>
+            <label>
+              Age
+              <input id="age" type="number" min="1" max="120" value="26" />
+            </label>
+
+            <label>
+              Location
+              <select id="location">
+                <option value="Northland">Northland</option>
+                <option value="Auckland">Auckland</option>
+                <option value="Waikato">Waikato</option>
+                <option value="Bay of Plenty">Bay of Plenty</option>
+                <option value="Rotorua and Taupo">Rotorua and Taupo</option>
+                <option value="Tairawhiti">Tairawhiti / Gisborne</option>
+                <option value="Hawke's Bay">Hawke's Bay</option>
+                <option value="Taranaki">Taranaki</option>
+                <option value="Manawatu-Whanganui">Manawatu-Whanganui</option>
+                <option value="Wairarapa">Wairarapa</option>
+                <option value="Wellington">Wellington</option>
+                <option value="Nelson Marlborough Tasman">Nelson, Marlborough and Tasman</option>
+                <option value="Canterbury" selected>Canterbury / Christchurch</option>
+                <option value="South Canterbury">South Canterbury</option>
+                <option value="West Coast">West Coast</option>
+                <option value="Otago">Otago</option>
+                <option value="Southland">Southland</option>
+              </select>
+            </label>
+            <div class="location-helper">
+              <button class="text-button" type="button" id="useGpsLocation">Use GPS location</button>
+              <span id="locationStatus">Optional. You can choose manually.</span>
+            </div>
+
+            <label>
+              Gender
+              <select id="identity">
+                <option value="male" selected>Male</option>
+                <option value="female">Female</option>
+                <option value="nonbinary">Non-binary</option>
+                <option value="another-gender">Another gender</option>
+                <option value="unspecified">Prefer not to say</option>
+              </select>
+            </label>
+
+            <fieldset>
+              <legend>Support preferences</legend>
+              <label><input type="checkbox" name="preference" value="maori" /> Maori provider or kaupapa Maori support</label>
+              <label><input type="checkbox" name="preference" value="pasifika" /> Pasifika provider or service</label>
+              <label><input type="checkbox" name="preference" value="rainbow" /> Rainbow / LGBTQIA+ affirming support</label>
+              <label><input type="checkbox" name="preference" value="trauma-informed" /> Trauma-informed support</label>
+              <label><input type="checkbox" name="preference" value="female-provider" /> Prefer a female provider</label>
+              <label><input type="checkbox" name="preference" value="male-provider" /> Prefer a male provider</label>
+            </fieldset>
+
+            <fieldset>
+              <legend>What is happening?</legend>
+              <label><input type="checkbox" name="need" value="depression" checked /> Depression or low mood</label>
+              <label><input type="checkbox" name="need" value="anxiety" /> Anxiety, panic, or overwhelm</label>
+              <label><input type="checkbox" name="need" value="trauma" /> Trauma or sexual harm</label>
+              <label><input type="checkbox" name="need" value="addiction" /> Alcohol, drug, or gambling harm</label>
+              <label><input type="checkbox" name="need" value="work" /> Work, study, money, or housing stress</label>
+            </fieldset>
+
+            <fieldset>
+              <legend>What makes care hard?</legend>
+              <label><input type="checkbox" name="barrier" value="cost" checked /> Cost</label>
+              <label><input type="checkbox" name="barrier" value="wait" /> Long waits</label>
+              <label><input type="checkbox" name="barrier" value="transport" /> Transport</label>
+              <label><input type="checkbox" name="barrier" value="privacy" /> Privacy or shame</label>
+              <label><input type="checkbox" name="barrier" value="culture" /> Need culturally safe support</label>
+            </fieldset>
+
+            <label>
+              How urgent is it?
+              <select id="urgency">
+                <option value="safe" selected>I can stay safe today</option>
+                <option value="same-day">I need help today</option>
+                <option value="crisis">I might not be safe</option>
+              </select>
+            </label>
+
+            <label>
+              Best first contact
+              <select id="contactPreference">
+                <option value="gp" selected>My GP or a nurse</option>
+                <option value="therapist">A counsellor or therapist</option>
+                <option value="psychologist">A psychologist</option>
+                <option value="mens-centre">A men's centre</option>
+                <option value="helpline">1737 right now</option>
+              </select>
+            </label>
+          </form>
+
+          <section class="results" aria-live="polite" aria-label="Suggested care path">
+            <div class="flow-step">2. Your care path</div>
+            <div class="profile-line" id="profileLine"></div>
+            <div id="resultList"></div>
+          </section>
+        </div>
+
+        <section class="provider-finder" aria-label="Local provider database">
+          <div class="flow-step">3. Choose a first contact</div>
+          <div class="provider-toolbar">
+            <label>
+              Search providers
+              <input id="providerSearch" type="search" placeholder="Search by name, city, concern, or contact type" />
+            </label>
+            <label>
+              Contact type
+              <select id="providerType">
+                <option value="all" selected>All contact types</option>
+                <option value="gp">GP-linked support</option>
+                <option value="counsellor">Counsellor / therapist</option>
+                <option value="psychologist">Psychologist</option>
+                <option value="helpline">Helpline</option>
+                <option value="mens-centre">Men's centre</option>
+                <option value="youth">Youth / rangatahi</option>
+                <option value="addiction">Addiction</option>
+                <option value="directory">Directory / navigator</option>
+                <option value="public-service">Public mental health</option>
+              </select>
+            </label>
+            <label>
+              Cost barrier
+              <select id="providerCost">
+                <option value="any" selected>Any cost</option>
+                <option value="free">Free or funded first</option>
+                <option value="winz">Can discuss WINZ / funding</option>
+              </select>
+            </label>
+          </div>
+          <div class="provider-count" id="providerCount">Loading local provider database...</div>
+          <div class="provider-list" id="providerList"></div>
+          <button class="button button--quiet provider-more" type="button" id="showMoreProviders">Show more</button>
+        </section>
+
+        <div class="contact-layout">
+          <section class="message-tool" aria-label="First contact message builder">
+            <div class="flow-step">4. Send or copy the message</div>
+            <div class="selected-provider" id="selectedProvider">
+              Choose a provider above, or use the message with any service you find.
+            </div>
+            <div class="pressure-panel">
+              <h3>This can be low pressure</h3>
+              <ul>
+                <li>A short message is enough.</li>
+                <li>You can ask about cost before sharing details.</li>
+                <li>You can ask whether they are a good match.</li>
+                <li>You are allowed to change provider if it does not feel right.</li>
+              </ul>
+            </div>
+            <label>
+              How much do you want to say?
+              <select id="contactComfort">
+                <option value="minimal" selected>Minimal: just ask for help</option>
+                <option value="practical">Practical: include barriers and next steps</option>
+                <option value="open">Open: share a little more context</option>
+              </select>
+            </label>
+            <label>
+              Your name, nickname, or initials
+              <input id="contactName" type="text" placeholder="Optional" />
+            </label>
+            <label>
+              Phone or email for replies
+              <input id="contactReply" type="text" placeholder="Optional" />
+            </label>
+            <label>
+              What you want to ask for
+              <select id="contactAsk">
+                <option value="appointment" selected>An appointment</option>
+                <option value="callback">A callback</option>
+                <option value="cost">Costs and funding options</option>
+                <option value="fit">Whether they are the right fit</option>
+                <option value="judgement">A non-judgemental first step</option>
+              </select>
+            </label>
+            <label>
+              Message to send
+              <textarea id="contactMessage" rows="9"></textarea>
+            </label>
+            <div class="contact-actions">
+              <button class="button button--primary" type="button" id="copyMessage">Copy message</button>
+              <a class="button button--quiet" id="emailMessage" href="#">Open email</a>
+              <a class="button button--quiet" id="callTarget" href="tel:1737">Call option</a>
+            </div>
+            <p class="copy-status" id="copyStatus" role="status"></p>
+          </section>
+
+          <aside class="contact-targets" aria-label="Useful first contact options">
+            <article class="reassurance-card">
+              <h3>What to say if you freeze</h3>
+              <p>"I am not coping like usual and I need help making a plan." That is enough to start.</p>
+            </article>
+            <article>
+              <h3>Fastest human contact</h3>
+              <p>Call or text 1737 any time. Good when typing a message to a service feels like too much.</p>
+              <a href="tel:1737">Call 1737</a>
+            </article>
+            <article>
+              <h3>GP or nurse</h3>
+              <p>Use the generated message with your clinic. Ask for Access and Choice, WINZ forms, and a same-week appointment.</p>
+              <a href="https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/">Find a GP on Healthpoint</a>
+            </article>
+            <article>
+              <h3>Counsellor, therapist, psychologist</h3>
+              <p>Send the message to ask about availability, funding, telehealth, and whether they work with your concern.</p>
+              <a href="https://www.healthpoint.co.nz/mental-health-addictions/">Search mental health services</a>
+            </article>
+            <article>
+              <h3>Christchurch men's support</h3>
+              <p>Canterbury Men's Centre has phone, text, email, and online contact options for a free first assessment.</p>
+              <a href="https://www.canmen.org.nz/">Contact Canterbury Men's Centre</a>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section id="funding" class="band">
+        <div class="section-heading">
+          <p class="eyebrow">Money help</p>
+          <h2>Funding routes to ask about</h2>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h3>WINZ Disability Allowance for counselling</h3>
+            <p>
+              Work and Income may help with counselling fees and transport through
+              Disability Allowance. WINZ currently lists a maximum of $82.85 per week,
+              and first-time counselling applications can cover up to 10 sessions when
+              eligibility and forms are met.
+            </p>
+            <a href="https://www.workandincome.govt.nz/eligibility/health-and-disability/counselling.html">WINZ counselling information</a>
+          </article>
+          <article class="card">
+            <h3>Free primary mental wellbeing support</h3>
+            <p>
+              Access and Choice services are free, practical supports often reached
+              through a GP or nurse. They may include Health Improvement Practitioners,
+              health coaches, and community support workers.
+            </p>
+            <a href="https://www.wellbeingsupport.health.nz/about-access-and-choice">About Access and Choice</a>
+          </article>
+          <article class="card">
+            <h3>ACC Sensitive Claims</h3>
+            <p>
+              If distress is linked to sexual abuse or assault, ACC says Sensitive Claims
+              can provide fully funded support, treatment, and assessment services.
+            </p>
+            <a href="https://www.acc.co.nz/for-providers/provider-contracts-and-services/sensitive-claims-service">ACC Sensitive Claims</a>
+          </article>
+        </div>
+        <div class="winz-guide">
+          <article>
+            <h3>WINZ counselling eligibility, in plain English</h3>
+            <ul>
+              <li>The counselling must be for a health condition or disability likely to last at least 6 months.</li>
+              <li>The counselling cost must be regular and ongoing, and not fully covered by another agency such as ACC.</li>
+              <li>You do not need to already be on a benefit to qualify.</li>
+              <li>You need to be 16 or older, a New Zealand citizen or permanent resident, and within the income limits.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>What provider counts</h3>
+            <ul>
+              <li>Counsellors must belong to a recognised body such as NZAC, the Psychotherapists Board, SWRB, ANZACATA, NZCCA, or eligible DAPAANZ membership.</li>
+              <li>Psychologists must be registered with the Psychologists Board and hold a current practising certificate.</li>
+              <li>Ask before booking: "Can you complete the WINZ Disability Certificate - Counselling form?"</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Application steps</h3>
+            <ul>
+              <li>If you already get WINZ payments but not Disability Allowance, complete the Disability Application for existing clients and the counselling certificate.</li>
+              <li>If you already get Disability Allowance, complete the Disability Certificate - Counselling form.</li>
+              <li>If you get no WINZ payments, apply online and complete the counselling certificate.</li>
+              <li>The counselling certificate needs input from you, a health practitioner, and the counsellor.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Important limits</h3>
+            <ul>
+              <li>First-time counselling applications can cover up to 10 sessions; more can be requested if a health practitioner recommends them.</li>
+              <li>WINZ says Disability Allowance can include counselling and transport, up to the weekly maximum.</li>
+              <li>WINZ does not pay for counselling unrelated to the condition, free hospital counselling, or childcare while attending counselling.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="options" class="options">
+        <div class="section-heading">
+          <p class="eyebrow">Care options</p>
+          <h2>What each door is good for</h2>
+        </div>
+        <div class="option-list">
+          <article>
+            <h3>GP or nurse</h3>
+            <p>Medication review, medical causes, referral, medical certificates, WINZ forms, and free Access and Choice supports where available.</p>
+          </article>
+          <article>
+            <h3>1737</h3>
+            <p>Free call or text any time for a trained counsellor when you need support, advice, or help choosing the next service.</p>
+          </article>
+          <article>
+            <h3>Counsellor or therapist</h3>
+            <p>Good for talking therapy, coping skills, grief, stress, depression, anxiety, and relationship patterns. Ask about WINZ, ACC, EAP, and sliding-scale fees.</p>
+          </article>
+          <article>
+            <h3>Psychologist</h3>
+            <p>Assessment and evidence-based therapy for depression, anxiety, PTSD, ADHD questions, complex distress, and behaviour change.</p>
+          </article>
+          <article>
+            <h3>Psychiatrist</h3>
+            <p>A medical specialist for diagnosis, medication complexity, bipolar or psychosis concerns, high risk, or treatment that is not improving.</p>
+          </article>
+          <article>
+            <h3>Men's centres and peer support</h3>
+            <p>Lower-pressure entry points for men who want practical support, someone to talk to, groups, or help navigating services.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="barriers" class="band barrier-section">
+        <div class="section-heading">
+          <p class="eyebrow">Barriers to care</p>
+          <h2>Common blockers and workarounds</h2>
+        </div>
+        <div class="barrier-grid">
+          <div><strong>Cost</strong><span>Ask GP reception about free HIP appointments. Ask counsellors whether they complete WINZ forms.</span></div>
+          <div><strong>Transport</strong><span>WINZ Disability Allowance can include transport to counselling when eligible.</span></div>
+          <div><strong>Privacy</strong><span>1737 can be text-only. You can ask services what appears on bills, records, and appointment reminders.</span></div>
+          <div><strong>Waitlists</strong><span>Use 1737 while waiting, ask for cancellation lists, and try GP-based same-day wellbeing support.</span></div>
+          <div><strong>Culture</strong><span>Ask for Maori, Pasifika, Rainbow, male, female, or trauma-informed support. It is okay to change provider.</span></div>
+          <div><strong>Hard to explain</strong><span>Bring one sentence: "I am not coping like usual and I need help making a plan."</span></div>
+        </div>
+      </section>
+
+      <section class="example">
+        <div class="section-heading">
+          <p class="eyebrow">Example</p>
+          <h2>26-year-old man in Canterbury with depression</h2>
+        </div>
+        <div class="timeline">
+          <div><span>Today</span><p>Text or call 1737 if the day feels too heavy. If unsafe, call 111 or go to ED.</p></div>
+          <div><span>This week</span><p>Book a GP appointment and ask for depression support, medication options, Access and Choice, and WINZ counselling forms.</p></div>
+          <div><span>Low-pressure support</span><p>Contact Canterbury Men's Centre for a free first assessment, peer support, counselling options, or service navigation.</p></div>
+          <div><span>Therapy path</span><p>Find a counsellor, therapist, or psychologist on Healthpoint. Ask directly about WINZ Disability Allowance, ACC, EAP, or reduced-fee places.</p></div>
+          <div><span>If severe or not improving</span><p>Ask the GP about psychiatrist referral, crisis team support, or community mental health referral.</p></div>
+        </div>
+      </section>
+
+      <section class="sources">
+        <h2>Key sources</h2>
+        <ul>
+          <li><a href="https://www.healthnz.govt.nz/health-topics/mental-health/where-to-get-help">Health NZ: where to get mental health help</a></li>
+          <li><a href="https://www.healthnz.govt.nz/health-topics/mental-health/crisis-assessment-teams">Health NZ: mental health crisis assessment teams by region</a></li>
+          <li><a href="https://www.healthpoint.co.nz/mental-health-addictions/mental-health/1737-need-to-talk/">Healthpoint: 1737 Need to Talk?</a></li>
+          <li><a href="https://www.workandincome.govt.nz/eligibility/health-and-disability/counselling.html">Work and Income: counselling and Disability Allowance</a></li>
+          <li><a href="https://www.wellbeingsupport.health.nz/about-access-and-choice">Te Whatu Ora: Access and Choice</a></li>
+          <li><a href="https://www.healthnz.govt.nz/hospitals-services/services-support/health-roles/psychologists">Health NZ: psychologists</a></li>
+          <li><a href="https://www.acc.co.nz/for-providers/provider-contracts-and-services/sensitive-claims-service">ACC: Sensitive Claims Service</a></li>
+          <li><a href="https://www.canmen.org.nz/">Canterbury Men's Centre</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Care Finder Aotearoa is a navigation aid, not a diagnosis or emergency service.
+        In an emergency call 111.
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
