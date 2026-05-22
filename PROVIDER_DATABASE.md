@@ -84,6 +84,19 @@ Preferred sources:
 5. PHO or provider-owned CSV exports, where the organisation has given
    permission to reuse contact details.
 
+Direct-care source shortlist:
+
+- NZCCP Find a Clinical Psychologist:
+  https://www.nzccp.co.nz/for-the-public
+- NZ Psychological Society PsychDirect:
+  https://www.psychology.org.nz/public/find-psychologist
+- RANZCP Find a Psychiatrist:
+  https://www.ranzcp.org/college-committees/public-partners/find-a-psychiatrist
+- TalkingWorks practitioner directory:
+  https://www.talkingworks.co.nz/
+- NZAC / Counselling Aotearoa approved exports, if a data-sharing agreement is
+  available.
+
 Do not scrape Healthpoint listing pages. Their public pages prohibit automated
 extraction without written permission.
 
@@ -106,3 +119,22 @@ node tools/import-nzccp-directory.mjs path/to/nzccp-directory-pages path/to/prof
 The first path may be one saved directory HTML file or a folder containing saved
 pagination pages. The optional profile folder lets the importer add direct email,
 phone, or website contact details when profile pages publish them.
+
+To import direct counsellor, psychologist, or psychiatrist contacts from an
+approved CSV export:
+
+```sh
+node tools/import-care-providers.mjs path/to/care-providers.csv
+```
+
+Required columns: `name`, `type`, `region`, `city`, `source`.
+
+`type` must be `counsellor`, `psychologist`, or `psychiatrist`. Each row must
+include at least one of `phone`, `text`, `email`, or `website`, because these
+records are intended to be direct care endpoints rather than directory hops.
+
+Run this before publishing to check contact quality:
+
+```sh
+node tools/audit-provider-quality.mjs
+```

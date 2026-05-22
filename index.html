@@ -38,7 +38,7 @@
         <p class="eyebrow">Mental health care in New Zealand</p>
         <h1>Contact someone who can help.</h1>
         <p>
-          Pick a reachable service, use a gentle message template, and make first
+          Pick a reachable service, use an easy message template, and make first
           contact without needing the perfect words.
         </p>
         <div class="hero__actions">
@@ -75,6 +75,12 @@
         <div class="guided-grid">
           <form class="intake" id="intakeForm" aria-label="Guide questions">
             <div class="flow-step">1. A few guide questions</div>
+            <div class="form-progress" aria-label="Guide question progress">
+              <div class="form-progress__bar" aria-hidden="true">
+                <span id="formProgressBar"></span>
+              </div>
+              <p id="formProgressText">0 of 5 guide questions complete</p>
+            </div>
             <p class="form-note">Your answers stay in this browser. Choose the closest option; it does not need to be perfect.</p>
             <label>
               <span class="label-with-help">
@@ -160,6 +166,7 @@
                 <option value="gp">My GP or a nurse</option>
                 <option value="therapist">A counsellor or therapist</option>
                 <option value="psychologist">A psychologist</option>
+                <option value="psychiatrist">A psychiatrist</option>
                 <option value="mens-centre">A men's centre</option>
                 <option value="helpline">1737 right now</option>
               </select>
@@ -187,6 +194,7 @@
                 <option value="gp">GP-linked support</option>
                 <option value="counsellor">Counsellor / therapist</option>
                 <option value="psychologist">Psychologist</option>
+                <option value="psychiatrist">Psychiatrist</option>
                 <option value="helpline">Helpline</option>
                 <option value="mens-centre">Men's centre</option>
                 <option value="youth">Youth / rangatahi</option>
@@ -211,7 +219,7 @@
 
         <div class="contact-layout">
           <section class="message-tool" aria-label="First contact message builder">
-            <div class="flow-step">4. Send or copy the message</div>
+            <div class="flow-step">4. Make contact</div>
             <div class="selected-provider" id="selectedProvider">
               Choose a provider above, or use the message with any service you find.
             </div>
@@ -258,6 +266,7 @@
               <button class="button button--primary" type="button" id="copyMessage">Copy message</button>
               <a class="button button--quiet" id="emailMessage" href="#">Open email</a>
               <a class="button button--quiet" id="callTarget" href="tel:1737">Call option</a>
+              <a class="button button--quiet" id="websiteTarget" href="#">Open website</a>
             </div>
             <p class="copy-status" id="copyStatus" role="status"></p>
           </section>
@@ -282,7 +291,7 @@
               <p>Send the message to ask about availability, funding, telehealth, and whether they work with your concern.</p>
               <a href="https://www.healthpoint.co.nz/mental-health-addictions/">Search mental health services</a>
             </article>
-            <article>
+            <article class="canterbury-only-contact">
               <h3>Christchurch men's support</h3>
               <p>Canterbury Men's Centre has phone, text, email, and online contact options for a free first assessment.</p>
               <a href="https://www.canmen.org.nz/">Contact Canterbury Men's Centre</a>

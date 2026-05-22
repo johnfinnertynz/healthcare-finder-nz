@@ -859,7 +859,7 @@
   {
     "id": "national-healthpoint-mental-health",
     "name": "Healthpoint Mental Health and Addictions Directory",
-    "type": "counsellor",
+    "type": "directory",
     "region": "National",
     "city": "Aotearoa New Zealand",
     "address": "",
@@ -879,8 +879,8 @@
       "fit",
       "cost"
     ],
-    "fit": "Searchable directory for mental health and addiction services, including local providers and referral information.",
-    "firstStep": "Search by region and service type, then use this site's message template with the provider you choose.",
+    "fit": "Fallback directory for finding mental health and addiction services if the local database does not yet have a direct contact that fits.",
+    "firstStep": "Use only if the direct contacts here do not fit. Search by region and service type, then bring the chosen provider back to this site's message template.",
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/",
     "verified": "2026-05"
   },
@@ -937,7 +937,7 @@
   {
     "id": "national-nzccp-find-psychologist",
     "name": "NZCCP Find a Clinical Psychologist",
-    "type": "psychologist",
+    "type": "directory",
     "region": "National",
     "city": "Aotearoa New Zealand",
     "address": "",
@@ -956,8 +956,8 @@
       "fit",
       "cost"
     ],
-    "fit": "Professional directory for finding clinical psychologists in private practice.",
-    "firstStep": "Search by location and concern, then send a short fit and cost enquiry.",
+    "fit": "Fallback professional directory for finding clinical psychologists when no direct psychologist listing fits.",
+    "firstStep": "Use only if the direct psychologist contacts here do not fit. Search by location and concern, then bring the chosen psychologist back to this site's message template.",
     "source": "https://www.nzccp.co.nz/for-the-public",
     "verified": "2026-05"
   },

@@ -316,6 +316,34 @@ footer {
   font-size: 0.92rem;
 }
 
+.form-progress {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.form-progress__bar {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--soft);
+}
+
+.form-progress__bar span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+  transition: width 0.2s ease;
+}
+
+.form-progress p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
 label,
 legend {
   display: grid;
@@ -571,7 +599,13 @@ input[type="checkbox"] {
   width: 100%;
 }
 
-.recommendation-card .button--primary.path-filter {
+.recommendation-actions {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.recommendation-card .button--primary.use-path {
   color: var(--white);
   background: var(--green-dark);
 }

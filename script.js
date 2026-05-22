@@ -11,6 +11,7 @@ const copyMessage = document.querySelector("#copyMessage");
 const copyStatus = document.querySelector("#copyStatus");
 const emailMessage = document.querySelector("#emailMessage");
 const callTarget = document.querySelector("#callTarget");
+const websiteTarget = document.querySelector("#websiteTarget");
 const useGpsLocation = document.querySelector("#useGpsLocation");
 const locationStatus = document.querySelector("#locationStatus");
 const providerSearch = document.querySelector("#providerSearch");
@@ -22,6 +23,9 @@ const showMoreProviders = document.querySelector("#showMoreProviders");
 const selectedProvider = document.querySelector("#selectedProvider");
 const providerFinder = document.querySelector(".provider-finder");
 const contactLayout = document.querySelector(".contact-layout");
+const canterburyOnlyContact = document.querySelector(".canterbury-only-contact");
+const formProgressBar = document.querySelector("#formProgressBar");
+const formProgressText = document.querySelector("#formProgressText");
 
 let providers = [];
 let selectedProviderId = "";
@@ -130,14 +134,28 @@ function intakeStatus() {
   const needs = checkedValues("need");
   const preference = contactPreference.value;
   const missing = [];
+  let completed = 0;
 
-  if (!age) missing.push("age");
-  if (!location) missing.push("location");
-  if (!identity) missing.push("gender");
-  if (!needs.length) missing.push("what is happening");
-  if (!preference) missing.push("who you want to talk to");
+  if (age) completed += 1;
+  else missing.push("age");
+  if (location) completed += 1;
+  else missing.push("location");
+  if (identity) completed += 1;
+  else missing.push("gender");
+  if (needs.length) completed += 1;
+  else missing.push("what is happening");
+  if (preference) completed += 1;
+  else missing.push("who you want to talk to");
 
-  return { complete: missing.length === 0, missing };
+  return { complete: missing.length === 0, completed, total: 5, missing };
+}
+
+function renderProgress(status) {
+  const percent = Math.round((status.completed / status.total) * 100);
+  formProgressBar.style.width = `${percent}%`;
+  formProgressText.textContent = status.complete
+    ? "Guide questions complete"
+    : `${status.completed} of ${status.total} guide questions complete`;
 }
 
 function sentenceList(items) {
@@ -158,6 +176,60 @@ function normalisePhone(phone) {
   return String(phone || "").replace(/[^\d+]/g, "");
 }
 
+function profileText(provider) {
+  return [
+    provider.name,
+    provider.type,
+    provider.region,
+    provider.city,
+    provider.cost,
+    provider.fit,
+    provider.firstStep,
+    ...(provider.tags || [])
+  ].join(" ").toLowerCase();
+}
+
+function hasSpecialtyMatch(provider, need) {
+  const text = profileText(provider);
+  const terms = {
+    depression: ["depression", "low mood", "mood"],
+    anxiety: ["anxiety", "panic", "overwhelm", "obsessive-compulsive", "ocd"],
+    trauma: ["trauma", "sexual harm", "sexual abuse", "sensitive claims", "emdr", "dissociative"],
+    addiction: ["addiction", "alcohol", "drug", "gambling"],
+    work: ["work", "stress", "study", "money", "housing", "burnout"]
+  }[need] || [need];
+
+  return terms.some((term) => text.includes(term));
+}
+
+function providerSpecialties(provider) {
+  const fit = provider.fit || "";
+  const match = fit.match(/specialt(?:y|ies) including\s+(.+?)(?:\.|$)/i);
+  if (match) return match[1];
+
+  const specialtyTags = (provider.tags || [])
+    .filter((tag) => ![
+      provider.type,
+      "fit",
+      "clinical-psychologist",
+      "primary-care",
+      "telehealth",
+      "directory",
+      "cost"
+    ].includes(tag))
+    .map((tag) => tag.replace(/-/g, " "));
+
+  return specialtyTags.slice(0, 6).join(", ");
+}
+
+function isDirectoryLike(provider) {
+  return provider.type === "directory" || provider.tags?.includes("directory");
+}
+
+function isDirectContact(provider) {
+  return Boolean(provider.phone || provider.text || provider.email) || !isDirectoryLike(provider);
+}
+
 function providerMatchesProfile(provider) {
   const location = document.querySelector("#location").value || "";
   const identity = document.querySelector("#identity").value;
@@ -170,11 +242,12 @@ function providerMatchesProfile(provider) {
   const preferenceType = contactPreference.value === "therapist" ? "counsellor" : contactPreference.value;
   if (provider.region === "National") score += 2;
   if (provider.region === location) score += 5;
-  if (provider.type === preferenceType) score += 4;
+  if (provider.type === preferenceType) score += 6;
   if (identity === "male" && tags.includes("male")) score += 2;
   if (identity === "female" && tags.includes("female")) score += 2;
   needs.forEach((need) => {
-    if (tags.includes(need)) score += 2;
+    if (tags.includes(need)) score += 4;
+    if (hasSpecialtyMatch(provider, need)) score += provider.type === "psychologist" ? 6 : 3;
   });
   barriers.forEach((barrier) => {
     if (tags.includes(barrier)) score += 1;
@@ -187,8 +260,31 @@ function providerMatchesProfile(provider) {
     if (preference === "female-provider" && tags.includes("female")) score += 2;
     if (preference === "male-provider" && tags.includes("male")) score += 2;
   });
-  if (provider.phone || provider.email || provider.text) score += 1;
+  if (provider.email) score += 2;
+  if (provider.phone || provider.text) score += 2;
+  if (provider.website) score += 1;
   return score;
+}
+
+function providerSortValue(provider) {
+  const needs = checkedValues("need");
+  const specialtyMatches = needs.filter((need) => hasSpecialtyMatch(provider, need)).length;
+  const directContacts = [provider.email, provider.phone, provider.text].filter(Boolean).length;
+  return {
+    specialtyMatches,
+    directContacts,
+    isLocal: provider.region === (document.querySelector("#location").value || "") ? 1 : 0
+  };
+}
+
+function compareProviders(a, b) {
+  const aSort = providerSortValue(a);
+  const bSort = providerSortValue(b);
+  return b.score - a.score
+    || bSort.specialtyMatches - aSort.specialtyMatches
+    || bSort.isLocal - aSort.isLocal
+    || bSort.directContacts - aSort.directContacts
+    || a.name.localeCompare(b.name);
 }
 
 function filteredProviders() {
@@ -219,14 +315,15 @@ function filteredProviders() {
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = Boolean(query) || optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
       const crisisOk = Boolean(query) || !provider.tags?.includes("crisis");
+      const directOk = Boolean(query) || provider.type === "gp" || isDirectContact(provider);
       const costText = `${provider.cost} ${(provider.tags || []).join(" ")}`.toLowerCase();
       const costOk = cost === "any"
         || (cost === "free" && /free|public|funded/.test(costText))
         || (cost === "winz" && /winz|cost|funded|directory/.test(costText));
 
-      return typeOk && queryOk && regionOk && preferenceOk && crisisOk && costOk;
+      return typeOk && queryOk && regionOk && preferenceOk && crisisOk && directOk && costOk;
     })
-    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+    .sort(compareProviders);
 }
 
 function recommendationCandidates(type = "all") {
@@ -241,9 +338,10 @@ function recommendationCandidates(type = "all") {
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
       const crisisOk = !provider.tags?.includes("crisis");
-      return typeOk && regionOk && preferenceOk && crisisOk;
+      const directOk = provider.type === "gp" || isDirectContact(provider);
+      return typeOk && regionOk && preferenceOk && crisisOk && directOk;
     })
-    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+    .sort(compareProviders);
 }
 
 function providerTypeLabel(type) {
@@ -251,6 +349,7 @@ function providerTypeLabel(type) {
     gp: "GP / medical practice",
     counsellor: "Counsellor",
     psychologist: "Psychologist",
+    psychiatrist: "Psychiatrist",
     helpline: "Helpline",
     "mens-centre": "Men's centre",
     youth: "Youth",
@@ -277,6 +376,7 @@ function renderProviders() {
   providerList.innerHTML = visibleMatches
     .map((provider) => {
       const isSelected = provider.id === selectedProviderId;
+      const specialty = providerSpecialties(provider);
       const contact = [
         provider.phone ? `Phone ${provider.phone}` : "",
         provider.text ? `Text ${provider.text}` : "",
@@ -289,6 +389,7 @@ function renderProviders() {
             <p class="provider-meta">${providerTypeLabel(provider.type)} | ${provider.region}${provider.city ? ` | ${provider.city}` : ""}</p>
             <h3>${provider.name}</h3>
             <p>${provider.fit}</p>
+            ${specialty ? `<p class="provider-detail"><strong>Specialties:</strong> ${specialty}</p>` : ""}
             <p class="provider-detail"><strong>First step:</strong> ${provider.firstStep}</p>
             <p class="provider-detail"><strong>Cost:</strong> ${provider.cost}</p>
             ${contact ? `<p class="provider-detail"><strong>Contact:</strong> ${contact}</p>` : ""}
@@ -496,6 +597,8 @@ function pathFilterOptions(paths) {
     { label: "GP or nurse", type: "gp" },
     { label: "Helpline now", type: "helpline" },
     { label: "Counsellor / therapist", type: "counsellor" },
+    { label: "Psychologist", type: "psychologist" },
+    { label: "Psychiatrist", type: "psychiatrist" },
     { label: "Public mental health", type: "public-service" }
   ];
 
@@ -534,6 +637,8 @@ function reasonForProvider(provider) {
   const identity = document.querySelector("#identity").value;
   const reasons = [];
   const tags = provider.tags || [];
+  const specialty = providerSpecialties(provider);
+  const matchedNeeds = needs.filter((need) => hasSpecialtyMatch(provider, need));
 
   if (provider.type === "gp") {
     reasons.push("A GP or nurse can turn this into a medical plan, referrals, medication options if wanted, and funded primary mental health support.");
@@ -549,8 +654,16 @@ function reasonForProvider(provider) {
 
   if (provider.type === "counsellor" || provider.type === "psychologist") {
     reasons.push("Talking therapy is a direct fit for depression, anxiety, trauma, stress, and patterns that are hard to shift alone.");
+    if (specialty) reasons.push(`Their listed focus includes ${specialty}.`);
+    if (matchedNeeds.length) reasons.push(`That directly matches ${labelledList(matchedNeeds, needLabels)} from your answers.`);
     if (barriers.includes("cost")) reasons.push("Ask before booking about WINZ Disability Allowance, ACC, EAP, funded places, or reduced-fee sessions.");
     if (preferences.length) reasons.push("Your preferences can be named in the first message so you do not have to explain them on the spot.");
+  }
+
+  if (provider.type === "psychiatrist") {
+    reasons.push("A psychiatrist is a medical specialist, which can fit medication complexity, diagnosis questions, high risk, or care that has not improved.");
+    if (specialty) reasons.push(`Their listed focus includes ${specialty}.`);
+    if (matchedNeeds.length) reasons.push(`That directly matches ${labelledList(matchedNeeds, needLabels)} from your answers.`);
   }
 
   if (provider.type === "mens-centre" || tags.includes("male") || identity === "male") {
@@ -579,16 +692,25 @@ function reasonForProvider(provider) {
     reasons.push("This option is available for your selected area and gives you a clear next contact step.");
   }
 
-  return reasons.slice(0, 3);
+  return reasons.slice(0, 4);
 }
 
-function addRecommendation(recommendations, provider, title, action) {
+function similarActionLabel(provider) {
+  if (provider.type === "gp") return "Show similar GP options";
+  if (provider.type === "helpline") return "Show similar helplines";
+  if (provider.type === "psychologist") return "Show similar psychologists";
+  if (provider.type === "counsellor") return "Show similar counsellors";
+  if (provider.type === "mens-centre") return "Show similar men's support";
+  return "Show similar contacts";
+}
+
+function addRecommendation(recommendations, provider, title) {
   if (!provider || recommendations.some((item) => item.provider.id === provider.id)) return;
 
   recommendations.push({
     provider,
     title: title || providerHeading(provider),
-    action: action || "Show matching contacts",
+    similarAction: similarActionLabel(provider),
     reasons: reasonForProvider(provider)
   });
 }
@@ -608,47 +730,45 @@ function recommendedMoves() {
     addRecommendation(
       recommendations,
       provider,
-      index === 0 ? "Your selected first step" : "Another good option",
-      index === 0 ? "Use this path" : "Show similar contacts"
+      index === 0 ? "Your selected first step" : "Another good option"
     );
   });
 
   if (recommendations.length >= 3) return recommendations.slice(0, 3);
 
-  addRecommendation(recommendations, best((provider) => provider.type === "gp"), "Start with a GP or nurse", "Show GP options");
+  addRecommendation(recommendations, best((provider) => provider.type === "gp"), "Start with a GP or nurse");
 
   if (needs.includes("anxiety") || needs.includes("depression") || barriers.includes("privacy")) {
-    addRecommendation(recommendations, best((provider) => provider.type === "helpline"), "Talk to someone before booking", "Show helplines");
+    addRecommendation(recommendations, best((provider) => provider.type === "helpline"), "Talk to someone before booking");
   }
 
   if (identity === "male") {
-    addRecommendation(recommendations, best((provider) => provider.type === "mens-centre" || provider.tags?.includes("male")), "Use a lower-pressure men's option", "Show men's support");
+    addRecommendation(recommendations, best((provider) => provider.type === "mens-centre" || provider.tags?.includes("male")), "Use a lower-pressure men's option");
   }
 
   if (preferences.length || barriers.includes("culture")) {
     addRecommendation(
       recommendations,
       best((provider) => (provider.tags || []).some((tag) => preferences.includes(tag))),
-      "Prioritise a safer fit",
-      "Show preference matches"
+      "Prioritise a safer fit"
     );
   }
 
   if (needs.includes("trauma")) {
-    addRecommendation(recommendations, best((provider) => provider.tags?.includes("trauma")), "Use trauma-informed support", "Show trauma support");
+    addRecommendation(recommendations, best((provider) => provider.tags?.includes("trauma")), "Use trauma-informed support");
   }
 
   if (needs.includes("addiction")) {
-    addRecommendation(recommendations, best((provider) => provider.type === "addiction" || provider.tags?.includes("addiction")), "Use addiction-aware support", "Show addiction support");
+    addRecommendation(recommendations, best((provider) => provider.type === "addiction" || provider.tags?.includes("addiction")), "Use addiction-aware support");
   }
 
   if (barriers.includes("cost") || barriers.includes("wait")) {
-    addRecommendation(recommendations, best((provider) => provider.type === "public-service" || provider.tags?.includes("cost")), "Look for funded or low-cost support", "Show funded options");
+    addRecommendation(recommendations, best((provider) => provider.type === "public-service" || provider.tags?.includes("cost")), "Look for funded or low-cost support");
   }
 
-  addRecommendation(recommendations, best((provider) => provider.type === "counsellor"), "Ask a counsellor or therapist", "Show counsellors");
-  addRecommendation(recommendations, best((provider) => provider.type === "psychologist"), "Look for a psychologist", "Show psychologists");
-  addRecommendation(recommendations, matches[0], "Best overall match", "Keep these matches");
+  addRecommendation(recommendations, best((provider) => provider.type === "counsellor"), "Ask a counsellor or therapist");
+  addRecommendation(recommendations, best((provider) => provider.type === "psychologist"), "Look for a psychologist");
+  addRecommendation(recommendations, matches[0], "Best overall match");
 
   return recommendations.slice(0, 3);
 }
@@ -708,6 +828,16 @@ function contactTarget() {
     };
   }
 
+  if (preference === "psychiatrist") {
+    return {
+      label: "a psychiatrist",
+      email: "",
+      phone: "",
+      subject: "Psychiatry appointment enquiry",
+      greeting: "Kia ora"
+    };
+  }
+
   return {
     label: "my GP clinic",
     email: "",
@@ -719,11 +849,16 @@ function contactTarget() {
 
 function askLine() {
   const ask = contactAsk.value;
-  if (ask === "callback") return "Could someone please call me back to talk through the next step?";
-  if (ask === "cost") return "Could you please tell me about costs, WINZ Disability Allowance, ACC, EAP, or any low-cost options? If WINZ may apply, can you complete the Disability Certificate - Counselling form?";
-  if (ask === "fit") return "Could you please let me know whether your service is a good fit, or where I should try if it is not?";
-  if (ask === "judgement") return "I am nervous about being judged and would appreciate a gentle, non-judgemental first step.";
-  return "Could I please book an appointment or be told the soonest available option?";
+  if (ask === "callback") return "Could someone please call me back about the next step?";
+  if (ask === "cost") return "Could you please confirm your fees and any WINZ, ACC, EAP, funded, or low-cost options?";
+  if (ask === "fit") return "Could you please let me know whether your service is a good fit, or suggest another option if not?";
+  if (ask === "judgement") return "Could we start with a gentle, non-judgemental first step?";
+  return "Could I please book an appointment, or be told the soonest available option?";
+}
+
+function messageContextLine(age, location, needs) {
+  const ageText = age ? `I am ${age}` : "I am an adult";
+  return `${ageText} and based in ${location}. I am looking for support with ${labelledList(needs, needLabels)}.`;
 }
 
 function buildContactMessage() {
@@ -736,53 +871,50 @@ function buildContactMessage() {
   const comfort = contactComfort.value;
   const name = contactName.value.trim();
   const reply = contactReply.value.trim();
-  const safety = "I need help getting care started.";
+  const lines = [
+    target.greeting,
+    "",
+    messageContextLine(age, location, needs),
+    askLine()
+  ];
 
-  const lines = [target.greeting, ""];
-
-  if (comfort === "minimal") {
-    lines.push(
-      `I am finding things hard with ${labelledList(needs, needLabels)} and want to make a first step toward support.`,
-      askLine(),
-      "I do not know exactly what to say yet. A simple next step would help."
-    );
-  } else {
-    lines.push(
-      `I am ${age || "an adult"} in ${location}. I am looking for help with ${labelledList(needs, needLabels)}.`,
-      safety,
-      `The main things making care hard are ${labelledList(barriers, barrierLabels)}.`,
-      askLine()
-    );
+  if (barriers.length && comfort !== "minimal") {
+    lines.push(`The main things making care harder are ${labelledList(barriers, barrierLabels)}.`);
   }
 
-  if (preferences.length && comfort !== "minimal") {
-    lines.push(`I would prefer ${labelledList(preferences, preferenceLabels)} if available.`);
-  } else if (preferences.length) {
-    lines.push(`I would prefer ${labelledList(preferences, preferenceLabels)} if available.`);
+  if (preferences.length) {
+    lines.push(`If possible, I would prefer ${labelledList(preferences, preferenceLabels)}.`);
   }
 
   if (comfort === "open") {
     lines.push(
-      "I am worried about judgement and about finding someone who is a good match.",
-      "If your service is not the right fit, could you please point me toward another option?"
+      "I am a bit nervous about starting and about finding the right fit.",
+      "A clear first step would help."
     );
+  } else if (comfort === "minimal") {
+    lines.push("A simple next step would help.");
   }
 
-  lines.push("", "I would appreciate a simple next step. A short reply is okay.");
-
-  if (reply) lines.push(`You can contact me at: ${reply}.`);
+  if (reply) lines.push(`My preferred contact is ${reply}.`);
   if (barriers.includes("cost")) {
-    lines.push("Cost is a barrier, so I would like to know whether WINZ Disability Allowance for counselling could help.");
+    lines.push("Cost is a concern, so I would appreciate any funding information, including whether WINZ Disability Allowance may apply.");
   }
   if (barriers.includes("privacy")) {
-    lines.push("Privacy is a concern for me, so please let me know what information I need to share at this stage.");
+    lines.push("Privacy matters to me, so please let me know what information is needed at this stage.");
   }
-  if (name) lines.push("", `Thank you,`, name);
+
+  lines.push("", "Thank you.");
+  if (name) lines.push(name);
 
   return lines.join("\n");
 }
 
 function renderContact() {
+  const location = document.querySelector("#location").value || "";
+  if (canterburyOnlyContact) {
+    canterburyOnlyContact.hidden = !/canterbury/i.test(location);
+  }
+
   if (!intakeStatus().complete) {
     contactMessage.value = "";
     selectedProvider.textContent = "Complete the guide questions first, then we will build a first message.";
@@ -790,6 +922,8 @@ function renderContact() {
     emailMessage.removeAttribute("href");
     callTarget.href = "tel:1737";
     callTarget.textContent = "Call 1737";
+    websiteTarget.hidden = true;
+    websiteTarget.removeAttribute("href");
     return;
   }
 
@@ -803,10 +937,6 @@ function renderContact() {
     emailMessage.hidden = false;
     emailMessage.href = `mailto:${target.email}?subject=${subject}&body=${body}`;
     emailMessage.textContent = `Email ${target.label}`;
-  } else if (target.website) {
-    emailMessage.hidden = false;
-    emailMessage.href = target.website;
-    emailMessage.textContent = "Open contact page";
   } else {
     emailMessage.hidden = true;
     emailMessage.removeAttribute("href");
@@ -815,12 +945,22 @@ function renderContact() {
   if (target.phone) {
     callTarget.href = `tel:${normalisePhone(target.phone)}`;
     callTarget.textContent = `Call ${target.label}`;
-  } else if (target.website) {
-    callTarget.href = target.website;
-    callTarget.textContent = "Open website";
   } else {
-    callTarget.href = "https://www.healthpoint.co.nz/mental-health-addictions/";
-    callTarget.textContent = "Find contact details";
+    callTarget.hidden = true;
+    callTarget.removeAttribute("href");
+  }
+
+  if (target.phone) {
+    callTarget.hidden = false;
+  }
+
+  if (target.website) {
+    websiteTarget.hidden = false;
+    websiteTarget.href = target.website;
+    websiteTarget.textContent = `Open ${target.label} website`;
+  } else {
+    websiteTarget.hidden = true;
+    websiteTarget.removeAttribute("href");
   }
 
   const provider = providers.find((item) => item.id === selectedProviderId);
@@ -831,6 +971,7 @@ function renderContact() {
 
 function render() {
   const status = intakeStatus();
+  renderProgress(status);
   providerFinder.hidden = !status.complete;
   contactLayout.hidden = !status.complete;
 
@@ -882,9 +1023,14 @@ function render() {
             <ul>
               ${move.reasons.map((reason) => `<li>${reason}</li>`).join("")}
             </ul>
-            <button class="button ${index === 0 ? "button--primary" : "button--quiet"} path-filter" type="button" data-provider-type="${move.provider.type}" data-provider-search="">
-              ${move.action}
-            </button>
+            <div class="recommendation-actions">
+              <button class="button button--primary use-path" type="button" data-provider-id="${move.provider.id}">
+                Use this path
+              </button>
+              <button class="button button--quiet path-filter" type="button" data-provider-type="${move.provider.type}" data-provider-search="">
+                ${move.similarAction}
+              </button>
+            </div>
           </div>
         </article>
       `).join("")}
@@ -909,6 +1055,21 @@ function render() {
 
 form.addEventListener("input", render);
 resultList.addEventListener("click", (event) => {
+  const usePath = event.target.closest(".use-path");
+  if (usePath) {
+    selectedProviderId = usePath.dataset.providerId;
+    const provider = providers.find((item) => item.id === selectedProviderId);
+    if (provider) {
+      providerType.value = provider.type;
+      providerSearch.value = "";
+      providerVisibleCount = providerBatchSize;
+    }
+    renderProviders();
+    renderContact();
+    document.querySelector(".contact-layout").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
   const button = event.target.closest(".path-filter");
   if (!button) return;
   providerType.value = button.dataset.providerType || "all";
