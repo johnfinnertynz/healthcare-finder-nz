@@ -20,6 +20,8 @@ const providerCount = document.querySelector("#providerCount");
 const providerList = document.querySelector("#providerList");
 const showMoreProviders = document.querySelector("#showMoreProviders");
 const selectedProvider = document.querySelector("#selectedProvider");
+const providerFinder = document.querySelector(".provider-finder");
+const contactLayout = document.querySelector(".contact-layout");
 
 let providers = [];
 let selectedProviderId = "";
@@ -54,6 +56,7 @@ const barrierLabels = {
 const preferenceLabels = {
   maori: "Maori provider or kaupapa Maori support",
   pasifika: "Pasifika provider or service",
+  asian: "Asian provider or service",
   rainbow: "Rainbow / LGBTQIA+ affirming support",
   "trauma-informed": "trauma-informed support",
   "female-provider": "a female provider",
@@ -114,8 +117,27 @@ const regionCentres = [
   { region: "Southland", lat: -46.413, lon: 168.353 }
 ];
 
+const optInPreferenceTags = ["maori", "pasifika", "asian", "rainbow"];
+
 function checkedValues(name) {
   return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map((item) => item.value);
+}
+
+function intakeStatus() {
+  const age = Number(document.querySelector("#age").value || 0);
+  const location = document.querySelector("#location").value;
+  const identity = document.querySelector("#identity").value;
+  const needs = checkedValues("need");
+  const preference = contactPreference.value;
+  const missing = [];
+
+  if (!age) missing.push("age");
+  if (!location) missing.push("location");
+  if (!identity) missing.push("gender");
+  if (!needs.length) missing.push("what is happening");
+  if (!preference) missing.push("who you want to talk to");
+
+  return { complete: missing.length === 0, missing };
 }
 
 function sentenceList(items) {
@@ -157,6 +179,9 @@ function providerMatchesProfile(provider) {
   barriers.forEach((barrier) => {
     if (tags.includes(barrier)) score += 1;
   });
+  if (tags.includes("telehealth")) {
+    score += barriers.includes("transport") ? 4 : -3;
+  }
   preferences.forEach((preference) => {
     if (tags.includes(preference)) score += 2;
     if (preference === "female-provider" && tags.includes("female")) score += 2;
@@ -171,6 +196,7 @@ function filteredProviders() {
   const type = providerType.value;
   const cost = providerCost.value;
   const location = document.querySelector("#location").value || "";
+  const preferences = checkedValues("preference");
 
   return providers
     .map((provider) => ({ ...provider, score: providerMatchesProfile(provider) }))
@@ -190,19 +216,39 @@ function filteredProviders() {
       const typeOk = type === "all" || provider.type === type;
       const queryOk = !query || haystack.includes(query);
       const regionOk = provider.region === "National" || provider.region === location || Boolean(query);
+      const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
+      const preferenceOk = Boolean(query) || optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
+      const crisisOk = Boolean(query) || !provider.tags?.includes("crisis");
       const costText = `${provider.cost} ${(provider.tags || []).join(" ")}`.toLowerCase();
       const costOk = cost === "any"
         || (cost === "free" && /free|public|funded/.test(costText))
         || (cost === "winz" && /winz|cost|funded|directory/.test(costText));
 
-      return typeOk && queryOk && regionOk && costOk;
+      return typeOk && queryOk && regionOk && preferenceOk && crisisOk && costOk;
+    })
+    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+}
+
+function recommendationCandidates(type = "all") {
+  const location = document.querySelector("#location").value || "";
+  const preferences = checkedValues("preference");
+
+  return providers
+    .map((provider) => ({ ...provider, score: providerMatchesProfile(provider) }))
+    .filter((provider) => {
+      const typeOk = type === "all" || provider.type === type;
+      const regionOk = provider.region === "National" || provider.region === location;
+      const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
+      const preferenceOk = optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
+      const crisisOk = !provider.tags?.includes("crisis");
+      return typeOk && regionOk && preferenceOk && crisisOk;
     })
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 }
 
 function providerTypeLabel(type) {
   return {
-    gp: "GP-linked",
+    gp: "GP / medical practice",
     counsellor: "Counsellor",
     psychologist: "Psychologist",
     helpline: "Helpline",
@@ -270,8 +316,7 @@ async function loadProviders() {
     providers = await response.json();
     const firstMatch = filteredProviders()[0];
     if (firstMatch) selectedProviderId = firstMatch.id;
-    renderProviders();
-    renderContact();
+    render();
   } catch {
     providerCount.textContent = "Could not load the local provider database.";
   }
@@ -334,34 +379,15 @@ function buildPaths() {
   const age = Number(document.querySelector("#age").value || 0);
   const location = document.querySelector("#location").value || "your area";
   const identity = document.querySelector("#identity").value;
-  const urgency = document.querySelector("#urgency").value;
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
   const preferences = checkedValues("preference");
   const paths = [];
 
+  const needText = needs.length ? labelledList(needs, needLabels) : "general wellbeing support";
+  const barrierText = barriers.length ? `Main barriers: ${labelledList(barriers, barrierLabels)}.` : "No major barriers selected.";
   const preferenceText = preferences.length ? ` Preferences: ${labelledList(preferences, preferenceLabels)}.` : "";
-  profileLine.textContent = `${age || "Adult"} in ${location}: ${labelledList(needs, needLabels)}. Main barriers: ${labelledList(barriers, barrierLabels)}.${preferenceText}`;
-
-  if (urgency === "crisis") {
-    addPath(paths, {
-      tone: "priority",
-      title: "Immediate safety comes first",
-      body: "Call 111, go to the nearest emergency department, or contact your local mental health crisis team. If you can stay safe while talking, call or text 1737 now.",
-      action: "Health NZ crisis options",
-      href: links.healthNz
-    });
-  }
-
-  if (urgency === "same-day") {
-    addPath(paths, {
-      tone: "priority",
-      title: "Get same-day human support",
-      body: "Call or text 1737 today. Ask them to help you choose between GP, crisis team, local community support, or a helpline that fits what is happening.",
-      action: "Call or text 1737",
-      href: "tel:1737"
-    });
-  }
+  profileLine.textContent = `${age || "Adult"} in ${location}: ${needText}. ${barrierText}${preferenceText}`;
 
   addPath(paths, {
     title: "Book a GP or nurse appointment",
@@ -436,10 +462,10 @@ function buildPaths() {
     });
   }
 
-  if (barriers.includes("culture") || preferences.some((item) => ["maori", "pasifika", "rainbow", "trauma-informed"].includes(item))) {
+  if (barriers.includes("culture") || preferences.some((item) => ["maori", "pasifika", "asian", "rainbow", "trauma-informed"].includes(item))) {
     addPath(paths, {
       title: "Ask for a culturally safe fit",
-      body: "You can ask for Maori, Pasifika, Rainbow, youth-friendly, trauma-informed, male, or female support. Fit matters, and changing provider is allowed.",
+      body: "You can ask for Maori, Pasifika, Asian, Rainbow, youth-friendly, trauma-informed, male, or female support. Fit matters, and changing provider is allowed.",
       action: "Find local services",
       href: links.healthpoint
     });
@@ -462,6 +488,169 @@ function buildPaths() {
   });
 
   return paths;
+}
+
+function pathFilterOptions(paths) {
+  const options = [
+    { label: "All matches", type: "all" },
+    { label: "GP or nurse", type: "gp" },
+    { label: "Helpline now", type: "helpline" },
+    { label: "Counsellor / therapist", type: "counsellor" },
+    { label: "Public mental health", type: "public-service" }
+  ];
+
+  if (paths.some((path) => path.title.includes("ACC") || path.title.includes("trauma"))) {
+    options.push({ label: "Trauma support", search: "trauma" });
+  }
+
+  if (paths.some((path) => path.title.includes("Addiction"))) {
+    options.push({ label: "Addiction support", type: "addiction" });
+  }
+
+  if (paths.some((path) => path.title.includes("Youth"))) {
+    options.push({ label: "Youth support", type: "youth" });
+  }
+
+  return options;
+}
+
+function providerHeading(provider) {
+  if (provider.type === "gp") return "Start with a GP or nurse";
+  if (provider.type === "helpline") return "Talk to someone now";
+  if (provider.type === "counsellor") return "Ask a counsellor or therapist";
+  if (provider.type === "psychologist") return "Look for a psychologist";
+  if (provider.type === "mens-centre") return "Use a lower-pressure men's support option";
+  if (provider.type === "public-service") return "Ask a funded public service";
+  if (provider.type === "addiction") return "Use addiction and mental health support";
+  if (provider.type === "youth") return "Use youth-friendly support";
+  return "Use a service navigator";
+}
+
+function reasonForProvider(provider) {
+  const age = Number(document.querySelector("#age").value || 0);
+  const needs = checkedValues("need");
+  const barriers = checkedValues("barrier");
+  const preferences = checkedValues("preference");
+  const identity = document.querySelector("#identity").value;
+  const reasons = [];
+  const tags = provider.tags || [];
+
+  if (provider.type === "gp") {
+    reasons.push("A GP or nurse can turn this into a medical plan, referrals, medication options if wanted, and funded primary mental health support.");
+    if (barriers.includes("cost")) reasons.push("Because cost is a barrier, ask about free Access and Choice support, Community Services Card fees, and WINZ paperwork.");
+    if (barriers.includes("wait")) reasons.push("GP teams can sometimes offer brief same-week support while you wait for counselling.");
+  }
+
+  if (provider.type === "helpline") {
+    reasons.push("This is useful when booking feels like too much: no enrolment, no diagnosis, and you can call or text first.");
+    if (needs.includes("anxiety")) reasons.push("For anxiety or overwhelm, a helpline can help you slow the next step down into one manageable action.");
+    if (barriers.includes("privacy")) reasons.push("Text or phone support can feel more private than walking into a clinic.");
+  }
+
+  if (provider.type === "counsellor" || provider.type === "psychologist") {
+    reasons.push("Talking therapy is a direct fit for depression, anxiety, trauma, stress, and patterns that are hard to shift alone.");
+    if (barriers.includes("cost")) reasons.push("Ask before booking about WINZ Disability Allowance, ACC, EAP, funded places, or reduced-fee sessions.");
+    if (preferences.length) reasons.push("Your preferences can be named in the first message so you do not have to explain them on the spot.");
+  }
+
+  if (provider.type === "mens-centre" || tags.includes("male") || identity === "male") {
+    reasons.push("This may feel less exposing if talking about mental health directly is hard, and it can still connect you into proper care.");
+  }
+
+  if (provider.type === "public-service") {
+    reasons.push("Public services can be a better fit when you need funded support, navigation, or help coordinating several problems at once.");
+  }
+
+  if (provider.type === "addiction") {
+    reasons.push("Addiction services are built for alcohol, drug, gambling, and mental health overlap, so you do not need to separate the issues first.");
+  }
+
+  if (provider.type === "youth" || (age > 0 && age < 25)) {
+    reasons.push("Youth-friendly services can be easier to approach and are used to helping young adults start care.");
+  }
+
+  if (preferences.includes("maori") && tags.includes("maori")) reasons.push("This matches your preference for Maori or kaupapa Maori support.");
+  if (preferences.includes("pasifika") && tags.includes("pasifika")) reasons.push("This matches your preference for Pasifika support.");
+  if (preferences.includes("asian") && tags.includes("asian")) reasons.push("This matches your preference for Asian support.");
+  if (preferences.includes("rainbow") && tags.includes("rainbow")) reasons.push("This matches your preference for Rainbow-affirming support.");
+  if (preferences.includes("trauma-informed") && tags.includes("trauma-informed")) reasons.push("This matches your preference for trauma-informed support.");
+
+  if (!reasons.length) {
+    reasons.push("This option is available for your selected area and gives you a clear next contact step.");
+  }
+
+  return reasons.slice(0, 3);
+}
+
+function addRecommendation(recommendations, provider, title, action) {
+  if (!provider || recommendations.some((item) => item.provider.id === provider.id)) return;
+
+  recommendations.push({
+    provider,
+    title: title || providerHeading(provider),
+    action: action || "Show matching contacts",
+    reasons: reasonForProvider(provider)
+  });
+}
+
+function recommendedMoves() {
+  const matches = recommendationCandidates();
+  const preference = contactPreference.value === "therapist" ? "counsellor" : contactPreference.value;
+  const needs = checkedValues("need");
+  const barriers = checkedValues("barrier");
+  const preferences = checkedValues("preference");
+  const identity = document.querySelector("#identity").value;
+  const recommendations = [];
+  const best = (predicate) => matches.find(predicate);
+  const preferredMatches = recommendationCandidates(preference);
+
+  preferredMatches.slice(0, 3).forEach((provider, index) => {
+    addRecommendation(
+      recommendations,
+      provider,
+      index === 0 ? "Your selected first step" : "Another good option",
+      index === 0 ? "Use this path" : "Show similar contacts"
+    );
+  });
+
+  if (recommendations.length >= 3) return recommendations.slice(0, 3);
+
+  addRecommendation(recommendations, best((provider) => provider.type === "gp"), "Start with a GP or nurse", "Show GP options");
+
+  if (needs.includes("anxiety") || needs.includes("depression") || barriers.includes("privacy")) {
+    addRecommendation(recommendations, best((provider) => provider.type === "helpline"), "Talk to someone before booking", "Show helplines");
+  }
+
+  if (identity === "male") {
+    addRecommendation(recommendations, best((provider) => provider.type === "mens-centre" || provider.tags?.includes("male")), "Use a lower-pressure men's option", "Show men's support");
+  }
+
+  if (preferences.length || barriers.includes("culture")) {
+    addRecommendation(
+      recommendations,
+      best((provider) => (provider.tags || []).some((tag) => preferences.includes(tag))),
+      "Prioritise a safer fit",
+      "Show preference matches"
+    );
+  }
+
+  if (needs.includes("trauma")) {
+    addRecommendation(recommendations, best((provider) => provider.tags?.includes("trauma")), "Use trauma-informed support", "Show trauma support");
+  }
+
+  if (needs.includes("addiction")) {
+    addRecommendation(recommendations, best((provider) => provider.type === "addiction" || provider.tags?.includes("addiction")), "Use addiction-aware support", "Show addiction support");
+  }
+
+  if (barriers.includes("cost") || barriers.includes("wait")) {
+    addRecommendation(recommendations, best((provider) => provider.type === "public-service" || provider.tags?.includes("cost")), "Look for funded or low-cost support", "Show funded options");
+  }
+
+  addRecommendation(recommendations, best((provider) => provider.type === "counsellor"), "Ask a counsellor or therapist", "Show counsellors");
+  addRecommendation(recommendations, best((provider) => provider.type === "psychologist"), "Look for a psychologist", "Show psychologists");
+  addRecommendation(recommendations, matches[0], "Best overall match", "Keep these matches");
+
+  return recommendations.slice(0, 3);
 }
 
 function contactTarget() {
@@ -540,7 +729,6 @@ function askLine() {
 function buildContactMessage() {
   const age = Number(document.querySelector("#age").value || 0);
   const location = document.querySelector("#location").value || "my area";
-  const urgency = document.querySelector("#urgency").value;
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
   const preferences = checkedValues("preference");
@@ -548,11 +736,7 @@ function buildContactMessage() {
   const comfort = contactComfort.value;
   const name = contactName.value.trim();
   const reply = contactReply.value.trim();
-  const safety = urgency === "crisis"
-    ? "I may not be safe and need urgent guidance."
-    : urgency === "same-day"
-      ? "I need help today if possible."
-      : "I can stay safe today, but I need help getting care started.";
+  const safety = "I need help getting care started.";
 
   const lines = [target.greeting, ""];
 
@@ -572,6 +756,8 @@ function buildContactMessage() {
   }
 
   if (preferences.length && comfort !== "minimal") {
+    lines.push(`I would prefer ${labelledList(preferences, preferenceLabels)} if available.`);
+  } else if (preferences.length) {
     lines.push(`I would prefer ${labelledList(preferences, preferenceLabels)} if available.`);
   }
 
@@ -597,16 +783,34 @@ function buildContactMessage() {
 }
 
 function renderContact() {
+  if (!intakeStatus().complete) {
+    contactMessage.value = "";
+    selectedProvider.textContent = "Complete the guide questions first, then we will build a first message.";
+    emailMessage.hidden = true;
+    emailMessage.removeAttribute("href");
+    callTarget.href = "tel:1737";
+    callTarget.textContent = "Call 1737";
+    return;
+  }
+
   const target = contactTarget();
   const message = buildContactMessage();
   contactMessage.value = message;
   const subject = encodeURIComponent(target.subject);
   const body = encodeURIComponent(message);
 
-  emailMessage.href = target.email
-    ? `mailto:${target.email}?subject=${subject}&body=${body}`
-    : `mailto:?subject=${subject}&body=${body}`;
-  emailMessage.textContent = target.email ? `Email ${target.label}` : "Open email";
+  if (target.email) {
+    emailMessage.hidden = false;
+    emailMessage.href = `mailto:${target.email}?subject=${subject}&body=${body}`;
+    emailMessage.textContent = `Email ${target.label}`;
+  } else if (target.website) {
+    emailMessage.hidden = false;
+    emailMessage.href = target.website;
+    emailMessage.textContent = "Open contact page";
+  } else {
+    emailMessage.hidden = true;
+    emailMessage.removeAttribute("href");
+  }
 
   if (target.phone) {
     callTarget.href = `tel:${normalisePhone(target.phone)}`;
@@ -626,29 +830,101 @@ function renderContact() {
 }
 
 function render() {
+  const status = intakeStatus();
+  providerFinder.hidden = !status.complete;
+  contactLayout.hidden = !status.complete;
+
+  if (!status.complete) {
+    profileLine.textContent = "Answer the guide questions to unlock a care path.";
+    resultList.innerHTML = `
+      <article class="intake-gate">
+        <h3>We will show your care path after these are filled in.</h3>
+        <p>Needed: ${sentenceList(status.missing)}.</p>
+        <p>Nothing needs to be perfect. A rough answer is enough to suggest safer first-contact options.</p>
+      </article>
+    `;
+    renderContact();
+    return;
+  }
+
+  if (!providers.length) {
+    profileLine.textContent = "Loading care options...";
+    resultList.innerHTML = `
+      <article class="intake-gate">
+        <h3>Finding care options for your answers.</h3>
+        <p>This should only take a moment.</p>
+      </article>
+    `;
+    return;
+  }
+
   const paths = buildPaths();
-  resultList.innerHTML = paths
+  const moves = recommendedMoves();
+  const filterOptions = pathFilterOptions(paths)
     .map(
-      (path, index) => `
-        <article class="path-card ${path.tone || ""}">
-          <h3>${index + 1}. ${path.title}</h3>
-          <p>${path.body}</p>
-          <a href="${path.href}">${path.action}</a>
-        </article>
+      (option) => `
+        <button class="path-filter" type="button" data-provider-type="${option.type || ""}" data-provider-search="${option.search || ""}">
+          ${option.label}
+        </button>
       `
     )
     .join("");
+
+  resultList.innerHTML = `
+    <div class="recommendation-grid" aria-label="Recommended first contact options">
+      ${moves.map((move, index) => `
+        <article class="recommendation-card ${index === 0 ? "recommendation-card--primary" : ""}">
+          <div class="recommendation-rank">${index + 1}</div>
+          <div>
+            <p class="recommendation-kicker">${move.title}</p>
+            <h3>${move.provider.name}</h3>
+            <p>${move.provider.firstStep}</p>
+            <ul>
+              ${move.reasons.map((reason) => `<li>${reason}</li>`).join("")}
+            </ul>
+            <button class="button ${index === 0 ? "button--primary" : "button--quiet"} path-filter" type="button" data-provider-type="${move.provider.type}" data-provider-search="">
+              ${move.action}
+            </button>
+          </div>
+        </article>
+      `).join("")}
+    </div>
+    <div class="path-filter-row" aria-label="Tune contact matches">
+      ${filterOptions}
+    </div>
+    <details class="path-details">
+      <summary>Why these paths?</summary>
+      ${paths.map((path) => `
+        <article class="path-card ${path.tone || ""}">
+          <h3>${path.title}</h3>
+          <p>${path.body}</p>
+          <a href="${path.href}">${path.action}</a>
+        </article>
+      `).join("")}
+    </details>
+  `;
   renderProviders();
   renderContact();
 }
 
 form.addEventListener("input", render);
+resultList.addEventListener("click", (event) => {
+  const button = event.target.closest(".path-filter");
+  if (!button) return;
+  providerType.value = button.dataset.providerType || "all";
+  providerSearch.value = button.dataset.providerSearch || "";
+  providerVisibleCount = providerBatchSize;
+  renderProviders();
+  renderContact();
+  document.querySelector(".provider-finder").scrollIntoView({ behavior: "smooth", block: "start" });
+});
 contactName.addEventListener("input", renderContact);
 contactReply.addEventListener("input", renderContact);
 contactAsk.addEventListener("input", renderContact);
 contactComfort.addEventListener("input", renderContact);
 contactPreference.addEventListener("input", () => {
-  const firstMatch = filteredProviders()[0];
+  const preference = contactPreference.value === "therapist" ? "counsellor" : contactPreference.value;
+  const firstMatch = recommendationCandidates(preference)[0] || filteredProviders()[0];
   if (firstMatch) selectedProviderId = firstMatch.id;
   render();
 });

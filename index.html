@@ -8,6 +8,8 @@
       content="A low-barrier mental health care finder for people in Aotearoa New Zealand."
     />
     <title>Care Finder Aotearoa</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -73,14 +75,19 @@
         <div class="guided-grid">
           <form class="intake" id="intakeForm" aria-label="Guide questions">
             <div class="flow-step">1. A few guide questions</div>
+            <p class="form-note">Your answers stay in this browser. Choose the closest option; it does not need to be perfect.</p>
             <label>
-              Age
-              <input id="age" type="number" min="1" max="120" value="26" />
+              <span class="label-with-help">
+                Age
+                <span class="help-tip" tabindex="0" aria-label="We ask for age to check whether youth or senior services may fit.">?</span>
+              </span>
+              <input id="age" type="number" min="1" max="120" placeholder="Enter age" required />
             </label>
 
             <label>
               Location
-              <select id="location">
+              <select id="location" required>
+                <option value="" selected>Choose your region</option>
                 <option value="Northland">Northland</option>
                 <option value="Auckland">Auckland</option>
                 <option value="Waikato">Waikato</option>
@@ -93,7 +100,7 @@
                 <option value="Wairarapa">Wairarapa</option>
                 <option value="Wellington">Wellington</option>
                 <option value="Nelson Marlborough Tasman">Nelson, Marlborough and Tasman</option>
-                <option value="Canterbury" selected>Canterbury / Christchurch</option>
+                <option value="Canterbury">Canterbury / Christchurch</option>
                 <option value="South Canterbury">South Canterbury</option>
                 <option value="West Coast">West Coast</option>
                 <option value="Otago">Otago</option>
@@ -107,8 +114,9 @@
 
             <label>
               Gender
-              <select id="identity">
-                <option value="male" selected>Male</option>
+              <select id="identity" required>
+                <option value="" selected>Choose gender</option>
+                <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="nonbinary">Non-binary</option>
                 <option value="another-gender">Another gender</option>
@@ -120,6 +128,7 @@
               <legend>Support preferences</legend>
               <label><input type="checkbox" name="preference" value="maori" /> Maori provider or kaupapa Maori support</label>
               <label><input type="checkbox" name="preference" value="pasifika" /> Pasifika provider or service</label>
+              <label><input type="checkbox" name="preference" value="asian" /> Asian provider or service</label>
               <label><input type="checkbox" name="preference" value="rainbow" /> Rainbow / LGBTQIA+ affirming support</label>
               <label><input type="checkbox" name="preference" value="trauma-informed" /> Trauma-informed support</label>
               <label><input type="checkbox" name="preference" value="female-provider" /> Prefer a female provider</label>
@@ -127,8 +136,8 @@
             </fieldset>
 
             <fieldset>
-              <legend>What is happening?</legend>
-              <label><input type="checkbox" name="need" value="depression" checked /> Depression or low mood</label>
+              <legend>What is happening? <span class="legend-note">Choose at least one</span></legend>
+              <label><input type="checkbox" name="need" value="depression" /> Depression or low mood</label>
               <label><input type="checkbox" name="need" value="anxiety" /> Anxiety, panic, or overwhelm</label>
               <label><input type="checkbox" name="need" value="trauma" /> Trauma or sexual harm</label>
               <label><input type="checkbox" name="need" value="addiction" /> Alcohol, drug, or gambling harm</label>
@@ -137,7 +146,7 @@
 
             <fieldset>
               <legend>What makes care hard?</legend>
-              <label><input type="checkbox" name="barrier" value="cost" checked /> Cost</label>
+              <label><input type="checkbox" name="barrier" value="cost" /> Cost</label>
               <label><input type="checkbox" name="barrier" value="wait" /> Long waits</label>
               <label><input type="checkbox" name="barrier" value="transport" /> Transport</label>
               <label><input type="checkbox" name="barrier" value="privacy" /> Privacy or shame</label>
@@ -145,18 +154,10 @@
             </fieldset>
 
             <label>
-              How urgent is it?
-              <select id="urgency">
-                <option value="safe" selected>I can stay safe today</option>
-                <option value="same-day">I need help today</option>
-                <option value="crisis">I might not be safe</option>
-              </select>
-            </label>
-
-            <label>
-              Best first contact
-              <select id="contactPreference">
-                <option value="gp" selected>My GP or a nurse</option>
+              Who I want to talk to
+              <select id="contactPreference" required>
+                <option value="" selected>Choose who to talk to</option>
+                <option value="gp">My GP or a nurse</option>
                 <option value="therapist">A counsellor or therapist</option>
                 <option value="psychologist">A psychologist</option>
                 <option value="mens-centre">A men's centre</option>
@@ -410,25 +411,13 @@
         </div>
       </section>
 
-      <section class="example">
-        <div class="section-heading">
-          <p class="eyebrow">Example</p>
-          <h2>26-year-old man in Canterbury with depression</h2>
-        </div>
-        <div class="timeline">
-          <div><span>Today</span><p>Text or call 1737 if the day feels too heavy. If unsafe, call 111 or go to ED.</p></div>
-          <div><span>This week</span><p>Book a GP appointment and ask for depression support, medication options, Access and Choice, and WINZ counselling forms.</p></div>
-          <div><span>Low-pressure support</span><p>Contact Canterbury Men's Centre for a free first assessment, peer support, counselling options, or service navigation.</p></div>
-          <div><span>Therapy path</span><p>Find a counsellor, therapist, or psychologist on Healthpoint. Ask directly about WINZ Disability Allowance, ACC, EAP, or reduced-fee places.</p></div>
-          <div><span>If severe or not improving</span><p>Ask the GP about psychiatrist referral, crisis team support, or community mental health referral.</p></div>
-        </div>
-      </section>
-
       <section class="sources">
         <h2>Key sources</h2>
         <ul>
           <li><a href="https://www.healthnz.govt.nz/health-topics/mental-health/where-to-get-help">Health NZ: where to get mental health help</a></li>
           <li><a href="https://www.healthnz.govt.nz/health-topics/mental-health/crisis-assessment-teams">Health NZ: mental health crisis assessment teams by region</a></li>
+          <li><a href="https://www.healthnz.govt.nz/hospitals-services/services-support/general-practices">Health NZ: general practices and how to enrol</a></li>
+          <li><a href="https://new.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/">Healthpoint: general practice directory</a></li>
           <li><a href="https://www.healthpoint.co.nz/mental-health-addictions/mental-health/1737-need-to-talk/">Healthpoint: 1737 Need to Talk?</a></li>
           <li><a href="https://www.workandincome.govt.nz/eligibility/health-and-disability/counselling.html">Work and Income: counselling and Disability Allowance</a></li>
           <li><a href="https://www.wellbeingsupport.health.nz/about-access-and-choice">Te Whatu Ora: Access and Choice</a></li>
