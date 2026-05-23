@@ -15,10 +15,9 @@ const textTarget = document.querySelector("#textTarget");
 const websiteTarget = document.querySelector("#websiteTarget");
 const contactAvailability = document.querySelector("#contactAvailability");
 const addressInput = document.querySelector("#address");
-const useAddressLocation = document.querySelector("#useAddressLocation");
+const addressSuggestions = document.querySelector("#addressSuggestions");
 const addressStatus = document.querySelector("#addressStatus");
-const useGpsLocation = document.querySelector("#useGpsLocation");
-const locationStatus = document.querySelector("#locationStatus");
+const locationInput = document.querySelector("#location");
 const providerSearch = document.querySelector("#providerSearch");
 const providerType = document.querySelector("#providerType");
 const providerCost = document.querySelector("#providerCost");
@@ -34,9 +33,20 @@ const formProgressText = document.querySelector("#formProgressText");
 
 let providers = [];
 let selectedProviderId = "";
+let contactProviderId = "";
 let providerVisibleCount = 5;
 let userCoords = null;
+let providerDirectoryFallbackActive = false;
+let addressSuggestionMatches = [];
+let activeAddressSuggestionIndex = -1;
+let addressLookupController = null;
+let addressResolveTimer = null;
+let addressLookupToken = 0;
+let wasIntakeComplete = false;
+let pendingCarePathScroll = false;
+let carePathScrollScheduled = false;
 const providerBatchSize = 5;
+const telehealthDistanceThresholdKm = 100;
 
 const links = {
   healthNz: "https://www.healthnz.govt.nz/health-topics/mental-health/where-to-get-help",
@@ -127,7 +137,52 @@ const regionCentres = [
   { region: "Southland", lat: -46.413, lon: 168.353 }
 ];
 
+const fallbackAddressPlaces = [
+  { name: "Auckland Central", city: "Auckland", region: "Auckland", lat: -36.8485, lon: 174.7633 },
+  { name: "Albany", city: "Auckland", region: "Auckland", lat: -36.7285, lon: 174.7013 },
+  { name: "Henderson", city: "Auckland", region: "Auckland", lat: -36.8772, lon: 174.6302 },
+  { name: "Manukau", city: "Auckland", region: "Auckland", lat: -36.9928, lon: 174.8793 },
+  { name: "New Lynn", city: "Auckland", region: "Auckland", lat: -36.9089, lon: 174.6858 },
+  { name: "Hamilton", city: "Hamilton", region: "Waikato", lat: -37.787, lon: 175.2793 },
+  { name: "Tauranga", city: "Tauranga", region: "Bay of Plenty", lat: -37.6878, lon: 176.1651 },
+  { name: "Rotorua", city: "Rotorua", region: "Rotorua and Taupo", lat: -38.1368, lon: 176.2497 },
+  { name: "Taupo", city: "Taupo", region: "Rotorua and Taupo", lat: -38.6857, lon: 176.0702 },
+  { name: "Gisborne", city: "Gisborne", region: "Tairawhiti", lat: -38.6623, lon: 178.0176 },
+  { name: "Napier", city: "Napier", region: "Hawke's Bay", lat: -39.4928, lon: 176.912 },
+  { name: "Hastings", city: "Hastings", region: "Hawke's Bay", lat: -39.6381, lon: 176.8492 },
+  { name: "New Plymouth", city: "New Plymouth", region: "Taranaki", lat: -39.0556, lon: 174.0752 },
+  { name: "Palmerston North", city: "Palmerston North", region: "Manawatu-Whanganui", lat: -40.3523, lon: 175.6082 },
+  { name: "Whanganui", city: "Whanganui", region: "Manawatu-Whanganui", lat: -39.9301, lon: 175.0479 },
+  { name: "Masterton", city: "Masterton", region: "Wairarapa", lat: -40.9511, lon: 175.6574 },
+  { name: "Wellington Central", city: "Wellington", region: "Wellington", lat: -41.2865, lon: 174.7762 },
+  { name: "Lower Hutt", city: "Lower Hutt", region: "Wellington", lat: -41.2125, lon: 174.9003 },
+  { name: "Porirua", city: "Porirua", region: "Wellington", lat: -41.1243, lon: 174.8393 },
+  { name: "Nelson", city: "Nelson", region: "Nelson Marlborough Tasman", lat: -41.2706, lon: 173.284 },
+  { name: "Blenheim", city: "Blenheim", region: "Nelson Marlborough Tasman", lat: -41.5134, lon: 173.9612 },
+  { name: "Greymouth", city: "Greymouth", region: "West Coast", lat: -42.4504, lon: 171.2108 },
+  { name: "Christchurch Central", city: "Christchurch", region: "Canterbury", lat: -43.5321, lon: 172.6362 },
+  { name: "Linwood", city: "Christchurch", region: "Canterbury", lat: -43.5329, lon: 172.6724 },
+  { name: "Riccarton", city: "Christchurch", region: "Canterbury", lat: -43.5309, lon: 172.5986 },
+  { name: "Papanui", city: "Christchurch", region: "Canterbury", lat: -43.4955, lon: 172.6076 },
+  { name: "New Brighton", city: "Christchurch", region: "Canterbury", lat: -43.5067, lon: 172.7292 },
+  { name: "Rangiora", city: "Rangiora", region: "Canterbury", lat: -43.3035, lon: 172.5957 },
+  { name: "Rolleston", city: "Rolleston", region: "Canterbury", lat: -43.5962, lon: 172.3832 },
+  { name: "Timaru", city: "Timaru", region: "South Canterbury", lat: -44.397, lon: 171.255 },
+  { name: "Dunedin Central", city: "Dunedin", region: "Otago", lat: -45.8795, lon: 170.5006 },
+  { name: "Queenstown", city: "Queenstown", region: "Otago", lat: -45.0312, lon: 168.6626 },
+  { name: "Invercargill", city: "Invercargill", region: "Southland", lat: -46.4132, lon: 168.3538 }
+];
+
 const optInPreferenceTags = ["maori", "pasifika", "asian", "rainbow"];
+const supportPreferenceTags = [...optInPreferenceTags, "trauma-informed"];
+const providerGenderPreferenceTags = {
+  "female-provider": "female",
+  "male-provider": "male"
+};
+const matchablePreferenceTags = [
+  ...supportPreferenceTags,
+  ...Object.values(providerGenderPreferenceTags)
+];
 
 function checkedValues(name) {
   return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map((item) => item.value);
@@ -135,8 +190,8 @@ function checkedValues(name) {
 
 function intakeStatus() {
   const age = Number(document.querySelector("#age").value || 0);
-  const location = document.querySelector("#location").value;
   const address = addressInput.value.trim();
+  const hasResolvedAddress = Boolean(locationInput.value || userCoords);
   const identity = document.querySelector("#identity").value;
   const needs = checkedValues("need");
   const preference = contactPreference.value;
@@ -145,10 +200,8 @@ function intakeStatus() {
 
   if (age) completed += 1;
   else missing.push("age");
-  if (location) completed += 1;
-  else missing.push("location");
-  if (address || userCoords) completed += 1;
-  else missing.push("address or suburb");
+  if (address && hasResolvedAddress) completed += 1;
+  else missing.push("street address or suburb");
   if (identity) completed += 1;
   else missing.push("gender");
   if (needs.length) completed += 1;
@@ -156,7 +209,7 @@ function intakeStatus() {
   if (preference) completed += 1;
   else missing.push("who you want to talk to");
 
-  return { complete: missing.length === 0, completed, total: 6, missing };
+  return { complete: missing.length === 0, completed, total: 5, missing };
 }
 
 function renderProgress(status) {
@@ -177,12 +230,42 @@ function labelledList(items, labels) {
   return sentenceList(items.map((item) => labels[item] || item));
 }
 
+function preferenceTagFor(preference) {
+  return providerGenderPreferenceTags[preference] || preference;
+}
+
+function selectedSupportPreferences(preferences = checkedValues("preference")) {
+  return preferences
+    .map(preferenceTagFor)
+    .filter((preference) => matchablePreferenceTags.includes(preference));
+}
+
+function supportPreferenceMatches(tags, preferences = checkedValues("preference")) {
+  const selected = selectedSupportPreferences(preferences);
+  return selected.filter((preference) => tags.includes(preference));
+}
+
+function hasProviderGenderConflict(tags, preferences = checkedValues("preference")) {
+  const wantsFemale = preferences.includes("female-provider");
+  const wantsMale = preferences.includes("male-provider");
+  if (wantsFemale && wantsMale) return false;
+  return (wantsFemale && tags.includes("male")) || (wantsMale && tags.includes("female"));
+}
+
 function addPath(paths, item) {
   if (!paths.some((path) => path.title === item.title)) paths.push(item);
 }
 
 function normalisePhone(phone) {
   return String(phone || "").replace(/[^\d+]/g, "");
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function profileText(provider) {
@@ -239,26 +322,50 @@ function isDirectContact(provider) {
   return !isDirectoryLike(provider) && Boolean(provider.phone || provider.text || provider.email || provider.website);
 }
 
+function providerMatchesSelectedType(provider, type, directoryFallback = false) {
+  const directory = isDirectoryLike(provider);
+  const tags = provider.tags || [];
+
+  if (type === "all") return true;
+  if (type === "directory") return directory;
+
+  if (directory) {
+    if (!directoryFallback) return false;
+    return tags.includes(type) || (type === "counsellor" && tags.includes("therapy"));
+  }
+
+  return provider.type === type || (type === "counsellor" && provider.type === "mens-centre");
+}
+
+function selectedContactType() {
+  const preference = contactPreference.value;
+  if (preference === "therapist") return "counsellor";
+  if (preference === "unsure") return "all";
+  return preference;
+}
+
 function providerMatchesProfile(provider) {
-  const location = document.querySelector("#location").value || "";
+  const location = locationInput.value || "";
   const identity = document.querySelector("#identity").value;
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
   const preferences = checkedValues("preference");
   const tags = provider.tags || [];
   const distance = distanceToProvider(provider);
+  const telehealth = isTelehealthProvider(provider);
 
   let score = 0;
-  const preferenceType = contactPreference.value === "therapist" ? "counsellor" : contactPreference.value;
-  if (provider.region === "National") score += 2;
+  const preferenceType = selectedContactType();
+  if (provider.region === "National") score += barriers.includes("transport") ? 2 : 0;
   if (provider.region === location) score += 5;
   if (distance !== null) {
-    if (distance <= 5) score += 7;
-    else if (distance <= 15) score += 5;
-    else if (distance <= 40) score += 3;
-    else if (distance <= 100) score += 1;
+    if (distance <= 5) score += telehealth ? 2 : 8;
+    else if (distance <= 15) score += telehealth ? 1 : 6;
+    else if (distance <= 40) score += telehealth ? 0 : 4;
+    else if (distance <= 100) score += telehealth ? -1 : 1;
+    else if (!telehealth) score -= 4;
   }
-  if (provider.type === preferenceType) score += 6;
+  if (preferenceType !== "all" && provider.type === preferenceType) score += 6;
   if (identity === "male" && tags.includes("male")) score += 2;
   if (identity === "female" && tags.includes("female")) score += 2;
   needs.forEach((need) => {
@@ -268,13 +375,18 @@ function providerMatchesProfile(provider) {
   barriers.forEach((barrier) => {
     if (tags.includes(barrier)) score += 1;
   });
-  if (tags.includes("telehealth")) {
-    score += barriers.includes("transport") ? 4 : -3;
+  if (telehealth) {
+    score += barriers.includes("transport") ? 4 : -8;
   }
+  const matchedSupportPreferences = supportPreferenceMatches(tags, preferences);
+  if (selectedSupportPreferences(preferences).length) {
+    score += matchedSupportPreferences.length * 12;
+    if (!matchedSupportPreferences.length) score -= 4;
+  }
+  if (hasProviderGenderConflict(tags, preferences)) score -= 30;
   preferences.forEach((preference) => {
-    if (tags.includes(preference)) score += 2;
-    if (preference === "female-provider" && tags.includes("female")) score += 2;
-    if (preference === "male-provider" && tags.includes("male")) score += 2;
+    const preferenceTag = preferenceTagFor(preference);
+    if (!matchablePreferenceTags.includes(preferenceTag) && tags.includes(preferenceTag)) score += 2;
   });
   if (provider.email) score += 2;
   if (provider.phone || provider.text) score += 2;
@@ -287,10 +399,13 @@ function providerSortValue(provider) {
   const specialtyMatches = needs.filter((need) => hasSpecialtyMatch(provider, need)).length;
   const directContacts = [provider.email, provider.phone, provider.text].filter(Boolean).length;
   const distance = distanceToProvider(provider);
+  const tags = provider.tags || [];
   return {
+    preferenceMatches: supportPreferenceMatches(tags).length,
     specialtyMatches,
     directContacts,
-    isLocal: provider.region === (document.querySelector("#location").value || "") ? 1 : 0,
+    isLocal: provider.region === (locationInput.value || "") ? 1 : 0,
+    isTelehealth: isTelehealthProvider(provider) ? 1 : 0,
     distance: distance === null ? Infinity : distance
   };
 }
@@ -299,8 +414,10 @@ function compareProviders(a, b) {
   const aSort = providerSortValue(a);
   const bSort = providerSortValue(b);
   return b.score - a.score
+    || bSort.preferenceMatches - aSort.preferenceMatches
     || bSort.specialtyMatches - aSort.specialtyMatches
     || bSort.isLocal - aSort.isLocal
+    || aSort.isTelehealth - bSort.isTelehealth
     || aSort.distance - bSort.distance
     || bSort.directContacts - aSort.directContacts
     || a.name.localeCompare(b.name);
@@ -310,12 +427,13 @@ function filteredProviders() {
   const query = providerSearch.value.trim().toLowerCase();
   const type = providerType.value;
   const cost = providerCost.value;
-  const location = document.querySelector("#location").value || "";
+  const location = locationInput.value || "";
   const preferences = checkedValues("preference");
 
-  return providers
+  const matchesFor = ({ directoriesOnly = false, directoryFallback = false } = {}) => providers
     .map((provider) => ({ ...provider, score: providerMatchesProfile(provider) }))
     .filter((provider) => {
+      const directory = isDirectoryLike(provider);
       const haystack = [
         provider.name,
         provider.type,
@@ -328,27 +446,39 @@ function filteredProviders() {
         ...(provider.tags || [])
       ].join(" ").toLowerCase();
 
-      const typeOk = type === "all"
-        || provider.type === type
-        || (type === "counsellor" && provider.type === "mens-centre");
+      const typeOk = providerMatchesSelectedType(provider, type, directoryFallback);
       const queryOk = !query || haystack.includes(query);
       const regionOk = provider.region === "National" || provider.region === location || Boolean(query);
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = Boolean(query) || optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
+      const genderOk = Boolean(query) || !hasProviderGenderConflict(provider.tags || [], preferences);
       const crisisOk = Boolean(query) || !provider.tags?.includes("crisis");
-      const directOk = provider.type === "directory" ? type === "directory" : isDirectContact(provider);
+      const contactOk = directoriesOnly
+        ? directory && Boolean(provider.website)
+        : !directory && isDirectContact(provider);
       const costText = `${provider.cost} ${(provider.tags || []).join(" ")}`.toLowerCase();
       const costOk = cost === "any"
         || (cost === "free" && /free|public|funded/.test(costText))
         || (cost === "winz" && /winz|cost|funded|directory/.test(costText));
 
-      return typeOk && queryOk && regionOk && preferenceOk && crisisOk && directOk && costOk;
+      return typeOk && queryOk && regionOk && preferenceOk && genderOk && crisisOk && contactOk && costOk;
     })
     .sort(compareProviders);
+
+  providerDirectoryFallbackActive = false;
+
+  if (type === "directory") return matchesFor({ directoriesOnly: true, directoryFallback: true });
+
+  const directMatches = matchesFor();
+  if (directMatches.length) return directMatches;
+
+  const directoryMatches = matchesFor({ directoriesOnly: true, directoryFallback: true });
+  providerDirectoryFallbackActive = directoryMatches.length > 0;
+  return directoryMatches;
 }
 
 function recommendationCandidates(type = "all") {
-  const location = document.querySelector("#location").value || "";
+  const location = locationInput.value || "";
   const preferences = checkedValues("preference");
 
   return providers
@@ -360,9 +490,10 @@ function recommendationCandidates(type = "all") {
       const regionOk = provider.region === "National" || provider.region === location;
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
+      const genderOk = !hasProviderGenderConflict(provider.tags || [], preferences);
       const crisisOk = !provider.tags?.includes("crisis");
       const directOk = isDirectContact(provider);
-      return typeOk && regionOk && preferenceOk && crisisOk && directOk;
+      return typeOk && regionOk && preferenceOk && genderOk && crisisOk && directOk;
     })
     .sort(compareProviders);
 }
@@ -394,14 +525,21 @@ function renderProviders() {
   if (!matches.some((provider) => provider.id === selectedProviderId)) {
     selectedProviderId = matches[0]?.id || "";
   }
+  if (contactProviderId && !matches.some((provider) => provider.id === contactProviderId)) {
+    contactProviderId = "";
+  }
   const visibleMatches = matches.slice(0, providerVisibleCount);
-  providerCount.textContent = `Showing ${visibleMatches.length} of ${matches.length} contact options from the local database. Best matches are shown first.`;
+  providerCount.textContent = providerDirectoryFallbackActive
+    ? `No direct contact options match these filters, so showing ${visibleMatches.length} of ${matches.length} directory options with websites.`
+    : `Showing ${visibleMatches.length} of ${matches.length} contact options from the local database. Best matches are shown first.`;
   providerList.innerHTML = visibleMatches
     .map((provider) => {
       const isSelected = provider.id === selectedProviderId;
       const directory = isDirectoryLike(provider);
+      const helpline = provider.type === "helpline";
       const specialty = providerSpecialties(provider);
       const distance = distanceToProvider(provider);
+      const distanceLabel = providerDistanceLabel(provider, distance);
       const contact = [
         !directory && provider.phone ? `Phone ${provider.phone}` : "",
         !directory && provider.text ? `Text ${provider.text}` : "",
@@ -412,14 +550,34 @@ function renderProviders() {
         ? provider.website
           ? `<a class="button button--primary" href="${provider.website}">Open directory</a>`
           : ""
+        : helpline
+          ? provider.phone
+            ? `<a class="button button--primary" href="tel:${normalisePhone(provider.phone)}">Call</a>`
+            : provider.text
+              ? `<a class="button button--primary" href="sms:${normalisePhone(provider.text)}">Text</a>`
+              : provider.website
+                ? `<a class="button button--primary" href="${provider.website}">Website</a>`
+                : ""
         : `<button class="button button--primary select-provider" type="button" data-provider-id="${provider.id}">
               Use this contact
             </button>`;
+      const secondaryActions = directory
+        ? ""
+        : helpline
+          ? `
+            ${provider.phone && provider.text ? `<a class="button button--quiet" href="sms:${normalisePhone(provider.text)}">Text</a>` : ""}
+            ${provider.website ? `<a class="button button--quiet" href="${provider.website}">Website</a>` : ""}
+          `
+          : `
+            ${provider.phone ? `<a class="button button--quiet" href="tel:${normalisePhone(provider.phone)}">Call</a>` : ""}
+            ${provider.text ? `<a class="button button--quiet" href="sms:${normalisePhone(provider.text)}">Text</a>` : ""}
+            ${provider.website ? `<a class="button button--quiet" href="${provider.website}">Website</a>` : ""}
+          `;
 
       return `
         <article class="provider-card ${isSelected ? "selected" : ""}">
           <div>
-            <p class="provider-meta">${providerTypeLabel(provider.type)} | ${provider.region}${provider.city ? ` | ${provider.city}` : ""}${distance !== null ? ` | ${Math.round(distance)} km away` : ""}</p>
+            <p class="provider-meta">${providerTypeLabel(provider.type)} | ${provider.region}${provider.city ? ` | ${provider.city}` : ""}${distanceLabel ? ` | ${distanceLabel}` : ""}</p>
             <h3>${provider.name}</h3>
             <p>${provider.fit}</p>
             ${specialty ? `<p class="provider-detail"><strong>Specialties:</strong> ${specialty}</p>` : ""}
@@ -429,9 +587,7 @@ function renderProviders() {
           </div>
           <div class="provider-actions">
             ${primaryAction}
-            ${!directory && provider.phone ? `<a class="button button--quiet" href="tel:${normalisePhone(provider.phone)}">Call</a>` : ""}
-            ${!directory && provider.text ? `<a class="button button--quiet" href="sms:${normalisePhone(provider.text)}">Text</a>` : ""}
-            ${!directory && provider.website ? `<a class="button button--quiet" href="${provider.website}">Website</a>` : ""}
+            ${secondaryActions}
           </div>
         </article>
       `;
@@ -461,6 +617,7 @@ async function loadProviders() {
     providers = await response.json();
     const firstMatch = filteredProviders()[0];
     if (firstMatch) selectedProviderId = firstMatch.id;
+    contactProviderId = "";
     render();
   } catch {
     providerCount.textContent = "Could not load the local provider database.";
@@ -488,6 +645,16 @@ function providerCoords(provider) {
 function distanceToProvider(provider) {
   const coords = providerCoords(provider);
   return userCoords && coords ? distanceKm(userCoords, coords) : null;
+}
+
+function isTelehealthProvider(provider) {
+  return provider.tags?.includes("telehealth") || provider.region === "National";
+}
+
+function providerDistanceLabel(provider, distance = distanceToProvider(provider)) {
+  if (isTelehealthProvider(provider) && (distance === null || distance > telehealthDistanceThresholdKm)) return "Telehealth provider";
+  if (distance === null) return "";
+  return `${distance.toFixed(1)} km away`;
 }
 
 function nearestRegionFromCoords(lat, lon) {
@@ -520,84 +687,286 @@ async function reverseGeocodeRegion(lat, lon) {
   }
 }
 
-async function setLocationFromAddress() {
-  const address = addressInput.value.trim();
-  if (!address) {
-    addressStatus.textContent = "Enter an address or suburb first.";
-    return;
+function inferRegionFromText(value) {
+  const text = String(value || "").toLowerCase();
+  const match = Object.entries(regionAliases)
+    .find(([alias]) => new RegExp(`\\b${alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(text));
+  return match?.[1] || "";
+}
+
+function regionFromAddressMatch(match) {
+  const address = match?.address || {};
+  const values = [
+    address.state,
+    address.region,
+    address.county,
+    address.city,
+    address.town,
+    address.village,
+    address.suburb,
+    match?.display_name
+  ].filter(Boolean);
+
+  for (const value of values) {
+    const direct = regionAliases[String(value).toLowerCase()];
+    if (direct) return direct;
+    const inferred = inferRegionFromText(value);
+    if (inferred) return inferred;
   }
 
-  addressStatus.textContent = "Looking up address for distance...";
-  useAddressLocation.disabled = true;
+  return "";
+}
+
+function addressSummary(match) {
+  return String(match?.display_name || "")
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .slice(0, 4)
+    .join(", ");
+}
+
+function isNzAddressMatch(match) {
+  const address = match?.address || {};
+  return address.country_code === "nz" || /\bnew zealand\b/i.test(match?.display_name || "");
+}
+
+function addressSuggestionDetail(match) {
+  const address = match?.address || {};
+  return [
+    address.suburb,
+    address.city || address.town || address.village,
+    address.state || address.region,
+    "New Zealand"
+  ].filter(Boolean)
+    .filter((value, index, list) => list.indexOf(value) === index)
+    .join(", ");
+}
+
+function fallbackMatchFromPlace(place) {
+  return {
+    display_name: `${place.name}, ${place.city}, ${place.region}, New Zealand`,
+    lat: place.lat,
+    lon: place.lon,
+    address: {
+      country_code: "nz",
+      suburb: place.name === place.city ? "" : place.name,
+      city: place.city,
+      state: place.region,
+      country: "New Zealand"
+    }
+  };
+}
+
+function localAddressMatches(query, limit = 5) {
+  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  const regionMatches = regionCentres.map((centre) => fallbackMatchFromPlace({
+    name: centre.region,
+    city: centre.region,
+    region: centre.region,
+    lat: centre.lat,
+    lon: centre.lon
+  }));
+  const placeMatches = fallbackAddressPlaces.map(fallbackMatchFromPlace);
+
+  return [...placeMatches, ...regionMatches]
+    .filter((match) => {
+      const text = `${match.display_name} ${Object.values(match.address || {}).join(" ")}`.toLowerCase();
+      return terms.every((term) => text.includes(term));
+    })
+    .slice(0, limit);
+}
+
+async function fetchAddressMatches(query, limit = 5) {
+  if (addressLookupController) addressLookupController.abort();
+  const controller = new AbortController();
+  addressLookupController = controller;
+  let timedOut = false;
+  const timeout = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, 1200);
+
+  const url = new URL("https://nominatim.openstreetmap.org/search");
+  url.searchParams.set("format", "jsonv2");
+  url.searchParams.set("countrycodes", "nz");
+  url.searchParams.set("addressdetails", "1");
+  url.searchParams.set("dedupe", "1");
+  url.searchParams.set("limit", String(limit));
+  url.searchParams.set("q", query);
 
   try {
-    const url = new URL("https://nominatim.openstreetmap.org/search");
-    url.searchParams.set("format", "jsonv2");
-    url.searchParams.set("countrycodes", "nz");
-    url.searchParams.set("limit", "1");
-    url.searchParams.set("addressdetails", "1");
-    url.searchParams.set("q", address);
-    const response = await fetch(url.toString(), { headers: { "Accept": "application/json" } });
+    const response = await fetch(url.toString(), {
+      signal: controller.signal,
+      headers: { "Accept": "application/json" }
+    });
     if (!response.ok) throw new Error("Address lookup failed");
-    const [match] = await response.json();
-    if (!match) throw new Error("No address match");
-
-    userCoords = { lat: Number(match.lat), lon: Number(match.lon) };
-    const resolvedRegion = await reverseGeocodeRegion(userCoords.lat, userCoords.lon) || nearestRegionFromCoords(userCoords.lat, userCoords.lon);
-    if (resolvedRegion) document.querySelector("#location").value = resolvedRegion;
-    addressStatus.textContent = `Using distance from ${match.display_name.split(",").slice(0, 3).join(", ")}.`;
-    useAddressLocation.disabled = false;
-    render();
-  } catch {
-    addressStatus.textContent = "Address lookup did not work. You can still choose a region or use GPS.";
-    useAddressLocation.disabled = false;
+    const matches = await response.json();
+    return matches.filter(isNzAddressMatch);
+  } catch (error) {
+    if (timedOut) error.addressLookupTimedOut = true;
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
-function setLocationFromGps() {
-  if (!navigator.geolocation) {
-    locationStatus.textContent = "GPS is not available in this browser. Please choose a region.";
+function renderAddressSuggestions(matches) {
+  activeAddressSuggestionIndex = matches.length ? 0 : -1;
+  addressInput.setAttribute("aria-expanded", matches.length ? "true" : "false");
+  if (matches.length) {
+    addressInput.setAttribute("aria-activedescendant", "address-suggestion-0");
+  } else {
+    addressInput.removeAttribute("aria-activedescendant");
+  }
+  addressSuggestions.hidden = !matches.length;
+  addressSuggestions.innerHTML = matches
+    .map((match, index) => {
+      const summary = addressSummary(match);
+      const detail = addressSuggestionDetail(match);
+      const showDetail = detail && detail.toLowerCase() !== summary.toLowerCase();
+      return `
+        <button
+          class="address-suggestion"
+          id="address-suggestion-${index}"
+          type="button"
+          role="option"
+          aria-selected="${index === activeAddressSuggestionIndex ? "true" : "false"}"
+          data-address-index="${index}"
+        >
+          <span class="address-suggestion__title">${escapeHtml(summary)}</span>
+          ${showDetail ? `<span class="address-suggestion__meta">${escapeHtml(detail)}</span>` : ""}
+        </button>
+      `;
+    })
+    .join("");
+}
+
+function setActiveAddressSuggestion(index) {
+  if (!addressSuggestionMatches.length) return;
+  activeAddressSuggestionIndex = (index + addressSuggestionMatches.length) % addressSuggestionMatches.length;
+  addressInput.setAttribute("aria-activedescendant", `address-suggestion-${activeAddressSuggestionIndex}`);
+
+  [...addressSuggestions.querySelectorAll(".address-suggestion")].forEach((button, buttonIndex) => {
+    button.setAttribute("aria-selected", buttonIndex === activeAddressSuggestionIndex ? "true" : "false");
+    if (buttonIndex === activeAddressSuggestionIndex) button.scrollIntoView({ block: "nearest" });
+  });
+}
+
+function hideAddressSuggestions() {
+  activeAddressSuggestionIndex = -1;
+  addressSuggestions.hidden = true;
+  addressSuggestions.innerHTML = "";
+  addressInput.setAttribute("aria-expanded", "false");
+  addressInput.removeAttribute("aria-activedescendant");
+}
+
+async function updateAddressSuggestions(query, token) {
+  if (query.length < 3) {
+    addressSuggestionMatches = [];
+    hideAddressSuggestions();
     return;
   }
 
-  locationStatus.textContent = "Waiting for GPS permission...";
-  useGpsLocation.disabled = true;
+  try {
+    let usedFallback = false;
+    let matches = await fetchAddressMatches(query, 5);
+    if (!matches.length) {
+      matches = localAddressMatches(query, 5);
+      usedFallback = matches.length > 0;
+    }
+    if (token !== addressLookupToken || addressInput.value.trim() !== query) return;
+    addressSuggestionMatches = matches;
+    renderAddressSuggestions(matches);
+    if (matches.length) {
+      addressStatus.textContent = usedFallback
+        ? "Showing New Zealand place matches. Choose one, press Enter, or pause to use the best match."
+        : "New Zealand matches found. Choose one, press Enter, or pause to use the best match.";
+      clearTimeout(addressResolveTimer);
+      addressResolveTimer = setTimeout(() => {
+        if (addressInput.value.trim() === query && !locationInput.value) resolveAddressFromInput("pause");
+      }, 2200);
+    } else {
+      addressStatus.textContent = "No New Zealand matches yet. Try a suburb, town, or fuller address.";
+    }
+  } catch (error) {
+    if (error.name === "AbortError" && !error.addressLookupTimedOut) return;
+    const matches = localAddressMatches(query, 5);
+    if (token !== addressLookupToken || addressInput.value.trim() !== query) return;
+    addressSuggestionMatches = matches;
+    renderAddressSuggestions(matches);
+    if (matches.length) {
+      addressStatus.textContent = "Showing New Zealand place matches. Choose one, press Enter, or pause to use the best match.";
+      clearTimeout(addressResolveTimer);
+      addressResolveTimer = setTimeout(() => {
+        if (addressInput.value.trim() === query && !locationInput.value) resolveAddressFromInput("pause");
+      }, 2200);
+    } else {
+      addressStatus.textContent = "Address suggestions did not load. Keep typing a suburb, town, or city.";
+    }
+  }
+}
 
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const region = nearestRegionFromCoords(
-        position.coords.latitude,
-        position.coords.longitude
-      );
+async function applyAddressMatch(match, statusPrefix = "Using distance from") {
+  const lat = Number(match.lat);
+  const lon = Number(match.lon);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) throw new Error("Address match missing coordinates");
 
-      if (!region) {
-        locationStatus.textContent = "Could not match GPS to a region. Please choose manually.";
-        useGpsLocation.disabled = false;
-        return;
-      }
+  userCoords = { lat, lon };
+  const resolvedRegion = regionFromAddressMatch(match)
+    || await reverseGeocodeRegion(lat, lon)
+    || nearestRegionFromCoords(lat, lon);
 
-      document.querySelector("#location").value = region;
-      userCoords = {
-        lat: position.coords.latitude,
-        lon: position.coords.longitude
-      };
-      if (!addressInput.value.trim()) addressInput.value = "GPS location";
-      locationStatus.textContent = `Using nearest region: ${region}. You can change it.`;
-      addressStatus.textContent = "Using GPS for distance. Your exact location stays in this browser.";
-      useGpsLocation.disabled = false;
-      render();
-    },
-    () => {
-      locationStatus.textContent = "GPS was not allowed or did not work. Please choose a region.";
-      useGpsLocation.disabled = false;
-    },
-    { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 }
-  );
+  locationInput.value = resolvedRegion;
+  addressInput.value = addressSummary(match);
+  addressStatus.textContent = resolvedRegion
+    ? `${statusPrefix} ${addressInput.value}.`
+    : `Using distance from ${addressInput.value}.`;
+  hideAddressSuggestions();
+  render();
+}
+
+async function resolveAddressFromInput(reason = "pause") {
+  const query = addressInput.value.trim();
+  const token = ++addressLookupToken;
+  clearTimeout(addressResolveTimer);
+
+  if (query.length < 3) {
+    userCoords = null;
+    locationInput.value = "";
+    addressSuggestionMatches = [];
+    hideAddressSuggestions();
+    addressStatus.textContent = "Start typing a New Zealand address or suburb.";
+    render();
+    return;
+  }
+
+  addressStatus.textContent = reason === "enter"
+    ? "Finding the best New Zealand match..."
+    : "Checking the best New Zealand match...";
+
+  try {
+    const exactMatch = addressSuggestionMatches.find((match) => addressSummary(match).toLowerCase() === query.toLowerCase());
+    const match = exactMatch || addressSuggestionMatches[0] || (await fetchAddressMatches(query, 1))[0];
+    if (token !== addressLookupToken) return;
+    if (!match) throw new Error("No address match");
+    await applyAddressMatch(match, reason === "enter" ? "Using" : "Using distance from");
+  } catch (error) {
+    if (error.name === "AbortError") return;
+    const fallbackRegion = inferRegionFromText(query);
+    locationInput.value = fallbackRegion;
+    userCoords = null;
+    hideAddressSuggestions();
+    addressStatus.textContent = fallbackRegion
+      ? `Using ${fallbackRegion} for local matching. Add more address detail for distance.`
+      : "Could not match that address yet. Try a suburb, town, or full street address in New Zealand.";
+    render();
+  }
 }
 
 function buildPaths() {
   const age = Number(document.querySelector("#age").value || 0);
-  const location = document.querySelector("#location").value || "your area";
+  const location = locationInput.value || "your area";
   const identity = document.querySelector("#identity").value;
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
@@ -645,7 +1014,8 @@ function buildPaths() {
     });
   }
 
-  if (identity === "male" && /canterbury/i.test(location)) {
+  const wantsFemaleProvider = preferences.includes("female-provider") && !preferences.includes("male-provider");
+  if (identity === "male" && !wantsFemaleProvider && /canterbury/i.test(location)) {
     addPath(paths, {
       tone: "local",
       title: "Try Canterbury Men's Centre",
@@ -653,7 +1023,7 @@ function buildPaths() {
       action: "Canterbury Men's Centre",
       href: links.canMen
     });
-  } else if (identity === "male") {
+  } else if (identity === "male" && !wantsFemaleProvider) {
     addPath(paths, {
       tone: "local",
       title: "Look for a male-friendly first contact",
@@ -758,9 +1128,12 @@ function reasonForProvider(provider) {
   const specialty = providerSpecialties(provider);
   const matchedNeeds = needs.filter((need) => hasSpecialtyMatch(provider, need));
   const distance = distanceToProvider(provider);
+  const distanceLabel = providerDistanceLabel(provider, distance);
 
-  if (distance !== null) {
-    reasons.push(`This option is about ${Math.round(distance)} km from the address or location you entered.`);
+  if (distanceLabel === "Telehealth provider") {
+    reasons.push("Telehealth provider.");
+  } else if (distanceLabel) {
+    reasons.push(`This option is about ${distanceLabel.replace(" away", "")} from the address or location you entered.`);
   }
 
   if (provider.type === "gp") {
@@ -810,6 +1183,8 @@ function reasonForProvider(provider) {
   if (preferences.includes("asian") && tags.includes("asian")) reasons.push("This matches your preference for Asian support.");
   if (preferences.includes("rainbow") && tags.includes("rainbow")) reasons.push("This matches your preference for Rainbow-affirming support.");
   if (preferences.includes("trauma-informed") && tags.includes("trauma-informed")) reasons.push("This matches your preference for trauma-informed support.");
+  if (preferences.includes("female-provider") && tags.includes("female")) reasons.push("This matches your preference for a female provider.");
+  if (preferences.includes("male-provider") && tags.includes("male")) reasons.push("This matches your preference for a male provider.");
 
   if (!reasons.length) {
     reasons.push("This option is available for your selected area and gives you a clear next contact step.");
@@ -839,20 +1214,20 @@ function addRecommendation(recommendations, provider, title) {
 }
 
 function exactPreferenceType() {
-  const preference = contactPreference.value === "therapist" ? "counsellor" : contactPreference.value;
+  const preference = selectedContactType();
   return ["gp", "psychologist", "psychiatrist"].includes(preference) ? preference : "";
 }
 
 function recommendedMoves() {
   const matches = recommendationCandidates();
-  const preference = contactPreference.value === "therapist" ? "counsellor" : contactPreference.value;
+  const preference = selectedContactType();
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
   const preferences = checkedValues("preference");
   const identity = document.querySelector("#identity").value;
   const recommendations = [];
   const best = (predicate) => matches.find(predicate);
-  const preferredMatches = recommendationCandidates(preference);
+  const preferredMatches = preference === "all" ? [] : recommendationCandidates(preference);
   const exactType = exactPreferenceType();
 
   preferredMatches.slice(0, 3).forEach((provider, index) => {
@@ -869,7 +1244,7 @@ function recommendedMoves() {
 
   addRecommendation(recommendations, best((provider) => provider.type === "gp"), "Start with a GP or nurse");
 
-  if (needs.includes("anxiety") || needs.includes("depression") || barriers.includes("privacy")) {
+  if (contactPreference.value !== "unsure" && (needs.includes("anxiety") || needs.includes("depression") || barriers.includes("privacy"))) {
     addRecommendation(recommendations, best((provider) => provider.type === "helpline"), "Talk to someone before booking");
   }
 
@@ -905,7 +1280,7 @@ function recommendedMoves() {
 }
 
 function contactTarget() {
-  const provider = providers.find((item) => item.id === selectedProviderId);
+  const provider = providers.find((item) => item.id === contactProviderId);
   if (provider) {
     const directory = isDirectoryLike(provider);
     return {
@@ -974,6 +1349,19 @@ function contactTarget() {
     };
   }
 
+  if (preference === "unsure") {
+    return {
+      label: "a care provider",
+      email: "",
+      phone: "",
+      text: "",
+      website: "",
+      isDirectory: false,
+      subject: "Mental health support enquiry",
+      greeting: "Kia ora"
+    };
+  }
+
   return {
     label: "my GP clinic",
     email: "",
@@ -1002,7 +1390,7 @@ function messageContextLine(age, location, needs) {
 
 function buildContactMessage() {
   const age = Number(document.querySelector("#age").value || 0);
-  const location = document.querySelector("#location").value || "my area";
+  const location = locationInput.value || "my area";
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
   const preferences = checkedValues("preference");
@@ -1026,10 +1414,7 @@ function buildContactMessage() {
   }
 
   if (comfort === "open") {
-    lines.push(
-      "I am a bit nervous about starting and about finding the right fit.",
-      "A clear first step would help."
-    );
+    lines.push("A clear first step would help.");
   } else if (comfort === "minimal") {
     lines.push("A simple next step would help.");
   }
@@ -1068,8 +1453,46 @@ function contactAvailabilityNote(target, provider) {
   return `This provider does not publish ${sentenceList(missing)} in our database.${fallback}`;
 }
 
+function setContactAction(element, href, label) {
+  if (!href) {
+    element.hidden = true;
+    element.textContent = "";
+    element.removeAttribute("href");
+    element.removeAttribute("target");
+    element.removeAttribute("rel");
+    return;
+  }
+
+  element.hidden = false;
+  element.href = href;
+  element.textContent = label;
+
+  if (/^https?:\/\//i.test(href)) {
+    element.target = "_blank";
+    element.rel = "noopener noreferrer";
+  } else {
+    element.removeAttribute("target");
+    element.removeAttribute("rel");
+  }
+}
+
+function contactMailtoHref(target, message) {
+  if (!target.email) return "";
+
+  const subject = encodeURIComponent(target.subject || "Mental health support enquiry");
+  const body = encodeURIComponent(message || "");
+  return `mailto:${target.email}?subject=${subject}&body=${body}`;
+}
+
+function updateContactActions(target, message) {
+  setContactAction(emailMessage, contactMailtoHref(target, message), `Email ${target.label}`);
+  setContactAction(callTarget, target.phone ? `tel:${normalisePhone(target.phone)}` : "", `Call ${target.label}`);
+  setContactAction(textTarget, target.text ? `sms:${normalisePhone(target.text)}` : "", `Text ${target.label}`);
+  setContactAction(websiteTarget, target.website || "", `Open ${target.label} website`);
+}
+
 function renderContact() {
-  const location = document.querySelector("#location").value || "";
+  const location = locationInput.value || "";
   if (canterburyOnlyContact) {
     canterburyOnlyContact.hidden = !/canterbury/i.test(location);
   }
@@ -1077,15 +1500,10 @@ function renderContact() {
   if (!intakeStatus().complete) {
     contactMessage.value = "";
     selectedProvider.textContent = "Complete the guide questions first, then we will build a first message.";
-    emailMessage.hidden = true;
-    emailMessage.removeAttribute("href");
-    textTarget.hidden = true;
-    textTarget.removeAttribute("href");
-    callTarget.href = "tel:1737";
-    callTarget.textContent = "Call 1737";
-    callTarget.hidden = false;
-    websiteTarget.hidden = true;
-    websiteTarget.removeAttribute("href");
+    setContactAction(emailMessage, "", "");
+    setContactAction(callTarget, "tel:1737", "Call 1737");
+    setContactAction(textTarget, "", "");
+    setContactAction(websiteTarget, "", "");
     contactAvailability.textContent = "";
     return;
   }
@@ -1093,46 +1511,9 @@ function renderContact() {
   const target = contactTarget();
   const message = buildContactMessage();
   contactMessage.value = message;
-  const subject = encodeURIComponent(target.subject);
-  const body = encodeURIComponent(message);
+  updateContactActions(target, message);
 
-  if (target.email) {
-    emailMessage.hidden = false;
-    emailMessage.href = `mailto:${target.email}?subject=${subject}&body=${body}`;
-    emailMessage.textContent = `Email ${target.label}`;
-  } else {
-    emailMessage.hidden = true;
-    emailMessage.removeAttribute("href");
-  }
-
-  if (target.phone) {
-    callTarget.href = `tel:${normalisePhone(target.phone)}`;
-    callTarget.textContent = `Call ${target.label}`;
-    callTarget.hidden = false;
-  } else {
-    callTarget.hidden = true;
-    callTarget.removeAttribute("href");
-  }
-
-  if (target.text) {
-    textTarget.hidden = false;
-    textTarget.href = `sms:${normalisePhone(target.text)}`;
-    textTarget.textContent = `Text ${target.label}`;
-  } else {
-    textTarget.hidden = true;
-    textTarget.removeAttribute("href");
-  }
-
-  if (target.website) {
-    websiteTarget.hidden = false;
-    websiteTarget.href = target.website;
-    websiteTarget.textContent = `Open ${target.label} website`;
-  } else {
-    websiteTarget.hidden = true;
-    websiteTarget.removeAttribute("href");
-  }
-
-  const provider = providers.find((item) => item.id === selectedProviderId);
+  const provider = providers.find((item) => item.id === contactProviderId);
   selectedProvider.textContent = provider
     ? target.isDirectory
       ? `${provider.name} is a directory or navigator. Use the website to choose a specific provider; this tool will not email or call it as if it were a provider.`
@@ -1141,13 +1522,32 @@ function renderContact() {
   contactAvailability.textContent = contactAvailabilityNote(target, provider);
 }
 
+function scrollToSuggestedFirstStep() {
+  if (carePathScrollScheduled) return;
+  carePathScrollScheduled = true;
+
+  requestAnimationFrame(() => {
+    const target = resultList.querySelector(".recommendation-card--primary")
+      || resultList.querySelector(".intake-gate")
+      || document.querySelector(".results");
+    pendingCarePathScroll = false;
+    carePathScrollScheduled = false;
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 function render() {
   const status = intakeStatus();
+  const becameComplete = status.complete && !wasIntakeComplete;
+  wasIntakeComplete = status.complete;
+  if (becameComplete) pendingCarePathScroll = true;
   renderProgress(status);
   providerFinder.hidden = !status.complete;
   contactLayout.hidden = !status.complete;
 
   if (!status.complete) {
+    pendingCarePathScroll = false;
     profileLine.textContent = "Answer the guide questions to unlock a care path.";
     resultList.innerHTML = `
       <article class="intake-gate">
@@ -1178,6 +1578,7 @@ function render() {
     const selected = providers.find((provider) => provider.id === selectedProviderId);
     if (!selected || selected.type !== exactType) {
       selectedProviderId = recommendationCandidates(exactType)[0]?.id || "";
+      contactProviderId = "";
     }
   }
   const filterOptions = pathFilterOptions(paths)
@@ -1237,22 +1638,34 @@ function render() {
   `;
   renderProviders();
   renderContact();
+  if (pendingCarePathScroll) {
+    scrollToSuggestedFirstStep();
+  }
 }
 
+form.addEventListener("submit", (event) => event.preventDefault());
 form.addEventListener("input", render);
+
+function chooseProviderForContact(providerId) {
+  selectedProviderId = providerId;
+  const provider = providers.find((item) => item.id === selectedProviderId);
+  if (provider) {
+    contactProviderId = isDirectoryLike(provider) ? "" : provider.id;
+    providerType.value = provider.type;
+    providerSearch.value = "";
+    providerVisibleCount = providerBatchSize;
+  } else {
+    contactProviderId = "";
+  }
+  renderProviders();
+  renderContact();
+  document.querySelector(".contact-layout").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 resultList.addEventListener("click", (event) => {
   const usePath = event.target.closest(".use-path");
   if (usePath) {
-    selectedProviderId = usePath.dataset.providerId;
-    const provider = providers.find((item) => item.id === selectedProviderId);
-    if (provider) {
-      providerType.value = provider.type;
-      providerSearch.value = "";
-      providerVisibleCount = providerBatchSize;
-    }
-    renderProviders();
-    renderContact();
-    document.querySelector(".contact-layout").scrollIntoView({ behavior: "smooth", block: "start" });
+    chooseProviderForContact(usePath.dataset.providerId);
     return;
   }
 
@@ -1260,6 +1673,7 @@ resultList.addEventListener("click", (event) => {
   if (!button) return;
   providerType.value = button.dataset.providerType || "all";
   providerSearch.value = button.dataset.providerSearch || "";
+  contactProviderId = "";
   providerVisibleCount = providerBatchSize;
   renderProviders();
   renderContact();
@@ -1269,21 +1683,88 @@ contactName.addEventListener("input", renderContact);
 contactReply.addEventListener("input", renderContact);
 contactAsk.addEventListener("input", renderContact);
 contactComfort.addEventListener("input", renderContact);
+contactMessage.addEventListener("input", () => {
+  if (!intakeStatus().complete) return;
+  updateContactActions(contactTarget(), contactMessage.value);
+});
 contactPreference.addEventListener("input", () => {
-  const preference = contactPreference.value === "therapist" ? "counsellor" : contactPreference.value;
+  const preference = selectedContactType();
   const firstMatch = recommendationCandidates(preference)[0] || (exactPreferenceType() ? null : filteredProviders()[0]);
   if (firstMatch) selectedProviderId = firstMatch.id;
   else selectedProviderId = "";
+  contactProviderId = "";
   render();
 });
-useGpsLocation.addEventListener("click", setLocationFromGps);
-useAddressLocation.addEventListener("click", setLocationFromAddress);
 addressInput.addEventListener("input", () => {
+  const query = addressInput.value.trim();
+  const token = ++addressLookupToken;
+
   userCoords = null;
-  addressStatus.textContent = "Use address for distance when you are ready. Address lookup sends this text to OpenStreetMap.";
+  locationInput.value = "";
+  clearTimeout(addressResolveTimer);
+
+  if (query.length < 3) {
+    addressSuggestionMatches = [];
+    hideAddressSuggestions();
+    addressStatus.textContent = "Start typing a New Zealand address or suburb.";
+    render();
+    return;
+  }
+
+  addressStatus.textContent = "Looking for New Zealand address matches...";
+  updateAddressSuggestions(query, token);
+  render();
+});
+addressInput.addEventListener("keydown", async (event) => {
+  if (event.key === "ArrowDown" && addressSuggestionMatches.length) {
+    event.preventDefault();
+    setActiveAddressSuggestion(activeAddressSuggestionIndex + 1);
+    return;
+  }
+
+  if (event.key === "ArrowUp" && addressSuggestionMatches.length) {
+    event.preventDefault();
+    setActiveAddressSuggestion(activeAddressSuggestionIndex - 1);
+    return;
+  }
+
+  if (event.key === "Escape") {
+    hideAddressSuggestions();
+    return;
+  }
+
+  if (event.key !== "Enter") return;
+  event.preventDefault();
+
+  const activeMatch = addressSuggestionMatches[activeAddressSuggestionIndex];
+  if (activeMatch) {
+    await applyAddressMatch(activeMatch, "Using");
+    return;
+  }
+
+  await resolveAddressFromInput("enter");
+});
+addressInput.addEventListener("change", () => {
+  if (addressInput.value.trim()) resolveAddressFromInput("change");
+});
+addressInput.addEventListener("blur", () => {
+  setTimeout(() => {
+    if (addressInput.value.trim() && !locationInput.value) resolveAddressFromInput("pause");
+    else hideAddressSuggestions();
+  }, 120);
+});
+addressSuggestions.addEventListener("mousedown", (event) => {
+  if (event.target.closest(".address-suggestion")) event.preventDefault();
+});
+addressSuggestions.addEventListener("click", async (event) => {
+  const button = event.target.closest(".address-suggestion");
+  if (!button) return;
+  const match = addressSuggestionMatches[Number(button.dataset.addressIndex)];
+  if (match) await applyAddressMatch(match, "Using");
 });
 function resetProviderList() {
   providerVisibleCount = providerBatchSize;
+  contactProviderId = "";
   renderProviders();
   renderContact();
 }
@@ -1298,9 +1779,7 @@ showMoreProviders.addEventListener("click", () => {
 providerList.addEventListener("click", (event) => {
   const button = event.target.closest(".select-provider");
   if (!button) return;
-  selectedProviderId = button.dataset.providerId;
-  renderProviders();
-  renderContact();
+  chooseProviderForContact(button.dataset.providerId);
 });
 copyMessage.addEventListener("click", async () => {
   try {

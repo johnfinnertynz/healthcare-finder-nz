@@ -106,8 +106,21 @@ FHIR, direct-care, MCNZ, Psychologists Board, and NZCCP source files that are
 present, refreshes opt-in RANZCP psychiatrists, geocodes public provider
 addresses, and writes a report to `data/reports/provider-refresh-report.json`.
 The GitHub Actions workflow `.github/workflows/provider-data-audit.yml` runs the
-same checks weekly and can use `HEALTHPOINT_API_URL` / `HEALTHPOINT_API_TOKEN`
-repository secrets if approved API access is granted.
+same checks weekly, refreshes DoctorPricer GP clinic listings at a conservative
+rate, and can use `HEALTHPOINT_API_URL` / `HEALTHPOINT_API_TOKEN` repository
+secrets if approved API access is granted.
+
+Refresh the GP clinic database from DoctorPricer directly:
+
+```sh
+node tools/import-doctorpricer-gps.mjs providers.json --rate-limit-ms 5000
+```
+
+That importer queries regional seed points, dedupes clinics, filters obvious
+urgent-care / student-only / non-GP records, and stores actual GP practices with
+phone, website, address, and coordinates where available. Healthpoint-approved
+FHIR or HPI access should still be treated as the preferred official long-term
+source when it becomes available.
 
 Import backend-only doctor register data after approved MCNZ access:
 
@@ -125,6 +138,7 @@ Check provider contact quality:
 
 ```sh
 node tools/audit-provider-quality.mjs
+node tools/audit-support-preferences.mjs
 node tools/audit-address-coverage.mjs
 ```
 
@@ -183,6 +197,14 @@ node tools/check-links.mjs
 
 Some health and government sites may block automated link checks with `403`.
 Those should be reviewed separately from genuinely broken links.
+By default the checker samples generated DoctorPricer GP links so CI does not
+hammer hundreds of practice websites. Run this for a full provider link audit:
+
+```sh
+CHECK_PROVIDER_LINKS=full node tools/check-links.mjs
+```
+
+Set `PROVIDER_LINK_LIMIT=300` to widen the sample.
 
 ## Provider Source Principles
 

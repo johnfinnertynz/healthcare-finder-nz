@@ -226,6 +226,10 @@ h3 {
   border: 2px solid transparent;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .button--primary {
   color: var(--white);
   background: var(--green-dark);
@@ -450,6 +454,55 @@ input[type="checkbox"] {
   margin-top: 0.2rem;
 }
 
+.address-field {
+  position: relative;
+}
+
+.address-suggestions {
+  z-index: 20;
+  display: grid;
+  gap: 0.18rem;
+  max-height: 16rem;
+  overflow-y: auto;
+  margin-bottom: 0.35rem;
+  padding: 0.35rem;
+  border: 1px solid #b8c8c0;
+  border-radius: 6px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.address-suggestion {
+  display: grid;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.62rem 0.7rem;
+  border: 0;
+  border-radius: 5px;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.address-suggestion:hover,
+.address-suggestion:focus,
+.address-suggestion[aria-selected="true"] {
+  background: var(--soft);
+  outline: none;
+}
+
+.address-suggestion__title {
+  font-weight: 800;
+}
+
+.address-suggestion__meta {
+  color: var(--muted);
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
 .location-helper {
   display: flex;
   gap: 0.6rem;
@@ -458,6 +511,10 @@ input[type="checkbox"] {
   margin-top: -0.6rem;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.address-field + .location-helper {
+  margin-top: 0;
 }
 
 .text-button {
@@ -478,6 +535,13 @@ input[type="checkbox"] {
 
 .results {
   padding: 1rem;
+}
+
+.results,
+.recommendation-card,
+.provider-finder,
+.contact-layout {
+  scroll-margin-top: 4rem;
 }
 
 .profile-line {

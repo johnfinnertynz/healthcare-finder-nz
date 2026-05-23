@@ -19,6 +19,11 @@
   },
   "liveSources": {
     "ranzcpPsychiatrists": true,
+    "doctorPricerGpPractices": {
+      "enabled": true,
+      "rateLimitMs": 3500,
+      "replaceSource": false
+    },
     "healthpointApi": {
       "urlEnv": "HEALTHPOINT_API_URL",
       "tokenEnv": "HEALTHPOINT_API_TOKEN"

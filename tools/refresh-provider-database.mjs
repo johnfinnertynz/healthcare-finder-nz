@@ -100,6 +100,24 @@ if (exists(imports.gpPracticesCsv)) {
   steps.push(skipStep("Import GP practice CSV", "no approved GP practice CSV found"));
 }
 
+const doctorPricerConfig = live.doctorPricerGpPractices || {};
+const doctorPricerEnabled = doctorPricerConfig === true || doctorPricerConfig.enabled === true;
+if (doctorPricerEnabled) {
+  const args = [
+    "tools/import-doctorpricer-gps.mjs",
+    providersPath,
+    "--rate-limit-ms",
+    String(doctorPricerConfig.rateLimitMs || 3500)
+  ];
+
+  if (doctorPricerConfig.noGeocode) args.push("--no-geocode");
+  if (doctorPricerConfig.replaceSource) args.push("--replace-source");
+
+  steps.push(runStep("Refresh DoctorPricer GP clinic listings", args, { optional: true }));
+} else {
+  steps.push(skipStep("Refresh DoctorPricer GP clinic listings", "DoctorPricer GP refresh disabled"));
+}
+
 if (exists(imports.directCareCsv)) {
   steps.push(runStep("Import direct care CSV", [
     "tools/import-care-providers.mjs",
@@ -162,6 +180,11 @@ steps.push(runStep("Geocode provider addresses", [
 
 steps.push(runStep("Audit provider contact quality", [
   "tools/audit-provider-quality.mjs",
+  providersPath
+]));
+
+steps.push(runStep("Audit support preference tags", [
+  "tools/audit-support-preferences.mjs",
   providersPath
 ]));
 

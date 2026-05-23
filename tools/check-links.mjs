@@ -1,7 +1,9 @@
 import fs from "node:fs";
 
-const files = ["index.html", "providers.json", "PROVIDER_DATABASE.md"];
+const files = ["index.html", "README.md", "PROVIDER_DATABASE.md"];
 const urls = new Set();
+const providerLinkMode = process.env.CHECK_PROVIDER_LINKS || "sample";
+const providerLinkLimit = Number(process.env.PROVIDER_LINK_LIMIT || 150);
 
 function collectFromText(text) {
   for (const match of text.matchAll(/https?:\/\/[^\s"'<>),]+/g)) {
@@ -12,6 +14,23 @@ function collectFromText(text) {
 for (const file of files) {
   if (!fs.existsSync(file)) continue;
   collectFromText(fs.readFileSync(file, "utf8"));
+}
+
+if (fs.existsSync("providers.json") && providerLinkMode !== "off") {
+  const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
+  const providerUrls = providers
+    .flatMap((provider) => [provider.website, provider.source].filter(Boolean).map((url) => ({
+      url,
+      generatedGp: provider.importSource === "doctorpricer"
+    })))
+    .filter((item) => /^https?:\/\//i.test(item.url));
+
+  const mustCheck = providerUrls.filter((item) => !item.generatedGp).map((item) => item.url);
+  const generated = providerUrls.filter((item) => item.generatedGp).map((item) => item.url).sort();
+  const generatedLimit = providerLinkMode === "full" ? generated.length : Math.max(0, providerLinkLimit);
+
+  for (const url of mustCheck) urls.add(url);
+  for (const url of generated.slice(0, generatedLimit)) urls.add(url);
 }
 
 async function request(url, method, timeoutMs) {

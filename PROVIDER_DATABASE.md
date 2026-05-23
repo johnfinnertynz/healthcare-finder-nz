@@ -45,6 +45,30 @@ as a public first-contact pathway, but public directory pages must not be treate
 as direct provider records. Directory pages should use `type: "directory"` and
 must not appear as "Use this path" GP options.
 
+The site also has a backend-only DoctorPricer importer for GP clinic records.
+DoctorPricer publishes a public GP-practice search endpoint used by its own
+site, with practice name, website, phone, address, coordinates, PHO, enrolment
+state, and fee signals. The importer queries regional seed points slowly, dedupes
+the results, filters obvious urgent-care / student-only / non-GP records, and
+stores the clinic as `type: "gp"` so users can call the practice directly instead
+of being sent to a directory.
+
+```sh
+node tools/import-doctorpricer-gps.mjs
+```
+
+Use a conservative rate limit if refreshing manually:
+
+```sh
+node tools/import-doctorpricer-gps.mjs providers.json --rate-limit-ms 5000
+```
+
+Because this source is not an official Health NZ register, keep the official
+HPI/Healthpoint-approved pathway below as the preferred long-term source. If
+DoctorPricer asks for different access terms, disable
+`liveSources.doctorPricerGpPractices.enabled` in `provider-sources.json` and use
+an approved CSV/FHIR export instead.
+
 To import a permitted GP export, use:
 
 ```sh

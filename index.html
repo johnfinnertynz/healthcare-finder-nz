@@ -79,7 +79,7 @@
               <div class="form-progress__bar" aria-hidden="true">
                 <span id="formProgressBar"></span>
               </div>
-              <p id="formProgressText">0 of 6 guide questions complete</p>
+              <p id="formProgressText">0 of 5 guide questions complete</p>
             </div>
             <p class="form-note">Your answers stay in this browser. Choose the closest option; it does not need to be perfect.</p>
             <label>
@@ -90,41 +90,23 @@
               <input id="age" type="number" min="1" max="120" placeholder="Enter age" required />
             </label>
 
-            <label>
-              Location
-              <select id="location" required>
-                <option value="" selected>Choose your region</option>
-                <option value="Northland">Northland</option>
-                <option value="Auckland">Auckland</option>
-                <option value="Waikato">Waikato</option>
-                <option value="Bay of Plenty">Bay of Plenty</option>
-                <option value="Rotorua and Taupo">Rotorua and Taupo</option>
-                <option value="Tairawhiti">Tairawhiti / Gisborne</option>
-                <option value="Hawke's Bay">Hawke's Bay</option>
-                <option value="Taranaki">Taranaki</option>
-                <option value="Manawatu-Whanganui">Manawatu-Whanganui</option>
-                <option value="Wairarapa">Wairarapa</option>
-                <option value="Wellington">Wellington</option>
-                <option value="Nelson Marlborough Tasman">Nelson, Marlborough and Tasman</option>
-                <option value="Canterbury">Canterbury / Christchurch</option>
-                <option value="South Canterbury">South Canterbury</option>
-                <option value="West Coast">West Coast</option>
-                <option value="Otago">Otago</option>
-                <option value="Southland">Southland</option>
-              </select>
-            </label>
-            <div class="location-helper">
-              <button class="text-button" type="button" id="useGpsLocation">Use GPS location</button>
-              <span id="locationStatus">Optional. You can choose manually.</span>
-            </div>
-
-            <label>
+            <label class="address-field">
               Street address or suburb
-              <input id="address" type="text" placeholder="e.g. 10 Example Street, Christchurch" required />
+              <input
+                id="address"
+                type="text"
+                placeholder="e.g. Linwood, Christchurch"
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="addressSuggestions"
+                aria-expanded="false"
+                required
+              />
+              <div id="addressSuggestions" class="address-suggestions" role="listbox" hidden></div>
+              <input id="location" type="hidden" />
             </label>
             <div class="location-helper">
-              <button class="text-button" type="button" id="useAddressLocation">Use address for distance</button>
-              <span id="addressStatus">Used only to rank nearby providers. Address lookup sends this text to OpenStreetMap.</span>
+              <span id="addressStatus">Start typing a New Zealand address or suburb.</span>
             </div>
 
             <label>
@@ -172,6 +154,7 @@
               Who I want to talk to
               <select id="contactPreference" required>
                 <option value="" selected>Choose who to talk to</option>
+                <option value="unsure">I don't know</option>
                 <option value="gp">My GP or a nurse</option>
                 <option value="therapist">A counsellor or therapist</option>
                 <option value="psychologist">A psychologist</option>
@@ -198,7 +181,7 @@
               Contact type
               <select id="providerType">
                 <option value="all" selected>All contact types</option>
-                <option value="gp">GP-linked support</option>
+                <option value="gp">GP / medical practice</option>
                 <option value="counsellor">Counsellor / therapist</option>
                 <option value="psychologist">Psychologist</option>
                 <option value="psychiatrist">Psychiatrist</option>

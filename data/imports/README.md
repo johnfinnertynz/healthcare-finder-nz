@@ -12,3 +12,7 @@ Suggested filenames:
 
 Do not commit restricted source exports unless the data-sharing agreement allows
 public redistribution.
+
+The DoctorPricer GP importer does not need a file in this folder. It refreshes
+the public GP clinic endpoint directly and writes normal `type: "gp"` provider
+records into `providers.json`.
