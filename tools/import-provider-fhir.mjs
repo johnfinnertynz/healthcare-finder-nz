@@ -1,10 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
+import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 
-const [, , bundlePath, providersPath = "providers.json"] = process.argv;
+const args = process.argv.slice(2);
+const noGeocode = args.includes("--no-geocode");
+const positional = args.filter((arg) => !arg.startsWith("--"));
+const [bundlePath, providersPath = "providers.json"] = positional;
 
 if (!bundlePath) {
-  console.error("Usage: node tools/import-provider-fhir.mjs <fhir-bundle.json> [providers.json]");
+  console.error("Usage: node tools/import-provider-fhir.mjs <fhir-bundle.json> [providers.json] [--no-geocode]");
   console.error("");
   console.error("Imports public provider contact details from FHIR Bundle resources.");
   console.error("Supported resources: Organization, HealthcareService, Location.");
@@ -168,6 +172,14 @@ function displayName(resource) {
   return resource.name || resource.alias?.[0] || resource.id || "";
 }
 
+function position(resource) {
+  const latitude = Number(resource.position?.latitude);
+  const longitude = Number(resource.position?.longitude);
+  return Number.isFinite(latitude) && Number.isFinite(longitude)
+    ? { lat: latitude, lon: longitude }
+    : { lat: "", lon: "" };
+}
+
 function resourceRecords(bundle) {
   const entries = asArray(bundle.entry).map((entry) => entry.resource).filter(Boolean);
   return entries
@@ -179,6 +191,7 @@ function resourceRecords(bundle) {
       const phone = telecom(resource, "phone");
       const email = telecom(resource, "email");
       const region = firstRegion(resource);
+      const coords = position(resource);
       const generatedId = `${slugify(region)}-${slugify(type)}-${slugify(name || resource.id)}`;
 
       return {
@@ -192,6 +205,8 @@ function resourceRecords(bundle) {
         text: "",
         email,
         website,
+        lat: coords.lat,
+        lon: coords.lon,
         hours: resource.availableTime ? "See source for opening hours" : "Ask provider about hours",
         cost: type === "gp"
           ? "Varies by practice; enrolled patients usually pay less. Ask about Community Services Card and Very Low Cost Access fees."
@@ -211,11 +226,43 @@ function resourceRecords(bundle) {
 const existing = JSON.parse(fs.readFileSync(providersPath, "utf8"));
 const bundle = JSON.parse(fs.readFileSync(bundlePath, "utf8"));
 const imported = resourceRecords(bundle);
-const existingIds = new Set(existing.map((provider) => provider.id));
-const newRecords = imported.filter((provider) => !existingIds.has(provider.id));
-const output = [...newRecords, ...existing].sort((a, b) =>
+const providersById = new Map(existing.map((provider) => [provider.id, provider]));
+const changedIds = new Set();
+let added = 0;
+let updated = 0;
+
+function mergeProvider(previous, incoming) {
+  if (!previous) return incoming;
+  const merged = { ...previous };
+  for (const [key, value] of Object.entries(incoming)) {
+    const emptyArray = Array.isArray(value) && value.length === 0;
+    if (value === "" || value === undefined || value === null || emptyArray) continue;
+    merged[key] = value;
+  }
+  return merged;
+}
+
+for (const provider of imported) {
+  if (providersById.has(provider.id)) updated += 1;
+  else added += 1;
+  providersById.set(provider.id, mergeProvider(providersById.get(provider.id), provider));
+  changedIds.add(provider.id);
+}
+
+const output = [...providersById.values()].sort((a, b) =>
   a.region.localeCompare(b.region) || a.name.localeCompare(b.name)
 );
 
+const geocodeSummary = noGeocode
+  ? null
+  : await geocodeProviderRecords(output, {
+      providerIds: changedIds,
+      failSoft: true
+    });
+
 fs.writeFileSync(providersPath, `${JSON.stringify(output, null, 2)}\n`);
-console.log(`Imported ${newRecords.length} provider contact records into ${path.resolve(providersPath)}.`);
+console.log(`Imported provider contact records into ${path.resolve(providersPath)}. Added ${added}; updated ${updated}.`);
+if (geocodeSummary) {
+  for (const line of geocodeSummary.logs) console.log(line);
+  console.log(`Geocoding for this import: checked ${geocodeSummary.checked}; updated ${geocodeSummary.updated}; no match ${geocodeSummary.noMatch}; failed ${geocodeSummary.failed}; skipped ${geocodeSummary.skipped}.`);
+}

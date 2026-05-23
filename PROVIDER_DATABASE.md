@@ -16,6 +16,8 @@ published as professional contact details.
 - `region`: NZ region, or `National`
 - `city`: city or service area
 - `address`: public address, if available
+- `lat` / `lon`: optional provider coordinates for distance ranking
+- `coordinateSource`: optional note for where provider coordinates came from
 - `phone`: public phone number, digits preferred
 - `text`: public text/SMS number, if available
 - `email`: public professional email, if available
@@ -39,10 +41,9 @@ valuable when they help users find fit, cost, culture, or availability.
 
 Health NZ directs people to Healthpoint to search for general practices and
 filter by hours, location, services, and enrolment status. Healthpoint is useful
-as a public first-contact pathway, but its site terms prohibit scraping or
-extracting listings without written permission. For that reason, the database
-uses Healthpoint GP directory records for NZ-wide coverage until a permitted
-bulk source is available.
+as a public first-contact pathway, but public directory pages must not be treated
+as direct provider records. Directory pages should use `type: "directory"` and
+must not appear as "Use this path" GP options.
 
 To import a permitted GP export, use:
 
@@ -50,14 +51,40 @@ To import a permitted GP export, use:
 node tools/import-gp-practices.mjs path/to/gp-practices.csv
 ```
 
+The importer geocodes any new or updated records with a public physical address
+and no `lat` / `lon`. Use `--no-geocode` for offline runs or restricted-source
+imports that should not send address text to OpenStreetMap Nominatim.
+
 Required CSV columns: `name`, `region`, `city`, `website`.
 
-Optional CSV columns: `id`, `address`, `phone`, `email`, `hours`, `cost`,
+Optional CSV columns: `id`, `address`, `phone`, `email`, `lat`, `lon`, `hours`, `cost`,
 `tags`, `fit`, `firstStep`, `source`, `verified`.
 
 Use `tags` separated by `|` or `;`. Good GP tags include `gp`, `primary-care`,
 `depression`, `anxiety`, `cost`, `maori`, `pasifika`, `asian`,
 `trauma-informed`, `female`, `male`, `telehealth`, and `enrolling`.
+
+For Healthpoint, use the official HL7 FHIR API or an approved export rather than
+scraping public pages:
+
+```sh
+HEALTHPOINT_API_URL="<approved-healthpoint-fhir-endpoint>" \
+HEALTHPOINT_API_TOKEN="token-if-issued" \
+node tools/fetch-healthpoint-fhir.mjs healthpoint-provider-bundle.json
+
+node tools/import-provider-fhir.mjs healthpoint-provider-bundle.json
+```
+
+For ongoing refreshes, put approved exports in `data/imports/` and run:
+
+```sh
+node tools/refresh-provider-database.mjs
+```
+
+This imports approved GP/practice data, direct-care CSVs, approved FHIR bundles,
+backend-only professional registers, opt-in RANZCP psychiatrist listings, and
+then runs address/contact audits. It also geocodes public provider addresses so
+distance ranking can use `lat` and `lon`.
 
 ## Long-Term Contact Import
 
@@ -86,12 +113,16 @@ Preferred sources:
 
 Direct-care source shortlist:
 
+- New Zealand Psychologists Board public register:
+  https://psychologistsboard.org.nz/search-register/
 - NZCCP Find a Clinical Psychologist:
   https://www.nzccp.co.nz/for-the-public
 - NZ Psychological Society PsychDirect:
   https://www.psychology.org.nz/public/find-psychologist
 - RANZCP Find a Psychiatrist:
   https://www.ranzcp.org/college-committees/public-partners/find-a-psychiatrist
+- Your Health in Mind Find a Psychiatrist:
+  https://www.yourhealthinmind.org/find-a-psychiatrist
 - TalkingWorks practitioner directory:
   https://www.talkingworks.co.nz/
 - NZAC / Counselling Aotearoa approved exports, if a data-sharing agreement is
@@ -110,6 +141,39 @@ The importer supports `Organization`, `HealthcareService`, and `Location`
 resources and maps public `telecom` contact points into `phone`, `email`, and
 `website` fields.
 
+Approved FHIR bundles may also include `PractitionerRole` resources that connect
+doctors to organisations and locations. Keep those in a backend-only register:
+
+```sh
+node tools/import-practitioner-roles-fhir.mjs data/imports/healthpoint-provider-bundle.json
+```
+
+This can help verify which GPs or psychiatrists are attached to which practice,
+but users should usually contact the clinic or practice record rather than an
+individual doctor record.
+
+To import the Medical Council register after approved access has been granted:
+
+```sh
+node tools/import-mcnz-register.mjs data/imports/mcnz-register.csv
+```
+
+The output goes to `data/registers/doctors.json` and is backend-only. The Medical
+Council register can include a doctor's registered address, but MCNZ states this
+is not employment or practice information. Do not use that address as a clinic
+recommendation unless a separate public clinic source confirms it.
+
+To import a New Zealand Psychologists Board register export:
+
+```sh
+node tools/import-psychologists-board-register.mjs data/imports/psychologists-board-register.csv
+node tools/prepare-psychologists-board-research.mjs data/imports/psychologists-board-register.csv
+```
+
+The register output is backend-only verification data. Use the research queue to
+find separate public practice pages or approved directory exports before adding a
+psychologist as a first-contact provider.
+
 To import an approved NZCCP directory snapshot:
 
 ```sh
@@ -127,7 +191,14 @@ approved CSV export:
 node tools/import-care-providers.mjs path/to/care-providers.csv
 ```
 
+The direct-care, GP, FHIR, NZCCP snapshot, and RANZCP importers all run the same
+geocoding helper on newly added or updated records. If source data already
+includes `lat` and `lon`, those coordinates are kept and no lookup is needed.
+
 Required columns: `name`, `type`, `region`, `city`, `source`.
+Optional columns include `id`, `address`, `lat`, `lon`, `phone`, `text`,
+`email`, `website`, `cost`, `hours`, `tags`, `fit`, `firstStep`, and
+`verified`.
 
 `type` must be `counsellor`, `psychologist`, or `psychiatrist`. Each row must
 include at least one of `phone`, `text`, `email`, or `website`, because these
@@ -137,4 +208,29 @@ Run this before publishing to check contact quality:
 
 ```sh
 node tools/audit-provider-quality.mjs
+node tools/audit-address-coverage.mjs
 ```
+
+To import opt-in New Zealand psychiatrist listings from Your Health in Mind:
+
+```sh
+node tools/import-ranzcp-psychiatrists.mjs
+```
+
+The directory states that information is provided by individual psychiatrists and
+that psychiatrists opt in to be included. Imported records should still be
+reviewed regularly because wait times, new-patient status, and contact details
+can change.
+
+To use the New Zealand Psychologists Board register as a verification and
+research source:
+
+```sh
+node tools/prepare-psychologists-board-research.mjs path/to/psychologists-board-register.csv
+```
+
+The Psychologists Board register should be treated as an authority for whether a
+person is registered and whether they hold a current practising certificate. Do
+not treat it as a direct contact directory. Use the generated research queue to
+find public practice pages, clinic pages, professional profiles, and published
+contact details before adding a provider record.

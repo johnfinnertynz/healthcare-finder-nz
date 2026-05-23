@@ -1,10 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
+import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 
-const [, , directoryHtmlPath, profileHtmlDir = "", providersPath = "providers.json"] = process.argv;
+const args = process.argv.slice(2);
+const noGeocode = args.includes("--no-geocode");
+const positional = args.filter((arg) => !arg.startsWith("--"));
+const [directoryHtmlPath, profileHtmlDir = "", providersPath = "providers.json"] = positional;
 
 if (!directoryHtmlPath) {
-  console.error("Usage: node tools/import-nzccp-directory.mjs <nzccp-directory.html-or-dir> [profile-html-dir] [providers.json]");
+  console.error("Usage: node tools/import-nzccp-directory.mjs <nzccp-directory.html-or-dir> [profile-html-dir] [providers.json] [--no-geocode]");
   console.error("");
   console.error("Imports NZCCP clinical psychologist directory records from an approved/saved snapshot.");
   console.error("If the first argument is a directory, every .html/.htm file in it is imported.");
@@ -205,7 +209,22 @@ function profileContact(record) {
 }
 
 const existing = JSON.parse(fs.readFileSync(providersPath, "utf8"));
-const existingIds = new Set(existing.map((provider) => provider.id));
+const providersById = new Map(existing.map((provider) => [provider.id, provider]));
+const changedIds = new Set();
+let added = 0;
+let updated = 0;
+
+function mergeProvider(previous, incoming) {
+  if (!previous) return incoming;
+  const merged = { ...previous };
+  for (const [key, value] of Object.entries(incoming)) {
+    const emptyArray = Array.isArray(value) && value.length === 0;
+    if (value === "" || value === undefined || value === null || emptyArray) continue;
+    merged[key] = value;
+  }
+  return merged;
+}
+
 function readDirectorySnapshots(inputPath) {
   const stat = fs.statSync(inputPath);
   if (!stat.isDirectory()) return [fs.readFileSync(inputPath, "utf8")];
@@ -217,18 +236,16 @@ function readDirectorySnapshots(inputPath) {
 }
 
 const directoryHtml = readDirectorySnapshots(directoryHtmlPath).join("\n");
-const imported = [];
 
 for (const record of extractDirectoryRecords(directoryHtml)) {
   const id = `nzccp-${record.slug || slugify(record.name)}`;
-  if (existingIds.has(id)) continue;
 
   const contact = profileContact(record);
   const tags = tagsFromText([...record.specialties, ...record.treatments, record.city]);
   const city = record.city || "Aotearoa New Zealand";
   const source = record.href;
 
-  imported.push({
+  const provider = {
     id,
     name: record.name,
     type: "psychologist",
@@ -248,12 +265,28 @@ for (const record of extractDirectoryRecords(directoryHtml)) {
       : "Open the profile and send a short enquiry asking about availability, fees, telehealth, and whether they are a good fit for what is happening.",
     source,
     verified: new Date().toISOString().slice(0, 7)
-  });
+  };
+
+  if (providersById.has(id)) updated += 1;
+  else added += 1;
+  providersById.set(id, mergeProvider(providersById.get(id), provider));
+  changedIds.add(id);
 }
 
-const output = [...imported, ...existing].sort((a, b) =>
+const output = [...providersById.values()].sort((a, b) =>
   a.region.localeCompare(b.region) || a.name.localeCompare(b.name)
 );
 
+const geocodeSummary = noGeocode
+  ? null
+  : await geocodeProviderRecords(output, {
+      providerIds: changedIds,
+      failSoft: true
+    });
+
 fs.writeFileSync(providersPath, `${JSON.stringify(output, null, 2)}\n`);
-console.log(`Imported ${imported.length} NZCCP psychologist records into ${path.resolve(providersPath)}.`);
+console.log(`Imported NZCCP psychologist records into ${path.resolve(providersPath)}. Added ${added}; updated ${updated}.`);
+if (geocodeSummary) {
+  for (const line of geocodeSummary.logs) console.log(line);
+  console.log(`Geocoding for this import: checked ${geocodeSummary.checked}; updated ${geocodeSummary.updated}; no match ${geocodeSummary.noMatch}; failed ${geocodeSummary.failed}; skipped ${geocodeSummary.skipped}.`);
+}

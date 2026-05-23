@@ -1,13 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
+import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 
-const [, , csvPath, providersPath = "providers.json"] = process.argv;
+const args = process.argv.slice(2);
+const noGeocode = args.includes("--no-geocode");
+const positional = args.filter((arg) => !arg.startsWith("--"));
+const [csvPath, providersPath = "providers.json"] = positional;
 
 if (!csvPath) {
-  console.error("Usage: node tools/import-gp-practices.mjs <gp-practices.csv> [providers.json]");
+  console.error("Usage: node tools/import-gp-practices.mjs <gp-practices.csv> [providers.json] [--no-geocode]");
   console.error("");
   console.error("Required CSV columns: name, region, city, website");
-  console.error("Optional columns: id, address, phone, email, hours, cost, tags, fit, firstStep, source, verified");
+  console.error("Optional columns: id, address, phone, email, lat, lon, hours, cost, tags, fit, firstStep, source, verified");
   process.exit(1);
 }
 
@@ -76,8 +80,21 @@ const requiredFields = ["name", "region", "city", "website"];
 const existing = JSON.parse(fs.readFileSync(providersPath, "utf8"));
 const csv = fs.readFileSync(csvPath, "utf8");
 const rows = toObjects(parseCsv(csv));
-const currentIds = new Set(existing.map((provider) => provider.id));
-const imported = [];
+const providersById = new Map(existing.map((provider) => [provider.id, provider]));
+const changedIds = new Set();
+let added = 0;
+let updated = 0;
+
+function mergeProvider(previous, incoming) {
+  if (!previous) return incoming;
+  const merged = { ...previous };
+  for (const [key, value] of Object.entries(incoming)) {
+    const emptyArray = Array.isArray(value) && value.length === 0;
+    if (value === "" || value === undefined || value === null || emptyArray) continue;
+    merged[key] = value;
+  }
+  return merged;
+}
 
 for (const row of rows) {
   const missing = requiredFields.filter((field) => !row[field]);
@@ -87,10 +104,7 @@ for (const row of rows) {
   }
 
   const id = row.id || `${slugify(row.region)}-${slugify(row.name)}`;
-  if (currentIds.has(id)) continue;
-  currentIds.add(id);
-
-  imported.push({
+  const record = {
     id,
     name: row.name,
     type: "gp",
@@ -101,6 +115,8 @@ for (const row of rows) {
     text: "",
     email: row.email || "",
     website: row.website,
+    lat: row.lat || row.latitude || "",
+    lon: row.lon || row.lng || row.longitude || "",
     hours: row.hours || "Ask the practice about appointment and enrolment hours",
     cost: row.cost || "Varies by practice; enrolled patients usually pay less. Ask about Community Services Card and Very Low Cost Access fees.",
     tags: [
@@ -116,12 +132,28 @@ for (const row of rows) {
     firstStep: row.firstStep || "Contact the practice and ask whether they are enrolling new patients, what the first appointment costs, and whether they have a health improvement practitioner, health coach, counsellor, or social worker.",
     source: row.source || row.website,
     verified: row.verified || new Date().toISOString().slice(0, 7)
-  });
+  };
+
+  if (providersById.has(id)) updated += 1;
+  else added += 1;
+  providersById.set(id, mergeProvider(providersById.get(id), record));
+  changedIds.add(id);
 }
 
-const output = [...imported, ...existing].sort((a, b) =>
+const output = [...providersById.values()].sort((a, b) =>
   a.region.localeCompare(b.region) || a.name.localeCompare(b.name)
 );
 
+const geocodeSummary = noGeocode
+  ? null
+  : await geocodeProviderRecords(output, {
+      providerIds: changedIds,
+      failSoft: true
+    });
+
 fs.writeFileSync(providersPath, `${JSON.stringify(output, null, 2)}\n`);
-console.log(`Imported ${imported.length} GP practice records into ${path.resolve(providersPath)}.`);
+console.log(`Imported GP practice records into ${path.resolve(providersPath)}. Added ${added}; updated ${updated}.`);
+if (geocodeSummary) {
+  for (const line of geocodeSummary.logs) console.log(line);
+  console.log(`Geocoding for this import: checked ${geocodeSummary.checked}; updated ${geocodeSummary.updated}; no match ${geocodeSummary.noMatch}; failed ${geocodeSummary.failed}; skipped ${geocodeSummary.skipped}.`);
+}

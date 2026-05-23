@@ -1,0 +1,6 @@
+data/geocode-cache.json
+data/imports/*
+!data/imports/README.md
+data/registers/*
+!data/registers/README.md
+data/reports/*

@@ -79,7 +79,7 @@
               <div class="form-progress__bar" aria-hidden="true">
                 <span id="formProgressBar"></span>
               </div>
-              <p id="formProgressText">0 of 5 guide questions complete</p>
+              <p id="formProgressText">0 of 6 guide questions complete</p>
             </div>
             <p class="form-note">Your answers stay in this browser. Choose the closest option; it does not need to be perfect.</p>
             <label>
@@ -116,6 +116,15 @@
             <div class="location-helper">
               <button class="text-button" type="button" id="useGpsLocation">Use GPS location</button>
               <span id="locationStatus">Optional. You can choose manually.</span>
+            </div>
+
+            <label>
+              Street address or suburb
+              <input id="address" type="text" placeholder="e.g. 10 Example Street, Christchurch" required />
+            </label>
+            <div class="location-helper">
+              <button class="text-button" type="button" id="useAddressLocation">Use address for distance</button>
+              <span id="addressStatus">Used only to rank nearby providers. Address lookup sends this text to OpenStreetMap.</span>
             </div>
 
             <label>
@@ -167,8 +176,6 @@
                 <option value="therapist">A counsellor or therapist</option>
                 <option value="psychologist">A psychologist</option>
                 <option value="psychiatrist">A psychiatrist</option>
-                <option value="mens-centre">A men's centre</option>
-                <option value="helpline">1737 right now</option>
               </select>
             </label>
           </form>
@@ -266,9 +273,11 @@
               <button class="button button--primary" type="button" id="copyMessage">Copy message</button>
               <a class="button button--quiet" id="emailMessage" href="#">Open email</a>
               <a class="button button--quiet" id="callTarget" href="tel:1737">Call option</a>
+              <a class="button button--quiet" id="textTarget" href="#">Text option</a>
               <a class="button button--quiet" id="websiteTarget" href="#">Open website</a>
             </div>
             <p class="copy-status" id="copyStatus" role="status"></p>
+            <p class="contact-note" id="contactAvailability"></p>
           </section>
 
           <aside class="contact-targets" aria-label="Useful first contact options">

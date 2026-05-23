@@ -807,6 +807,14 @@ input[type="checkbox"] {
   font-weight: 800;
 }
 
+.contact-note {
+  min-height: 1.1rem;
+  margin: -0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
 .contact-targets {
   display: grid;
   gap: 0.8rem;

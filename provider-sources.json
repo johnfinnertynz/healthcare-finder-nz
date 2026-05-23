@@ -1,0 +1,32 @@
+{
+  "providersPath": "providers.json",
+  "reportsPath": "data/reports/provider-refresh-report.json",
+  "imports": {
+    "healthpointFhirBundle": "data/imports/healthpoint-provider-bundle.json",
+    "gpPracticesCsv": "data/imports/gp-practices.csv",
+    "directCareCsv": "data/imports/care-providers.csv",
+    "mcnzRegisterCsv": "data/imports/mcnz-register.csv",
+    "psychologistsBoardCsv": "data/imports/psychologists-board-register.csv",
+    "nzccpDirectoryPages": "data/imports/nzccp/directory-pages",
+    "nzccpProfilePages": "data/imports/nzccp/profile-pages"
+  },
+  "outputs": {
+    "doctorRegister": "data/registers/doctors.json",
+    "practitionerRoles": "data/registers/practitioner-roles.json",
+    "psychologistRegister": "data/registers/psychologists.json",
+    "psychologistResearchQueue": "data/registers/psychologists-board-research.json",
+    "healthpointFhirBundle": "data/imports/healthpoint-provider-bundle.json"
+  },
+  "liveSources": {
+    "ranzcpPsychiatrists": true,
+    "healthpointApi": {
+      "urlEnv": "HEALTHPOINT_API_URL",
+      "tokenEnv": "HEALTHPOINT_API_TOKEN"
+    }
+  },
+  "geocoding": {
+    "cachePath": "data/geocode-cache.json",
+    "rateLimitMs": 1100,
+    "userAgent": "CareFinderAotearoa/1.0 (https://github.com/johnfinnertynz/healthcare-finder-nz)"
+  }
+}
