@@ -34,6 +34,17 @@ a {
   font-weight: 700;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+.help-tip:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -503,7 +514,7 @@ input[type="checkbox"] {
   font-weight: 600;
 }
 
-.location-helper {
+.address-helper {
   display: flex;
   gap: 0.6rem;
   align-items: center;
@@ -513,7 +524,7 @@ input[type="checkbox"] {
   font-size: 0.9rem;
 }
 
-.address-field + .location-helper {
+.address-field + .address-helper {
   margin-top: 0;
 }
 

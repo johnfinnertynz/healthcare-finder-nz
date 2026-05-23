@@ -8,6 +8,13 @@
       content="A low-barrier mental health care finder for people in Aotearoa New Zealand."
     />
     <title>Care Finder Aotearoa</title>
+    <link rel="canonical" href="https://johnfinnertynz.github.io/healthcare-finder-nz/" />
+    <meta property="og:title" content="Care Finder Aotearoa" />
+    <meta property="og:description" content="A low-barrier mental health care finder for people in Aotearoa New Zealand." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://johnfinnertynz.github.io/healthcare-finder-nz/" />
+    <meta property="og:image" content="https://johnfinnertynz.github.io/healthcare-finder-nz/assets/hero-care-path.png" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="apple-touch-icon" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css" />
@@ -97,15 +104,16 @@
                 type="text"
                 placeholder="e.g. Linwood, Christchurch"
                 autocomplete="off"
+                role="combobox"
                 aria-autocomplete="list"
+                aria-haspopup="listbox"
                 aria-controls="addressSuggestions"
                 aria-expanded="false"
                 required
               />
               <div id="addressSuggestions" class="address-suggestions" role="listbox" hidden></div>
-              <input id="location" type="hidden" />
             </label>
-            <div class="location-helper">
+            <div class="address-helper">
               <span id="addressStatus">Start typing a New Zealand address or suburb.</span>
             </div>
 
@@ -128,6 +136,7 @@
               <label><input type="checkbox" name="preference" value="asian" /> Asian provider or service</label>
               <label><input type="checkbox" name="preference" value="rainbow" /> Rainbow / LGBTQIA+ affirming support</label>
               <label><input type="checkbox" name="preference" value="trauma-informed" /> Trauma-informed support</label>
+              <label><input type="checkbox" name="preference" value="telehealth" /> Telehealth / phone or video appointments</label>
               <label><input type="checkbox" name="preference" value="female-provider" /> Prefer a female provider</label>
               <label><input type="checkbox" name="preference" value="male-provider" /> Prefer a male provider</label>
             </fieldset>

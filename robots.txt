@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://johnfinnertynz.github.io/healthcare-finder-nz/sitemap.xml

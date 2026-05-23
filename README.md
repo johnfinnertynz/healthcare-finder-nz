@@ -21,14 +21,15 @@ talk now, free call or text **1737** any time, 24/7.
 
 ## What It Does
 
-- Guides people through age, region, gender, support preferences, concerns, and
+- Guides people through age, street address or suburb, gender, support preferences, concerns, and
   barriers to care.
-- Uses an address, suburb, or GPS location to weight nearby providers when the
-  user chooses to use distance matching.
+- Includes NZ-only address autocomplete with a local fallback for common towns
+  and suburbs.
+- Uses the street address or suburb to weight nearby providers.
 - Shows a care path only after the guide questions are complete.
-- Recommends three first-contact options based on location, need, support
+- Recommends three first-contact options based on nearby providers, need, support
   preference, barriers, and provider fit.
-- Helps users find providers by region, support need, cost barrier, and contact
+- Helps users find providers by address/suburb match, support need, cost barrier, and contact
   type.
 - Prioritises direct-contact providers over directory-only results.
 - Generates a short, editable first-contact message.
