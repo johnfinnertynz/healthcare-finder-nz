@@ -30,6 +30,8 @@ published as professional contact details.
 - `firstStep`: the smallest action a user can take
 - `source`: URL used to verify the listing
 - `verified`: month verified, formatted `YYYY-MM`
+- `confidence`: `high`, `medium`, or `low`; use `medium` when the source is
+  indirect or the listing needs a future direct-provider confirmation
 
 ## Import Rule
 

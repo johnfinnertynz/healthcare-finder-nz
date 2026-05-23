@@ -6,7 +6,7 @@ const providers = JSON.parse(fs.readFileSync(providersPath, "utf8"));
 const supportPreferences = {
   maori: {
     label: "Maori / kaupapa Maori",
-    pattern: /\b(hauora|whanau|whānau|marae|iwi|maori|māori|kaupapa|ngāti|ngati|rongoa|rongoā)\b/i
+    pattern: /\b(whanau|whānau|marae|iwi|maori|māori|kaupapa|ngāti|ngati|rongoa|rongoā)\b/i
   },
   pasifika: {
     label: "Pasifika",
