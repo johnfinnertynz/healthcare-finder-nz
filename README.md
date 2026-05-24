@@ -148,6 +148,7 @@ Check promising providers that are not currently taking new clients:
 
 ```sh
 node tools/find-unavailable-providers.mjs
+node tools/audit-availability-watchlist.mjs
 node tools/check-provider-availability.mjs
 ```
 

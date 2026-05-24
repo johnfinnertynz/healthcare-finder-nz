@@ -31,6 +31,9 @@ jobs:
       - name: Discover unavailable provider candidates
         run: node tools/find-unavailable-providers.mjs
 
+      - name: Audit unavailable provider watchlist
+        run: node tools/audit-availability-watchlist.mjs
+
       - name: Check unavailable provider watchlist
         run: node tools/check-provider-availability.mjs
 

@@ -49,15 +49,19 @@ Run the monitor to re-check those pages:
 
 ```sh
 node tools/find-unavailable-providers.mjs
+node tools/audit-availability-watchlist.mjs
 node tools/check-provider-availability.mjs
 ```
 
 `find-unavailable-providers.mjs` scans current direct-care provider websites and
 writes `data/reports/provider-unavailable-candidates.json` for manual review.
-`check-provider-availability.mjs` re-checks the watchlist and writes
-`data/reports/provider-availability-monitor.json`. A detected change should be
-manually reviewed before adding the provider back to the live database, because
-"possibly available" wording may still require a phone or email confirmation.
+`audit-availability-watchlist.mjs` checks that unavailable watchlist records are
+not also live in `providers.json` and that tracked "monitor, not added" notes
+have matching watchlist URLs. `check-provider-availability.mjs` re-checks the
+watchlist and writes `data/reports/provider-availability-monitor.json`. A
+detected change should be manually reviewed before adding the provider back to
+the live database, because "possibly available" wording may still require a phone
+or email confirmation.
 
 ## General Practice Data
 
