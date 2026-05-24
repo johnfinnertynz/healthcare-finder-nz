@@ -6,10 +6,10 @@ where the app had few direct counsellor, psychologist, or psychiatrist options.
 
 ## Added Or Updated
 
-- 49 sourced import records reviewed.
-- 47 new provider records added to `providers.json`.
+- 61 sourced import records reviewed.
+- 59 new provider records added to `providers.json`.
 - 2 existing records improved with better direct contact detail or source data.
-- Total provider records after merge: 1130.
+- Total provider records after merge: 1142.
 
 ## Coverage Notes
 
@@ -21,12 +21,12 @@ Regions with stronger specialist coverage after this pass:
 
 Regions still thin for private/local specialist choice:
 
-- Northland: local psychologist options added, but no local private psychiatrist found in this pass.
+- Northland: local psychologist options and one psychiatry route added.
 - Tairawhiti: useful counselling and psychology contacts added; no local private psychiatrist found.
-- Hawke's Bay: psychology coverage improved; no local psychiatrist found.
+- Hawke's Bay: psychology and counselling coverage improved; no local psychiatrist found.
 - Manawatu-Whanganui: psychology coverage improved; psychiatry still relies on public, GP, or telehealth routes.
 - Wairarapa: some local psychology/counselling options found; no local psychiatrist found.
-- South Canterbury: limited local private specialist options found.
+- South Canterbury: local counselling and psychology options improved; no local private psychiatrist found.
 - West Coast: local counselling options found; no active local psychologist taking referrals or local psychiatrist confirmed.
 - Southland: counselling and psychology improved; psychiatry still relies mostly on telehealth or referral pathways.
 - Starfish Clinic contact details were found from the indexed provider page, but the site blocked automated direct checks during this pass, so those records are marked medium confidence and have website buttons hidden.
@@ -37,6 +37,13 @@ Regions still thin for private/local specialist choice:
 - West Coast Health Primary Health Counselling: https://www.healthpoint.co.nz/mental-health-addictions/mental-health/west-coast-health-primary-health-counselling/at/west-coast-health-office-163-mackay-street/
 - West Coast Counselling: https://westcoastcounselling.co.nz/
 - Kensington Clinic listing: https://westcoastconnect.co.nz/directory/kensington-clinic/
+- Heartwood Psychiatry: https://www.heartwoodpsychiatry.co.nz/
+- Tom O'Flynn Psychiatrist: https://www.healthpoint.co.nz/private/psychiatry/tom-oflynn-psychiatrist/
+- LaNae Fisk Psychology: https://www.lanaefiskpsychology.co.nz/
+- Reihana Psychology: https://www.reihanapsychology.co.nz/
+- Mokonui-a-rangi TALK: https://www.mokonuiarangi.org/
+- Gore Counselling Centre: https://www.gorecounsellingcentre.com/
+- Loss and Grief Centre Southland: https://www.lossandgriefcentre.com/our-centres/southland-centre
 - The Starfish Clinic: https://www.starfishclinic.com/contact/
 - Bay Psychology: https://baypsychology.co.nz/contact-us/
 - Massey Palmerston North Psychology Clinic: https://www.massey.ac.nz/about/clinics-and-services-for-the-public/massey-psychology-clinics/palmerston-north-manawat%C5%AB-psychology-clinic-massey-university/
