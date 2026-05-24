@@ -4,6 +4,7 @@ import fs from "node:fs";
 import test from "node:test";
 
 const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
+const indexHtml = fs.readFileSync("index.html", "utf8");
 const optInPreferenceTags = new Set(["maori", "pasifika", "asian", "rainbow"]);
 const exactTypes = ["gp", "counsellor", "psychologist", "psychiatrist"];
 const expectedRegions = [
@@ -90,6 +91,18 @@ test("all current region filters have useful visible direct contacts", () => {
   }
 });
 
+test("location filtering only returns the selected region or national providers", () => {
+  for (const region of expectedRegions) {
+    const offRegion = visibleMatches({ region })
+      .filter((provider) => provider.region !== region && provider.region !== "National")
+      .map((provider) => `${provider.id}:${provider.region}`);
+
+    assert.deepEqual(offRegion, []);
+  }
+
+  assert.equal(visibleMatches({ region: "South Canterbury" }).some((provider) => provider.id === "canterbury-mens-centre"), false);
+});
+
 test("exact professional filters do not substitute unrelated provider types", () => {
   for (const region of ["Auckland", "Canterbury", "Otago", "Wellington"]) {
     for (const type of exactTypes) {
@@ -119,4 +132,27 @@ test("provider records used for contact have safe public contact fields", () => 
     .map((provider) => provider.id);
 
   assert.deepEqual(missing, []);
+});
+
+test("every provider has launch verification metadata", () => {
+  const missing = providers
+    .filter((provider) => !provider.source || !provider.confidence || !provider.sourceQuality || !provider.lastVerified || typeof provider.needsManualVerification !== "boolean")
+    .map((provider) => provider.id);
+
+  const invalidConfidence = providers
+    .filter((provider) => !["high", "medium", "low"].includes(provider.confidence))
+    .map((provider) => `${provider.id}:${provider.confidence}`);
+
+  assert.deepEqual(missing, []);
+  assert.deepEqual(invalidConfidence, []);
+});
+
+test("privacy, disclaimer, correction, and crisis links are visible from the home page", () => {
+  for (const href of ["privacy.html", "terms.html", "data-sources.html", "crisis.html"]) {
+    assert.match(indexHtml, new RegExp(`href="${href}"`));
+  }
+
+  assert.match(indexHtml, /Report a correction/i);
+  assert.match(indexHtml, /Soft launch pilot/i);
+  assert.match(indexHtml, /Provider database last updated/i);
 });

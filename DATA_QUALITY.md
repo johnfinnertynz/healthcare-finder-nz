@@ -34,6 +34,9 @@ Recommended fields:
 - `website`
 - `hours`
 - `confidence`
+- `sourceQuality`
+- `lastVerified`
+- `needsManualVerification`
 - `eligibility`
 - `crisisOnly`
 - `onlineAvailable`
@@ -44,6 +47,13 @@ Current schema aliases:
 
 - `source` is the source URL.
 - `verified` is the last verified month in `YYYY-MM` format.
+- `lastVerified` mirrors the latest known verification/import month and is used
+  for launch-readiness checks.
+- `sourceQuality` describes the kind of source, such as provider-owned page,
+  trusted health directory, official agency page, professional directory, or
+  third-party GP listing.
+- `needsManualVerification` is `true` when a listing should be checked by a
+  person before stronger claims are made.
 - `tags` currently carry support flags such as `maori`, `pasifika`, `asian`,
   `rainbow`, `trauma-informed`, `telehealth`, `female`, `male`, `cost`,
   `crisis`, `addiction`, and `direct-contact`.
@@ -99,6 +109,8 @@ Before committing provider data changes:
 8. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
    telehealth, female provider, male provider.
 9. Check one local workflow in a large city and one in a thin-coverage region.
+10. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
+    soft launch.
 
 Use this stricter command when source URLs, not only user-visible websites, need
 network verification:
@@ -112,9 +124,10 @@ results as "manual browser review needed" rather than automatically broken.
 
 ## Known Data Risks
 
-- Many imported GP and directory records still lack `confidence`. The validator
-  warns about this but does not fail, because contact and verification fields are
-  present.
+- Many imported GP and directory records are intentionally marked `medium`
+  confidence with `needsManualVerification: true`. That does not mean the record
+  is unusable; it means the source should be manually checked before wider public
+  promotion.
 - Several non-GP support services still need address or coordinate enrichment for
   stronger distance ranking.
 - Local psychiatrist coverage is thin in many regions. National telehealth

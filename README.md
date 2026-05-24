@@ -4,6 +4,16 @@ A low-barrier mental health care finder for people in Aotearoa New Zealand.
 
 Live site: [johnfinnertynz.github.io/healthcare-finder-nz](https://johnfinnertynz.github.io/healthcare-finder-nz/)
 
+## Soft Launch Status
+
+Care Finder Aotearoa is in limited public soft launch / pilot status. Provider
+details can change, and users should confirm cost, eligibility, availability,
+and contact details directly with the service before relying on them.
+
+Report incorrect phone, website, address, eligibility, cost, or availability
+information by emailing
+[john@johnfinnerty.co.nz](mailto:john@johnfinnerty.co.nz?subject=Care%20Finder%20provider%20correction).
+
 Care Finder Aotearoa helps someone take a first step when they need support but
 do not know who to contact or what to say. It combines a guided intake flow,
 local provider search, funding guidance, and a concise first-contact message
@@ -18,6 +28,13 @@ This is not an emergency service or a replacement for clinical care.
 
 If someone is unsafe right now, call **111**. If they can stay safe but need to
 talk now, free call or text **1737** any time, 24/7.
+
+The public trust pages are:
+
+- [Privacy](privacy.html)
+- [Terms and disclaimer](terms.html)
+- [Data sources and corrections](data-sources.html)
+- [Crisis guidance](crisis.html)
 
 ## What It Does
 
@@ -87,6 +104,8 @@ The database is intended to contain current, public, professional contact
 details only. Direct care records should include at least one usable contact
 method such as phone, email, text, or an official website/contact page.
 Provider coordinates can be stored as `lat` and `lon` for distance ranking.
+Each provider should also have `confidence`, `sourceQuality`, `lastVerified`,
+and `needsManualVerification` so launch risk is visible.
 
 Address lookup for users is done in the browser and is only used to rank nearby
 providers. If a user chooses address lookup, the address text is sent to the
@@ -96,6 +115,8 @@ See `PROVIDER_DATABASE.md` for field definitions, source guidance, and import
 rules.
 See `DATA_QUALITY.md` for the verification checklist and public-data safety
 rules.
+See `MANUAL_VERIFICATION_PLAN.md` for soft-launch phone/email verification
+priorities, blocked-by-site links requiring human review, and call scripts.
 
 ## Data Quality Tools
 

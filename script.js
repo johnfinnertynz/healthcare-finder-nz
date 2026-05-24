@@ -21,6 +21,7 @@ const providerSearch = document.querySelector("#providerSearch");
 const providerType = document.querySelector("#providerType");
 const providerCost = document.querySelector("#providerCost");
 const providerCount = document.querySelector("#providerCount");
+const providerUpdatedDate = document.querySelector("#providerUpdatedDate");
 const providerList = document.querySelector("#providerList");
 const showMoreProviders = document.querySelector("#showMoreProviders");
 const selectedProvider = document.querySelector("#selectedProvider");
@@ -268,6 +269,29 @@ function escapeHtml(value) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+function monthLabel(value) {
+  if (!/^\d{4}-\d{2}$/.test(value || "")) return "";
+  const [year, month] = value.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, 1));
+  return date.toLocaleDateString("en-NZ", { month: "long", year: "numeric", timeZone: "UTC" });
+}
+
+function providerDatabaseDateLabel() {
+  const verifiedMonths = providers
+    .map((provider) => provider.lastVerified || provider.verified)
+    .filter((value) => /^\d{4}-\d{2}$/.test(value || ""))
+    .sort();
+  return monthLabel(verifiedMonths.at(-1));
+}
+
+function renderProviderUpdatedDate() {
+  if (!providerUpdatedDate) return;
+  const label = providerDatabaseDateLabel();
+  providerUpdatedDate.textContent = label
+    ? `Provider database last updated: ${label}. Please confirm availability, cost, and eligibility with the provider.`
+    : "Provider database update date unavailable. Please confirm details with the provider.";
 }
 
 function safeHref(value, { allowHash = false } = {}) {
@@ -669,12 +693,14 @@ async function loadProviders() {
     const response = await fetch("providers.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Provider database failed to load");
     providers = await response.json();
+    renderProviderUpdatedDate();
     const firstMatch = filteredProviders()[0];
     if (firstMatch) selectedProviderId = firstMatch.id;
     contactProviderId = "";
     render();
   } catch {
     providerLoadError = "Could not load the local provider database.";
+    renderProviderUpdatedDate();
     renderProviders();
     renderContact();
   }

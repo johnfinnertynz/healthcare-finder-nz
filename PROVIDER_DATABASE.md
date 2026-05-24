@@ -30,8 +30,14 @@ published as professional contact details.
 - `firstStep`: the smallest action a user can take
 - `source`: URL used to verify the listing
 - `verified`: month verified, formatted `YYYY-MM`
+- `lastVerified`: latest known verification or import month, formatted `YYYY-MM`
 - `confidence`: `high`, `medium`, or `low`; use `medium` when the source is
   indirect or the listing needs a future direct-provider confirmation
+- `sourceQuality`: short description of the source, such as `provider-owned page`,
+  `official health/government page`, `professional directory`, or
+  `third-party public GP listing`
+- `needsManualVerification`: `true` when details should be checked by a person
+  before broader public promotion
 
 ## Import Rule
 
@@ -107,8 +113,9 @@ imports that should not send address text to OpenStreetMap Nominatim.
 
 Required CSV columns: `name`, `region`, `city`, `website`.
 
-Optional CSV columns: `id`, `address`, `phone`, `email`, `lat`, `lon`, `hours`, `cost`,
-`tags`, `fit`, `firstStep`, `source`, `verified`.
+Optional CSV columns: `id`, `address`, `phone`, `email`, `lat`, `lon`, `hours`,
+`cost`, `tags`, `fit`, `firstStep`, `source`, `verified`, `lastVerified`,
+`confidence`, `sourceQuality`, and `needsManualVerification`.
 
 Use `tags` separated by `|` or `;`. Good GP tags include `gp`, `primary-care`,
 `depression`, `anxiety`, `cost`, `maori`, `pasifika`, `asian`,
@@ -248,7 +255,9 @@ includes `lat` and `lon`, those coordinates are kept and no lookup is needed.
 Required columns: `name`, `type`, `region`, `city`, `source`.
 Optional columns include `id`, `address`, `lat`, `lon`, `phone`, `text`,
 `email`, `website`, `cost`, `hours`, `tags`, `fit`, `firstStep`, and
-`verified`.
+`verified`. Importers should also populate `lastVerified`, `confidence`,
+`sourceQuality`, and `needsManualVerification`; use honest `medium` or `low`
+confidence rather than implying a provider has been manually checked.
 
 `type` must be `counsellor`, `psychologist`, or `psychiatrist`. Each row must
 include at least one of `phone`, `text`, `email`, or `website`, because these

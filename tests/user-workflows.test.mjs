@@ -4,6 +4,7 @@ import test from "node:test";
 
 const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
 const indexHtml = fs.readFileSync("index.html", "utf8");
+const trustPages = ["privacy.html", "terms.html", "data-sources.html", "crisis.html"];
 const optInPreferenceTags = new Set(["maori", "pasifika", "asian", "rainbow"]);
 
 const personas = [
@@ -117,6 +118,18 @@ test("emergency guidance is visible without using filters", () => {
   assert.match(indexHtml, /call\s+111/i);
   assert.match(indexHtml, /1737/i);
   assert.match(indexHtml, /not an emergency service|not a replacement/i);
+  assert.match(indexHtml, /href="crisis\.html"/i);
+});
+
+test("trust pages render with safety navigation", () => {
+  for (const page of trustPages) {
+    const html = fs.readFileSync(page, "utf8");
+    assert.match(html, /<title>.+Care Finder Aotearoa<\/title>/i, `${page} should have a title`);
+    assert.match(html, /<h1>/i, `${page} should have a main heading`);
+    assert.match(html, /1737/i, `${page} should include 1737 guidance`);
+    assert.match(html, /111/i, `${page} should include 111 guidance`);
+    assert.match(html, /index\.html/i, `${page} should link back to the app`);
+  }
 });
 
 test("20 simulated user workflows reach actionable, non-directory options", () => {

@@ -48,8 +48,13 @@ const requiredFields = [
   "fit",
   "firstStep",
   "source",
-  "verified"
+  "verified",
+  "lastVerified",
+  "confidence",
+  "sourceQuality"
 ];
+
+const allowedConfidence = new Set(["high", "medium", "low"]);
 
 const unavailablePattern = /\b(not taking new (clients|patients)|not accepting (new )?(clients|patients|referrals)|books are closed|closed to new (clients|patients)|unable to accept new (clients|patients|referrals))\b/i;
 const errors = [];
@@ -99,6 +104,9 @@ if (!Array.isArray(providers)) {
     if (provider.website && !isUrl(provider.website)) recordIssue(errors, provider, "website must be an http(s) URL");
     if (provider.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(provider.email)) recordIssue(errors, provider, `invalid email "${provider.email}"`);
     if (monthAge(provider.verified) > 6) recordIssue(errors, provider, `verified month is missing or older than 6 months (${provider.verified || "missing"})`);
+    if (monthAge(provider.lastVerified) > 6) recordIssue(errors, provider, `lastVerified month is missing or older than 6 months (${provider.lastVerified || "missing"})`);
+    if (provider.confidence && !allowedConfidence.has(provider.confidence)) recordIssue(errors, provider, `invalid confidence "${provider.confidence}"`);
+    if (typeof provider.needsManualVerification !== "boolean") recordIssue(errors, provider, "needsManualVerification must be true or false");
 
     if (provider.type !== "directory" && !hasUsableContact(provider)) {
       recordIssue(errors, provider, "direct-service records need at least one public contact method");
@@ -106,10 +114,6 @@ if (!Array.isArray(providers)) {
 
     if (provider.type === "directory" && !provider.website) {
       recordIssue(errors, provider, "directory records need a website");
-    }
-
-    if (provider.type !== "directory" && provider.tags?.includes("directory")) {
-      recordIssue(warnings, provider, "carries the directory tag and will be treated as a navigator in the UI");
     }
 
     if (provider.tags?.includes("crisis") && !["public-service", "helpline", "directory"].includes(provider.type)) {
@@ -130,15 +134,11 @@ if (!Array.isArray(providers)) {
       if (!Number.isFinite(lat) || lat < -48 || lat > -33) recordIssue(errors, provider, `lat looks outside New Zealand (${provider.lat})`);
       if (!Number.isFinite(lon) || lon < 165 || lon > 180) recordIssue(errors, provider, `lon looks outside New Zealand (${provider.lon})`);
     }
-
-    if (!provider.confidence) {
-      recordIssue(warnings, provider, "confidence not set; use high/medium/low when practical");
-    }
   }
 }
 
 for (const warning of warnings.slice(0, 30)) console.log(`WARN ${warning}`);
-if (warnings.length > 30) console.log(`WARN ...and ${warnings.length - 30} more confidence/data-quality warnings`);
+if (warnings.length > 30) console.log(`WARN ...and ${warnings.length - 30} more data-quality warnings`);
 for (const error of errors) console.log(`ERROR ${error}`);
 
 console.log(`Validated ${Array.isArray(providers) ? providers.length : 0} providers. Errors: ${errors.length}. Warnings: ${warnings.length}.`);

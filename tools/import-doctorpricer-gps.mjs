@@ -248,6 +248,10 @@ function mapPractice(practice, seed, fetchedAt) {
     firstStep: firstStepFor(practice),
     source: DOCTORPRICER_HOME,
     verified: fetchedAt,
+    lastVerified: fetchedAt,
+    confidence: "medium",
+    sourceQuality: "third-party public GP listing",
+    needsManualVerification: true,
     importSource: IMPORT_SOURCE,
     doctorPricer: {
       id: practice.id || "",

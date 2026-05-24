@@ -1,6 +1,14 @@
 import fs from "node:fs";
 
-const files = ["index.html", "README.md", "PROVIDER_DATABASE.md"];
+const files = [
+  "index.html",
+  "privacy.html",
+  "terms.html",
+  "data-sources.html",
+  "crisis.html",
+  "README.md",
+  "PROVIDER_DATABASE.md"
+];
 const urls = new Set();
 const providerLinkMode = process.env.CHECK_PROVIDER_LINKS || "sample";
 const providerLinkLimit = Number(process.env.PROVIDER_LINK_LIMIT || 150);
@@ -9,6 +17,8 @@ const checkProviderSources = process.env.CHECK_PROVIDER_SOURCES === "true";
 function collectFromText(text) {
   for (const match of text.matchAll(/https?:\/\/[^\s"'<>),]+/g)) {
     const url = match[0].replace(/[.;]+$/, "");
+    const localPublishedFile = projectFileForPublishedUrl(url);
+    if (localPublishedFile && fs.existsSync(localPublishedFile)) continue;
     if (!isLocalDevUrl(url)) urls.add(url);
   }
 }
@@ -19,6 +29,19 @@ function isLocalDevUrl(value) {
     return ["127.0.0.1", "localhost", "::1"].includes(url.hostname);
   } catch {
     return false;
+  }
+}
+
+function projectFileForPublishedUrl(value) {
+  try {
+    const url = new URL(value);
+    if (url.hostname !== "johnfinnertynz.github.io") return "";
+    if (!url.pathname.startsWith("/healthcare-finder-nz/")) return "";
+    const page = decodeURIComponent(url.pathname.replace("/healthcare-finder-nz/", "")) || "index.html";
+    if (!page || page.endsWith("/")) return `${page}index.html`;
+    return page;
+  } catch {
+    return "";
   }
 }
 
