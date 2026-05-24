@@ -7,7 +7,17 @@ const providerLinkLimit = Number(process.env.PROVIDER_LINK_LIMIT || 150);
 
 function collectFromText(text) {
   for (const match of text.matchAll(/https?:\/\/[^\s"'<>),]+/g)) {
-    urls.add(match[0].replace(/[.;]+$/, ""));
+    const url = match[0].replace(/[.;]+$/, "");
+    if (!isLocalDevUrl(url)) urls.add(url);
+  }
+}
+
+function isLocalDevUrl(value) {
+  try {
+    const url = new URL(value);
+    return ["127.0.0.1", "localhost", "::1"].includes(url.hostname);
+  } catch {
+    return false;
   }
 }
 

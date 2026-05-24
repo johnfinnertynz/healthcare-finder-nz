@@ -20022,36 +20022,6 @@
     "lon": 172.6288728
   },
   {
-    "id": "christchurch-psychmed-michelle-mccarthy",
-    "name": "Dr Michelle McCarthy",
-    "type": "psychologist",
-    "region": "Canterbury",
-    "city": "Christchurch",
-    "address": "169 Innes Road, St Albans, Christchurch",
-    "phone": "033561150",
-    "text": "",
-    "email": "info@christchurchpsychmed.co.nz",
-    "website": "https://www.christchurchpsychmed.co.nz/about",
-    "hours": "Weekdays 9am-5pm; ask about current availability",
-    "cost": "Private fees apply; ask about fees, referral requirements, and any funding options.",
-    "tags": [
-      "psychologist",
-      "clinical-psychologist",
-      "telehealth",
-      "anxiety",
-      "depression",
-      "work",
-      "fit",
-      "direct-contact"
-    ],
-    "fit": "Christchurch PsychMed clinical psychologist. Dr Michelle McCarthy specialises in anxiety, including generalised anxiety, OCD, social anxiety, health anxiety, pregnancy and postnatal mental health, and work-related stress and burnout. The site notes she offers Zoom appointments but is currently unable to accept new clients.",
-    "firstStep": "Email or call Christchurch PsychMed asking about current availability, waitlist options, fees, and whether Michelle is accepting new clients.",
-    "source": "https://www.christchurchpsychmed.co.nz/about",
-    "verified": "2026-05",
-    "lat": -43.5042606,
-    "lon": 172.6288728
-  },
-  {
     "id": "christchurch-psychmed-natasha-pomeroy",
     "name": "Natasha Pomeroy",
     "type": "psychologist",

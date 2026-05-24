@@ -15,7 +15,11 @@
     "practitionerRoles": "data/registers/practitioner-roles.json",
     "psychologistRegister": "data/registers/psychologists.json",
     "psychologistResearchQueue": "data/registers/psychologists-board-research.json",
-    "healthpointFhirBundle": "data/imports/healthpoint-provider-bundle.json"
+    "healthpointFhirBundle": "data/imports/healthpoint-provider-bundle.json",
+    "availabilityMonitorReport": "data/reports/provider-availability-monitor.json"
+  },
+  "monitors": {
+    "availabilityWatchlist": "data/monitors/provider-availability-watchlist.json"
   },
   "liveSources": {
     "ranzcpPsychiatrists": true,

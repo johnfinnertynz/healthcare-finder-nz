@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "updated": "2026-05-24",
+  "items": [
+    {
+      "id": "west-coast-internal-growth-holistic-psychology",
+      "name": "Internal Growth Holistic Psychology",
+      "type": "psychologist",
+      "region": "West Coast",
+      "city": "Greymouth",
+      "url": "https://www.internalgrowth.co.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Homepage says the practice is at full capacity and unable to take on new clients.",
+      "unavailablePatterns": [
+        "full\\s+capacity",
+        "unable\\s+to\\s+take\\s+on\\s+new\\s+clients"
+      ],
+      "availablePatterns": [
+        "taking\\s+new\\s+clients",
+        "accepting\\s+new\\s+clients",
+        "new\\s+client\\s+enquir(?:y|ies)",
+        "book\\s+(?:an\\s+)?appointment"
+      ],
+      "providerCandidate": {
+        "name": "Internal Growth Holistic Psychology",
+        "type": "psychologist",
+        "region": "West Coast",
+        "city": "Greymouth",
+        "website": "https://www.internalgrowth.co.nz/",
+        "source": "https://www.internalgrowth.co.nz/",
+        "tags": [
+          "psychologist",
+          "clinical-psychologist",
+          "trauma",
+          "emdr",
+          "assessment",
+          "adhd",
+          "acc",
+          "sensitive-claims",
+          "fit",
+          "direct-contact"
+        ],
+        "fit": "Greymouth clinical psychology practice offering assessment, trauma-informed therapy, EMDR, neurodiversity assessments, supervision, and ACC-related support. Add to live providers only when the practice is accepting new clients.",
+        "firstStep": "Use the website contact form and ask whether new-client enquiries are open, what the first appointment costs, and whether ACC or private therapy fits."
+      },
+      "checkedAt": "2026-05-24",
+      "notes": "Do not add as a live first-contact option until availability changes."
+    },
+    {
+      "id": "christchurch-psychmed-michelle-mccarthy",
+      "name": "Dr Michelle McCarthy",
+      "type": "psychologist",
+      "region": "Canterbury",
+      "city": "Christchurch",
+      "url": "https://www.christchurchpsychmed.co.nz/about",
+      "lastKnownStatus": "unavailable",
+      "reason": "Christchurch PsychMed profile notes she is currently unable to accept new clients.",
+      "unavailablePatterns": [
+        "Michelle\\s+McCarthy[\\s\\S]{0,1200}?unable\\s+to\\s+accept\\s+new\\s+clients",
+        "Dr\\s+Michelle\\s+McCarthy[\\s\\S]{0,1200}?unable\\s+to\\s+accept\\s+new\\s+clients"
+      ],
+      "availablePatterns": [
+        "Michelle\\s+McCarthy[\\s\\S]{0,1200}?accepting\\s+new\\s+clients",
+        "Michelle\\s+McCarthy[\\s\\S]{0,1200}?taking\\s+new\\s+clients",
+        "Michelle\\s+McCarthy[\\s\\S]{0,1200}?new\\s+client\\s+enquir(?:y|ies)"
+      ],
+      "providerCandidate": {
+        "id": "christchurch-psychmed-michelle-mccarthy",
+        "name": "Dr Michelle McCarthy",
+        "type": "psychologist",
+        "region": "Canterbury",
+        "city": "Christchurch",
+        "address": "169 Innes Road, St Albans, Christchurch",
+        "lat": -43.5042606,
+        "lon": 172.6288728,
+        "phone": "033561150",
+        "email": "info@christchurchpsychmed.co.nz",
+        "website": "https://www.christchurchpsychmed.co.nz/about",
+        "source": "https://www.christchurchpsychmed.co.nz/about",
+        "tags": [
+          "psychologist",
+          "clinical-psychologist",
+          "telehealth",
+          "anxiety",
+          "depression",
+          "work",
+          "fit",
+          "direct-contact"
+        ],
+        "fit": "Christchurch PsychMed clinical psychologist specialising in anxiety, including generalised anxiety, OCD, social anxiety, health anxiety, pregnancy and postnatal mental health, and work-related stress or burnout. Add back to live providers only when accepting new clients.",
+        "firstStep": "Email or call Christchurch PsychMed asking about current availability, fees, and whether Michelle is accepting new clients."
+      },
+      "checkedAt": "2026-05-24",
+      "notes": "Removed from live provider results while unavailable."
+    }
+  ]
+}

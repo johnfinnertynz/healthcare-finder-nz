@@ -58,6 +58,7 @@ script.js              Guided flow, provider matching, and message builder
 providers.json         Local provider and directory data
 provider-sources.json  Refresh source manifest
 data/imports/          Approved source exports, not usually committed
+data/monitors/         Watchlists for promising providers not currently available
 data/registers/        Backend-only professional register outputs
 data/reports/          Refresh and audit reports
 PROVIDER_DATABASE.md   Data rules, fields, and import notes
@@ -142,6 +143,17 @@ node tools/audit-provider-quality.mjs
 node tools/audit-support-preferences.mjs
 node tools/audit-address-coverage.mjs
 ```
+
+Check promising providers that are not currently taking new clients:
+
+```sh
+node tools/check-provider-availability.mjs
+```
+
+The watchlist lives at `data/monitors/provider-availability-watchlist.json`.
+These records are not shown as live first-contact options until their page stops
+matching unavailable wording and is manually reviewed. The weekly GitHub Actions
+audit writes `data/reports/provider-availability-monitor.json` as an artifact.
 
 Geocode public provider addresses for distance ranking:
 

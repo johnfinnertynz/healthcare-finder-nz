@@ -39,6 +39,23 @@ If a listing is only a directory and not a direct provider, mark `type` as
 `directory`. Direct contact details are more useful, but directories are still
 valuable when they help users find fit, cost, culture, or availability.
 
+## Availability Watchlist
+
+Do not keep a provider in `providers.json` when the source clearly says they are
+full, closed to new clients, or unable to accept new referrals. Put them in
+`data/monitors/provider-availability-watchlist.json` instead.
+
+Run the monitor to re-check those pages:
+
+```sh
+node tools/check-provider-availability.mjs
+```
+
+The monitor writes `data/reports/provider-availability-monitor.json`. A detected
+change should be manually reviewed before adding the provider back to the live
+database, because "possibly available" wording may still require a phone or email
+confirmation.
+
 ## General Practice Data
 
 Health NZ directs people to Healthpoint to search for general practices and
