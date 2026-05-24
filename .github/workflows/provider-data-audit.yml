@@ -24,6 +24,13 @@ jobs:
         run: |
           node --check script.js
           for file in tools/*.mjs; do node --check "$file"; done
+          for file in tests/*.mjs; do node --check "$file"; done
+
+      - name: Run provider data validation
+        run: node tools/validate-provider-data.mjs
+
+      - name: Run unit and workflow tests
+        run: node --test tests/*.test.mjs
 
       - name: Refresh approved provider data
         run: node tools/refresh-provider-database.mjs

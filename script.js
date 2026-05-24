@@ -36,6 +36,7 @@ let contactProviderId = "";
 let providerVisibleCount = 5;
 let userCoords = null;
 let matchedRegion = "";
+let providerLoadError = "";
 let providerDirectoryFallbackActive = false;
 let addressSuggestionMatches = [];
 let activeAddressSuggestionIndex = -1;
@@ -274,6 +275,14 @@ function safeHref(value, { allowHash = false } = {}) {
   if (allowHash && /^#[\w-]+$/.test(href)) return href;
   if (/^https?:\/\//i.test(href)) return href;
   return "";
+}
+
+function externalLinkAttrs(href) {
+  return /^https?:\/\//i.test(href) ? ' target="_blank" rel="noopener noreferrer"' : "";
+}
+
+function isChristchurchMensSupportRelevant(location = matchedRegion) {
+  return location === "Canterbury";
 }
 
 function profileText(provider) {
@@ -538,8 +547,18 @@ function providerTypeLabel(type) {
 
 function renderProviders() {
   if (!providers.length) {
-    providerCount.textContent = "No providers loaded yet.";
-    providerList.innerHTML = "";
+    providerCount.textContent = providerLoadError || "Loading local provider database...";
+    providerList.innerHTML = providerLoadError
+      ? `
+        <article class="provider-card provider-card--empty">
+          <div>
+            <h3>Provider database unavailable</h3>
+            <p>The local provider list could not be loaded. Refresh the page, or use 1737 if you need to talk with someone now.</p>
+            <p class="provider-detail"><strong>Immediate safety:</strong> call 111 if someone may be unsafe right now.</p>
+          </div>
+        </article>
+      `
+      : "";
     showMoreProviders.hidden = true;
     return;
   }
@@ -582,7 +601,7 @@ function renderProviders() {
       ].filter(Boolean).join(" | ");
       const primaryAction = directory
         ? website
-          ? `<a class="button button--primary" href="${escapeHtml(website)}">Open directory</a>`
+          ? `<a class="button button--primary" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Open directory</a>`
           : ""
         : helpline
           ? provider.phone
@@ -590,7 +609,7 @@ function renderProviders() {
             : provider.text
               ? `<a class="button button--primary" href="sms:${normalisePhone(provider.text)}">Text</a>`
               : website
-                ? `<a class="button button--primary" href="${escapeHtml(website)}">Website</a>`
+                ? `<a class="button button--primary" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Website</a>`
                 : ""
         : `<button class="button button--primary select-provider" type="button" data-provider-id="${providerId}">
               Use this contact
@@ -600,12 +619,12 @@ function renderProviders() {
         : helpline
           ? `
             ${provider.phone && provider.text ? `<a class="button button--quiet" href="sms:${normalisePhone(provider.text)}">Text</a>` : ""}
-            ${website ? `<a class="button button--quiet" href="${escapeHtml(website)}">Website</a>` : ""}
+            ${website ? `<a class="button button--quiet" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Website</a>` : ""}
           `
           : `
             ${provider.phone ? `<a class="button button--quiet" href="tel:${normalisePhone(provider.phone)}">Call</a>` : ""}
             ${provider.text ? `<a class="button button--quiet" href="sms:${normalisePhone(provider.text)}">Text</a>` : ""}
-            ${website ? `<a class="button button--quiet" href="${escapeHtml(website)}">Website</a>` : ""}
+            ${website ? `<a class="button button--quiet" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Website</a>` : ""}
           `;
 
       return `
@@ -646,6 +665,7 @@ function renderProviders() {
 
 async function loadProviders() {
   try {
+    providerLoadError = "";
     const response = await fetch("providers.json", { cache: "no-store" });
     if (!response.ok) throw new Error("Provider database failed to load");
     providers = await response.json();
@@ -654,7 +674,9 @@ async function loadProviders() {
     contactProviderId = "";
     render();
   } catch {
-    providerCount.textContent = "Could not load the local provider database.";
+    providerLoadError = "Could not load the local provider database.";
+    renderProviders();
+    renderContact();
   }
 }
 
@@ -1066,7 +1088,7 @@ function buildPaths() {
   }
 
   const wantsFemaleProvider = preferences.includes("female-provider") && !preferences.includes("male-provider");
-  if (identity === "male" && !wantsFemaleProvider && /canterbury/i.test(location)) {
+  if (identity === "male" && !wantsFemaleProvider && isChristchurchMensSupportRelevant(location)) {
     addPath(paths, {
       tone: "local",
       title: "Try Canterbury Men's Centre",
@@ -1269,6 +1291,45 @@ function addRecommendation(recommendations, provider, title) {
   });
 }
 
+function hasSelectedPreferenceMatch(recommendations, preferences) {
+  const selected = selectedSupportPreferences(preferences);
+  return selected.length > 0
+    && recommendations.some((item) => selected.some((preference) => item.provider.tags?.includes(preference)));
+}
+
+function recommendationMatchesSelectedType(provider, type = selectedContactType()) {
+  if (type === "all") return true;
+  if (type === "counsellor") return provider.type === "counsellor" || provider.type === "mens-centre";
+  if (type === "addiction") return provider.type === "addiction" || provider.tags?.includes("addiction");
+  return provider.type === type;
+}
+
+function topRecommendations(recommendations, preferences) {
+  const selected = selectedSupportPreferences(preferences);
+  const selectedType = selectedContactType();
+  const ranked = recommendations
+    .map((item, index) => ({
+      item,
+      index,
+      typeMatches: recommendationMatchesSelectedType(item.provider, selectedType) ? 1 : 0,
+      preferenceMatches: selected.filter((preference) => item.provider.tags?.includes(preference)).length
+    }))
+    .sort((a, b) => {
+      if (selectedType !== "all" && b.typeMatches !== a.typeMatches) return b.typeMatches - a.typeMatches;
+      return b.preferenceMatches - a.preferenceMatches || a.index - b.index;
+    });
+
+  const top = ranked.slice(0, 3);
+  if (selected.length && !top.some((entry) => entry.preferenceMatches > 0)) {
+    const supportMatch = ranked.find((entry) => entry.preferenceMatches > 0);
+    if (supportMatch) {
+      top.splice(Math.min(2, top.length), 1, supportMatch);
+    }
+  }
+
+  return [...new Map(top.map((entry) => [entry.item.provider.id, entry.item])).values()];
+}
+
 function exactPreferenceType() {
   const preference = selectedContactType();
   return ["gp", "psychologist", "psychiatrist"].includes(preference) ? preference : "";
@@ -1294,9 +1355,19 @@ function recommendedMoves() {
     );
   });
 
-  if (exactType) return recommendations.slice(0, 3);
+  if (!exactType && selectedSupportPreferences(preferences).length && !hasSelectedPreferenceMatch(recommendations, preferences)) {
+    addRecommendation(
+      recommendations,
+      best((provider) => (provider.tags || []).some((tag) => selectedSupportPreferences(preferences).includes(tag))),
+      "Prioritise a safer fit"
+    );
+  }
 
-  if (recommendations.length >= 3) return recommendations.slice(0, 3);
+  if (exactType) return topRecommendations(recommendations, preferences);
+
+  if (recommendations.length >= 3 && (!selectedSupportPreferences(preferences).length || hasSelectedPreferenceMatch(recommendations, preferences))) {
+    return topRecommendations(recommendations, preferences);
+  }
 
   addRecommendation(recommendations, best((provider) => provider.type === "gp"), "Start with a GP or nurse");
 
@@ -1332,7 +1403,7 @@ function recommendedMoves() {
   addRecommendation(recommendations, best((provider) => provider.type === "psychologist"), "Look for a psychologist");
   addRecommendation(recommendations, matches[0], "Best overall match");
 
-  return recommendations.slice(0, 3);
+  return topRecommendations(recommendations, preferences);
 }
 
 function contactTarget() {
@@ -1550,7 +1621,7 @@ function updateContactActions(target, message) {
 function renderContact() {
   const location = matchedRegion || "";
   if (canterburyOnlyContact) {
-    canterburyOnlyContact.hidden = !/canterbury/i.test(location);
+    canterburyOnlyContact.hidden = !isChristchurchMensSupportRelevant(location);
   }
 
   if (!intakeStatus().complete) {
@@ -1687,7 +1758,7 @@ function render() {
         <article class="path-card ${escapeHtml(path.tone || "")}">
           <h3>${escapeHtml(path.title)}</h3>
           <p>${escapeHtml(path.body)}</p>
-          ${safeHref(path.href, { allowHash: true }) ? `<a href="${escapeHtml(safeHref(path.href, { allowHash: true }))}">${escapeHtml(path.action)}</a>` : ""}
+          ${safeHref(path.href, { allowHash: true }) ? `<a href="${escapeHtml(safeHref(path.href, { allowHash: true }))}"${externalLinkAttrs(safeHref(path.href, { allowHash: true }))}>${escapeHtml(path.action)}</a>` : ""}
         </article>
       `).join("")}
     </details>

@@ -19,6 +19,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -27,6 +28,7 @@ body {
   background: var(--paper);
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 a {
@@ -175,6 +177,7 @@ summary:focus-visible,
 .hero__content {
   align-self: center;
   max-width: 720px;
+  min-width: 0;
   padding: 2rem clamp(1rem, 7vw, 7rem) 3.2rem;
 }
 
@@ -235,6 +238,9 @@ h3 {
   border-radius: 6px;
   text-decoration: none;
   border: 2px solid transparent;
+  max-width: 100%;
+  text-align: center;
+  white-space: normal;
 }
 
 [hidden] {
@@ -270,6 +276,7 @@ footer {
 
 .safety-band div {
   max-width: 820px;
+  min-width: 0;
 }
 
 .safety-band h2,
@@ -1041,6 +1048,17 @@ footer p {
   .hero__content {
     padding-top: 2.2rem;
     padding-bottom: 4rem;
+  }
+
+  .hero__actions,
+  .safety-band {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .hero__actions .button,
+  .safety-band .button {
+    width: 100%;
   }
 
   h1 {

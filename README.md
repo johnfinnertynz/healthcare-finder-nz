@@ -94,6 +94,8 @@ OpenStreetMap Nominatim geocoding service.
 
 See `PROVIDER_DATABASE.md` for field definitions, source guidance, and import
 rules.
+See `DATA_QUALITY.md` for the verification checklist and public-data safety
+rules.
 
 ## Data Quality Tools
 
@@ -139,9 +141,16 @@ node tools/import-psychologists-board-register.mjs data/imports/psychologists-bo
 Check provider contact quality:
 
 ```sh
+node tools/validate-provider-data.mjs
 node tools/audit-provider-quality.mjs
 node tools/audit-support-preferences.mjs
 node tools/audit-address-coverage.mjs
+```
+
+Run the automated data and simulated workflow tests:
+
+```sh
+node --test tests/*.test.mjs
 ```
 
 Check promising providers that are not currently taking new clients:
@@ -214,7 +223,9 @@ node tools/check-links.mjs
 Some health and government sites may block automated link checks with `403`.
 Those should be reviewed separately from genuinely broken links.
 By default the checker samples generated DoctorPricer GP links so CI does not
-hammer hundreds of practice websites. Run this for a full provider link audit:
+hammer hundreds of practice websites. It checks provider websites that users can
+open from the app; add `CHECK_PROVIDER_SOURCES=true` when you also want to test
+backend verification source URLs. Run this for a full provider website audit:
 
 ```sh
 CHECK_PROVIDER_LINKS=full node tools/check-links.mjs

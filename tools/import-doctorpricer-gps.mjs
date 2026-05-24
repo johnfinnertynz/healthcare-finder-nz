@@ -9,6 +9,22 @@ const DEFAULT_RATE_LIMIT_MS = 3500;
 const DEFAULT_AGE = 25;
 const DEFAULT_CSC = false;
 const upstreamUrlOverrides = new Map([
+  [
+    "https://birkenheadmedical.co.nz/",
+    "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/birkenhead-medical-centre/at/4-rawene-road-birkenhead-auckland/"
+  ],
+  [
+    "https://www.birkenheadmedical.co.nz/",
+    "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/birkenhead-medical-centre/at/4-rawene-road-birkenhead-auckland/"
+  ],
+  [
+    "https://kawhiahc.co.nz",
+    "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/kawhia-health-centre/"
+  ],
+  [
+    "https://kawhiahc.co.nz/",
+    "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/kawhia-health-centre/"
+  ],
   ["http://waverleyhealth.co.nz", ""],
   [
     "http://www.touch-sub.com/pcst/Rosehill%20Christian%20Medical%20Center.html",

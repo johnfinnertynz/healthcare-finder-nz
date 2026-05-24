@@ -4,6 +4,7 @@ const files = ["index.html", "README.md", "PROVIDER_DATABASE.md"];
 const urls = new Set();
 const providerLinkMode = process.env.CHECK_PROVIDER_LINKS || "sample";
 const providerLinkLimit = Number(process.env.PROVIDER_LINK_LIMIT || 150);
+const checkProviderSources = process.env.CHECK_PROVIDER_SOURCES === "true";
 
 function collectFromText(text) {
   for (const match of text.matchAll(/https?:\/\/[^\s"'<>),]+/g)) {
@@ -29,10 +30,10 @@ for (const file of files) {
 if (fs.existsSync("providers.json") && providerLinkMode !== "off") {
   const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
   const providerUrls = providers
-    .flatMap((provider) => [provider.website, provider.source].filter(Boolean).map((url) => ({
-      url,
-      generatedGp: provider.importSource === "doctorpricer"
-    })))
+    .flatMap((provider) => [
+      provider.website ? { url: provider.website, generatedGp: provider.importSource === "doctorpricer" } : null,
+      checkProviderSources && provider.source ? { url: provider.source, generatedGp: false } : null
+    ].filter(Boolean))
     .filter((item) => /^https?:\/\//i.test(item.url));
 
   const mustCheck = providerUrls.filter((item) => !item.generatedGp).map((item) => item.url);
