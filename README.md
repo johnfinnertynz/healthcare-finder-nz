@@ -147,13 +147,15 @@ node tools/audit-address-coverage.mjs
 Check promising providers that are not currently taking new clients:
 
 ```sh
+node tools/find-unavailable-providers.mjs
 node tools/check-provider-availability.mjs
 ```
 
 The watchlist lives at `data/monitors/provider-availability-watchlist.json`.
 These records are not shown as live first-contact options until their page stops
 matching unavailable wording and is manually reviewed. The weekly GitHub Actions
-audit writes `data/reports/provider-availability-monitor.json` as an artifact.
+audit writes `data/reports/provider-unavailable-candidates.json` and
+`data/reports/provider-availability-monitor.json` as artifacts.
 
 Geocode public provider addresses for distance ranking:
 

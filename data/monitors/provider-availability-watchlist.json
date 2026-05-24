@@ -92,6 +92,171 @@
       },
       "checkedAt": "2026-05-24",
       "notes": "Removed from live provider results while unavailable."
+    },
+    {
+      "id": "ranzcp-4827",
+      "name": "Dr Tanya Wright",
+      "type": "psychiatrist",
+      "region": "Auckland",
+      "city": "Mt Eden",
+      "url": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4827/dr-tanya-wright",
+      "lastKnownStatus": "unavailable",
+      "reason": "RANZCP Your Health in Mind listing says appointment wait: Not taking new patients.",
+      "unavailablePatterns": [
+        "not\\s+taking\\s+new\\s+patients",
+        "not\\s+(?:currently\\s+)?accepting\\s+new\\s+(?:patients|clients|referrals)",
+        "unable\\s+to\\s+(?:accept|take\\s+on|see)\\s+new\\s+(?:patients|clients|referrals)"
+      ],
+      "availablePatterns": [
+        "appointment\\s+wait:?\\s*(?:less\\s+than|1\\s*-\\s*3|3\\s*-\\s*6|6\\+)",
+        "taking\\s+new\\s+patients",
+        "accepting\\s+new\\s+patients"
+      ],
+      "providerCandidate": {
+        "id": "ranzcp-4827",
+        "name": "Dr Tanya Wright",
+        "type": "psychiatrist",
+        "region": "Auckland",
+        "city": "Mt Eden",
+        "address": "Mt Eden, Auckland, 1024",
+        "phone": "+6421851270",
+        "text": "",
+        "email": "tanya@wrightpsych.co.nz",
+        "website": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4827/dr-tanya-wright",
+        "hours": "Ask about current availability and referral requirements.",
+        "cost": "Private specialist fees usually apply. Ask about referral needs, insurance, ACC, or any funded options.",
+        "tags": [
+          "psychiatrist",
+          "medical-specialist",
+          "fit",
+          "telehealth",
+          "maori",
+          "rainbow",
+          "cost",
+          "depression",
+          "anxiety",
+          "trauma",
+          "work",
+          "direct-contact"
+        ],
+        "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression, Family therapy, Obsessive-compulsive disorders, Oppositional Defiant Disorder, Post-traumatic stress disorder. Services include ACC Assessment, Professional supervision. Works with Mother and baby, Ages 1-17, Ages 16-24. Add back to live providers only when the listing no longer says not taking new patients.",
+        "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+        "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4827/dr-tanya-wright",
+        "verified": "2026-05",
+        "sourceUpdated": "2025-06-23",
+        "lat": -36.8871341,
+        "lon": 174.7474285
+      },
+      "checkedAt": "2026-05-24",
+      "notes": "Removed from live provider results while unavailable."
+    },
+    {
+      "id": "ranzcp-1363",
+      "name": "Dr Roger Elliott",
+      "type": "psychiatrist",
+      "region": "Taranaki",
+      "city": "Oakura",
+      "url": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1363/dr-roger-elliott",
+      "lastKnownStatus": "unavailable",
+      "reason": "RANZCP Your Health in Mind listing says appointment wait: Not taking new patients.",
+      "unavailablePatterns": [
+        "not\\s+taking\\s+new\\s+patients",
+        "not\\s+(?:currently\\s+)?accepting\\s+new\\s+(?:patients|clients|referrals)",
+        "unable\\s+to\\s+(?:accept|take\\s+on|see)\\s+new\\s+(?:patients|clients|referrals)"
+      ],
+      "availablePatterns": [
+        "appointment\\s+wait:?\\s*(?:less\\s+than|1\\s*-\\s*3|3\\s*-\\s*6|6\\+)",
+        "taking\\s+new\\s+patients",
+        "accepting\\s+new\\s+patients"
+      ],
+      "providerCandidate": {
+        "id": "ranzcp-1363",
+        "name": "Dr Roger Elliott",
+        "type": "psychiatrist",
+        "region": "Taranaki",
+        "city": "Oakura",
+        "address": "95 Ahu Ahu Rd, RD4, Oakura, New Plymouth, 4374",
+        "phone": "021357705",
+        "text": "",
+        "email": "",
+        "website": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1363/dr-roger-elliott",
+        "hours": "Ask about current availability and referral requirements.",
+        "cost": "Private specialist fees usually apply. Ask about referral needs, insurance, ACC, or any funded options.",
+        "tags": [
+          "psychiatrist",
+          "medical-specialist",
+          "fit",
+          "telehealth",
+          "cost",
+          "work",
+          "direct-contact"
+        ],
+        "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Psychodynamic psychotherapy. Services include Professional supervision, Professional supervision, Weekly psychotherapy. Works with Ages 18-60, Ages 60+. Add back to live providers only when the listing no longer says not taking new patients.",
+        "firstStep": "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+        "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1363/dr-roger-elliott",
+        "verified": "2026-05",
+        "sourceUpdated": "2024-06-26",
+        "lat": -39.1182167,
+        "lon": 173.931235
+      },
+      "checkedAt": "2026-05-24",
+      "notes": "Removed from live provider results while unavailable."
+    },
+    {
+      "id": "ranzcp-2586",
+      "name": "Dr John Collier",
+      "type": "psychiatrist",
+      "region": "Waikato",
+      "city": "HAMILTON CBD",
+      "url": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2586/dr-john-collier",
+      "lastKnownStatus": "unavailable",
+      "reason": "RANZCP Your Health in Mind listing says appointment wait: Not taking new patients.",
+      "unavailablePatterns": [
+        "not\\s+taking\\s+new\\s+patients",
+        "not\\s+(?:currently\\s+)?accepting\\s+new\\s+(?:patients|clients|referrals)",
+        "unable\\s+to\\s+(?:accept|take\\s+on|see)\\s+new\\s+(?:patients|clients|referrals)"
+      ],
+      "availablePatterns": [
+        "appointment\\s+wait:?\\s*(?:less\\s+than|1\\s*-\\s*3|3\\s*-\\s*6|6\\+)",
+        "taking\\s+new\\s+patients",
+        "accepting\\s+new\\s+patients"
+      ],
+      "providerCandidate": {
+        "id": "ranzcp-2586",
+        "name": "Dr John Collier",
+        "type": "psychiatrist",
+        "region": "Waikato",
+        "city": "HAMILTON CBD",
+        "address": "HAMILTON CBD, HAmilton, 3240",
+        "phone": "07 8568676",
+        "text": "",
+        "email": "",
+        "website": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2586/dr-john-collier",
+        "hours": "Ask about current availability and referral requirements.",
+        "cost": "Private specialist fees usually apply. Ask about referral needs, insurance, ACC, or any funded options.",
+        "tags": [
+          "psychiatrist",
+          "medical-specialist",
+          "fit",
+          "maori",
+          "cost",
+          "depression",
+          "anxiety",
+          "trauma",
+          "addiction",
+          "work",
+          "direct-contact"
+        ],
+        "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, Anxiety disorders, Bipolar disorder, Brain injury, Depression, Interpersonal therapy, Obsessive-compulsive disorders, Pain management. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Professional supervision, Weekly psychotherapy. Works with Ages 18-60, Ages 60+. Add back to live providers only when the listing no longer says not taking new patients.",
+        "firstStep": "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+        "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2586/dr-john-collier",
+        "verified": "2026-05",
+        "sourceUpdated": "2024-01-23",
+        "lat": -37.7863194,
+        "lon": 175.2824138
+      },
+      "checkedAt": "2026-05-24",
+      "notes": "Removed from live provider results while unavailable."
     }
   ]
 }

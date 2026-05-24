@@ -28,6 +28,9 @@ jobs:
       - name: Refresh approved provider data
         run: node tools/refresh-provider-database.mjs
 
+      - name: Discover unavailable provider candidates
+        run: node tools/find-unavailable-providers.mjs
+
       - name: Check unavailable provider watchlist
         run: node tools/check-provider-availability.mjs
 
@@ -47,3 +50,10 @@ jobs:
         with:
           name: provider-availability-monitor
           path: data/reports/provider-availability-monitor.json
+
+      - name: Upload unavailable candidate report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-unavailable-candidates
+          path: data/reports/provider-unavailable-candidates.json
