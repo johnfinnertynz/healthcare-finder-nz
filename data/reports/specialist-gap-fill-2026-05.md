@@ -79,3 +79,7 @@ Results:
 - Continue targeted searches for local psychiatry in Northland, Tairawhiti, Hawke's Bay, Manawatu-Whanganui, Wairarapa, South Canterbury, West Coast, and Southland.
 - Recheck West Coast private psychology availability; Internal Growth was found but currently states it is full and not taking new clients.
 - Keep using backend-only professional registers as verification sources, then add only public practice/contact pages as user-facing provider records.
+
+## Monitor, Not Added
+
+- Internal Growth Holistic Psychology, Greymouth: relevant West Coast clinical psychology practice, but the homepage currently states the practice is at full capacity and unable to take new clients. Do not add as a live first-contact option until availability changes. Source: https://www.internalgrowth.co.nz/
