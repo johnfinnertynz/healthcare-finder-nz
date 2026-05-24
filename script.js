@@ -318,6 +318,12 @@ function profileText(provider) {
     provider.cost,
     provider.fit,
     provider.firstStep,
+    provider.appointmentWait,
+    ...(provider.specialties || []),
+    ...(provider.services || []),
+    ...(provider.ageGroups || []),
+    ...(provider.patientGroups || []),
+    ...(provider.languages || []),
     ...(provider.tags || [])
   ].join(" ").toLowerCase();
 }
@@ -336,8 +342,12 @@ function hasSpecialtyMatch(provider, need) {
 }
 
 function providerSpecialties(provider) {
+  if (Array.isArray(provider.specialties) && provider.specialties.length) {
+    return provider.specialties.slice(0, 6).join(", ");
+  }
+
   const fit = provider.fit || "";
-  const match = fit.match(/specialt(?:y|ies) including\s+(.+?)(?:\.|$)/i);
+  const match = fit.match(/(?:specialt(?:y|ies)|special interests?) (?:including|include)\s+(.+?)(?:\.|$)/i);
   if (match) return match[1];
 
   const specialtyTags = (provider.tags || [])
@@ -353,6 +363,15 @@ function providerSpecialties(provider) {
     .map((tag) => tag.replace(/-/g, " "));
 
   return specialtyTags.slice(0, 6).join(", ");
+}
+
+function providerPatientGroups(provider) {
+  if (Array.isArray(provider.patientGroups) && provider.patientGroups.length) {
+    return provider.patientGroups.slice(0, 6).join(", ");
+  }
+
+  const match = (provider.fit || "").match(/Patient groups listed include\s+(.+?)(?:\.|$)/i);
+  return match ? match[1] : "";
 }
 
 function isDirectoryLike(provider) {
@@ -604,6 +623,7 @@ function renderProviders() {
       const directory = isDirectoryLike(provider);
       const helpline = provider.type === "helpline";
       const specialty = providerSpecialties(provider);
+      const patientGroups = providerPatientGroups(provider);
       const distance = distanceToProvider(provider);
       const distanceLabel = providerDistanceLabel(provider, distance);
       const website = safeHref(provider.website);
@@ -616,6 +636,7 @@ function renderProviders() {
       const providerFirstStep = escapeHtml(provider.firstStep);
       const providerCost = escapeHtml(provider.cost);
       const providerSpecialty = escapeHtml(specialty);
+      const providerPatientGroup = escapeHtml(patientGroups);
       const providerDistance = escapeHtml(distanceLabel);
       const contact = [
         !directory && provider.phone ? `Phone ${escapeHtml(provider.phone)}` : "",
@@ -658,6 +679,7 @@ function renderProviders() {
             <h3>${providerName}</h3>
             <p>${providerFit}</p>
             ${specialty ? `<p class="provider-detail"><strong>Specialties:</strong> ${providerSpecialty}</p>` : ""}
+            ${patientGroups ? `<p class="provider-detail"><strong>Patient groups:</strong> ${providerPatientGroup}</p>` : ""}
             <p class="provider-detail"><strong>First step:</strong> ${providerFirstStep}</p>
             <p class="provider-detail"><strong>Cost:</strong> ${providerCost}</p>
             ${contact ? `<p class="provider-detail"><strong>Contact:</strong> ${contact}</p>` : ""}

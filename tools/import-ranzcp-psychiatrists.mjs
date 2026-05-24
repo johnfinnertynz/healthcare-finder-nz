@@ -100,15 +100,23 @@ function cleanHtml(value) {
     .trim();
 }
 
+function descriptions(values = []) {
+  return values.map((item) => cleanHtml(item.description)).filter(Boolean);
+}
+
+function isUnavailable(profile) {
+  return /not taking new patients/i.test(profile.appointmentWaitTIme || "");
+}
+
 function tagsFor(profile, address) {
   const text = [
     profile.summary,
     profile.displayCredentials,
     profile.accreditedTier1Faculty,
-    ...(profile.psychExpertises || []).map((item) => item.description),
-    ...(profile.psychServices || []).map((item) => item.description),
-    ...(profile.psychExperiencesWith || []).map((item) => item.description),
-    ...(profile.psychLanguages || []).map((item) => item.description)
+    ...descriptions(profile.psychExpertises),
+    ...descriptions(profile.psychServices),
+    ...descriptions(profile.psychExperiencesWith),
+    ...descriptions(profile.psychLanguages)
   ].join(" ");
 
   const tags = new Set(["psychiatrist", "medical-specialist", "fit"]);
@@ -171,15 +179,19 @@ async function fetchPage(page) {
 
 function toRecord(profile) {
   const address = firstContactAddress(profile);
-  const expertise = (profile.psychExpertises || []).map((item) => item.description).filter(Boolean);
-  const services = (profile.psychServices || []).map((item) => item.description).filter(Boolean);
-  const ages = (profile.psychAgeGroupsTreated || []).map((item) => item.description).filter(Boolean);
+  const expertise = descriptions(profile.psychExpertises);
+  const services = descriptions(profile.psychServices);
+  const ages = descriptions(profile.psychAgeGroupsTreated);
+  const patientGroups = descriptions(profile.psychExperiencesWith);
+  const languages = descriptions(profile.psychLanguages);
   const region = regionFromAddress(address);
   const profileUrl = `${sourceBase}${profile.profileUrl}`;
   const wait = profile.appointmentWaitTIme ? ` Appointment wait: ${profile.appointmentWaitTIme}.` : "";
   const focus = expertise.length ? ` Special interests include ${expertise.slice(0, 8).join(", ")}.` : "";
   const serviceText = services.length ? ` Services include ${services.slice(0, 6).join(", ")}.` : "";
   const ageText = ages.length ? ` Works with ${ages.join(", ")}.` : "";
+  const patientGroupText = patientGroups.length ? ` Patient groups listed include ${patientGroups.slice(0, 8).join(", ")}.` : "";
+  const verifiedMonth = new Date().toISOString().slice(0, 7);
 
   return {
     id: `ranzcp-${slugify(profile.ranzcP_ID || profile.id || profile.name)}`,
@@ -197,12 +209,22 @@ function toRecord(profile) {
     hours: wait.trim() || "Ask provider about current availability",
     cost: "Private specialist fees usually apply. Ask about referral needs, insurance, ACC, or any funded options.",
     tags: tagsFor(profile, address),
-    fit: `RANZCP Your Health in Mind psychiatrist listing.${focus}${serviceText}${ageText}`.trim(),
+    specialties: expertise,
+    services,
+    ageGroups: ages,
+    patientGroups,
+    languages,
+    appointmentWait: profile.appointmentWaitTIme || "",
+    fit: `RANZCP Your Health in Mind psychiatrist listing.${focus}${serviceText}${patientGroupText}${ageText}`.trim(),
     firstStep: address.email
       ? "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step."
       : "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     source: profileUrl,
-    verified: new Date().toISOString().slice(0, 7),
+    verified: verifiedMonth,
+    lastVerified: verifiedMonth,
+    confidence: "medium",
+    sourceQuality: "professional register or directory",
+    needsManualVerification: true,
     sourceUpdated: profile.lastUpdatedDate ? profile.lastUpdatedDate.slice(0, 10) : ""
   };
 }
@@ -219,7 +241,9 @@ for (let page = 2; page <= totalPages; page += 1) {
   profiles.push(...result.results);
 }
 
+const unavailable = profiles.filter(isUnavailable);
 const imported = profiles
+  .filter((profile) => !isUnavailable(profile))
   .map(toRecord)
   .filter((record) => record.name && (record.phone || record.email || record.website));
 
@@ -257,7 +281,7 @@ const geocodeSummary = noGeocode
     });
 
 fs.writeFileSync(providersPath, `${JSON.stringify(output, null, 2)}\n`);
-console.log(`Imported RANZCP psychiatrist records into ${providersPath}. Added ${added}; updated ${updated}.`);
+console.log(`Imported RANZCP psychiatrist records into ${providersPath}. Added ${added}; updated ${updated}. Skipped unavailable: ${unavailable.length}.`);
 if (geocodeSummary) {
   for (const line of geocodeSummary.logs) console.log(line);
   console.log(`Geocoding for this import: checked ${geocodeSummary.checked}; updated ${geocodeSummary.updated}; no match ${geocodeSummary.noMatch}; failed ${geocodeSummary.failed}; skipped ${geocodeSummary.skipped}.`);

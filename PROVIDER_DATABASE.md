@@ -26,6 +26,11 @@ published as professional contact details.
 - `cost`: free, funded, private, public service, or varies
 - `tags`: search and matching tags such as `depression`, `anxiety`, `trauma`,
   `cost`, `male`, `rangatahi`, `same-day`, `privacy`
+- `specialties`: optional public focus areas or clinical interests listed by the
+  provider or directory
+- `patientGroups`: optional patient groups explicitly listed by the source, such
+  as Maori, Rainbow, family, refugee, veteran, or disability groups
+- `ageGroups`: optional age groups explicitly listed by the source
 - `fit`: plain-language description of who this is good for
 - `firstStep`: the smallest action a user can take
 - `source`: URL used to verify the listing
@@ -258,6 +263,11 @@ Optional columns include `id`, `address`, `lat`, `lon`, `phone`, `text`,
 `verified`. Importers should also populate `lastVerified`, `confidence`,
 `sourceQuality`, and `needsManualVerification`; use honest `medium` or `low`
 confidence rather than implying a provider has been manually checked.
+
+Optional structured fit columns such as `specialties`, `patientGroups`,
+`ageGroups`, `services`, and `languages` can be stored as arrays when the source
+publishes them. Do not infer opt-in support tags from a provider's name alone;
+use these explicit fields or another public source.
 
 `type` must be `counsellor`, `psychologist`, or `psychiatrist`. Each row must
 include at least one of `phone`, `text`, `email`, or `website`, because these

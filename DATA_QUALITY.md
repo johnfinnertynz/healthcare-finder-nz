@@ -19,6 +19,9 @@ Every provider record must include:
 - `city`
 - `cost`
 - `tags`
+- `specialties`
+- `patientGroups`
+- `ageGroups`
 - `fit`
 - `firstStep`
 - `source`
@@ -54,6 +57,9 @@ Current schema aliases:
   third-party GP listing.
 - `needsManualVerification` is `true` when a listing should be checked by a
   person before stronger claims are made.
+- `patientGroups`, `ageGroups`, `specialties`, `services`, and `languages` are
+  optional structured source fields. Use them when a directory explicitly
+  publishes them, especially for support-preference evidence.
 - `tags` currently carry support flags such as `maori`, `pasifika`, `asian`,
   `rainbow`, `trauma-informed`, `telehealth`, `female`, `male`, `cost`,
   `crisis`, `addiction`, and `direct-contact`.

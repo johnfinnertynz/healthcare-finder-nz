@@ -14527,7 +14527,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Cognitive analytic therapy, Complex trauma, Dementia related disorders. Services include ACC Assessment, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care. Works with Ages 18-60, Ages 60+, Ages 16-24.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Cognitive analytic therapy, Complex trauma, Dementia related disorders. Services include ACC Assessment, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care. Patient groups listed include Asylum seekers and refugees, Aboriginal and Torres Strait Islander, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intellectual disability, Intersex, Maori. Works with Ages 18-60, Ages 60+, Ages 16-24.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4499/dr-campbell-emmerton",
     "verified": "2026-05",
@@ -14537,7 +14537,72 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Addiction",
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Cognitive analytic therapy",
+      "Complex trauma",
+      "Dementia related disorders",
+      "Depression",
+      "Electroconvulsive therapy (ECT)",
+      "Epilepsy",
+      "Functional neurological disorder",
+      "Interpersonal therapy",
+      "Mentalisation-based therapy",
+      "Mindfulness",
+      "Motivational interviewing",
+      "Neuropsychiatry",
+      "Obsessive-compulsive disorders",
+      "Pain management",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Prolonged grief",
+      "Psychodynamic psychotherapy",
+      "Psychosis",
+      "Psychotherapy",
+      "Schizophrenia",
+      "Sexual disorders",
+      "Supportive psychotherapy"
+    ],
+    "services": [
+      "ACC Assessment",
+      "Civil medicolegal",
+      "Family court medicolegal",
+      "Insurance opinions / reports",
+      "Professional supervision",
+      "Shared care",
+      "Urgent assessments",
+      "Weekly psychotherapy",
+      "After-hours appointments"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+",
+      "Ages 16-24"
+    ],
+    "patientGroups": [
+      "Asylum seekers and refugees",
+      "Aboriginal and Torres Strait Islander",
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Intellectual disability",
+      "Intersex",
+      "Maori",
+      "Military and veterans",
+      "Non-English speaking",
+      "Physical disability",
+      "Families",
+      "Emergency services personnel"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-2665",
@@ -14565,7 +14630,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Shared care. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Shared care. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intellectual disability, Physical disability. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2665/dr-ian-goodwin",
     "verified": "2026-05",
@@ -14575,7 +14640,41 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia",
+      "Transcranial Magnetic Stimulation (TMS)"
+    ],
+    "services": [
+      "Civil medicolegal",
+      "Criminal medicolegal",
+      "Insurance opinions / reports",
+      "Shared care"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Asylum seekers and refugees",
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Intellectual disability",
+      "Physical disability"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "3-6 months"
   },
   {
     "id": "ranzcp-2745",
@@ -14601,7 +14700,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Bipolar disorder, Dementia related disorders, Depression. Services include Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care, Urgent assessments. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Bipolar disorder, Dementia related disorders, Depression. Services include Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Gay and lesbian, Maori, Military and veterans, Non-English speaking, Physical disability. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2745/dr-jane-casey",
     "verified": "2026-05",
@@ -14611,7 +14710,36 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Bipolar disorder",
+      "Dementia related disorders",
+      "Depression"
+    ],
+    "services": [
+      "Civil medicolegal",
+      "Family court medicolegal",
+      "Insurance opinions / reports",
+      "Professional supervision",
+      "Shared care",
+      "Urgent assessments"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Gay and lesbian",
+      "Maori",
+      "Military and veterans",
+      "Non-English speaking",
+      "Physical disability"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "ranzcp-7046",
@@ -14641,7 +14769,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Pain management. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Experience with interpreters. Works with Ages 18-60.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Pain management. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Experience with interpreters. Patient groups listed include Asylum seekers and refugees, Gender diverse, Maori, Military and veterans, Non-English speaking, Physical disability, Emergency services personnel. Works with Ages 18-60.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7046/dr-john-joseph",
     "verified": "2026-05",
@@ -14651,7 +14779,45 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Pain management",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "services": [
+      "ACC Assessment",
+      "ACC Treatment provider",
+      "Civil medicolegal",
+      "Family court medicolegal",
+      "Insurance opinions / reports",
+      "Experience with interpreters"
+    ],
+    "ageGroups": [
+      "Ages 18-60"
+    ],
+    "patientGroups": [
+      "Asylum seekers and refugees",
+      "Gender diverse",
+      "Maori",
+      "Military and veterans",
+      "Non-English speaking",
+      "Physical disability",
+      "Emergency services personnel"
+    ],
+    "languages": [
+      "Hindi",
+      "Malayalam"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-4859",
@@ -14679,7 +14845,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Treatment provider, Insurance opinions / reports, Shared care. Works with Ages 18-60.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Treatment provider, Insurance opinions / reports, Shared care. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans, Non-English speaking, Physical disability. Works with Ages 18-60.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4859/dr-katie-ritchie",
     "verified": "2026-05",
@@ -14689,7 +14855,39 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "services": [
+      "ACC Treatment provider",
+      "Insurance opinions / reports",
+      "Shared care"
+    ],
+    "ageGroups": [
+      "Ages 18-60"
+    ],
+    "patientGroups": [
+      "Asylum seekers and refugees",
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Military and veterans",
+      "Non-English speaking",
+      "Physical disability"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "3-6 months"
   },
   {
     "id": "ranzcp-7734",
@@ -14718,7 +14916,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Dementia related disorders, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Urgent assessments. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Dementia related disorders, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Urgent assessments. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gay and lesbian, Maori, Non-English speaking. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7734/dr-m-shanmukha-swamy-lokesh",
     "verified": "2026-05",
@@ -14728,7 +14926,42 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Dementia related disorders",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "services": [
+      "ACC Assessment",
+      "Civil medicolegal",
+      "Criminal medicolegal",
+      "Insurance opinions / reports",
+      "Urgent assessments"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Asylum seekers and refugees",
+      "Doctors, psychiatrists or medical students",
+      "Gay and lesbian",
+      "Maori",
+      "Non-English speaking"
+    ],
+    "languages": [
+      "English",
+      "Hindi",
+      "Kannada"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "ranzcp-576",
@@ -14760,7 +14993,15 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "services": [
+      "Civil medicolegal",
+      "Professional supervision"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-7045",
@@ -14794,7 +15035,23 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "services": [
+      "ACC Assessment",
+      "Civil medicolegal",
+      "Criminal medicolegal",
+      "Family court medicolegal",
+      "Shared care"
+    ],
+    "ageGroups": [
+      "Ages 18-60"
+    ],
+    "languages": [
+      "English",
+      "Hindi",
+      "Malayalam"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-4472",
@@ -14820,7 +15077,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Conversion disorder, Depression, Interpersonal therapy, Obsessive-compulsive disorders. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Professional supervision, Urgent assessments. Works with Ages 18-60.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Conversion disorder, Depression, Interpersonal therapy, Obsessive-compulsive disorders. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Professional supervision, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans. Works with Ages 18-60.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4472/dr-patrick-daniels",
     "verified": "2026-05",
@@ -14830,7 +15087,44 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Cognitive behavioural therapy",
+      "Conversion disorder",
+      "Depression",
+      "Interpersonal therapy",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Psychodynamic psychotherapy",
+      "Psychosis",
+      "Schizophrenia",
+      "Supportive psychotherapy"
+    ],
+    "services": [
+      "ACC Assessment",
+      "ACC Treatment provider",
+      "Civil medicolegal",
+      "Insurance opinions / reports",
+      "Professional supervision",
+      "Urgent assessments",
+      "Weekly psychotherapy"
+    ],
+    "ageGroups": [
+      "Ages 18-60"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Military and veterans"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "ranzcp-3358",
@@ -14854,7 +15148,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Post-traumatic stress disorder. Works with Mother and baby, Ages 18-60.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Post-traumatic stress disorder. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans. Works with Mother and baby, Ages 18-60.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3358/dr-sara-weeks",
     "verified": "2026-05",
@@ -14864,7 +15158,21 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Post-traumatic stress disorder"
+    ],
+    "ageGroups": [
+      "Mother and baby",
+      "Ages 18-60"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Military and veterans"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-4807",
@@ -14893,7 +15201,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Interpersonal therapy, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychodynamic psychotherapy. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Shared care. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Interpersonal therapy, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychodynamic psychotherapy. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Shared care. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Military and veterans. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4807/dr-scott-chambers",
     "verified": "2026-05",
@@ -14903,7 +15211,40 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Cognitive behavioural therapy",
+      "Depression",
+      "Interpersonal therapy",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychodynamic psychotherapy",
+      "Supportive psychotherapy"
+    ],
+    "services": [
+      "ACC Assessment",
+      "ACC Treatment provider",
+      "Civil medicolegal",
+      "Insurance opinions / reports",
+      "Shared care"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Maori",
+      "Military and veterans"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "nzccp-alexandra-hayns",
@@ -17144,7 +17485,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Depression, Forensic, Mindfulness, Obsessive-compulsive disorders. Services include ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision. Works with Ages 1-17, Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Depression, Forensic, Mindfulness, Obsessive-compulsive disorders. Services include ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students, Intellectual disability, Maori, Military and veterans, Physical disability, Emergency services personnel. Works with Ages 1-17, Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6743/dr-caleb-armstrong",
     "verified": "2026-05",
@@ -17154,7 +17495,50 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Depression",
+      "Forensic",
+      "Mindfulness",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia",
+      "Sexual assault / abuse treatment"
+    ],
+    "services": [
+      "ACC Treatment provider",
+      "Civil medicolegal",
+      "Criminal medicolegal",
+      "Family court medicolegal",
+      "Insurance opinions / reports",
+      "Professional supervision",
+      "Experience with interpreters",
+      "Available for COVID-19 healthcare workers"
+    ],
+    "ageGroups": [
+      "Ages 1-17",
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Intellectual disability",
+      "Maori",
+      "Military and veterans",
+      "Physical disability",
+      "Emergency services personnel"
+    ],
+    "languages": [
+      "English",
+      "German"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "nzccp-allanah-casey",
@@ -21734,7 +22118,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Post-traumatic stress disorder, Psychosis. Works with Ages 1-17, Ages 16-24.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Post-traumatic stress disorder, Psychosis. Patient groups listed include Families. Works with Ages 1-17, Ages 16-24.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/13276/dr-evan-wilson",
     "verified": "2026-05",
@@ -21744,7 +22128,29 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Addiction",
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "ageGroups": [
+      "Ages 1-17",
+      "Ages 16-24"
+    ],
+    "patientGroups": [
+      "Families"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "christchurch-psychmed-laura-hammersley",
@@ -21839,7 +22245,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Electroconvulsive therapy (ECT), Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports. Works with Ages 18-60.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Electroconvulsive therapy (ECT), Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports. Patient groups listed include Military and veterans. Works with Ages 18-60.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4946/dr-paul-edgar",
     "verified": "2026-05",
@@ -21849,7 +22255,37 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Cognitive behavioural therapy",
+      "Depression",
+      "Electroconvulsive therapy (ECT)",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "services": [
+      "ACC Assessment",
+      "ACC Treatment provider",
+      "Civil medicolegal",
+      "Criminal medicolegal",
+      "Family court medicolegal",
+      "Insurance opinions / reports",
+      "Shared care"
+    ],
+    "ageGroups": [
+      "Ages 18-60"
+    ],
+    "patientGroups": [
+      "Military and veterans"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "christchurch-psychmed-samantha-chow",
@@ -21939,7 +22375,7 @@
       "depression",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Bipolar disorder, Depression, Epilepsy, Functional neurological disorder, Neuropsychiatry. Services include Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Psychedelic-Assisted Therapy. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Bipolar disorder, Depression, Epilepsy, Functional neurological disorder, Neuropsychiatry. Services include Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Psychedelic-Assisted Therapy. Patient groups listed include Doctors, psychiatrists or medical students, Maori. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5226/prof-cameron-lacey",
     "verified": "2026-05",
@@ -21949,7 +22385,30 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Bipolar disorder",
+      "Depression",
+      "Epilepsy",
+      "Functional neurological disorder",
+      "Neuropsychiatry"
+    ],
+    "services": [
+      "Civil medicolegal",
+      "Family court medicolegal",
+      "Insurance opinions / reports",
+      "Psychedelic-Assisted Therapy"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Maori"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "nzccp-aimee-hanson",
@@ -25453,7 +25912,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include Professional supervision. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5617/dr-helen-austin",
     "verified": "2026-05",
@@ -25463,7 +25922,21 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "services": [
+      "Professional supervision"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "psychiatry-nz-jimi-macmillan",
@@ -25557,7 +26030,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Developmental disability. Services include Professional supervision, Shared care, After-hours appointments, Experience with interpreters, Home visits. Works with Ages 1-17, Ages 18-60, Ages 16-24.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Developmental disability. Services include Professional supervision, Shared care, After-hours appointments, Experience with interpreters, Home visits. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Military and veterans, Non-English speaking, Physical disability. Works with Ages 1-17, Ages 18-60, Ages 16-24.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5542/dr-vernon-reynolds",
     "verified": "2026-05",
@@ -25567,7 +26040,57 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Acceptance and commitment therapy",
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Cognitive behavioural therapy",
+      "Depression",
+      "Developmental disability",
+      "Eating disorders",
+      "Family therapy",
+      "Group Therapy",
+      "Interpersonal therapy",
+      "Mindfulness",
+      "Motivational interviewing",
+      "Obsessive-compulsive disorders",
+      "Oppositional Defiant Disorder",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia",
+      "Supportive psychotherapy"
+    ],
+    "services": [
+      "Professional supervision",
+      "Shared care",
+      "After-hours appointments",
+      "Experience with interpreters",
+      "Home visits"
+    ],
+    "ageGroups": [
+      "Ages 1-17",
+      "Ages 18-60",
+      "Ages 16-24"
+    ],
+    "patientGroups": [
+      "Asylum seekers and refugees",
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Maori",
+      "Military and veterans",
+      "Non-English speaking",
+      "Physical disability",
+      "Families"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "nzccp-alex-richards",
@@ -26733,7 +27256,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Professional supervision. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students, Intellectual disability, Military and veterans, Physical disability. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4371/dr-thomas-levien",
     "verified": "2026-05",
@@ -26743,7 +27266,40 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "services": [
+      "ACC Assessment",
+      "ACC Treatment provider",
+      "Civil medicolegal",
+      "Criminal medicolegal",
+      "Insurance opinions / reports",
+      "Professional supervision"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Intellectual disability",
+      "Military and veterans",
+      "Physical disability"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "crisis-nelson-marlborough-tasman",
@@ -29646,7 +30202,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression. Services include Professional supervision, Shared care. Works with Ages 18-60.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression. Services include Professional supervision, Shared care. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intersex, Military and veterans, Doctors psychiatrists or medical students. Works with Ages 18-60.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4171/prof-sunny-collings",
     "verified": "2026-05",
@@ -29656,7 +30212,32 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Depression"
+    ],
+    "services": [
+      "Professional supervision",
+      "Shared care"
+    ],
+    "ageGroups": [
+      "Ages 18-60"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Intersex",
+      "Military and veterans",
+      "Doctors psychiatrists or medical students"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "dunedin-bernadette-berry-delta-psychology",
@@ -40675,7 +41256,20 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "services": [
+      "Civil medicolegal",
+      "Criminal medicolegal",
+      "Family court medicolegal"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-7544",
@@ -40701,7 +41295,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include Insurance opinions / reports, Urgent assessments. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include Insurance opinions / reports, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Non-English speaking. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7544/dr-kang-tan",
     "verified": "2026-05",
@@ -40711,7 +41305,39 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia",
+      "Supportive psychotherapy"
+    ],
+    "services": [
+      "Insurance opinions / reports",
+      "Urgent assessments"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Non-English speaking"
+    ],
+    "languages": [
+      "Cantonese",
+      "English",
+      "Hokkien",
+      "Malay",
+      "Mandarin"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "ranzcp-6009",
@@ -40737,7 +41363,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Cognitive behavioural therapy, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Supportive psychotherapy. Services include ACC Assessment. Works with Mother and baby, Ages 1-17, Ages 18-60, Ages 16-24.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Cognitive behavioural therapy, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Supportive psychotherapy. Services include ACC Assessment. Patient groups listed include Families. Works with Mother and baby, Ages 1-17, Ages 18-60, Ages 16-24.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6009/dr-rachel-kan",
     "verified": "2026-05",
@@ -40747,7 +41373,32 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Cognitive behavioural therapy",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Supportive psychotherapy"
+    ],
+    "services": [
+      "ACC Assessment"
+    ],
+    "ageGroups": [
+      "Mother and baby",
+      "Ages 1-17",
+      "Ages 18-60",
+      "Ages 16-24"
+    ],
+    "patientGroups": [
+      "Families"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "Less than 1 month"
   },
   {
     "id": "ranzcp-5481",
@@ -40776,7 +41427,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Complex trauma, Dementia related disorders. Services include ACC Treatment provider, Shared care, Home visits. Works with Ages 18-60, Ages 60+.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Complex trauma, Dementia related disorders. Services include ACC Treatment provider, Shared care, Home visits. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Maori, Non-English speaking, Physical disability. Works with Ages 18-60, Ages 60+.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit",
     "verified": "2026-05",
@@ -40786,7 +41437,43 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Acceptance and commitment therapy",
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Complex trauma",
+      "Dementia related disorders",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "services": [
+      "ACC Treatment provider",
+      "Shared care",
+      "Home visits"
+    ],
+    "ageGroups": [
+      "Ages 18-60",
+      "Ages 60+"
+    ],
+    "patientGroups": [
+      "Asylum seekers and refugees",
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Maori",
+      "Non-English speaking",
+      "Physical disability"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-5889",
@@ -40814,7 +41501,7 @@
       "work",
       "direct-contact"
     ],
-    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Bipolar disorder, Complex trauma, Depression, Post-traumatic stress disorder, Psychosis. Works with Ages 1-17, Ages 18-60, Ages 16-24.",
+    "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Bipolar disorder, Complex trauma, Depression, Post-traumatic stress disorder, Psychosis. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Non-English speaking, Families, Doctors psychiatrists or medical students. Works with Ages 1-17, Ages 18-60, Ages 16-24.",
     "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5889/dr-struan-robertson",
     "verified": "2026-05",
@@ -40824,7 +41511,34 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "specialties": [
+      "Addiction",
+      "ADHD",
+      "Bipolar disorder",
+      "Complex trauma",
+      "Depression",
+      "Post-traumatic stress disorder",
+      "Psychosis"
+    ],
+    "ageGroups": [
+      "Ages 1-17",
+      "Ages 18-60",
+      "Ages 16-24"
+    ],
+    "patientGroups": [
+      "Doctors, psychiatrists or medical students",
+      "Gender diverse",
+      "Gay and lesbian",
+      "Maori",
+      "Non-English speaking",
+      "Families",
+      "Doctors psychiatrists or medical students"
+    ],
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "1-3 months"
   },
   {
     "id": "ranzcp-448",
@@ -40856,7 +41570,11 @@
     "sourceQuality": "professional register or directory",
     "confidence": "medium",
     "lastVerified": "2026-05",
-    "needsManualVerification": true
+    "needsManualVerification": true,
+    "languages": [
+      "English"
+    ],
+    "appointmentWait": "Contact clinic"
   },
   {
     "id": "nzccp-alan-hackney",
@@ -45404,17 +46122,17 @@
   },
   {
     "id": "taranaki-talkingpoint-new-plymouth",
-    "name": "TalkingPoint",
+    "name": "TalkingPoint New Plymouth",
     "type": "psychologist",
     "region": "Taranaki",
     "city": "New Plymouth",
-    "address": "127 Vivian Street, New Plymouth 4310",
+    "address": "27 Courtenay Street, New Plymouth",
     "phone": "06 757 4898",
     "text": "",
     "email": "admin@talkingpoint.co.nz",
-    "website": "https://www.talkingpoint.co.nz/",
-    "hours": "The site currently notes private client self-referral is available; contact for current times.",
-    "cost": "Private fees may apply; ask about ACC, EAP, insurance, or WINZ options.",
+    "website": "https://www.talkingpoint.co.nz/new-plymouth/",
+    "hours": "Site says private client self-referral and New Plymouth referrals are currently available; contact to confirm clinician availability.",
+    "cost": "Private clients and ACC clients are mentioned. Ask about current fees, ACC, EAP, insurance, WINZ, or other funding options.",
     "tags": [
       "psychologist",
       "clinical-psychologist",
@@ -45425,23 +46143,58 @@
       "trauma",
       "ptsd",
       "grief",
-      "adhd",
-      "child",
       "assessment",
       "fit",
-      "direct-contact"
+      "direct-contact",
+      "neuropsychology",
+      "health",
+      "anger",
+      "self-esteem",
+      "personal-development",
+      "adhd",
+      "child",
+      "acc"
     ],
-    "fit": "New Plymouth clinical psychology practice currently advertising private client self-referral. Specialist areas listed include anxiety, OCD, neuropsychology, trauma, PTSD, grief, ADHD, child psychology, and assessments.",
-    "firstStep": "Call, email, or use the self-referral enquiry and ask whether a clinician has availability for your concern.",
-    "source": "https://www.talkingpoint.co.nz/",
+    "fit": "Clinical psychology practice in New Plymouth. The site lists anxiety, OCD, neuropsychology, health psychology, trauma, PTSD, grief, ADHD, child psychology, learning disorder assessments, ACC and private-client pathways, a Maori clinical psychologist, and LGBQ+ friendly support.",
+    "firstStep": "Call, email, or use the self-referral form and ask whether a clinician is available for your concern, costs, ACC or other funding, and the simplest first appointment step.",
+    "source": "https://www.talkingpoint.co.nz/new-plymouth/",
     "verified": "2026-05",
     "confidence": "high",
-    "lat": -39.0625377,
-    "lon": 174.0655643,
-    "coordinateSource": "OpenStreetMap Nominatim 2026-05-23",
-    "sourceQuality": "provider-owned or NGO public page",
+    "lat": -39.0581798,
+    "lon": 174.0755579,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
+    "sourceQuality": "provider-owned page",
     "lastVerified": "2026-05",
-    "needsManualVerification": false
+    "needsManualVerification": false,
+    "specialties": [
+      "Stress",
+      "OCD treatment",
+      "Neuropsychology",
+      "Health psychology",
+      "Anger management",
+      "Self esteem counselling",
+      "Anxiety",
+      "Personal development psychology",
+      "Competency assessments",
+      "Grief counselling/PTSD",
+      "Trauma counselling",
+      "Child ADHD",
+      "Child OCD",
+      "Child psychology",
+      "Child learning disorder assessments"
+    ],
+    "patientGroups": [
+      "Private clients",
+      "ACC clients",
+      "Children",
+      "Adults",
+      "People seeking a Maori clinical psychologist",
+      "LGBQ+ friendly"
+    ],
+    "ageGroups": [
+      "Children",
+      "Adults"
+    ]
   },
   {
     "id": "taranaki-groundwork-psychology",
@@ -46663,6 +47416,75 @@
     "confidence": "high",
     "sourceQuality": "provider-owned or NGO public page",
     "lastVerified": "2026-05",
+    "needsManualVerification": false
+  },
+  {
+    "id": "waikato-talkingpoint-cambridge",
+    "name": "TalkingPoint Cambridge",
+    "type": "psychologist",
+    "region": "Waikato",
+    "city": "Cambridge",
+    "address": "",
+    "phone": "06 757 4898",
+    "text": "",
+    "email": "",
+    "website": "https://www.talkingpoint.co.nz/cambridge/",
+    "hours": "Site says private client self-referral is currently available; contact to confirm Cambridge availability.",
+    "cost": "Private fees may apply. Ask about current fees, ACC, EAP, insurance, WINZ, or other funding options.",
+    "tags": [
+      "psychologist",
+      "clinical-psychologist",
+      "depression",
+      "anxiety",
+      "stress",
+      "ocd",
+      "trauma",
+      "ptsd",
+      "grief",
+      "assessment",
+      "fit",
+      "direct-contact",
+      "health",
+      "anger",
+      "self-esteem",
+      "personal-development",
+      "parenting",
+      "child",
+      "adolescent"
+    ],
+    "specialties": [
+      "Stress",
+      "OCD treatment",
+      "Health psychology",
+      "Anger management",
+      "Self esteem counselling",
+      "Anxiety",
+      "Personal development psychology",
+      "Competency assessments",
+      "Grief counselling/PTSD",
+      "Trauma counselling",
+      "Family and parenting interventions",
+      "Child, adolescent, and adult support"
+    ],
+    "patientGroups": [
+      "Private clients",
+      "Children",
+      "Adolescents",
+      "Adults",
+      "Parents and families"
+    ],
+    "ageGroups": [
+      "Children",
+      "Adolescents",
+      "Adults"
+    ],
+    "fit": "Cambridge psychology service. The site lists support for stress, OCD, health psychology, anger, self-esteem, anxiety, personal development, competency assessments, grief/PTSD, trauma, parenting, and adults, adolescents, and children with anxiety, depression, and stress.",
+    "firstStep": "Call or use the self-referral form, choose Cambridge, and ask about availability, costs, funding options, and whether the service fits your concern.",
+    "source": "https://www.talkingpoint.co.nz/cambridge/",
+    "verified": "2026-05",
+    "lastVerified": "2026-05",
+    "confidence": "high",
+    "sourceQuality": "provider-owned page",
     "needsManualVerification": false
   }
 ]

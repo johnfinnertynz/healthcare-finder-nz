@@ -55,6 +55,24 @@ promotion:
 - Wairarapa: no local psychiatrist records.
 - West Coast: no local psychologist or psychiatrist records.
 
+## RANZCP Directory Thin-Coverage Check
+
+Checked the Your Health in Mind / RANZCP New Zealand psychiatrist directory on
+2026-05-24 for thin-coverage locations. The directory's current New Zealand
+results did not add any available local psychiatrist profiles for Hawke's Bay,
+Tairawhiti, Manawatu-Whanganui, Wairarapa, Rotorua and Taupo, South Canterbury,
+Southland, or West Coast.
+
+Location searches did identify two local profiles that should stay off the live
+provider list until availability changes:
+
+- Waikato / Hamilton: Dr John Collier, listed as not taking new patients.
+- Taranaki / New Plymouth: Dr Roger Elliott, listed as not taking new patients.
+
+Nearest available RANZCP directory results for several thin regions are
+out-of-region, often 75 km to 250 km away. Treat those as telehealth or
+manual-review fallback options rather than local listings.
+
 ## Blocked-By-Site Links Needing Human Review
 
 The automated link checker cannot verify these because the site blocks automated

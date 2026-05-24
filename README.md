@@ -211,6 +211,12 @@ Import opt-in psychiatrist listings from RANZCP Your Health in Mind:
 node tools/import-ranzcp-psychiatrists.mjs
 ```
 
+Refresh TalkingPoint public psychology practice listings:
+
+```sh
+node tools/import-talkingpoint.mjs
+```
+
 Prepare a psychologist verification and public-contact research queue from an
 exported New Zealand Psychologists Board register search:
 

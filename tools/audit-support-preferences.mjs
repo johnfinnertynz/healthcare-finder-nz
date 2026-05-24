@@ -42,7 +42,11 @@ function evidenceText(provider) {
     provider.fit,
     provider.firstStep,
     provider.cost,
-    ...(provider.specialties || [])
+    ...(provider.specialties || []),
+    ...(provider.patientGroups || []),
+    ...(provider.ageGroups || []),
+    ...(provider.services || []),
+    ...(provider.languages || [])
   ].join(" ");
 }
 
