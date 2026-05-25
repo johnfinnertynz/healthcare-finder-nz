@@ -57,6 +57,7 @@ const requiredFields = [
 const allowedConfidence = new Set(["high", "medium", "low"]);
 const allowedNeedScope = new Set(["depression", "anxiety", "trauma", "addiction", "work"]);
 const broadNeedTags = new Set(["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"]);
+const coreMentalHealthTags = new Set(["depression", "anxiety", "trauma", "addiction", "relationships", "grief"]);
 
 const unavailablePattern = /\b(not taking new (clients|patients)|not accepting (new )?(clients|patients|referrals)|books are closed|closed to new (clients|patients)|unable to accept new (clients|patients|referrals))\b/i;
 const errors = [];
@@ -161,6 +162,14 @@ if (!Array.isArray(providers)) {
       && !provider.tags.some((tag) => broadNeedTags.has(tag));
     if (sexualHarmOnly && !provider.needScope?.includes("trauma")) {
       recordIssue(errors, provider, "sexual-harm-only services must include needScope [\"trauma\"] so unrelated concerns do not rank them");
+    }
+
+    const rehabWorkOnly = provider.type === "psychologist"
+      && provider.tags?.includes("rehabilitation")
+      && ["acc", "concussion", "pain", "return-to-work", "vocational"].some((tag) => provider.tags?.includes(tag))
+      && !provider.tags.some((tag) => coreMentalHealthTags.has(tag));
+    if (rehabWorkOnly && !provider.needScope?.includes("work")) {
+      recordIssue(errors, provider, "rehabilitation-only psychology services must include needScope [\"work\"] so they do not rank for unrelated low-mood or anxiety flows");
     }
 
     const hasLat = provider.lat !== undefined && provider.lat !== "";

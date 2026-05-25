@@ -69,7 +69,8 @@ const needLabels = {
 
 const scopedNeedLabels = {
   trauma: "trauma or sexual harm",
-  addiction: "alcohol, drug, or gambling harm"
+  addiction: "alcohol, drug, or gambling harm",
+  work: "work, study, money, or housing stress"
 };
 
 const broadNeedTags = ["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"];
@@ -390,9 +391,14 @@ function providerNeedScope(provider) {
       || (provider.type === "helpline" && tags.includes("addiction"))
       || tags.includes("gambling"))
     && !["depression", "anxiety", "trauma", "work"].some((tag) => tags.includes(tag));
+  const rehabWorkOnly = provider.type === "psychologist"
+    && tags.includes("rehabilitation")
+    && ["acc", "concussion", "pain", "return-to-work", "vocational"].some((tag) => tags.includes(tag))
+    && !["depression", "anxiety", "trauma", "addiction", "relationships", "grief"].some((tag) => tags.includes(tag));
 
   if (sexualHarmOnly) scopes.push("trauma");
   if (addictionOnly) scopes.push("addiction");
+  if (rehabWorkOnly) scopes.push("work");
   return [...new Set(scopes)];
 }
 
@@ -605,6 +611,8 @@ function filteredProviders() {
         provider.cost,
         provider.fit,
         provider.firstStep,
+        provider.clinicianName,
+        provider.practiceName,
         ...(provider.tags || [])
       ].join(" ").toLowerCase();
 
@@ -714,6 +722,29 @@ function providerTypeBadge(provider) {
   `;
 }
 
+function providerPrimaryName(provider) {
+  return provider.clinicianName || provider.name;
+}
+
+function providerPracticeName(provider) {
+  if (!provider.clinicianName) return "";
+  const practice = provider.practiceName || provider.name;
+  return practice && practice !== provider.clinicianName ? practice : "";
+}
+
+function providerDisplayLabel(provider) {
+  const practice = providerPracticeName(provider);
+  return practice ? `${providerPrimaryName(provider)} at ${practice}` : providerPrimaryName(provider);
+}
+
+function providerNameMarkup(provider) {
+  const practice = providerPracticeName(provider);
+  return `
+    <h3>${escapeHtml(providerPrimaryName(provider))}</h3>
+    ${practice ? `<p class="provider-practice">${escapeHtml(practice)}</p>` : ""}
+  `;
+}
+
 function renderProviders() {
   if (!providers.length) {
     providerCount.textContent = providerLoadError || "Loading local provider database...";
@@ -755,7 +786,6 @@ function renderProviders() {
       const website = safeHref(provider.website);
       const booking = safeHref(provider.bookingUrl);
       const providerId = escapeHtml(provider.id);
-      const providerName = escapeHtml(provider.name);
       const providerRegion = escapeHtml(provider.region);
       const providerCity = escapeHtml(provider.city);
       const providerFit = escapeHtml(provider.fit);
@@ -803,7 +833,7 @@ function renderProviders() {
         <article class="provider-card ${isSelected ? "selected" : ""}">
           <div class="provider-card__header">
             <div>
-              <h3>${providerName}</h3>
+              ${providerNameMarkup(provider)}
               <p class="provider-meta">${providerRegion}${provider.city ? ` | ${providerCity}` : ""}${distanceLabel ? ` | ${providerDistance}` : ""}</p>
             </div>
             ${providerTypeBadge(provider)}
@@ -1624,16 +1654,19 @@ function contactTarget() {
   const provider = providers.find((item) => item.id === contactProviderId);
   if (provider) {
     const directory = isDirectoryLike(provider);
+    const label = providerPrimaryName(provider);
+    const fullLabel = providerDisplayLabel(provider);
+    const websiteOwner = provider.practiceName || provider.name;
     return {
-      label: provider.name,
+      label,
       email: directory ? "" : provider.email || "",
       phone: directory ? "" : provider.phone || "",
       text: directory ? "" : provider.text || "",
       website: safeHref(provider.bookingUrl || provider.website),
-      websiteLabel: provider.bookingUrl ? "Open booking page" : `Open ${provider.name} website`,
+      websiteLabel: provider.bookingUrl ? "Open booking page" : `Open ${websiteOwner} website`,
       isDirectory: directory,
-      subject: `Support request for ${provider.name}`,
-      greeting: provider.name.includes("1737") ? "Kia ora" : `Kia ora ${provider.name}`
+      subject: `Support request for ${fullLabel}`,
+      greeting: provider.name.includes("1737") ? "Kia ora" : `Kia ora ${label}`
     };
   }
 
@@ -1859,7 +1892,7 @@ function renderContact() {
   selectedProvider.textContent = provider
     ? target.isDirectory
       ? `${provider.name} is a directory or navigator. Use the website to choose a specific provider; this tool will not email or call it as if it were a provider.`
-      : `Using ${provider.name}. You can still edit the message before sending.`
+      : `Using ${providerDisplayLabel(provider)}. You can still edit the message before sending.`
     : "Choose a provider above, or use the message with any service you find.";
   contactAvailability.textContent = contactAvailabilityNote(target, provider);
 }
@@ -1946,7 +1979,7 @@ function render() {
             <div class="recommendation-card__header">
               <div>
                 <p class="recommendation-kicker">${escapeHtml(move.title)}</p>
-                <h3>${escapeHtml(move.provider.name)}</h3>
+                ${providerNameMarkup(move.provider)}
                 <p class="recommendation-meta">${escapeHtml(move.provider.region)}${move.provider.city ? ` | ${escapeHtml(move.provider.city)}` : ""}${distanceLabel ? ` | ${escapeHtml(distanceLabel)}` : ""}</p>
               </div>
               ${providerTypeBadge(move.provider)}

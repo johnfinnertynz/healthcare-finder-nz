@@ -24132,6 +24132,8 @@
   {
     "id": "hawkes-bay-alive-psychology",
     "name": "Alive! Psychological Services",
+    "clinicianName": "Bhavna Nagar",
+    "practiceName": "Alive! Psychological Services",
     "type": "psychologist",
     "region": "Hawke's Bay",
     "city": "Napier",
@@ -51287,23 +51289,24 @@
       "direct-contact"
     ],
     "specialties": [
-      "Psychology services",
-      "Rehabilitation",
+      "Rehabilitation psychology",
       "ACC services",
       "Concussion",
       "Pain management",
-      "Return to work support",
-      "Health and wellbeing checks"
+      "Return to work support"
+    ],
+    "needScope": [
+      "work"
     ],
     "patientGroups": [
       "Adults",
-      "People recovering after injury, illness, pain, concussion, work stress, or mental illness"
+      "People recovering after injury, illness, concussion, pain, or return-to-work difficulty"
     ],
     "ageGroups": [
       "Adults"
     ],
-    "fit": "Greymouth rehabilitation clinic listing psychology services, ACC services, and support after injury, illness, concussion, pain, work difficulty, or mental illness. Verify whether general mental health psychology is available before booking.",
-    "firstStep": "Call or email and ask whether a psychologist is available for your concern, whether a referral is needed, and what funding or private fees apply.",
+    "fit": "Greymouth occupational health and rehabilitation clinic. Psychology appears in an ACC, concussion, pain, rehabilitation, and return-to-work context, so it should only be a first option when the concern is connected to work, injury, pain, concussion, or rehabilitation.",
+    "firstStep": "Call or email only if your concern is linked to work, injury, pain, concussion, ACC, or rehabilitation. Ask whether psychology is available for that specific need and whether a referral is required.",
     "source": "https://proactivehealthcare.co.nz/clinic/proactive-greymouth/"
   },
   {

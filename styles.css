@@ -867,6 +867,19 @@ input[type="checkbox"] {
   font-size: 1.25rem;
 }
 
+.provider-practice {
+  margin: 0.16rem 0 0.25rem !important;
+  color: var(--muted) !important;
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.recommendation-card .provider-practice {
+  margin-top: 0.1rem !important;
+  font-size: 0.88rem;
+}
+
 .provider-card > .provider-card__header {
   grid-column: 1 / -1;
 }
@@ -949,11 +962,14 @@ input[type="checkbox"] {
 }
 
 .provider-actions {
+  grid-column: 1 / -1;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  justify-content: flex-end;
-  max-width: 340px;
+  justify-content: flex-start;
+  max-width: none;
+  border-top: 1px solid var(--line);
+  padding-top: 0.85rem;
 }
 
 .provider-actions .button {

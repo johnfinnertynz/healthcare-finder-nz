@@ -235,6 +235,25 @@ test("Xtrapsychplus is scoped to sexual harm counselling, not broad psychology",
   assert.match(provider.fit, /sexual harm counselling/i);
 });
 
+test("clinician-led practice records can display the clinician above the practice", () => {
+  const provider = providers.find((item) => item.id === "hawkes-bay-alive-psychology");
+  assert.ok(provider);
+  assert.equal(provider.clinicianName, "Bhavna Nagar");
+  assert.equal(provider.practiceName, "Alive! Psychological Services");
+  assert.equal(provider.email, "bhavna@alivepsych.co.nz");
+});
+
+test("rehabilitation psychology is scoped away from general low-mood searches", () => {
+  const provider = providers.find((item) => item.id === "west-coast-proactive-greymouth-psychology");
+  assert.ok(provider);
+  assert.equal(provider.type, "psychologist");
+  assert.deepEqual(provider.needScope, ["work"]);
+  assert.equal(provider.tags.includes("depression"), false);
+  assert.equal(provider.tags.includes("anxiety"), false);
+  assert.match(provider.fit, /occupational health and rehabilitation/i);
+  assert.equal(/general mental health psychology/i.test(provider.fit), false);
+});
+
 test("need-scoped sexual harm services do not rank for unrelated concern selections", () => {
   const anxietyMatches = visibleMatches({
     region: "Northland",
@@ -249,6 +268,22 @@ test("need-scoped sexual harm services do not rank for unrelated concern selecti
 
   assert.equal(anxietyMatches.some((provider) => provider.id === "northland-xtrapsychplus"), false);
   assert.equal(traumaMatches.some((provider) => provider.id === "northland-xtrapsychplus"), true);
+});
+
+test("need-scoped rehabilitation services do not rank for unrelated low-mood searches", () => {
+  const depressionMatches = visibleMatches({
+    region: "West Coast",
+    type: "psychologist",
+    needs: ["depression"]
+  });
+  const workMatches = visibleMatches({
+    region: "West Coast",
+    type: "psychologist",
+    needs: ["work"]
+  });
+
+  assert.equal(depressionMatches.some((provider) => provider.id === "west-coast-proactive-greymouth-psychology"), false);
+  assert.equal(workMatches.some((provider) => provider.id === "west-coast-proactive-greymouth-psychology"), true);
 });
 
 test("provider records used for contact have safe public contact fields", () => {

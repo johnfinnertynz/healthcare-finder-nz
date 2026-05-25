@@ -257,10 +257,26 @@ test("Greymouth psychologist flow does not recommend Christchurch providers as t
 
   assert.ok(matches.length > 0, "Greymouth psychologist flow should still find options");
   assert.equal(matches.some((provider) => provider.id === "nzccp-alex-richards"), false);
+  assert.equal(matches.some((provider) => provider.id === "west-coast-proactive-greymouth-psychology"), false);
   assert.ok(
     matches.every((provider) => provider.region === "West Coast" || hasNationalServiceReach(provider)),
     "out-of-region recommendations must have confirmed national or telehealth reach"
   );
+});
+
+test("Greymouth work-related psychologist flow may include scoped rehabilitation psychology", () => {
+  const matches = recommendations({
+    name: "27-year-old male in Greymouth with work stress seeking a psychologist",
+    region: "West Coast",
+    age: 27,
+    want: "psychologist",
+    needs: ["work"],
+    preferences: [],
+    barriers: []
+  });
+
+  assert.ok(matches.length > 0, "Greymouth work-related psychologist flow should still find options");
+  assert.equal(matches.some((provider) => provider.id === "west-coast-proactive-greymouth-psychology"), true);
 });
 
 test("all main intake choices have matching logic coverage", () => {
