@@ -527,6 +527,29 @@ test("opt-in cultural providers stay hidden unless selected", () => {
   assert.equal(asianSelected.some((provider) => provider.id === "national-asian-family-services"), true);
 });
 
+test("Gisborne psychologist coverage uses approved local records and excludes corrected LaNae Fisk location", () => {
+  const gisborne = { lat: -38.6623, lon: 178.0176 };
+  const psychologists = visibleMatches({
+    region: "Tairawhiti",
+    type: "psychologist",
+    needs: ["depression"],
+    userCoords: gisborne
+  });
+  const ids = psychologists.map((provider) => provider.id);
+
+  assert.equal(ids.includes("tairawhiti-the-therapy-space"), true);
+  assert.equal(ids.includes("tairawhiti-wellmind-psychology"), true);
+  assert.equal(ids.includes("tairawhiti-nelson-clinic-nadine-von-rothkirch"), true);
+  assert.equal(ids.includes("tairawhiti-lanae-fisk-psychology"), false);
+
+  const lanae = providers.find((provider) => provider.id === "tairawhiti-lanae-fisk-psychology");
+  assert.ok(lanae);
+  assert.equal(lanae.region, "Canterbury");
+  assert.equal(lanae.city, "Christchurch");
+  assert.equal(lanae.needsManualVerification, true);
+  assert.match(lanae.fit, /corrected from Gisborne to Christchurch/i);
+});
+
 test("Whangarei depression flow has local direct GP, counselling, psychology, and psychiatry options", () => {
   const whangarei = { lat: -35.7251, lon: 174.3237 };
   const profile = {

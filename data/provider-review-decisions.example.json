@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-26T00:00:00.000Z",
+  "notes": "Example only. The browser prototype downloads this shape; apply with npm run apply:review -- --decisions data/provider-review-decisions.json after human review.",
+  "decisions": [
+    {
+      "reviewId": "provider:example-provider-id",
+      "providerId": "example-provider-id",
+      "action": "adjust",
+      "reviewer": "reviewer@example.nz",
+      "reviewedDate": "2026-05-26",
+      "sourceUrl": "https://example.org/provider-page",
+      "sourceExcerpt": "Short source-backed excerpt showing the changed field. Do not paste whole pages.",
+      "auditRulesResolved": [
+        "missing-coordinates"
+      ],
+      "correctedFields": {
+        "clinicianName": "Jane Example",
+        "practiceName": "Example Psychology",
+        "availabilityStatus": "unknown",
+        "availabilityEvidence": "Availability is not published on the source page.",
+        "availabilityCheckedAt": "2026-05-26"
+      },
+      "explicitApprovals": [],
+      "reviewNotes": "Reviewed against the provider-owned source page."
+    },
+    {
+      "reviewId": "provider:example-unavailable-id",
+      "providerId": "example-unavailable-id",
+      "action": "move_to_watchlist",
+      "reviewer": "reviewer@example.nz",
+      "reviewedDate": "2026-05-26",
+      "sourceUrl": "https://example.org/availability",
+      "sourceExcerpt": "The page says the practice is not accepting new clients.",
+      "auditRulesResolved": [
+        "restrictive-evidence-status-mismatch"
+      ],
+      "correctedFields": {},
+      "reviewNotes": "Moved out of live first recommendations until availability changes."
+    },
+    {
+      "reviewId": "provider:example-duplicate-id",
+      "providerId": "example-duplicate-id",
+      "action": "duplicate",
+      "keptProviderId": "example-kept-provider-id",
+      "reviewer": "reviewer@example.nz",
+      "reviewedDate": "2026-05-26",
+      "sourceUrl": "https://example.org/source",
+      "sourceExcerpt": "Both records refer to the same provider/practice.",
+      "auditRulesResolved": [],
+      "correctedFields": {},
+      "reviewNotes": "Duplicate removed; kept provider id is recorded in the append-only review log."
+    }
+  ]
+}

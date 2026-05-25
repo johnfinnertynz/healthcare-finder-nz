@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-25T03:51:45.322Z",
-  "providersScanned": 1210,
+  "generatedAt": "2026-05-25T23:12:06.015Z",
+  "providersScanned": 1214,
   "findings": [
     {
       "providerId": "canterbury-mherc",
@@ -3340,8 +3340,8 @@
         "depression",
         "anxiety",
         "serious-mental-health",
-        "maori",
-        "kaupapa-maori",
+        "whanau",
+        "cultural-safety",
         "cost",
         "fit",
         "direct-contact"
@@ -3439,6 +3439,35 @@
       "severity": "medium",
       "issue": "Broad tag \"trauma\" is present but source fields do not clearly support it.",
       "suggestedFix": "Remove \"trauma\" or add source-backed specialties/services evidence.",
+      "allowlisted": false
+    },
+    {
+      "providerId": "northland-indigo-house-lynn-price",
+      "providerName": "Lynn Price",
+      "region": "Northland",
+      "city": "Whangarei",
+      "type": "psychologist",
+      "tags": [
+        "psychologist",
+        "therapy",
+        "trauma",
+        "sexual-harm",
+        "grief",
+        "relationships",
+        "female",
+        "acc",
+        "cost",
+        "fit",
+        "direct-contact"
+      ],
+      "needScope": [
+        "trauma"
+      ],
+      "source": "https://indigohouse.co.nz/who-we-are/",
+      "rule": "weak-telehealth-evidence",
+      "severity": "medium",
+      "issue": "Telehealth or online availability is set but source fields do not clearly support remote care.",
+      "suggestedFix": "Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments.",
       "allowlisted": false
     },
     {
@@ -3618,28 +3647,6 @@
       "severity": "medium",
       "issue": "rainbow support tag is present but source fields do not clearly support it.",
       "suggestedFix": "Remove the tag or add a stronger public source/structured patientGroups/languages evidence.",
-      "allowlisted": false
-    },
-    {
-      "providerId": "nzccp-alex-mortlock",
-      "providerName": "Alex Mortlock",
-      "region": "Canterbury",
-      "city": "Christchurch",
-      "type": "psychologist",
-      "tags": [
-        "psychologist",
-        "clinical-psychologist",
-        "fit",
-        "anxiety",
-        "depression",
-        "act"
-      ],
-      "needScope": [],
-      "source": "https://www.nzccp.co.nz/team/alex-mortlock",
-      "rule": "register-only-public-contact",
-      "severity": "medium",
-      "issue": "Professional appears to come from a register/directory only and lacks a separate public practice contact route.",
-      "suggestedFix": "Keep as a research lead or add a provider-owned/practice contact source before treating as direct first contact.",
       "allowlisted": false
     },
     {
@@ -4687,62 +4694,6 @@
       ],
       "needScope": [],
       "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit",
-      "rule": "weak-telehealth-evidence",
-      "severity": "medium",
-      "issue": "Telehealth or online availability is set but source fields do not clearly support remote care.",
-      "suggestedFix": "Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments.",
-      "allowlisted": false
-    },
-    {
-      "providerId": "ranzcp-5542",
-      "providerName": "Dr Vernon Reynolds",
-      "region": "Northland",
-      "city": "Whangarei",
-      "type": "psychiatrist",
-      "tags": [
-        "psychiatrist",
-        "medical-specialist",
-        "fit",
-        "telehealth",
-        "maori",
-        "rainbow",
-        "cost",
-        "depression",
-        "anxiety",
-        "trauma",
-        "work",
-        "direct-contact"
-      ],
-      "needScope": [],
-      "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5542/dr-vernon-reynolds",
-      "rule": "broad-tag-without-source-support",
-      "severity": "medium",
-      "issue": "Broad tag \"work\" is present but source fields do not clearly support it.",
-      "suggestedFix": "Remove \"work\" or add source-backed specialties/services evidence.",
-      "allowlisted": false
-    },
-    {
-      "providerId": "ranzcp-5542",
-      "providerName": "Dr Vernon Reynolds",
-      "region": "Northland",
-      "city": "Whangarei",
-      "type": "psychiatrist",
-      "tags": [
-        "psychiatrist",
-        "medical-specialist",
-        "fit",
-        "telehealth",
-        "maori",
-        "rainbow",
-        "cost",
-        "depression",
-        "anxiety",
-        "trauma",
-        "work",
-        "direct-contact"
-      ],
-      "needScope": [],
-      "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5542/dr-vernon-reynolds",
       "rule": "weak-telehealth-evidence",
       "severity": "medium",
       "issue": "Telehealth or online availability is set but source fields do not clearly support remote care.",
@@ -6195,6 +6146,90 @@
       "severity": "medium",
       "issue": "Telehealth or online availability is set but source fields do not clearly support remote care.",
       "suggestedFix": "Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments.",
+      "allowlisted": false
+    },
+    {
+      "providerId": "tairawhiti-lanae-fisk-psychology",
+      "providerName": "LaNae Fisk Psychology",
+      "region": "Canterbury",
+      "city": "Christchurch",
+      "type": "psychologist",
+      "tags": [
+        "psychologist",
+        "clinical-psychologist",
+        "therapy",
+        "depression",
+        "anxiety",
+        "trauma",
+        "acc",
+        "assessment",
+        "fit",
+        "direct-contact",
+        "telehealth",
+        "online"
+      ],
+      "needScope": [],
+      "source": "https://www.lanaefiskpsychology.info/",
+      "rule": "broad-tag-without-source-support",
+      "severity": "medium",
+      "issue": "Broad tag \"depression\" is present but source fields do not clearly support it.",
+      "suggestedFix": "Remove \"depression\" or add source-backed specialties/services evidence.",
+      "allowlisted": false
+    },
+    {
+      "providerId": "tairawhiti-lanae-fisk-psychology",
+      "providerName": "LaNae Fisk Psychology",
+      "region": "Canterbury",
+      "city": "Christchurch",
+      "type": "psychologist",
+      "tags": [
+        "psychologist",
+        "clinical-psychologist",
+        "therapy",
+        "depression",
+        "anxiety",
+        "trauma",
+        "acc",
+        "assessment",
+        "fit",
+        "direct-contact",
+        "telehealth",
+        "online"
+      ],
+      "needScope": [],
+      "source": "https://www.lanaefiskpsychology.info/",
+      "rule": "broad-tag-without-source-support",
+      "severity": "medium",
+      "issue": "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
+      "suggestedFix": "Remove \"anxiety\" or add source-backed specialties/services evidence.",
+      "allowlisted": false
+    },
+    {
+      "providerId": "tairawhiti-lanae-fisk-psychology",
+      "providerName": "LaNae Fisk Psychology",
+      "region": "Canterbury",
+      "city": "Christchurch",
+      "type": "psychologist",
+      "tags": [
+        "psychologist",
+        "clinical-psychologist",
+        "therapy",
+        "depression",
+        "anxiety",
+        "trauma",
+        "acc",
+        "assessment",
+        "fit",
+        "direct-contact",
+        "telehealth",
+        "online"
+      ],
+      "needScope": [],
+      "source": "https://www.lanaefiskpsychology.info/",
+      "rule": "broad-tag-without-source-support",
+      "severity": "medium",
+      "issue": "Broad tag \"trauma\" is present but source fields do not clearly support it.",
+      "suggestedFix": "Remove \"trauma\" or add source-backed specialties/services evidence.",
       "allowlisted": false
     },
     {
@@ -10700,9 +10735,9 @@
     }
   ],
   "summary": {
-    "total": 403,
+    "total": 404,
     "high": 2,
-    "medium": 275,
+    "medium": 276,
     "low": 126,
     "highUnallowlisted": 0,
     "allowlisted": 2

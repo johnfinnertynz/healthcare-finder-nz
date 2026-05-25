@@ -244,6 +244,80 @@ Before committing provider data changes:
 13. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
     soft launch.
 
+## Human Review Queue
+
+Use the provider review queue when audit output or manual verification flags
+need a human decision:
+
+```sh
+npm run export:review
+```
+
+The export produces `data/provider-review-queue.json`,
+`data/provider-review-queue.csv`, and `PROVIDER_REVIEW_QUEUE.md`. The queue is
+focused by default. It prioritises high-severity audit findings, providers that
+can affect first recommendations, psychiatrist referral uncertainty,
+availability risk, unsupported broad tags, weak support-preference evidence,
+weak telehealth evidence, geocode concerns, directory/direct-contact confusion,
+register-only records, missing contact details, low confidence, and stale
+verification dates.
+
+Use `admin/index.html` for local review. It is a static prototype only: it does
+not write to provider data. Reviewers export decisions, then apply them through:
+
+```sh
+npm run apply:review
+```
+
+Supported decisions are `approve`, `adjust`, `reject`, `move_to_watchlist`,
+`duplicate`, and `needs_more_info`. `correctedFields` is intentionally
+allowlisted. Unsafe fields are rejected unless an explicit unsafe-field flag is
+used for an exceptional local maintenance task.
+
+Every applied decision appends to `data/provider-review-log.jsonl`. The log is
+the audit trail and should not be rewritten during normal review work.
+
+## Structured Evidence Model
+
+Review queue items can include structured source evidence:
+
+```json
+{
+  "sourceEvidence": {
+    "contact": [],
+    "address": [],
+    "availability": [],
+    "referral": [],
+    "scope": [],
+    "tags": {},
+    "telehealth": [],
+    "cultural": [],
+    "cost": []
+  }
+}
+```
+
+Each evidence item supports:
+
+- `field`
+- `value`
+- `sourceUrl`
+- `excerpt`
+- `capturedAt`
+- `confidence`
+- `needsManualReview`
+
+Do not fake excerpts. If an importer cannot capture a source excerpt for a
+claim, mark the relevant evidence item as `needsManualReview: true`.
+
+Never guess:
+
+- accepting-new-client status
+- psychiatrist self-referral
+- Māori, Pasifika, Asian, Rainbow, trauma-informed, or telehealth support
+- broad need tags such as depression, anxiety, trauma, addiction, or work
+- whether a directory/register entry is a direct provider
+
 ## Source-Fit Audit
 
 The source-fit audit protects against a record being more confident than its

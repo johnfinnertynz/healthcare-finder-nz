@@ -1,6 +1,6 @@
 # Availability Recheck Report
 
-Generated: 2026-05-25T03:51:45.335Z
+Generated: 2026-05-25T23:12:05.997Z
 
 ## Current Behaviour Before This Change
 
@@ -25,13 +25,13 @@ Accepting is never inferred from silence. Blocked or unreachable pages create ma
 
 Live providers:
 
-- accepting: 4
-- not_published: 1177
-- waitlist: 29
+- accepting: 6
+- not_published: 1178
+- waitlist: 30
 
 Unavailable watchlist:
 
-- not_accepting: 14
+- not_accepting: 15
 - referrals_paused: 5
 
 Regions most affected by unavailable/watchlist records:
@@ -40,7 +40,7 @@ Regions most affected by unavailable/watchlist records:
 - Canterbury: 1
 - Hawke's Bay: 2
 - Nelson Marlborough Tasman: 1
-- Northland: 5
+- Northland: 6
 - Southland: 1
 - Tairawhiti: 1
 - Taranaki: 4

@@ -353,6 +353,69 @@ check. The default user agent is intentionally browser-like and does not
 identify itself as a link checker, because some healthcare directories block
 that wording before returning a useful status.
 
+## Provider Review Workflow
+
+Provider data changes should go through a review queue rather than direct edits
+where practical:
+
+```sh
+npm run export:review
+```
+
+This writes:
+
+- `data/provider-review-queue.json`
+- `data/provider-review-queue.csv`
+- `PROVIDER_REVIEW_QUEUE.md`
+
+The export merges `providers.json`, source-fit findings, availability findings,
+psychiatrist referral findings, address/geocode checks, the availability
+watchlist, and optional identity/link/discovery reports. By default it is a
+focused queue and does not include every low-risk GP record. Use
+`node tools/export-provider-review-queue.mjs --include-all` for a full dump.
+
+Open the local prototype at `admin/index.html` after serving the repo locally.
+The admin console loads the queue, lets a reviewer inspect evidence, and exports
+review decisions. It does not write to production data.
+
+Place an exported decision file at `data/provider-review-decisions.json`, then
+apply it through the controlled script:
+
+```sh
+npm run apply:review
+```
+
+Decisions are:
+
+- `approve`
+- `adjust`
+- `reject`
+- `move_to_watchlist`
+- `duplicate`
+- `needs_more_info`
+
+`correctedFields` only accepts an allowlisted set of provider fields. The apply
+script rejects unsafe fields and enforces safety rules such as no `accepting`
+availability without explicit evidence, no psychiatrist `self` referral without
+source evidence, and no directory-to-direct-provider conversion without a direct
+provider contact source. Every applied decision appends an event to
+`data/provider-review-log.jsonl`.
+
+After applying decisions, run:
+
+```sh
+npm run validate:data
+npm run audit:source-fit
+npm run audit:availability
+npm run audit:referrals
+npm run audit:addresses
+npm test
+```
+
+Source pages should be opened in a new tab from the auditor UI. Iframe previews
+are optional and sandboxed because many healthcare sites block embedding. Do not
+proxy source websites to bypass their restrictions.
+
 ## Provider Source Principles
 
 - Prefer official provider pages, professional body directories, Health NZ,

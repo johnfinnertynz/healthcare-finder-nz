@@ -15,6 +15,9 @@
     "audit:support-preferences": "node tools/audit-support-preferences.mjs providers.json",
     "audit:addresses": "node tools/audit-address-coverage.mjs providers.json",
     "audit:watchlist": "node tools/audit-availability-watchlist.mjs",
+    "scan:identities": "node tools/scan-provider-identities.mjs",
+    "export:review": "node tools/export-provider-review-queue.mjs",
+    "apply:review": "node tools/apply-provider-review-decisions.mjs",
     "discover:providers": "node tools/build-provider-discovery-queue.mjs",
     "check:links": "node tools/check-links.mjs"
   },

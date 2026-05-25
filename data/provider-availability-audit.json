@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-25T03:51:45.335Z",
+  "generatedAt": "2026-05-25T23:12:05.997Z",
   "currentBehaviour": {
     "scheduledRecheckPreviouslyExisted": true,
     "notes": [
@@ -9,8 +9,8 @@
       "The link checker checked reachability only; it did not infer provider availability."
     ]
   },
-  "providersScanned": 1210,
-  "watchlistItemsScanned": 19,
+  "providersScanned": 1214,
+  "watchlistItemsScanned": 20,
   "recheckResultsScanned": 19,
   "allowedAvailabilityStatuses": [
     "accepting",
@@ -30,12 +30,12 @@
   },
   "statusCounts": {
     "liveProviders": {
-      "not_published": 1177,
-      "waitlist": 29,
-      "accepting": 4
+      "not_published": 1178,
+      "waitlist": 30,
+      "accepting": 6
     },
     "watchlist": {
-      "not_accepting": 14,
+      "not_accepting": 15,
       "referrals_paused": 5
     }
   },
@@ -45,7 +45,7 @@
     "Auckland": 1,
     "Taranaki": 4,
     "Waikato": 2,
-    "Northland": 5,
+    "Northland": 6,
     "Southland": 1,
     "Nelson Marlborough Tasman": 1,
     "Tairawhiti": 1,
