@@ -156,13 +156,17 @@ Opt-in cultural and safety tags are hidden unless selected:
 - `asian`
 - `rainbow`
 
-Provider gender tags are soft fit signals:
+Provider gender is stored separately from general support tags where possible:
 
-- `female`
-- `male`
+- `providerGender: "female"`
+- `providerGender: "male"`
+- optional `providerGenderSource` and `providerGenderEvidence`
 
-Only use these when a public source explicitly supports the tag. Do not infer
-ethnicity, culture, gender, or affirming practice from a provider name alone.
+Legacy `female` and `male` tags may still exist, but new imports should prefer
+`providerGender` so a clinician's gender is not confused with a service focus
+such as men's health or women's health. Only use provider-gender metadata when a
+public source explicitly supports it. Do not infer ethnicity, culture, gender,
+or affirming practice from a provider name alone.
 
 ## Availability Freshness Rules
 

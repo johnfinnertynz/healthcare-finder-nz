@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Helpline">
+  <circle cx="256" cy="256" r="142" fill="#f0ecff"/>
+  <g fill="none" stroke="#2b145f" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M185 163c-23 12-35 31-33 54 5 70 83 148 153 153 23 2 42-10 54-33 7-13 3-29-10-37l-41-25c-11-7-26-5-35 5l-19 22c-28-14-51-37-65-65l22-19c10-9 12-24 5-35l-25-41c-8-13-24-17-37-10z"/>
+    <path d="M276 166c17-17 44-17 61 0s17 44 0 61l-31 31-31-31c-17-17-17-44 1-61z"/>
+  </g>
+</svg>

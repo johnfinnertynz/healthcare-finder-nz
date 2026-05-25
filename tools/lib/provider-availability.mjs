@@ -45,7 +45,7 @@ const waitlistPatterns = [
 ];
 
 const acceptingPatterns = [
-  /\b(?:currently\s+available\s+to\s+see\s+new\s+clients|accepting\s+new\s+(?:private\s+)?clients\s+now|accepting\s+new\s+(?:clients|patients|referrals)|taking\s+new\s+(?:clients|patients|referrals)|new\s+client\s+enquir(?:y|ies)\s+(?:welcome|open)|self-referral\s+(?:is\s+)?currently\s+available|book\s+(?:a\s+)?(?:session|consultation|appointment)\s+(?:now|online))\b/i
+  /\b(?:currently\s+available\s+to\s+see\s+new\s+clients|accepting\s+new\s+(?:private\s+)?clients\s+now|accepting\s+new\s+(?:clients|patients|referrals)|taking\s+new\s+(?:clients|patients|referrals)|new\s+(?:patient\s+)?enrolments?\s+(?:are\s+)?open|enrolments?\s+(?:are\s+)?open|new\s+client\s+enquir(?:y|ies)\s+(?:welcome|open)|self-referral\s+(?:is\s+)?currently\s+available|book\s+(?:a\s+)?(?:session|consultation|appointment)\s+(?:now|online))\b/i
 ];
 
 const htmlBreakPattern = /<\/?(?:p|div|li|section|article|h[1-6]|br)\b[^>]*>/gi;

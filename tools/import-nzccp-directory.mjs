@@ -81,8 +81,6 @@ const specialtyTags = new Map([
   ["sexual abuse", "trauma"],
   ["work stress", "work"],
   ["return to work", "work"],
-  ["men's health", "male"],
-  ["women's health", "female"],
   ["migrant", "culture"],
   ["cross-cultural", "culture"],
   ["gender dysphoria", "rainbow"],

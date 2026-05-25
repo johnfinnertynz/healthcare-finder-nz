@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Men's centre">
+  <circle cx="256" cy="256" r="142" fill="#e7f4ff"/>
+  <g fill="none" stroke="#0b3268" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M146 315V205h220v110"/>
+    <path d="M128 315h42M342 315h42"/>
+    <path d="M154 205v-48h204v48"/>
+    <path d="M170 157h172v-24H170z"/>
+    <path d="M216 205h80v38h-80z"/>
+    <path d="M177 235h22v38h-22zM313 235h22v38h-22z"/>
+    <path d="M198 279a23 23 0 1 0 0-46 23 23 0 0 0 0 46zM256 279a23 23 0 1 0 0-46 23 23 0 0 0 0 46zM314 279a23 23 0 1 0 0-46 23 23 0 0 0 0 46z"/>
+    <path d="M168 363v-45c0-20 13-34 30-34s30 14 30 34v45M226 363v-45c0-20 13-34 30-34s30 14 30 34v45M284 363v-45c0-20 13-34 30-34s30 14 30 34v45"/>
+    <path d="M206 184h100"/>
+  </g>
+</svg>

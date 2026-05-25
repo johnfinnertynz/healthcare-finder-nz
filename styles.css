@@ -737,28 +737,14 @@ input[type="checkbox"] {
 }
 
 .recommendation-card .provider-type-badge {
-  width: 4rem;
-  height: 4rem;
-  min-height: 4rem;
-  padding: 0;
+  width: 4.25rem;
+  height: 4.25rem;
+  min-height: 4.25rem;
 }
 
 .recommendation-card .provider-type-badge img {
-  width: 3.35rem;
-  height: 3.35rem;
-}
-
-.recommendation-card .provider-type-badge span {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  white-space: nowrap;
-  border: 0;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
+  width: 95%;
+  height: 95%;
 }
 
 .recommendation-meta {
@@ -944,14 +930,17 @@ input[type="checkbox"] {
 }
 
 .provider-type-badge {
+  position: relative;
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
-  max-width: 15rem;
-  min-height: 3.35rem;
-  padding: 0.42rem 0.72rem;
+  width: 4.25rem;
+  max-width: 4.25rem;
+  height: 4.25rem;
+  min-height: 4.25rem;
+  padding: 0;
+  overflow: hidden;
   border: 1px solid rgba(7, 67, 49, 0.18);
   border-radius: 999px;
   color: var(--green-dark);
@@ -964,13 +953,24 @@ input[type="checkbox"] {
 
 .provider-type-badge img {
   flex: 0 0 auto;
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 95%;
+  height: 95%;
   object-fit: contain;
+  transform: scale(1.8);
+  transform-origin: center;
 }
 
 .provider-type-badge span {
-  overflow-wrap: anywhere;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
 }
 
 .provider-type-badge--gp {
@@ -1340,26 +1340,28 @@ footer nav {
   }
 
   .provider-type-badge {
-    max-width: 11rem;
-    min-height: 3.25rem;
-    padding: 0.38rem 0.54rem;
+    width: 4rem;
+    max-width: 4rem;
+    height: 4rem;
+    min-height: 4rem;
+    padding: 0;
     font-size: 0.76rem;
   }
 
   .provider-type-badge img {
-    width: 2.6rem;
-    height: 2.6rem;
+    width: 95%;
+    height: 95%;
   }
 
   .recommendation-card .provider-type-badge {
-    width: 3.75rem;
-    height: 3.75rem;
-    min-height: 3.75rem;
+    width: 4rem;
+    height: 4rem;
+    min-height: 4rem;
   }
 
   .recommendation-card .provider-type-badge img {
-    width: 3.15rem;
-    height: 3.15rem;
+    width: 95%;
+    height: 95%;
   }
 
 }

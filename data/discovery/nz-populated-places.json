@@ -1,0 +1,1496 @@
+{
+  "generatedAt": "2026-05-25T06:42:50.759Z",
+  "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand",
+  "note": "Search-engine result pages are queued for repeatable human or API-assisted provider discovery. Use official Google Custom Search and Bing Web Search API keys for --run-searches; do not scrape blocked search result HTML.",
+  "placesScanned": 130,
+  "pagesPerQuery": 3,
+  "serviceSearches": [
+    {
+      "serviceType": "gp",
+      "queryTerms": [
+        "GP doctors medical centre",
+        "general practice family doctor"
+      ]
+    },
+    {
+      "serviceType": "psychologist",
+      "queryTerms": [
+        "psychologist clinical psychologist",
+        "psychologist therapy"
+      ]
+    },
+    {
+      "serviceType": "psychiatrist",
+      "queryTerms": [
+        "psychiatrist private psychiatry",
+        "psychiatry specialist"
+      ]
+    },
+    {
+      "serviceType": "counsellor",
+      "queryTerms": [
+        "counsellor therapist counselling",
+        "counselling mental health therapist"
+      ]
+    }
+  ],
+  "places": [
+    {
+      "rank": 1,
+      "name": "Auckland",
+      "searchNames": [
+        "Auckland"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 1547200,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 2,
+      "name": "Christchurch",
+      "searchNames": [
+        "Christchurch"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 407800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 3,
+      "name": "Wellington",
+      "searchNames": [
+        "Wellington"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 209800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 4,
+      "name": "Hamilton",
+      "searchNames": [
+        "Hamilton"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 192100,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 5,
+      "name": "Tauranga",
+      "searchNames": [
+        "Tauranga"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 160900,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 6,
+      "name": "Lower Hutt",
+      "searchNames": [
+        "Lower Hutt"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 113200,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 7,
+      "name": "Dunedin",
+      "searchNames": [
+        "Dunedin"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 104000,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 8,
+      "name": "Palmerston North",
+      "searchNames": [
+        "Palmerston North"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 81200,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 9,
+      "name": "Hibiscus Coast",
+      "searchNames": [
+        "Hibiscus Coast"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 67800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 10,
+      "name": "Napier",
+      "searchNames": [
+        "Napier"
+      ],
+      "wikiRegion": "Hawke's Bay",
+      "appRegion": "Hawke's Bay",
+      "populationJune2025": 66400,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 11,
+      "name": "New Plymouth",
+      "searchNames": [
+        "New Plymouth"
+      ],
+      "wikiRegion": "Taranaki",
+      "appRegion": "Taranaki",
+      "populationJune2025": 60200,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 12,
+      "name": "Porirua",
+      "searchNames": [
+        "Porirua"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 60100,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 13,
+      "name": "Rotorua",
+      "searchNames": [
+        "Rotorua"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 58500,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 14,
+      "name": "Whangārei",
+      "searchNames": [
+        "Whangārei",
+        "Whangarei"
+      ],
+      "wikiRegion": "Northland",
+      "appRegion": "Northland",
+      "populationJune2025": 56100,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 15,
+      "name": "Invercargill",
+      "searchNames": [
+        "Invercargill"
+      ],
+      "wikiRegion": "Southland",
+      "appRegion": "Southland",
+      "populationJune2025": 51200,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 16,
+      "name": "Nelson",
+      "searchNames": [
+        "Nelson"
+      ],
+      "wikiRegion": "Nelson",
+      "appRegion": "Nelson Marlborough Tasman",
+      "populationJune2025": 50800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 17,
+      "name": "Hastings",
+      "searchNames": [
+        "Hastings"
+      ],
+      "wikiRegion": "Hawke's Bay",
+      "appRegion": "Hawke's Bay",
+      "populationJune2025": 49800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 18,
+      "name": "Upper Hutt",
+      "searchNames": [
+        "Upper Hutt"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 44500,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 19,
+      "name": "Whanganui",
+      "searchNames": [
+        "Whanganui"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 42800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 20,
+      "name": "Gisborne",
+      "searchNames": [
+        "Gisborne"
+      ],
+      "wikiRegion": "Gisborne",
+      "appRegion": "Tairawhiti",
+      "populationJune2025": 38100,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 21,
+      "name": "Rolleston",
+      "searchNames": [
+        "Rolleston"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 34100,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 22,
+      "name": "Paraparaumu",
+      "searchNames": [
+        "Paraparaumu"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 29900,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 23,
+      "name": "Blenheim",
+      "searchNames": [
+        "Blenheim"
+      ],
+      "wikiRegion": "Marlborough",
+      "appRegion": "Nelson Marlborough Tasman",
+      "populationJune2025": 29800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 24,
+      "name": "Timaru",
+      "searchNames": [
+        "Timaru"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 29300,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 25,
+      "name": "Queenstown",
+      "searchNames": [
+        "Queenstown"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 29000,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 26,
+      "name": "Pukekohe",
+      "searchNames": [
+        "Pukekohe"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 28800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 27,
+      "name": "Taupō",
+      "searchNames": [
+        "Taupō",
+        "Taupo"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 27000,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 28,
+      "name": "Cambridge",
+      "searchNames": [
+        "Cambridge"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 22700,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 29,
+      "name": "Masterton",
+      "searchNames": [
+        "Masterton"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 22600,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 30,
+      "name": "Ashburton",
+      "searchNames": [
+        "Ashburton"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 21600,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 31,
+      "name": "Levin",
+      "searchNames": [
+        "Levin"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 20500,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 32,
+      "name": "Richmond",
+      "searchNames": [
+        "Richmond"
+      ],
+      "wikiRegion": "Tasman",
+      "appRegion": "Nelson Marlborough Tasman",
+      "populationJune2025": 19950,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 33,
+      "name": "Rangiora",
+      "searchNames": [
+        "Rangiora"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 19300,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 34,
+      "name": "Feilding",
+      "searchNames": [
+        "Feilding"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 17650,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 35,
+      "name": "Whakatāne",
+      "searchNames": [
+        "Whakatāne",
+        "Whakatane"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 16950,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 36,
+      "name": "Mosgiel",
+      "searchNames": [
+        "Mosgiel"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 15100,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 37,
+      "name": "Havelock North",
+      "searchNames": [
+        "Havelock North"
+      ],
+      "wikiRegion": "Hawke's Bay",
+      "appRegion": "Hawke's Bay",
+      "populationJune2025": 15000,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 38,
+      "name": "Tokoroa",
+      "searchNames": [
+        "Tokoroa"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 14500,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 39,
+      "name": "Oamaru",
+      "searchNames": [
+        "Oamaru"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 14300,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 40,
+      "name": "Te Awamutu",
+      "searchNames": [
+        "Te Awamutu"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 13950,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 41,
+      "name": "Kaiapoi",
+      "searchNames": [
+        "Kaiapoi"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 13700,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 42,
+      "name": "Waikanae",
+      "searchNames": [
+        "Waikanae"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 13600,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 43,
+      "name": "Wānaka",
+      "searchNames": [
+        "Wānaka",
+        "Wanaka"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 13200,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 44,
+      "name": "Lincoln",
+      "searchNames": [
+        "Lincoln"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 12100,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 45,
+      "name": "Hāwera",
+      "searchNames": [
+        "Hāwera",
+        "Hawera"
+      ],
+      "wikiRegion": "Taranaki",
+      "appRegion": "Taranaki",
+      "populationJune2025": 10700,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 46,
+      "name": "Te Puke",
+      "searchNames": [
+        "Te Puke"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 10400,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 47,
+      "name": "Waiuku",
+      "searchNames": [
+        "Waiuku"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 9860,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 48,
+      "name": "Morrinsville",
+      "searchNames": [
+        "Morrinsville"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 9770,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 49,
+      "name": "Matamata",
+      "searchNames": [
+        "Matamata"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 9540,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 50,
+      "name": "Greymouth",
+      "searchNames": [
+        "Greymouth"
+      ],
+      "wikiRegion": "West Coast",
+      "appRegion": "West Coast",
+      "populationJune2025": 8610,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 51,
+      "name": "Ngāruawāhia",
+      "searchNames": [
+        "Ngāruawāhia",
+        "Ngaruawahia"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 8570,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 52,
+      "name": "Huntly",
+      "searchNames": [
+        "Huntly"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 8550,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 53,
+      "name": "Kerikeri",
+      "searchNames": [
+        "Kerikeri"
+      ],
+      "wikiRegion": "Northland",
+      "appRegion": "Northland",
+      "populationJune2025": 8380,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 54,
+      "name": "Beachlands-Pine Harbour",
+      "searchNames": [
+        "Beachlands-Pine Harbour",
+        "Beachlands",
+        "Pine Harbour"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 8330,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 55,
+      "name": "Gore",
+      "searchNames": [
+        "Gore"
+      ],
+      "wikiRegion": "Southland",
+      "appRegion": "Southland",
+      "populationJune2025": 8310,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 56,
+      "name": "Motueka",
+      "searchNames": [
+        "Motueka"
+      ],
+      "wikiRegion": "Tasman",
+      "appRegion": "Nelson Marlborough Tasman",
+      "populationJune2025": 8290,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 57,
+      "name": "Kumeū - Huapai",
+      "searchNames": [
+        "Kumeū-Huapai",
+        "Kumeu-Huapai",
+        "Kumeū",
+        "Huapai"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 8270,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 58,
+      "name": "Waiheke Island",
+      "searchNames": [
+        "Waiheke Island"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 8160,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 59,
+      "name": "Waitara",
+      "searchNames": [
+        "Waitara"
+      ],
+      "wikiRegion": "Taranaki",
+      "appRegion": "Taranaki",
+      "populationJune2025": 7720,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 60,
+      "name": "Kawerau",
+      "searchNames": [
+        "Kawerau"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 7680,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 61,
+      "name": "Cromwell",
+      "searchNames": [
+        "Cromwell"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 7470,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 62,
+      "name": "Pōkeno",
+      "searchNames": [
+        "Pōkeno",
+        "Pokeno"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 7380,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 63,
+      "name": "Thames",
+      "searchNames": [
+        "Thames"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 7230,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 64,
+      "name": "Warkworth",
+      "searchNames": [
+        "Warkworth"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 7080,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 65,
+      "name": "Stratford",
+      "searchNames": [
+        "Stratford"
+      ],
+      "wikiRegion": "Taranaki",
+      "appRegion": "Taranaki",
+      "populationJune2025": 6430,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 66,
+      "name": "Kaitaia",
+      "searchNames": [
+        "Kaitaia"
+      ],
+      "wikiRegion": "Northland",
+      "appRegion": "Northland",
+      "populationJune2025": 6170,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 67,
+      "name": "Whitianga",
+      "searchNames": [
+        "Whitianga"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 6140,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 68,
+      "name": "Tuakau",
+      "searchNames": [
+        "Tuakau"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 6090,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 69,
+      "name": "Katikati",
+      "searchNames": [
+        "Katikati"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 6030,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 70,
+      "name": "Carterton",
+      "searchNames": [
+        "Carterton"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 5930,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 71,
+      "name": "Alexandra",
+      "searchNames": [
+        "Alexandra"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 5860,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 72,
+      "name": "Waihi",
+      "searchNames": [
+        "Waihi"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 5850,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 73,
+      "name": "Ōmokoroa",
+      "searchNames": [
+        "Ōmokoroa",
+        "Omokoroa"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 5800,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 74,
+      "name": "Prebbleton",
+      "searchNames": [
+        "Prebbleton"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 5750,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 75,
+      "name": "Marton",
+      "searchNames": [
+        "Marton"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 5730,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 76,
+      "name": "Dannevirke",
+      "searchNames": [
+        "Dannevirke"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 5640,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 77,
+      "name": "Woodend",
+      "searchNames": [
+        "Woodend"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 5470,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 78,
+      "name": "Ngongotahā",
+      "searchNames": [
+        "Ngongotahā",
+        "Ngongotaha"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 5280,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 79,
+      "name": "Ōtaki",
+      "searchNames": [
+        "Ōtaki",
+        "Otaki"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 5260,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 80,
+      "name": "Dargaville",
+      "searchNames": [
+        "Dargaville"
+      ],
+      "wikiRegion": "Northland",
+      "appRegion": "Northland",
+      "populationJune2025": 5170,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 81,
+      "name": "Taumarunui",
+      "searchNames": [
+        "Taumarunui"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 4940,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 82,
+      "name": "Ōpōtiki",
+      "searchNames": [
+        "Ōpōtiki",
+        "Opotiki"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 4900,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 85,
+      "name": "Temuka",
+      "searchNames": [
+        "Temuka"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 4760,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 86,
+      "name": "Waipukurau",
+      "searchNames": [
+        "Waipukurau"
+      ],
+      "wikiRegion": "Hawke's Bay",
+      "appRegion": "Hawke's Bay",
+      "populationJune2025": 4750,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 87,
+      "name": "Te Aroha",
+      "searchNames": [
+        "Te Aroha"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 4730,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 92,
+      "name": "Putāruru",
+      "searchNames": [
+        "Putāruru",
+        "Putaruru"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 4560,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 93,
+      "name": "Balclutha",
+      "searchNames": [
+        "Balclutha"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 4460,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 94,
+      "name": "Pegasus",
+      "searchNames": [
+        "Pegasus"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 4260,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 95,
+      "name": "Whangamatā",
+      "searchNames": [
+        "Whangamatā",
+        "Whangamata"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 4230,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 96,
+      "name": "Inglewood",
+      "searchNames": [
+        "Inglewood"
+      ],
+      "wikiRegion": "Taranaki",
+      "appRegion": "Taranaki",
+      "populationJune2025": 3970,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 97,
+      "name": "Tūrangi",
+      "searchNames": [
+        "Tūrangi",
+        "Turangi"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 3960,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 98,
+      "name": "Raglan",
+      "searchNames": [
+        "Raglan"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 3910,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 99,
+      "name": "Riverhead",
+      "searchNames": [
+        "Riverhead"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 3840,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 100,
+      "name": "Kihikihi",
+      "searchNames": [
+        "Kihikihi"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 3820,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 101,
+      "name": "Te Kauwhata",
+      "searchNames": [
+        "Te Kauwhata"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 3780,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 102,
+      "name": "Snells Beach",
+      "searchNames": [
+        "Snells Beach"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 3750,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 103,
+      "name": "Waimate",
+      "searchNames": [
+        "Waimate"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 3610,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 104,
+      "name": "Darfield",
+      "searchNames": [
+        "Darfield"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 3590,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 105,
+      "name": "Helensville",
+      "searchNames": [
+        "Helensville"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 3540,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 106,
+      "name": "Foxton",
+      "searchNames": [
+        "Foxton"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 3520,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 107,
+      "name": "Hokitika",
+      "searchNames": [
+        "Hokitika"
+      ],
+      "wikiRegion": "West Coast",
+      "appRegion": "West Coast",
+      "populationJune2025": 3420,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 110,
+      "name": "Ōtorohanga",
+      "searchNames": [
+        "Ōtorohanga",
+        "Otorohanga"
+      ],
+      "wikiRegion": "Waikato",
+      "appRegion": "Waikato",
+      "populationJune2025": 3240,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 111,
+      "name": "Lyttelton",
+      "searchNames": [
+        "Lyttelton"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 3220,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 114,
+      "name": "Te Anau",
+      "searchNames": [
+        "Te Anau"
+      ],
+      "wikiRegion": "Southland",
+      "appRegion": "Southland",
+      "populationJune2025": 2920,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 115,
+      "name": "Ruakākā",
+      "searchNames": [
+        "Ruakākā",
+        "Ruakaka"
+      ],
+      "wikiRegion": "Northland",
+      "appRegion": "Northland",
+      "populationJune2025": 2890,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 118,
+      "name": "Arrowtown",
+      "searchNames": [
+        "Arrowtown"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 2860,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 119,
+      "name": "Greytown",
+      "searchNames": [
+        "Greytown"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 2840,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 120,
+      "name": "Pahiatua",
+      "searchNames": [
+        "Pahiatua"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 2830,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 121,
+      "name": "Mangawhai Heads",
+      "searchNames": [
+        "Mangawhai Heads"
+      ],
+      "wikiRegion": "Northland",
+      "appRegion": "Northland",
+      "populationJune2025": 2760,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 122,
+      "name": "Wakefield",
+      "searchNames": [
+        "Wakefield"
+      ],
+      "wikiRegion": "Tasman",
+      "appRegion": "Nelson Marlborough Tasman",
+      "populationJune2025": 2730,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 123,
+      "name": "West Melton",
+      "searchNames": [
+        "West Melton"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 2700,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 124,
+      "name": "Maraetai",
+      "searchNames": [
+        "Maraetai"
+      ],
+      "wikiRegion": "Auckland",
+      "appRegion": "Auckland",
+      "populationJune2025": 2660,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 125,
+      "name": "Waihi Beach-Bowentown",
+      "searchNames": [
+        "Waihi Beach-Bowentown",
+        "Waihi Beach",
+        "Bowentown"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 2620,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 126,
+      "name": "Winton",
+      "searchNames": [
+        "Winton"
+      ],
+      "wikiRegion": "Southland",
+      "appRegion": "Southland",
+      "populationJune2025": 2560,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 127,
+      "name": "Lake Hāwea",
+      "searchNames": [
+        "Lake Hāwea",
+        "Lake Hawea"
+      ],
+      "wikiRegion": "Otago",
+      "appRegion": "Otago",
+      "populationJune2025": 2500,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 130,
+      "name": "Waipawa",
+      "searchNames": [
+        "Waipawa"
+      ],
+      "wikiRegion": "Hawke's Bay",
+      "appRegion": "Hawke's Bay",
+      "populationJune2025": 2430,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 131,
+      "name": "Kaikōura",
+      "searchNames": [
+        "Kaikōura",
+        "Kaikoura"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 2350,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 132,
+      "name": "Brightwater",
+      "searchNames": [
+        "Brightwater"
+      ],
+      "wikiRegion": "Tasman",
+      "appRegion": "Nelson Marlborough Tasman",
+      "populationJune2025": 2330,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 133,
+      "name": "Oxford",
+      "searchNames": [
+        "Oxford"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 2250,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 134,
+      "name": "Ōtaki Beach",
+      "searchNames": [
+        "Ōtaki Beach",
+        "Otaki Beach"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 2230,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 135,
+      "name": "Foxton Beach",
+      "searchNames": [
+        "Foxton Beach"
+      ],
+      "wikiRegion": "Manawatū-Whanganui",
+      "appRegion": "Manawatu-Whanganui",
+      "populationJune2025": 2190,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 136,
+      "name": "Methven",
+      "searchNames": [
+        "Methven"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 2170,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 141,
+      "name": "Clive",
+      "searchNames": [
+        "Clive"
+      ],
+      "wikiRegion": "Hawke's Bay",
+      "appRegion": "Hawke's Bay",
+      "populationJune2025": 2040,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 142,
+      "name": "Moerewa",
+      "searchNames": [
+        "Moerewa"
+      ],
+      "wikiRegion": "Northland",
+      "appRegion": "Northland",
+      "populationJune2025": 1930,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 143,
+      "name": "Murupara",
+      "searchNames": [
+        "Murupara"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 1910,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 144,
+      "name": "Martinborough",
+      "searchNames": [
+        "Martinborough"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 1900,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 145,
+      "name": "Edgecumbe",
+      "searchNames": [
+        "Edgecumbe"
+      ],
+      "wikiRegion": "Bay of Plenty",
+      "appRegion": "Bay of Plenty",
+      "populationJune2025": 1890,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 146,
+      "name": "Bluff",
+      "searchNames": [
+        "Bluff"
+      ],
+      "wikiRegion": "Southland",
+      "appRegion": "Southland",
+      "populationJune2025": 1840,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 147,
+      "name": "Twizel",
+      "searchNames": [
+        "Twizel"
+      ],
+      "wikiRegion": "Canterbury",
+      "appRegion": "Canterbury",
+      "populationJune2025": 1790,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    },
+    {
+      "rank": 150,
+      "name": "Paekākāriki",
+      "searchNames": [
+        "Paekākāriki",
+        "Paekakariki"
+      ],
+      "wikiRegion": "Wellington",
+      "appRegion": "Wellington",
+      "populationJune2025": 1740,
+      "source": "https://en.wikipedia.org/wiki/List_of_populated_places_in_New_Zealand"
+    }
+  ]
+}

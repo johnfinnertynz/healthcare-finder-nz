@@ -7,6 +7,10 @@ const indexHtml = fs.readFileSync("index.html", "utf8");
 const trustPages = ["privacy.html", "terms.html", "data-sources.html", "crisis.html"];
 const optInPreferenceTags = new Set(["maori", "pasifika", "asian", "rainbow"]);
 const broadNeedTags = new Set(["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"]);
+const providerGenderPreferenceTags = {
+  "female-provider": "female",
+  "male-provider": "male"
+};
 
 const personas = [
   { name: "16-year-old female in Northland with anxiety", region: "Northland", age: 16, want: "therapist", needs: ["anxiety"], preferences: ["female-provider"], barriers: ["privacy"], goal: "find age-appropriate anxiety support without sexual-harm-only services" },
@@ -113,12 +117,39 @@ function selectedType(want) {
   return want;
 }
 
+function selectedProviderGender(preferences) {
+  const wantsFemale = preferences.includes("female-provider");
+  const wantsMale = preferences.includes("male-provider");
+  if (wantsFemale === wantsMale) return "";
+  return wantsFemale ? "female" : "male";
+}
+
+function providerGender(provider) {
+  const explicit = String(provider.providerGender || "").toLowerCase();
+  if (explicit === "female" || explicit === "male") return explicit;
+  const tags = provider.tags || [];
+  if (tags.includes("female") && !tags.includes("male")) return "female";
+  if (tags.includes("male") && !tags.includes("female")) return "male";
+  return "";
+}
+
+function supportPreferenceMatches(provider, preferences) {
+  const tags = provider.tags || [];
+  return preferences
+    .map((preference) => providerGenderPreferenceTags[preference] || preference)
+    .filter((preference) => {
+      if (preference === "female" || preference === "male") return providerGender(provider) === preference;
+      return tags.includes(preference);
+    });
+}
+
 function preferenceAllowed(provider, preferences) {
   const tags = provider.tags || [];
   const optInTags = tags.filter((tag) => optInPreferenceTags.has(tag));
   if (optInTags.length && !optInTags.some((tag) => preferences.includes(tag))) return false;
-  if (preferences.includes("female-provider") && !preferences.includes("male-provider") && tags.includes("male")) return false;
-  if (preferences.includes("male-provider") && !preferences.includes("female-provider") && tags.includes("female")) return false;
+  const wantedGender = selectedProviderGender(preferences);
+  const actualGender = providerGender(provider);
+  if (wantedGender && actualGender && actualGender !== wantedGender) return false;
   return true;
 }
 
@@ -167,7 +198,7 @@ function score(provider, persona, type) {
   if (provider.type === type) value += 8;
   if (type === "all" && ["gp", "counsellor", "psychologist", "public-service", "youth"].includes(provider.type)) value += 2;
   for (const need of persona.needs) if (tags.includes(need) || provider.fit?.toLowerCase().includes(need)) value += 5;
-  for (const preference of persona.preferences) if (tags.includes(preference)) value += 8;
+  value += supportPreferenceMatches(provider, persona.preferences).length * 8;
   if (persona.preferences.includes("telehealth") && isTelehealthProvider(provider)) value += 8;
   if (!persona.preferences.includes("telehealth") && isTelehealthProvider(provider)) value -= 3;
   if (persona.barriers.includes("cost") && /free|funded|public|winz|low-cost|reduced/i.test(`${provider.cost} ${tags.join(" ")}`)) value += 5;
@@ -207,12 +238,16 @@ function recommendations(persona) {
   const merged = type === "all" || !strictExactTypes.has(type)
     ? [...new Map([...primary, ...fill].map((provider) => [provider.id, provider])).values()]
     : primary;
+  const genderMatched = selectedProviderGender(persona.preferences)
+    ? merged.filter((provider) => providerGender(provider) === selectedProviderGender(persona.preferences))
+    : [];
+  const finalPool = genderMatched.length ? genderMatched : merged;
 
-  return merged
+  return finalPool
     .map((provider, index) => ({
       provider,
       index,
-      preferenceMatches: persona.preferences.filter((preference) => provider.tags?.includes(preference)).length
+      preferenceMatches: supportPreferenceMatches(provider, persona.preferences).length
     }))
     .sort((a, b) => b.preferenceMatches - a.preferenceMatches || a.index - b.index)
     .map(({ provider }) => provider)
@@ -323,6 +358,23 @@ test("Greymouth work-related psychologist flow may include scoped rehabilitation
 
   assert.ok(matches.length > 0, "Greymouth work-related psychologist flow should still find options");
   assert.equal(matches.some((provider) => provider.id === "west-coast-proactive-greymouth-psychology"), true);
+});
+
+test("Christchurch male psychologist preference keeps top care-path cards gender matched", () => {
+  const matches = recommendations({
+    name: "27-year-old male in Christchurch seeking a male psychologist",
+    region: "Canterbury",
+    age: 27,
+    want: "psychologist",
+    needs: ["depression"],
+    preferences: ["male-provider"],
+    barriers: []
+  });
+
+  assert.ok(matches.length > 0);
+  assert.ok(matches.every((provider) => matchesType(provider, "psychologist")));
+  assert.ok(matches.every((provider) => providerGender(provider) === "male"));
+  assert.ok(matches.some((provider) => provider.id === "nzccp-alex-richards"));
 });
 
 test("availability metadata lowers waitlists and removes unavailable providers from first recommendations", () => {

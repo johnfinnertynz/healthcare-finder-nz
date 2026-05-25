@@ -919,6 +919,51 @@
       "availabilityEvidence": "The provider-owned website currently returns 404 in the link checker, so public contact details need human verification before this is served live.",
       "availabilitySource": "https://www.jvrpsychology.com/",
       "availabilityNeedsManualReview": true
+    },
+    {
+      "id": "gp-central-family-health-care-35-7201-174-3199",
+      "name": "Central Family Health Care",
+      "type": "gp",
+      "region": "Northland",
+      "city": "Whangarei",
+      "url": "https://centralfamily.co.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider-owned homepage says their books are currently closed.",
+      "unavailablePatterns": [
+        "books?\\s+are\\s+currently\\s+closed"
+      ],
+      "availablePatterns": [
+        "new\\s+patient\\s+enrolments?\\s+are\\s+open",
+        "accepting\\s+new\\s+patients",
+        "enrolments?\\s+are\\s+open"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Useful Whangarei GP candidate if enrolments reopen; do not serve as a first-contact option while books are closed.",
+      "providerCandidate": {
+        "name": "Central Family Health Care",
+        "type": "gp",
+        "region": "Northland",
+        "city": "Whangarei",
+        "address": "7 Mansfield Terrace, Regent, Whangarei 0112",
+        "phone": "(09) 438 2703",
+        "website": "https://centralfamily.co.nz/",
+        "source": "https://centralfamily.co.nz/",
+        "tags": [
+          "gp",
+          "primary-care",
+          "mental-health",
+          "medication",
+          "depression",
+          "anxiety",
+          "cost",
+          "direct-contact"
+        ]
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider-owned homepage says their books are currently closed.",
+      "availabilitySource": "https://centralfamily.co.nz/",
+      "availabilityNeedsManualReview": true
     }
   ]
 }

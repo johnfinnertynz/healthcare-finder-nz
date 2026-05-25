@@ -281,6 +281,30 @@ watchlist:
 node tools/import-gap-verified-providers.mjs
 ```
 
+Build a repeatable provider-discovery queue from the Wikipedia populated-places
+table. The default run writes every populated place plus Google/Bing search URLs
+for GP/doctors, psychologists, psychiatrists, and counsellor/therapist searches
+across the first 3 result pages:
+
+```sh
+npm run discover:providers
+```
+
+Narrow a manual pass to one place:
+
+```sh
+node tools/build-provider-discovery-queue.mjs --place Whangarei
+```
+
+The script generates search queues by default rather than scraping search-result
+HTML, which is unreliable and often blocked. To collect search results through
+approved APIs, set `GOOGLE_API_KEY` plus `GOOGLE_CSE_ID` and/or
+`BING_WEB_SEARCH_KEY`, then run:
+
+```sh
+node tools/build-provider-discovery-queue.mjs --run-searches --limit-searches 100
+```
+
 Prepare a psychologist verification and public-contact research queue from an
 exported New Zealand Psychologists Board register search:
 

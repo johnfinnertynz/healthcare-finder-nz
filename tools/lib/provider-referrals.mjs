@@ -46,6 +46,18 @@ export function inferReferralMetadata(provider, { checkedAt = new Date().toISOSt
     };
   }
 
+  if (/christchurchpsychmed\.co\.nz/i.test(sourceUrl)) {
+    return {
+      requiresReferral: true,
+      referralType: "gp",
+      referralSourceUrl: "https://www.christchurchpsychmed.co.nz/helpful-info",
+      referralSourceExcerpt: "Christchurch PsychMed says a GP referral is required to see a psychiatrist; clinical psychologist referrals are helpful but not essential.",
+      referralConfidence: "high",
+      referralLastChecked: checkedAt,
+      referralNeedsManualReview: false
+    };
+  }
+
   const clearGpReferral = /\bmust\s+first\s+see\s+(?:your\s+)?(?:gp|doctor|general practitioner)\b|\b(?:please\s+)?contact\s+(?:your\s+)?(?:gp|doctor|general practitioner)\s+to\s+make\s+a\s+referral\b|\bask\s+(?:your\s+)?(?:gp|doctor|general practitioner)\s+for\s+(?:a\s+)?referral\b|\b(?:gp|doctor|general practitioner)\s+referral\s+(?:is\s+)?(?:required|needed)\b/i;
   const asksWhetherGpReferral = /\b(?:whether|if)\b.{0,80}\b(?:gp|doctor|general practitioner)\b.{0,80}\breferr|\b(?:whether|if)\b.{0,80}\breferr.{0,80}\b(?:gp|doctor|general practitioner)\b/i;
   const selfReferral = /\b(self[-\s]?referr(?:al|ed|ing)?|self[-\s]?refer|patients?\s+can\s+(?:make\s+)?a\s+referral|book\s+online|book\s+now|patient\s+portal)\b/i;

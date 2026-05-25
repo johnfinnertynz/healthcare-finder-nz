@@ -103,11 +103,26 @@ function matchesRegion(provider, region, preferences = [], query = "", userCoord
   return provider.region === region && localDistanceAllowed(provider, preferences, userCoords);
 }
 
-function hasGenderConflict(provider, preferences) {
+function selectedProviderGender(preferences) {
   const wantsFemale = preferences.includes("female-provider");
   const wantsMale = preferences.includes("male-provider");
-  if (wantsFemale && wantsMale) return false;
-  return (wantsFemale && provider.tags?.includes("male")) || (wantsMale && provider.tags?.includes("female"));
+  if (wantsFemale === wantsMale) return "";
+  return wantsFemale ? "female" : "male";
+}
+
+function providerGender(provider) {
+  const explicit = String(provider.providerGender || "").toLowerCase();
+  if (explicit === "female" || explicit === "male") return explicit;
+  const tags = provider.tags || [];
+  if (tags.includes("female") && !tags.includes("male")) return "female";
+  if (tags.includes("male") && !tags.includes("female")) return "male";
+  return "";
+}
+
+function hasGenderConflict(provider, preferences) {
+  const wanted = selectedProviderGender(preferences);
+  const actual = providerGender(provider);
+  return Boolean(wanted && actual && actual !== wanted);
 }
 
 function matchesPreferencePrivacy(provider, preferences) {
@@ -476,12 +491,66 @@ test("Dr Rachel Kan is marked as GP-referral first, not direct-contact first", (
   assert.doesNotMatch(provider.firstStep, /^Email the practice/i);
 });
 
+test("Christchurch PsychMed psychiatrist records require GP referral while psychologists remain direct enquiry", () => {
+  const psychiatristIds = [
+    "christchurch-psychmed-deborah-wood",
+    "christchurch-psychmed-laura-hammersley",
+    "christchurch-psychmed-nicholas-pascoe",
+    "christchurch-psychmed-samantha-chow",
+    "christchurch-psychmed-sue-luty"
+  ];
+
+  for (const id of psychiatristIds) {
+    const provider = providers.find((item) => item.id === id);
+    assert.ok(provider, id);
+    assert.equal(provider.type, "psychiatrist");
+    assert.equal(provider.requiresReferral, true);
+    assert.equal(provider.referralType, "gp");
+    assert.match(provider.referralSourceUrl, /christchurchpsychmed\.co\.nz\/helpful-info/);
+    assert.match(provider.firstStep, /^Book with your GP/i);
+  }
+
+  for (const id of ["christchurch-psychmed-amanda-baird", "christchurch-psychmed-natasha-pomeroy", "christchurch-psychmed-steve-humm"]) {
+    const provider = providers.find((item) => item.id === id);
+    assert.ok(provider, id);
+    assert.equal(provider.type, "psychologist");
+    assert.equal(provider.requiresReferral, undefined);
+    assert.match(provider.firstStep, /^Email or call Christchurch PsychMed/i);
+  }
+});
+
 test("opt-in cultural providers stay hidden unless selected", () => {
   const general = visibleMatches({ region: "Auckland", type: "counsellor" });
   const asianSelected = visibleMatches({ region: "Auckland", type: "counsellor", preferences: ["asian"] });
 
   assert.equal(general.some((provider) => provider.id === "national-asian-family-services"), false);
   assert.equal(asianSelected.some((provider) => provider.id === "national-asian-family-services"), true);
+});
+
+test("Whangarei depression flow has local direct GP, counselling, psychology, and psychiatry options", () => {
+  const whangarei = { lat: -35.7251, lon: 174.3237 };
+  const profile = {
+    region: "Northland",
+    needs: ["depression"],
+    preferences: [],
+    userCoords: whangarei
+  };
+
+  const gps = visibleMatches({ ...profile, type: "gp" });
+  assert.equal(gps.some((provider) => provider.id === "gp-west-end-medical-centre-whang-rei-35-7311-174-3107"), true);
+  assert.equal(gps.some((provider) => provider.id === "gp-kensington-health-35-7100-174-3138"), true);
+
+  const counsellors = visibleMatches({ ...profile, type: "counsellor" });
+  assert.equal(counsellors.some((provider) => provider.id === "northland-michael-streifler-counselling"), true);
+  assert.equal(counsellors.some((provider) => provider.id === "northland-steven-smithson-counselling"), true);
+
+  const psychologists = visibleMatches({ ...profile, type: "psychologist" });
+  assert.equal(psychologists.some((provider) => provider.id === "northland-hagan-provan-psychology-services"), true);
+  assert.equal(psychologists.some((provider) => provider.id === "northland-maria-rotella-clinical-psychologist"), true);
+
+  const psychiatrists = visibleMatches({ ...profile, type: "psychiatrist" });
+  assert.equal(psychiatrists.some((provider) => provider.id === "ranzcp-5542"), true);
+  assert.equal(psychiatrists.some((provider) => provider.id === "northland-healthnz-adult-community-mha"), true);
 });
 
 test("male and female provider preferences are implemented as mutually exclusive controls", () => {
@@ -491,6 +560,60 @@ test("male and female provider preferences are implemented as mutually exclusive
   assert.match(script, /function enforceExclusiveProviderGenderPreference/);
   assert.match(script, /"female-provider": "male-provider"/);
   assert.match(script, /"male-provider": "female-provider"/);
+  assert.match(script, /function providerGenderFor/);
+  assert.match(script, /providerGender/);
+});
+
+test("Christchurch psychologist gender metadata uses explicit source-backed providerGender fields", () => {
+  const expected = new Map([
+    ["nzccp-aimee-hanson", "female"],
+    ["nzccp-alex-mortlock", "male"],
+    ["christchurch-psychmed-steve-humm", "male"],
+    ["christchurch-psychmed-natasha-pomeroy", "female"]
+  ]);
+
+  for (const [id, gender] of expected.entries()) {
+    const provider = providers.find((item) => item.id === id);
+    assert.ok(provider, id);
+    assert.equal(provider.providerGender, gender, id);
+    assert.match(provider.providerGenderSource, /^https:\/\//, id);
+    assert.match(provider.providerGenderEvidence, /public profile/i, id);
+  }
+
+  const invalid = providers
+    .filter((provider) => provider.providerGender)
+    .filter((provider) => !["female", "male"].includes(provider.providerGender));
+  assert.deepEqual(invalid, []);
+});
+
+test("address suggestions require explicit selection", () => {
+  const script = fs.readFileSync("script.js", "utf8");
+  assert.match(script, /function renderAddressSuggestions/);
+  assert.match(script, /activeAddressSuggestionIndex = -1;/);
+  assert.match(script, /Choose one to use it/);
+  assert.doesNotMatch(script, /pause to use the best match/i);
+  assert.doesNotMatch(script, /resolveAddressFromInput/);
+  assert.doesNotMatch(script, /Checking the best New Zealand match/);
+});
+
+test("provider discovery queue script covers the Wikipedia populated-place source and official search APIs", () => {
+  const discoveryScript = fs.readFileSync("tools/build-provider-discovery-queue.mjs", "utf8");
+  assert.match(discoveryScript, /List_of_populated_places_in_New_Zealand/);
+  assert.match(discoveryScript, /provider-search-queue\.json/);
+  assert.match(discoveryScript, /GOOGLE_CSE_ID/);
+  assert.match(discoveryScript, /BING_WEB_SEARCH_KEY/);
+  assert.match(discoveryScript, /do not scrape blocked search result HTML/i);
+});
+
+test("provider type icon assets cover all contact types and fill the badge bubble", () => {
+  const script = fs.readFileSync("script.js", "utf8");
+  const css = fs.readFileSync("styles.css", "utf8");
+  for (const icon of ["helpline.svg", "mens-centre.svg", "directory.svg", "youth.svg", "addiction.svg", "public-mental-health.svg"]) {
+    assert.match(script, new RegExp(`assets/provider-icons/${icon}`));
+    assert.ok(fs.existsSync(`assets/provider-icons/${icon}`), icon);
+  }
+  assert.match(css, /provider-type-badge img[\s\S]*width:\s*95%/);
+  assert.match(css, /provider-type-badge img[\s\S]*transform:\s*scale\(1\.8\)/);
 });
 
 test("Golden Bay counselling does not treat Blenheim as a local in-person match", () => {

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Public mental health">
+  <circle cx="256" cy="256" r="142" fill="#e9f7fb"/>
+  <g fill="none" stroke="#0b6b84" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M131 253c0-70 55-126 125-126s125 56 125 126"/>
+    <path d="M256 285a47 47 0 1 0 0-94 47 47 0 0 0 0 94z"/>
+    <path d="M199 374v-56c0-35 25-61 57-61s57 26 57 61v56"/>
+    <path d="M162 296a33 33 0 1 0 0-66 33 33 0 0 0 0 66z"/>
+    <path d="M112 359v-42c0-30 21-52 50-52 16 0 29 7 38 18"/>
+    <path d="M350 296a33 33 0 1 0 0-66 33 33 0 0 0 0 66z"/>
+    <path d="M400 359v-42c0-30-21-52-50-52-16 0-29 7-38 18"/>
+  </g>
+</svg>

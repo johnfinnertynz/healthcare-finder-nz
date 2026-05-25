@@ -119,6 +119,34 @@ A detected change should be manually reviewed before adding the provider back to
 the live database, because "possibly available" wording may still require a phone
 or email confirmation.
 
+## Discovery Queue
+
+When a region or town has weak coverage, build a repeatable search queue rather
+than relying on one-off manual searching:
+
+```sh
+npm run discover:providers
+```
+
+The script reads the Wikipedia populated-places table, maps places to the app's
+regions where possible, and writes:
+
+- `data/discovery/nz-populated-places.json`
+- `data/discovery/provider-search-queue.json`
+- `data/discovery/provider-search-results.json` when `--run-searches` is used
+  with official Google Custom Search or Bing Web Search API keys
+
+Each queued item covers a place, service type, search query, search engine, and
+result page. Review provider-owned pages, professional profiles, Healthpoint,
+Health NZ, PHOs, NGO pages, or professional body directories before adding live
+records. Do not add a result just because it appears in a search result.
+
+Useful narrow pass:
+
+```sh
+node tools/build-provider-discovery-queue.mjs --place Whangarei --run-searches --limit-searches 50
+```
+
 ## General Practice Data
 
 Health NZ directs people to Healthpoint to search for general practices and

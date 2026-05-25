@@ -34,6 +34,15 @@ const genderPreferences = {
 const providerGenderPreferenceValues = new Set(["female-provider", "male-provider"]);
 const optInPreferenceTags = new Set(["maori", "pasifika", "asian", "rainbow"]);
 
+function providerGenderFor(provider) {
+  const explicit = String(provider.providerGender || "").toLowerCase();
+  if (explicit === "female" || explicit === "male") return explicit;
+  const tags = provider.tags || [];
+  if (tags.includes("female") && !tags.includes("male")) return "female";
+  if (tags.includes("male") && !tags.includes("female")) return "male";
+  return "";
+}
+
 function evidenceText(provider) {
   return [
     provider.name,
@@ -92,11 +101,11 @@ for (const [tag, config] of Object.entries(supportPreferences)) {
 }
 
 for (const [tag, pattern] of Object.entries(genderPreferences)) {
-  const tagged = providers.filter((provider) => (provider.tags || []).includes(tag));
-  const weakEvidence = tagged.filter((provider) => !pattern.test(evidenceText(provider)));
+  const tagged = providers.filter((provider) => providerGenderFor(provider) === tag);
+  const weakEvidence = tagged.filter((provider) => !provider.providerGenderSource && !pattern.test(evidenceText(provider)));
 
   console.log(`\n${tag} provider preference`);
-  console.log(`  tagged=${tagged.length} weakEvidence=${weakEvidence.length}`);
+  console.log(`  tagged=${tagged.length} sourceBacked=${tagged.filter((provider) => provider.providerGenderSource).length} weakEvidence=${weakEvidence.length}`);
   if (!tagged.length) {
     console.log("  NO_VERIFIED_PROVIDER_TAGS loaded yet. The website will keep this as a soft preference until verified provider-gender data is added.");
   }

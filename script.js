@@ -42,7 +42,6 @@ let providerDirectoryFallbackActive = false;
 let addressSuggestionMatches = [];
 let activeAddressSuggestionIndex = -1;
 let addressLookupController = null;
-let addressResolveTimer = null;
 let addressLookupToken = 0;
 let wasIntakeComplete = false;
 let pendingCarePathScroll = false;
@@ -300,16 +299,45 @@ function selectedSupportPreferences(preferences = checkedValues("preference")) {
     .filter((preference) => matchablePreferenceTags.includes(preference));
 }
 
-function supportPreferenceMatches(tags, preferences = checkedValues("preference")) {
-  const selected = selectedSupportPreferences(preferences);
-  return selected.filter((preference) => tags.includes(preference));
-}
-
-function hasProviderGenderConflict(tags, preferences = checkedValues("preference")) {
+function selectedProviderGenderPreference(preferences = checkedValues("preference")) {
   const wantsFemale = preferences.includes("female-provider");
   const wantsMale = preferences.includes("male-provider");
-  if (wantsFemale && wantsMale) return false;
-  return (wantsFemale && tags.includes("male")) || (wantsMale && tags.includes("female"));
+  if (wantsFemale === wantsMale) return "";
+  return wantsFemale ? "female" : "male";
+}
+
+function providerGenderFor(providerOrTags = {}) {
+  const tags = Array.isArray(providerOrTags) ? providerOrTags : providerOrTags.tags || [];
+  const explicit = Array.isArray(providerOrTags) ? "" : String(providerOrTags.providerGender || "").toLowerCase();
+  if (explicit === "female" || explicit === "male") return explicit;
+
+  const hasFemaleTag = tags.includes("female");
+  const hasMaleTag = tags.includes("male");
+  if (hasFemaleTag && !hasMaleTag) return "female";
+  if (hasMaleTag && !hasFemaleTag) return "male";
+  return "";
+}
+
+function providerMatchesSelectedGender(providerOrTags, preferences = checkedValues("preference")) {
+  const selectedGender = selectedProviderGenderPreference(preferences);
+  return !selectedGender || providerGenderFor(providerOrTags) === selectedGender;
+}
+
+function supportPreferenceMatches(providerOrTags, preferences = checkedValues("preference")) {
+  const tags = Array.isArray(providerOrTags) ? providerOrTags : providerOrTags.tags || [];
+  const selected = selectedSupportPreferences(preferences);
+  const providerGender = providerGenderFor(providerOrTags);
+
+  return selected.filter((preference) => {
+    if (preference === "female" || preference === "male") return providerGender === preference;
+    return tags.includes(preference);
+  });
+}
+
+function hasProviderGenderConflict(providerOrTags, preferences = checkedValues("preference")) {
+  const selectedGender = selectedProviderGenderPreference(preferences);
+  const providerGender = providerGenderFor(providerOrTags);
+  return Boolean(selectedGender && providerGender && providerGender !== selectedGender);
 }
 
 function addPath(paths, item) {
@@ -698,12 +726,12 @@ function providerMatchesProfile(provider) {
   } else if (wantsTelehealth) {
     score -= 18;
   }
-  const matchedSupportPreferences = supportPreferenceMatches(tags, preferences);
+  const matchedSupportPreferences = supportPreferenceMatches(provider, preferences);
   if (selectedSupportPreferences(preferences).length) {
     score += matchedSupportPreferences.length * 12;
     if (!matchedSupportPreferences.length) score -= 4;
   }
-  if (hasProviderGenderConflict(tags, preferences)) score -= 30;
+  if (hasProviderGenderConflict(provider, preferences)) score -= 30;
   preferences.forEach((preference) => {
     const preferenceTag = preferenceTagFor(preference);
     if (!matchablePreferenceTags.includes(preferenceTag) && tags.includes(preferenceTag)) score += 2;
@@ -723,7 +751,7 @@ function providerSortValue(provider) {
   const wantsTelehealth = checkedValues("preference").includes("telehealth");
   const telehealth = isTelehealthProvider(provider);
   return {
-    preferenceMatches: supportPreferenceMatches(tags).length,
+    preferenceMatches: supportPreferenceMatches(provider).length,
     availabilityTier: providerAvailabilitySortTier(provider),
     referralTier: providerReferralSortTier(provider),
     telehealthMatch: wantsTelehealth && telehealth ? 1 : 0,
@@ -782,7 +810,7 @@ function filteredProviders() {
       const regionOk = providerMatchesSelectedRegion(provider, location, preferences, query);
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
-      const genderOk = !hasProviderGenderConflict(provider.tags || [], preferences);
+      const genderOk = !hasProviderGenderConflict(provider, preferences);
       const ageOk = providerMatchesAge(provider);
       const needOk = Boolean(query) || providerMatchesSelectedNeeds(provider, needs);
       const crisisOk = !provider.tags?.includes("crisis");
@@ -827,7 +855,7 @@ function recommendationCandidates(type = "all", options = {}) {
       const regionOk = providerMatchesSelectedRegion(provider, location, preferences);
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
-      const genderOk = !hasProviderGenderConflict(provider.tags || [], preferences);
+      const genderOk = !hasProviderGenderConflict(provider, preferences);
       const ageOk = providerMatchesAge(provider);
       const needOk = providerMatchesSelectedNeeds(provider, needs);
       const crisisOk = !provider.tags?.includes("crisis");
@@ -863,12 +891,12 @@ function providerTypeIconAsset(type) {
     counsellor: "assets/provider-icons/counsellor-therapist.png",
     psychologist: "assets/provider-icons/psychologist.png",
     psychiatrist: "assets/provider-icons/psychiatrist.png",
-    helpline: "assets/provider-icons/telehealth.png",
-    "mens-centre": "assets/provider-icons/counsellor-therapist.png",
-    youth: "assets/provider-icons/counsellor-therapist.png",
-    addiction: "assets/provider-icons/counsellor-therapist.png",
-    directory: "assets/provider-icons/telehealth.png",
-    "public-service": "assets/provider-icons/doctor.png"
+    helpline: "assets/provider-icons/helpline.svg",
+    "mens-centre": "assets/provider-icons/mens-centre.svg",
+    youth: "assets/provider-icons/youth.svg",
+    addiction: "assets/provider-icons/addiction.svg",
+    directory: "assets/provider-icons/directory.svg",
+    "public-service": "assets/provider-icons/public-mental-health.svg"
   };
   return icons[type] || "assets/provider-icons/counsellor-therapist.png";
 }
@@ -1302,13 +1330,9 @@ async function fetchAddressMatches(query, limit = 5) {
 }
 
 function renderAddressSuggestions(matches) {
-  activeAddressSuggestionIndex = matches.length ? 0 : -1;
+  activeAddressSuggestionIndex = -1;
   addressInput.setAttribute("aria-expanded", matches.length ? "true" : "false");
-  if (matches.length) {
-    addressInput.setAttribute("aria-activedescendant", "address-suggestion-0");
-  } else {
-    addressInput.removeAttribute("aria-activedescendant");
-  }
+  addressInput.removeAttribute("aria-activedescendant");
   addressSuggestions.hidden = !matches.length;
   addressSuggestions.innerHTML = matches
     .map((match, index) => {
@@ -1321,7 +1345,7 @@ function renderAddressSuggestions(matches) {
           id="address-suggestion-${index}"
           type="button"
           role="option"
-          aria-selected="${index === activeAddressSuggestionIndex ? "true" : "false"}"
+          aria-selected="false"
           data-address-index="${index}"
         >
           <span class="address-suggestion__title">${escapeHtml(summary)}</span>
@@ -1370,12 +1394,8 @@ async function updateAddressSuggestions(query, token) {
     renderAddressSuggestions(matches);
     if (matches.length) {
       addressStatus.textContent = usedFallback
-        ? "Showing New Zealand place matches. Choose one, press Enter, or pause to use the best match."
-        : "New Zealand matches found. Choose one, press Enter, or pause to use the best match.";
-      clearTimeout(addressResolveTimer);
-      addressResolveTimer = setTimeout(() => {
-        if (addressInput.value.trim() === query && !matchedRegion) resolveAddressFromInput("pause");
-      }, 2200);
+        ? "Showing New Zealand place matches. Choose one to use it."
+        : "New Zealand matches found. Choose one to use it.";
     } else {
       addressStatus.textContent = "No New Zealand matches yet. Try a suburb, town, or fuller address.";
     }
@@ -1386,11 +1406,7 @@ async function updateAddressSuggestions(query, token) {
     addressSuggestionMatches = matches;
     renderAddressSuggestions(matches);
     if (matches.length) {
-      addressStatus.textContent = "Showing New Zealand place matches. Choose one, press Enter, or pause to use the best match.";
-      clearTimeout(addressResolveTimer);
-      addressResolveTimer = setTimeout(() => {
-        if (addressInput.value.trim() === query && !matchedRegion) resolveAddressFromInput("pause");
-      }, 2200);
+      addressStatus.textContent = "Showing New Zealand place matches. Choose one to use it.";
     } else {
       addressStatus.textContent = "Address suggestions did not load. Keep typing a suburb, town, or city.";
     }
@@ -1414,45 +1430,6 @@ async function applyAddressMatch(match, statusPrefix = "Using distance from") {
     : `Using distance from ${addressInput.value}.`;
   hideAddressSuggestions();
   render();
-}
-
-async function resolveAddressFromInput(reason = "pause") {
-  const query = addressInput.value.trim();
-  const token = ++addressLookupToken;
-  clearTimeout(addressResolveTimer);
-
-  if (query.length < 3) {
-    userCoords = null;
-    matchedRegion = "";
-    addressSuggestionMatches = [];
-    hideAddressSuggestions();
-    addressStatus.textContent = "Start typing a New Zealand address or suburb.";
-    render();
-    return;
-  }
-
-  addressStatus.textContent = reason === "enter"
-    ? "Finding the best New Zealand match..."
-    : "Checking the best New Zealand match...";
-
-  try {
-    const exactMatch = addressSuggestionMatches.find((match) => addressSummary(match).toLowerCase() === query.toLowerCase());
-    const localMatch = localAddressMatches(query, 1)[0];
-    const match = exactMatch || addressSuggestionMatches[0] || localMatch || (await fetchAddressMatches(query, 1))[0];
-    if (token !== addressLookupToken) return;
-    if (!match) throw new Error("No address match");
-    await applyAddressMatch(match, reason === "enter" ? "Using" : "Using distance from");
-  } catch (error) {
-    if (error.name === "AbortError") return;
-    const fallbackRegion = inferRegionFromText(query);
-    matchedRegion = fallbackRegion;
-    userCoords = null;
-    hideAddressSuggestions();
-    addressStatus.textContent = fallbackRegion
-      ? `Using ${fallbackRegion} for local matching. Add more address detail for distance.`
-      : "Could not match that address yet. Try a suburb, town, or full street address in New Zealand.";
-    render();
-  }
 }
 
 function buildPaths() {
@@ -1704,8 +1681,8 @@ function reasonForProvider(provider) {
   if (preferences.includes("rainbow") && tags.includes("rainbow")) reasons.push("This matches your preference for Rainbow-affirming support.");
   if (preferences.includes("trauma-informed") && tags.includes("trauma-informed")) reasons.push("This matches your preference for trauma-informed support.");
   if (preferences.includes("telehealth") && isTelehealthProvider(provider) && distanceLabel !== "Telehealth provider") reasons.push("This matches your preference for phone or video appointments.");
-  if (preferences.includes("female-provider") && tags.includes("female")) reasons.push("This matches your preference for a female provider.");
-  if (preferences.includes("male-provider") && tags.includes("male")) reasons.push("This matches your preference for a male provider.");
+  if (preferences.includes("female-provider") && providerGenderFor(provider) === "female") reasons.push("This matches your preference for a female provider.");
+  if (preferences.includes("male-provider") && providerGenderFor(provider) === "male") reasons.push("This matches your preference for a male provider.");
 
   if (!reasons.length) {
     reasons.push("This option is available for your selected area and gives you a clear next contact step.");
@@ -1735,9 +1712,8 @@ function addRecommendation(recommendations, provider, title) {
 }
 
 function hasSelectedPreferenceMatch(recommendations, preferences) {
-  const selected = selectedSupportPreferences(preferences);
-  return selected.length > 0
-    && recommendations.some((item) => selected.some((preference) => item.provider.tags?.includes(preference)));
+  return selectedSupportPreferences(preferences).length > 0
+    && recommendations.some((item) => supportPreferenceMatches(item.provider, preferences).length > 0);
 }
 
 function recommendationMatchesSelectedType(provider, type = selectedContactType()) {
@@ -1756,7 +1732,7 @@ function topRecommendations(recommendations, preferences) {
       item,
       index,
       typeMatches: recommendationMatchesSelectedType(item.provider, selectedType) ? 1 : 0,
-      preferenceMatches: selected.filter((preference) => item.provider.tags?.includes(preference)).length
+      preferenceMatches: supportPreferenceMatches(item.provider, preferences).length
     }))
     .sort((a, b) => {
       if (selectedType !== "all" && b.typeMatches !== a.typeMatches) return b.typeMatches - a.typeMatches;
@@ -1796,8 +1772,12 @@ function recommendedMoves() {
       ? []
       : recommendationCandidates(preference, { includeUnavailable: true });
   const exactType = exactPreferenceType();
+  const genderPreferredMatches = selectedProviderGenderPreference(preferences)
+    ? preferredMatches.filter((provider) => providerMatchesSelectedGender(provider, preferences))
+    : [];
+  const preferredPathMatches = genderPreferredMatches.length ? genderPreferredMatches : preferredMatches;
 
-  preferredMatches.slice(0, 3).forEach((provider, index) => {
+  preferredPathMatches.slice(0, 3).forEach((provider, index) => {
     addRecommendation(
       recommendations,
       provider,
@@ -1808,7 +1788,7 @@ function recommendedMoves() {
   if (!exactType && selectedSupportPreferences(preferences).length && !hasSelectedPreferenceMatch(recommendations, preferences)) {
     addRecommendation(
       recommendations,
-      best((provider) => (provider.tags || []).some((tag) => selectedSupportPreferences(preferences).includes(tag))),
+      best((provider) => supportPreferenceMatches(provider, preferences).length > 0),
       "Prioritise a safer fit"
     );
   }
@@ -1832,7 +1812,7 @@ function recommendedMoves() {
   if (preferences.length || barriers.includes("culture")) {
     addRecommendation(
       recommendations,
-      best((provider) => (provider.tags || []).some((tag) => preferences.includes(tag))),
+      best((provider) => supportPreferenceMatches(provider, preferences).length > 0),
       "Prioritise a safer fit"
     );
   }
@@ -2340,7 +2320,6 @@ addressInput.addEventListener("input", () => {
 
   userCoords = null;
   matchedRegion = "";
-  clearTimeout(addressResolveTimer);
 
   if (query.length < 3) {
     addressSuggestionMatches = [];
@@ -2381,15 +2360,24 @@ addressInput.addEventListener("keydown", async (event) => {
     return;
   }
 
-  await resolveAddressFromInput("enter");
+  if (addressSuggestionMatches.length) {
+    addressStatus.textContent = "Choose a suggested New Zealand address or suburb to use it.";
+    return;
+  }
+
+  addressStatus.textContent = "Keep typing until New Zealand suggestions appear, then choose one.";
 });
 addressInput.addEventListener("change", () => {
-  if (addressInput.value.trim()) resolveAddressFromInput("change");
+  if (!matchedRegion && addressInput.value.trim().length >= 3 && addressSuggestionMatches.length) {
+    addressStatus.textContent = "Choose a suggested New Zealand address or suburb to use it.";
+  }
 });
 addressInput.addEventListener("blur", () => {
   setTimeout(() => {
-    if (addressInput.value.trim() && !matchedRegion) resolveAddressFromInput("pause");
-    else hideAddressSuggestions();
+    hideAddressSuggestions();
+    if (!matchedRegion && addressInput.value.trim().length >= 3) {
+      addressStatus.textContent = "Choose a suggested New Zealand address or suburb to use it.";
+    }
   }, 120);
 });
 addressSuggestions.addEventListener("mousedown", (event) => {
