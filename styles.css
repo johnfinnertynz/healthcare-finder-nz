@@ -737,10 +737,15 @@ input[type="checkbox"] {
 }
 
 .recommendation-card .provider-type-badge {
-  width: 2.15rem;
-  height: 2.15rem;
-  min-height: 2.15rem;
+  width: 4rem;
+  height: 4rem;
+  min-height: 4rem;
   padding: 0;
+}
+
+.recommendation-card .provider-type-badge img {
+  width: 3.35rem;
+  height: 3.35rem;
 }
 
 .recommendation-card .provider-type-badge span {
@@ -943,15 +948,15 @@ input[type="checkbox"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  max-width: 13.5rem;
-  min-height: 2rem;
-  padding: 0.34rem 0.55rem;
+  gap: 0.45rem;
+  max-width: 15rem;
+  min-height: 3.35rem;
+  padding: 0.42rem 0.72rem;
   border: 1px solid rgba(7, 67, 49, 0.18);
   border-radius: 999px;
   color: var(--green-dark);
   background: #eef7f1;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 900;
   line-height: 1.15;
   text-align: right;
@@ -959,8 +964,8 @@ input[type="checkbox"] {
 
 .provider-type-badge img {
   flex: 0 0 auto;
-  width: 1.45rem;
-  height: 1.45rem;
+  width: 2.8rem;
+  height: 2.8rem;
   object-fit: contain;
 }
 
@@ -1335,9 +1340,26 @@ footer nav {
   }
 
   .provider-type-badge {
-    max-width: 8.5rem;
-    padding: 0.32rem 0.45rem;
-    font-size: 0.72rem;
+    max-width: 11rem;
+    min-height: 3.25rem;
+    padding: 0.38rem 0.54rem;
+    font-size: 0.76rem;
+  }
+
+  .provider-type-badge img {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .recommendation-card .provider-type-badge {
+    width: 3.75rem;
+    height: 3.75rem;
+    min-height: 3.75rem;
+  }
+
+  .recommendation-card .provider-type-badge img {
+    width: 3.15rem;
+    height: 3.15rem;
   }
 
 }
