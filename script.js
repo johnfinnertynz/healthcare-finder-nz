@@ -49,6 +49,23 @@ let pendingCarePathScroll = false;
 let carePathScrollScheduled = false;
 const providerBatchSize = 5;
 const telehealthDistanceThresholdKm = 100;
+const availabilityStatuses = new Set([
+  "accepting",
+  "waitlist",
+  "not_accepting",
+  "referrals_paused",
+  "unknown",
+  "not_published"
+]);
+const restrictiveAvailabilityStatuses = new Set(["not_accepting", "referrals_paused"]);
+const availabilityCadenceDays = {
+  accepting: 90,
+  waitlist: 30,
+  not_accepting: 14,
+  referrals_paused: 14,
+  unknown: 90,
+  not_published: 90
+};
 
 const links = {
   healthNz: "https://www.healthnz.govt.nz/health-topics/mental-health/where-to-get-help",
@@ -318,6 +335,87 @@ function renderProviderUpdatedDate() {
     : "Provider database update date unavailable. Please confirm details with the provider.";
 }
 
+function providerAvailabilityStatus(provider) {
+  return availabilityStatuses.has(provider.availabilityStatus)
+    ? provider.availabilityStatus
+    : "not_published";
+}
+
+function parseAvailabilityDate(value) {
+  const text = String(value || "").trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return new Date(`${text}T00:00:00Z`);
+  if (/^\d{4}-\d{2}$/.test(text)) return new Date(`${text}-01T00:00:00Z`);
+  return null;
+}
+
+function availabilityDateLabel(value) {
+  const date = parseAvailabilityDate(value);
+  if (!date) return "";
+  return date.toLocaleDateString("en-NZ", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC"
+  });
+}
+
+function providerAvailabilityStale(provider) {
+  const status = providerAvailabilityStatus(provider);
+  const cadence = availabilityCadenceDays[status];
+  const date = parseAvailabilityDate(provider.availabilityCheckedAt);
+  if (!cadence || !date) return false;
+  const days = Math.floor((Date.now() - date.getTime()) / 86400000);
+  return days > cadence;
+}
+
+function providerExplicitlyAccepting(provider) {
+  return providerAvailabilityStatus(provider) === "accepting"
+    && Boolean(String(provider.availabilityEvidence || "").trim())
+    && !providerAvailabilityStale(provider);
+}
+
+function isUnavailableForFirstRecommendations(provider) {
+  return restrictiveAvailabilityStatuses.has(providerAvailabilityStatus(provider));
+}
+
+function providerAvailabilitySortTier(provider) {
+  const status = providerAvailabilityStatus(provider);
+  if (providerExplicitlyAccepting(provider)) return 3;
+  if (status === "unknown" || status === "not_published") return 2;
+  if (status === "waitlist") return 1;
+  return isUnavailableForFirstRecommendations(provider) ? 0 : 2;
+}
+
+function providerAvailabilityScore(provider) {
+  const status = providerAvailabilityStatus(provider);
+  if (providerExplicitlyAccepting(provider)) return 2;
+  if (status === "waitlist") return -10;
+  if (isUnavailableForFirstRecommendations(provider)) return -120;
+  return 0;
+}
+
+function providerAvailabilityNote(provider, { compact = false } = {}) {
+  const status = providerAvailabilityStatus(provider);
+  const checkedLabel = availabilityDateLabel(provider.availabilityCheckedAt);
+  const stale = providerAvailabilityStale(provider);
+  const showStalePrefix = stale && !["unknown", "not_published"].includes(status);
+  const suffix = checkedLabel
+    ? ` Last checked ${checkedLabel}; confirm before relying on it.`
+    : " Confirm before relying on it.";
+  const stalePrefix = showStalePrefix ? "Availability needs rechecking: " : "";
+
+  const labels = {
+    accepting: "Listed as accepting new clients.",
+    waitlist: "May have a waitlist.",
+    not_accepting: "Listed as not accepting new clients.",
+    referrals_paused: "Referrals appear to be paused.",
+    unknown: "Availability is not clearly published.",
+    not_published: "Availability is not clearly published."
+  };
+
+  if (compact) return `${stalePrefix}${labels[status] || "Availability should be confirmed."}${suffix}`;
+  return `${stalePrefix}${labels[status] || "Availability should be confirmed."}${suffix}`;
+}
+
 function safeHref(value, { allowHash = false } = {}) {
   const href = String(value || "").trim();
   if (allowHash && /^#[\w-]+$/.test(href)) return href;
@@ -509,7 +607,7 @@ function providerMatchesProfile(provider) {
   const wantsTelehealth = preferences.includes("telehealth");
   const needScopedMatch = providerMatchesSelectedNeeds(provider, needs);
 
-  let score = 0;
+  let score = providerAvailabilityScore(provider);
   if (!needScopedMatch) score -= 80;
   const preferenceType = selectedContactType();
   if (hasNationalServiceReach(provider)) score += wantsTelehealth ? 4 : (barriers.includes("transport") ? 2 : 0);
@@ -567,6 +665,7 @@ function providerSortValue(provider) {
   const telehealth = isTelehealthProvider(provider);
   return {
     preferenceMatches: supportPreferenceMatches(tags).length,
+    availabilityTier: providerAvailabilitySortTier(provider),
     telehealthMatch: wantsTelehealth && telehealth ? 1 : 0,
     specialtyMatches,
     directContacts,
@@ -581,6 +680,7 @@ function compareProviders(a, b) {
   const bSort = providerSortValue(b);
   return b.score - a.score
     || bSort.preferenceMatches - aSort.preferenceMatches
+    || bSort.availabilityTier - aSort.availabilityTier
     || bSort.telehealthMatch - aSort.telehealthMatch
     || bSort.specialtyMatches - aSort.specialtyMatches
     || bSort.isLocal - aSort.isLocal
@@ -649,10 +749,11 @@ function filteredProviders() {
   return directoryMatches;
 }
 
-function recommendationCandidates(type = "all") {
+function recommendationCandidates(type = "all", options = {}) {
   const location = matchedRegion || "";
   const needs = checkedValues("need");
   const preferences = checkedValues("preference");
+  const includeUnavailable = Boolean(options.includeUnavailable);
 
   return providers
     .map((provider) => ({ ...provider, score: providerMatchesProfile(provider) }))
@@ -670,7 +771,8 @@ function recommendationCandidates(type = "all") {
       const needOk = providerMatchesSelectedNeeds(provider, needs);
       const crisisOk = !provider.tags?.includes("crisis");
       const directOk = isDirectContact(provider);
-      return typeOk && regionOk && preferenceOk && genderOk && ageOk && needOk && crisisOk && directOk;
+      const availabilityOk = includeUnavailable || !isUnavailableForFirstRecommendations(provider);
+      return typeOk && regionOk && preferenceOk && genderOk && ageOk && needOk && crisisOk && directOk && availabilityOk;
     })
     .sort(compareProviders);
 }
@@ -794,6 +896,9 @@ function renderProviders() {
       const providerSpecialty = escapeHtml(specialty);
       const providerPatientGroup = escapeHtml(patientGroups);
       const providerDistance = escapeHtml(distanceLabel);
+      const availabilityStatus = providerAvailabilityStatus(provider);
+      const unavailable = isUnavailableForFirstRecommendations(provider);
+      const availabilityNote = providerAvailabilityNote(provider, { compact: true });
       const contact = [
         !directory && provider.phone ? `Phone ${escapeHtml(provider.phone)}` : "",
         !directory && provider.text ? `Text ${escapeHtml(provider.text)}` : "",
@@ -811,6 +916,16 @@ function renderProviders() {
               ? `<a class="button button--primary" href="sms:${normalisePhone(provider.text)}">Text</a>`
               : website
                 ? `<a class="button button--primary" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Website</a>`
+                : ""
+        : unavailable
+          ? provider.email
+            ? `<button class="button button--primary select-provider" type="button" data-provider-id="${providerId}">
+                Check availability first
+              </button>`
+            : provider.phone
+              ? `<a class="button button--primary" href="tel:${normalisePhone(provider.phone)}">Call to check availability</a>`
+              : website
+                ? `<a class="button button--primary" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Check availability</a>`
                 : ""
         : `<button class="button button--primary select-provider" type="button" data-provider-id="${providerId}">
               Use this contact
@@ -830,7 +945,7 @@ function renderProviders() {
           `;
 
       return `
-        <article class="provider-card ${isSelected ? "selected" : ""}">
+        <article class="provider-card provider-card--availability-${escapeHtml(availabilityStatus)} ${isSelected ? "selected" : ""}">
           <div class="provider-card__header">
             <div>
               ${providerNameMarkup(provider)}
@@ -844,6 +959,7 @@ function renderProviders() {
             ${patientGroups ? `<p class="provider-detail"><strong>Patient groups:</strong> ${providerPatientGroup}</p>` : ""}
             <p class="provider-detail"><strong>First step:</strong> ${providerFirstStep}</p>
             <p class="provider-detail"><strong>Cost:</strong> ${providerCost}</p>
+            <p class="provider-detail availability-note availability-note--${escapeHtml(availabilityStatus)}"><strong>Availability:</strong> ${escapeHtml(availabilityNote)}</p>
             ${contact ? `<p class="provider-detail"><strong>Contact:</strong> ${contact}</p>` : ""}
           </div>
           <div class="provider-actions">
@@ -1445,6 +1561,14 @@ function reasonForProvider(provider) {
     reasons.push(`This service is specifically for ${needScopeLabel}, which matches what you selected.`);
   }
 
+  if (providerExplicitlyAccepting(provider)) {
+    reasons.push("Their public information says they are accepting new clients, but it is still worth confirming.");
+  } else if (providerAvailabilityStatus(provider) === "waitlist") {
+    reasons.push("They may have a waitlist, so ask about timing before putting energy into this option.");
+  } else if (isUnavailableForFirstRecommendations(provider)) {
+    reasons.push(providerAvailabilityNote(provider, { compact: true }));
+  }
+
   if (distanceLabel === "Telehealth provider") {
     reasons.push(preferences.includes("telehealth")
       ? "This matches your preference for phone or video appointments."
@@ -1581,14 +1705,20 @@ function exactPreferenceType() {
 
 function recommendedMoves() {
   const matches = recommendationCandidates();
+  const fallbackMatches = matches.length ? matches : recommendationCandidates("all", { includeUnavailable: true });
   const preference = selectedContactType();
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
   const preferences = checkedValues("preference");
   const identity = document.querySelector("#identity").value;
   const recommendations = [];
-  const best = (predicate) => matches.find(predicate);
-  const preferredMatches = preference === "all" ? [] : recommendationCandidates(preference);
+  const best = (predicate) => fallbackMatches.find(predicate);
+  const availablePreferredMatches = preference === "all" ? [] : recommendationCandidates(preference);
+  const preferredMatches = availablePreferredMatches.length
+    ? availablePreferredMatches
+    : preference === "all"
+      ? []
+      : recommendationCandidates(preference, { includeUnavailable: true });
   const exactType = exactPreferenceType();
 
   preferredMatches.slice(0, 3).forEach((provider, index) => {
@@ -1645,7 +1775,7 @@ function recommendedMoves() {
 
   addRecommendation(recommendations, best((provider) => provider.type === "counsellor"), "Ask a counsellor or therapist");
   addRecommendation(recommendations, best((provider) => provider.type === "psychologist"), "Look for a psychologist");
-  addRecommendation(recommendations, matches[0], "Best overall match");
+  addRecommendation(recommendations, fallbackMatches[0], "Best overall match");
 
   return topRecommendations(recommendations, preferences);
 }
@@ -1813,19 +1943,23 @@ function contactAvailabilityNote(target, provider) {
     return "Choose a specific provider to show only the contact buttons we have confirmed for them.";
   }
 
+  const availability = providerAvailabilityNote(provider, { compact: true });
+
   if (target.isDirectory) {
-    return "This is a directory or navigator, not a direct provider. Email and call buttons are hidden; open the website and choose a specific service.";
+    return `This is a directory or navigator, not a direct provider. Email and call buttons are hidden; open the website and choose a specific service. ${availability}`;
   }
 
   const missing = [];
   if (!target.email) missing.push("an email address");
   if (!target.phone && !target.text) missing.push("a phone or text number");
-  if (!missing.length) return "";
+  if (!missing.length) return isUnavailableForFirstRecommendations(provider)
+    ? `${availability} Contact only if you want to check whether this has changed.`
+    : availability;
 
   const fallback = target.website
     ? " You can copy the message and use their website or contact form."
     : " Choose another provider if you need that contact method.";
-  return `This provider does not publish ${sentenceList(missing)} in our database.${fallback}`;
+  return `${availability} This provider does not publish ${sentenceList(missing)} in our database.${fallback}`;
 }
 
 function setContactAction(element, href, label) {
@@ -1953,7 +2087,9 @@ function render() {
   if (exactType) {
     const selected = providers.find((provider) => provider.id === selectedProviderId);
     if (!selected || selected.type !== exactType) {
-      selectedProviderId = recommendationCandidates(exactType)[0]?.id || "";
+      selectedProviderId = recommendationCandidates(exactType)[0]?.id
+        || recommendationCandidates(exactType, { includeUnavailable: true })[0]?.id
+        || "";
       contactProviderId = "";
     }
   }
@@ -1972,8 +2108,11 @@ function render() {
       <div class="recommendation-grid" aria-label="Recommended first contact options">
         ${moves.map((move, index) => {
           const distanceLabel = providerDistanceLabel(move.provider);
+          const unavailable = isUnavailableForFirstRecommendations(move.provider);
+          const availabilityStatus = providerAvailabilityStatus(move.provider);
+          const availabilityNote = providerAvailabilityNote(move.provider, { compact: true });
           return `
-        <article class="recommendation-card ${index === 0 ? "recommendation-card--primary" : ""}">
+        <article class="recommendation-card recommendation-card--availability-${escapeHtml(availabilityStatus)} ${index === 0 ? "recommendation-card--primary" : ""}">
           <div class="recommendation-rank">${index + 1}</div>
           <div>
             <div class="recommendation-card__header">
@@ -1985,12 +2124,13 @@ function render() {
               ${providerTypeBadge(move.provider)}
             </div>
             <p>${escapeHtml(move.provider.firstStep)}</p>
+            <p class="availability-note availability-note--${escapeHtml(availabilityStatus)}">${escapeHtml(availabilityNote)}</p>
             <ul>
               ${move.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}
             </ul>
             <div class="recommendation-actions">
               <button class="button button--primary use-path" type="button" data-provider-id="${escapeHtml(move.provider.id)}">
-                Use this path
+                ${unavailable ? "Check availability first" : "Use this path"}
               </button>
               <button class="button button--quiet path-filter" type="button" data-provider-type="${escapeHtml(move.provider.type)}" data-provider-search="">
                 ${escapeHtml(move.similarAction)}
@@ -2074,7 +2214,9 @@ contactMessage.addEventListener("input", () => {
 });
 contactPreference.addEventListener("input", () => {
   const preference = selectedContactType();
-  const firstMatch = recommendationCandidates(preference)[0] || (exactPreferenceType() ? null : filteredProviders()[0]);
+  const firstMatch = recommendationCandidates(preference)[0]
+    || recommendationCandidates(preference, { includeUnavailable: true })[0]
+    || (exactPreferenceType() ? null : filteredProviders()[0]);
   if (firstMatch) selectedProviderId = firstMatch.id;
   else selectedProviderId = "";
   contactProviderId = "";

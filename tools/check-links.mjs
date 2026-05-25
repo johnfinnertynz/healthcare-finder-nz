@@ -13,6 +13,7 @@ const urls = new Set();
 const providerLinkMode = process.env.CHECK_PROVIDER_LINKS || "sample";
 const providerLinkLimit = Number(process.env.PROVIDER_LINK_LIMIT || 150);
 const checkProviderSources = process.env.CHECK_PROVIDER_SOURCES === "true";
+const linkCheckConcurrency = Math.max(1, Number(process.env.LINK_CHECK_CONCURRENCY || 12));
 
 function collectFromText(text) {
   for (const match of text.matchAll(/https?:\/\/[^\s"'<>),]+/g)) {
@@ -112,10 +113,28 @@ async function check(url) {
   };
 }
 
-const results = [];
-for (const url of [...urls].sort()) {
-  results.push(await check(url));
+async function checkAll(urlList) {
+  const results = new Array(urlList.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < urlList.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      results[index] = await check(urlList[index]);
+    }
+  }
+
+  const workers = Array.from(
+    { length: Math.min(linkCheckConcurrency, urlList.length) },
+    () => worker()
+  );
+  await Promise.all(workers);
+  return results;
 }
+
+const sortedUrls = [...urls].sort();
+const results = await checkAll(sortedUrls);
 
 const broken = results.filter((result) => !result.ok && !result.blocked);
 const blocked = results.filter((result) => result.blocked);
@@ -133,5 +152,5 @@ for (const result of redirected) {
   console.log(`REDIRECT ${result.status} ${result.url} -> ${result.final}`);
 }
 
-console.log(`Checked ${results.length} links. Broken: ${broken.length}. Blocked by site: ${blocked.length}. Redirects: ${redirected.length}.`);
+console.log(`Checked ${results.length} links with concurrency ${linkCheckConcurrency}. Broken: ${broken.length}. Blocked by site: ${blocked.length}. Redirects: ${redirected.length}.`);
 process.exitCode = broken.length ? 1 : 0;

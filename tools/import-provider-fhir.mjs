@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
+import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -194,7 +195,8 @@ function resourceRecords(bundle) {
       const coords = position(resource);
       const generatedId = `${slugify(region)}-${slugify(type)}-${slugify(name || resource.id)}`;
 
-      return {
+      const verifiedMonth = new Date().toISOString().slice(0, 7);
+      return withAvailabilityDefaults({
         id: resource.identifier?.[0]?.value ? `fhir-${slugify(resource.identifier[0].value)}` : generatedId,
         name,
         type,
@@ -218,12 +220,12 @@ function resourceRecords(bundle) {
           ? "Call and ask for the simplest next step, costs, and whether this service is a good fit."
           : "Use the website or email contact to ask for the simplest next step, costs, and whether this service is a good fit.",
         source: website || "https://www.healthpoint.co.nz/",
-        verified: new Date().toISOString().slice(0, 7),
-        lastVerified: new Date().toISOString().slice(0, 7),
+        verified: verifiedMonth,
+        lastVerified: verifiedMonth,
         confidence: website ? "medium" : "low",
         sourceQuality: "official FHIR provider export",
         needsManualVerification: true
-      };
+      }, { checkedAt: verifiedMonth });
     })
     .filter((record) => record.name && (record.phone || record.email || record.website));
 }

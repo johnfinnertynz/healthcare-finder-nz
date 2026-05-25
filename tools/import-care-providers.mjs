@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
+import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -129,7 +130,7 @@ for (const row of rows) {
   }
 
   const id = row.id || `${slugify(row.region)}-${slugify(row.type)}-${slugify(row.name)}`;
-  const record = {
+  const record = withAvailabilityDefaults({
     id,
     name: row.name,
     type: row.type,
@@ -153,8 +154,13 @@ for (const row of rows) {
     lastVerified: row.lastVerified || row.verified || new Date().toISOString().slice(0, 7),
     confidence: row.confidence || "medium",
     sourceQuality: row.sourceQuality || "provider-owned or NGO public page",
-    needsManualVerification: booleanCell(row.needsManualVerification, true)
-  };
+    needsManualVerification: booleanCell(row.needsManualVerification, true),
+    availabilityStatus: row.availabilityStatus || "",
+    availabilityCheckedAt: row.availabilityCheckedAt || "",
+    availabilityEvidence: row.availabilityEvidence || "",
+    availabilitySource: row.availabilitySource || "",
+    availabilityNeedsManualReview: booleanCell(row.availabilityNeedsManualReview, undefined)
+  });
 
   if (providersById.has(id)) updated += 1;
   else added += 1;

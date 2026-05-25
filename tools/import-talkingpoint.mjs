@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
+import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -103,7 +104,7 @@ function recordForNewPlymouth(previous = {}) {
   const resolvedAddress = address || previous.address || "27 Courtenay Street, New Plymouth";
   const keepPreviousCoords = previous.address === resolvedAddress;
 
-  return {
+  return withAvailabilityDefaults({
     ...previous,
     id: "taranaki-talkingpoint-new-plymouth",
     name: "TalkingPoint New Plymouth",
@@ -154,11 +155,11 @@ function recordForNewPlymouth(previous = {}) {
     confidence: "high",
     sourceQuality: "provider-owned page",
     needsManualVerification: false
-  };
+  }, { checkedAt: verifiedMonth });
 }
 
 function recordForCambridge(previous = {}) {
-  return {
+  return withAvailabilityDefaults({
     ...previous,
     id: "waikato-talkingpoint-cambridge",
     name: "TalkingPoint Cambridge",
@@ -198,7 +199,7 @@ function recordForCambridge(previous = {}) {
     confidence: "high",
     sourceQuality: "provider-owned page",
     needsManualVerification: false
-  };
+  }, { checkedAt: verifiedMonth });
 }
 
 const providers = JSON.parse(fs.readFileSync(providersPath, "utf8"));

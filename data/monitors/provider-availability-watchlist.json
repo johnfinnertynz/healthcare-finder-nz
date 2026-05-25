@@ -44,7 +44,12 @@
         "firstStep": "Use the website contact form and ask whether new-client enquiries are open, what the first appointment costs, and whether ACC or private therapy fits."
       },
       "checkedAt": "2026-05-24",
-      "notes": "Do not add as a live first-contact option until availability changes."
+      "notes": "Do not add as a live first-contact option until availability changes.",
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Homepage says the practice is at full capacity and unable to take on new clients.",
+      "availabilitySource": "https://www.internalgrowth.co.nz/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "christchurch-psychmed-michelle-mccarthy",
@@ -91,7 +96,12 @@
         "firstStep": "Email or call Christchurch PsychMed asking about current availability, fees, and whether Michelle is accepting new clients."
       },
       "checkedAt": "2026-05-24",
-      "notes": "Removed from live provider results while unavailable."
+      "notes": "Removed from live provider results while unavailable.",
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Christchurch PsychMed profile notes she is currently unable to accept new clients.",
+      "availabilitySource": "https://www.christchurchpsychmed.co.nz/about",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "ranzcp-4827",
@@ -148,7 +158,12 @@
         "lon": 174.7474285
       },
       "checkedAt": "2026-05-24",
-      "notes": "Removed from live provider results while unavailable."
+      "notes": "Removed from live provider results while unavailable.",
+      "availabilityStatus": "referrals_paused",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "RANZCP Your Health in Mind listing says appointment wait: Not taking new patients.",
+      "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4827/dr-tanya-wright",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "ranzcp-1363",
@@ -200,7 +215,12 @@
         "lon": 173.931235
       },
       "checkedAt": "2026-05-24",
-      "notes": "Removed from live provider results while unavailable."
+      "notes": "Removed from live provider results while unavailable.",
+      "availabilityStatus": "referrals_paused",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "RANZCP Your Health in Mind listing says appointment wait: Not taking new patients.",
+      "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1363/dr-roger-elliott",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "ranzcp-2586",
@@ -256,7 +276,12 @@
         "lon": 175.2824138
       },
       "checkedAt": "2026-05-24",
-      "notes": "Removed from live provider results while unavailable."
+      "notes": "Removed from live provider results while unavailable.",
+      "availabilityStatus": "referrals_paused",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "RANZCP Your Health in Mind listing says appointment wait: Not taking new patients.",
+      "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2586/dr-john-collier",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "northland-creative-counselling-kerikeri",
@@ -297,7 +322,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page says they are currently not accepting new clients.",
+      "availabilitySource": "https://www.creativecounselling.co.nz/services/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "northland-mindme-clinical-psychology",
@@ -336,7 +366,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "referrals_paused",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page says they are not accepting new referrals due to high demand.",
+      "availabilitySource": "https://www.mindme.co.nz/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "northland-wayfinder-psychology",
@@ -378,7 +413,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page says they are currently not taking new clients.",
+      "availabilitySource": "https://wayfinderpsychology.co.nz/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "northland-whangarei-care-centre-counselling",
@@ -421,7 +461,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Website notice says Whangarei Care will close on Friday 29 May 2026.",
+      "availabilitySource": "https://whgcare.org.nz/counselling-whangarei/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "waikato-waikato-counselling",
@@ -463,7 +508,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page says they are currently not taking new clients.",
+      "availabilitySource": "https://www.waikatocounselling.net/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "northland-northland-psychiatry-dr-foote",
@@ -503,7 +553,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page says availability is ACC/VA assessments only and not ongoing treatment work.",
+      "availabilitySource": "https://www.northlandpsychiatry.co.nz/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "taranaki-calming-minds-dr-candy-fox",
@@ -535,7 +590,12 @@
           "medical-specialist",
           "fit"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Homepage says the psychiatrist is not currently accepting new clients.",
+      "availabilitySource": "https://calmingminds.co.nz/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "southland-south-coast-psychology-psychiatry",
@@ -573,7 +633,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Psychiatry page says there are currently no providers available.",
+      "availabilitySource": "https://southcoastpsychology.co.nz/service/psychiatry/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "marlborough-durkin-zintl-psychology",
@@ -616,7 +681,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "referrals_paused",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page says the practice is currently closed to new referrals.",
+      "availabilitySource": "https://www.durkinzintlpsychology.co.nz/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "tairawhiti-mauri-psychology",
@@ -655,7 +725,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page marks trauma therapy and holistic psychological counselling as currently unavailable or fully booked.",
+      "availabilitySource": "https://www.mauripsychology.com/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "taranaki-jade-psychology",
@@ -692,7 +767,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Contact page says the psychologist has commenced maternity leave and is not seeing clients or checking emails.",
+      "availabilitySource": "https://www.jade-psychology.com/contact",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "taranaki-tosca-counselling",
@@ -734,7 +814,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Provider page still states temporarily closed until November 2025, which is stale as of this 2026 check and needs human verification.",
+      "availabilitySource": "https://www.counsellingnewplymouth.nz/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "hawkes-bay-nova-mentem-broad-streams",
@@ -777,7 +862,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "Source marks anxiety, mood, trauma, and psychotic condition streams as currently at capacity for new clients.",
+      "availabilitySource": "https://www.futureready.org.nz/listing/nova-mentem-mind-health-specialists/",
+      "availabilityNeedsManualReview": true
     },
     {
       "id": "hawkes-bay-janneke-van-rooijen-psychology",
@@ -823,7 +913,12 @@
           "fit",
           "direct-contact"
         ]
-      }
+      },
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-24",
+      "availabilityEvidence": "The provider-owned website currently returns 404 in the link checker, so public contact details need human verification before this is served live.",
+      "availabilitySource": "https://www.jvrpsychology.com/",
+      "availabilityNeedsManualReview": true
     }
   ]
 }

@@ -31,6 +31,10 @@ Every provider record must include:
 - `sourceQuality`
 - `needsManualVerification`
 - `needScope`
+- `availabilityStatus`
+- `availabilityCheckedAt`
+- `availabilitySource`
+- `availabilityNeedsManualReview`
 
 Recommended fields:
 
@@ -69,6 +73,16 @@ Current schema aliases:
 - `tags` currently carry support flags such as `maori`, `pasifika`, `asian`,
   `rainbow`, `trauma-informed`, `telehealth`, `female`, `male`, `cost`,
   `crisis`, `addiction`, `psychiatry-service`, and `direct-contact`.
+- `availabilityStatus` must be one of `accepting`, `waitlist`,
+  `not_accepting`, `referrals_paused`, `unknown`, or `not_published`.
+- `availabilityCheckedAt` is the date or month when availability was last
+  checked, in `YYYY-MM-DD` or `YYYY-MM` format.
+- `availabilitySource` is the source URL used for the status. This may be the
+  same as `source` or `website`.
+- `availabilityEvidence` stores the short public phrase that supports an
+  explicit status. Do not invent this text.
+- `availabilityNeedsManualReview` is `true` when the status is uncertain,
+  restrictive, stale, or based on indirect wording.
 
 ## Verification Rules
 
@@ -95,8 +109,10 @@ Current schema aliases:
   records so child/adolescent-only and older-adult-only services are not shown
   to clearly incompatible ages.
 - If a provider page says books are closed, not taking new clients, or not
-  accepting referrals, remove it from `providers.json` and add it to
-  `data/monitors/provider-availability-watchlist.json`.
+  accepting referrals, do not promote it as a normal first-contact option. Move
+  it to `data/monitors/provider-availability-watchlist.json` where possible, or
+  keep it labelled with `availabilityStatus: "not_accepting"` /
+  `"referrals_paused"` only when there is a deliberate fallback reason.
 - Do not publish private emails, personal mobile numbers, or register addresses
   unless they are clearly public professional contact details.
 - Keep MCNZ and Psychologists Board register data backend-only unless a separate
@@ -119,22 +135,56 @@ Provider gender tags are soft fit signals:
 Only use these when a public source explicitly supports the tag. Do not infer
 ethnicity, culture, gender, or affirming practice from a provider name alone.
 
+## Availability Freshness Rules
+
+Availability is not the same as link reachability. A provider website can be
+online while the provider is full, paused, or waitlisting.
+
+- `accepting` needs explicit public evidence such as "accepting new clients" or
+  "currently available"; it must not be guessed from a booking button alone.
+- `unknown` and `not_published` are normal for many providers. They stay visible
+  with confirm-availability wording.
+- `waitlist` stays visible but is ranked lower than unknown/not-published
+  providers with similar fit.
+- `not_accepting` and `referrals_paused` are excluded from the first care-path
+  cards unless there are no alternatives, and they must be labelled clearly.
+- Restrictive statuses should be rechecked at least every 14 days. Waitlist
+  statuses should be rechecked at least every 30 days. Accepting, unknown, and
+  not-published statuses should be refreshed at least every 90 days.
+- Stale restrictive records need human review before being treated as available.
+- Use `data/provider-availability-allowlist.json` only for short-lived, reviewed
+  exceptions. Every item needs `id`, `rule`, `reason`, `reviewedBy`,
+  `reviewedDate`, and `expiryDate`.
+
+The availability tools are:
+
+```sh
+node tools/audit-provider-availability.mjs
+node tools/recheck-provider-availability.mjs
+```
+
+The audit writes `data/provider-availability-audit.json` and
+`AVAILABILITY_RECHECK_REPORT.md`. The recheck tool writes
+`data/provider-availability-recheck-results.json` and never changes
+`providers.json` automatically.
+
 ## Update Checklist
 
 Before committing provider data changes:
 
 1. Run `node tools/validate-provider-data.mjs`.
 2. Run `node tools/audit-provider-source-fit.mjs`.
-3. Run `node tools/audit-provider-quality.mjs providers.json`.
-4. Run `node tools/audit-support-preferences.mjs providers.json`.
-5. Run `node tools/audit-address-coverage.mjs providers.json`.
-6. Run `node tools/audit-availability-watchlist.mjs`.
-7. Run `node tools/check-links.mjs`.
-8. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
-9. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
+3. Run `node tools/audit-provider-availability.mjs`.
+4. Run `node tools/audit-provider-quality.mjs providers.json`.
+5. Run `node tools/audit-support-preferences.mjs providers.json`.
+6. Run `node tools/audit-address-coverage.mjs providers.json`.
+7. Run `node tools/audit-availability-watchlist.mjs`.
+8. Run `node tools/check-links.mjs`.
+9. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
+10. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
    telehealth, female provider, male provider.
-10. Check one local workflow in a large city and one in a thin-coverage region.
-11. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
+11. Check one local workflow in a large city and one in a thin-coverage region.
+12. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
     soft launch.
 
 ## Source-Fit Audit

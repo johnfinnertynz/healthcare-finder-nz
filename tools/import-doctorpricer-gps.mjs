@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
+import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const DOCTORPRICER_API = "https://doctorpricer.co.nz/api/practices";
 const DOCTORPRICER_HOME = "https://doctorpricer.co.nz/";
@@ -227,7 +228,7 @@ function mapPractice(practice, seed, fetchedAt) {
     ...culturalTags(practice)
   ];
 
-  return {
+  return withAvailabilityDefaults({
     id: `gp-${slugify(practice.id || `${name}-${practice.address}`)}`,
     name,
     type: "gp",
@@ -260,7 +261,7 @@ function mapPractice(practice, seed, fetchedAt) {
       enrolling: Boolean(practice.active),
       adultFee: Number.isFinite(Number(practice.price)) ? Number(practice.price) : ""
     }
-  };
+  }, { checkedAt: fetchedAt });
 }
 
 function mergeProvider(previous, incoming) {

@@ -4,6 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { auditAvailability } from "../tools/audit-provider-availability.mjs";
 import { auditProviders } from "../tools/audit-provider-source-fit.mjs";
 
 const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
@@ -153,6 +154,98 @@ test("provider source-fit audit passes without unallowlisted high-severity findi
   const report = JSON.parse(fs.readFileSync(path.join(tempDir, "provider-source-fit-audit.json"), "utf8"));
   assert.equal(report.summary.highUnallowlisted, 0);
   assert.ok(report.summary.total >= 1, "audit should keep reporting reviewable source-fit findings");
+});
+
+test("provider availability audit passes without unallowlisted high-severity findings", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "provider-availability-"));
+  execFileSync(process.execPath, [
+    "tools/audit-provider-availability.mjs",
+    "providers.json",
+    "--allowlist",
+    "data/provider-availability-allowlist.json",
+    "--json-out",
+    path.join(tempDir, "provider-availability-audit.json"),
+    "--md-out",
+    path.join(tempDir, "AVAILABILITY_RECHECK_REPORT.md")
+  ], { stdio: "pipe" });
+
+  const report = JSON.parse(fs.readFileSync(path.join(tempDir, "provider-availability-audit.json"), "utf8"));
+  assert.equal(report.summary.highUnallowlisted, 0);
+  assert.ok(report.providersScanned >= providers.length);
+});
+
+test("availability audit catches stale or unsafe availability metadata", () => {
+  const baseProvider = {
+    id: "availability-sample",
+    name: "Availability Sample",
+    type: "psychologist",
+    region: "Auckland",
+    city: "Auckland",
+    phone: "09 000 0000",
+    email: "hello@example.org",
+    website: "https://example.org",
+    cost: "Private fees apply.",
+    tags: ["psychologist", "direct-contact"],
+    fit: "Psychology service.",
+    firstStep: "Ask about fit.",
+    source: "https://example.org",
+    verified: "2026-05",
+    lastVerified: "2026-05",
+    confidence: "medium",
+    sourceQuality: "provider-owned page",
+    needsManualVerification: true,
+    needScope: []
+  };
+
+  const report = auditAvailability({
+    generatedAt: "2026-05-25T00:00:00.000Z",
+    providers: [
+      {
+        ...baseProvider,
+        id: "accepting-without-evidence",
+        availabilityStatus: "accepting",
+        availabilityCheckedAt: "2026-05-20",
+        availabilityEvidence: "",
+        availabilitySource: "https://example.org"
+      },
+      {
+        ...baseProvider,
+        id: "stale-not-accepting",
+        availabilityStatus: "not_accepting",
+        availabilityCheckedAt: "2026-04-01",
+        availabilityEvidence: "Currently not accepting new clients",
+        availabilitySource: "https://example.org",
+        availabilityNeedsManualReview: true
+      },
+      {
+        ...baseProvider,
+        id: "contradictory-status",
+        availabilityStatus: "not_published",
+        availabilityCheckedAt: "2026-05-20",
+        availabilityEvidence: "Referrals are paused.",
+        availabilitySource: "https://example.org",
+        availabilityNeedsManualReview: true
+      },
+      {
+        ...baseProvider,
+        id: "directory-accepting",
+        type: "directory",
+        tags: ["directory"],
+        availabilityStatus: "accepting",
+        availabilityCheckedAt: "2026-05-20",
+        availabilityEvidence: "Accepting new clients",
+        availabilitySource: "https://example.org"
+      }
+    ],
+    allowlistEntries: []
+  });
+
+  const rules = report.findings.map((finding) => `${finding.providerId}:${finding.rule}:${finding.severity}`);
+  assert.ok(rules.includes("accepting-without-evidence:accepting-without-explicit-evidence:high"));
+  assert.ok(rules.includes("stale-not-accepting:stale-availability:high"));
+  assert.ok(rules.includes("contradictory-status:restrictive-evidence-status-mismatch:high"));
+  assert.ok(rules.includes("directory-accepting:directory-marked-accepting:high"));
+  assert.equal(report.summary.highUnallowlisted, 5);
 });
 
 test("source-fit audit catches known unsafe provider patterns", () => {
@@ -424,8 +517,18 @@ test("every provider has launch verification metadata", () => {
     .filter((provider) => !["high", "medium", "low"].includes(provider.confidence))
     .map((provider) => `${provider.id}:${provider.confidence}`);
 
+  const missingAvailability = providers
+    .filter((provider) => !provider.availabilityStatus || !provider.availabilityCheckedAt || !provider.availabilitySource || typeof provider.availabilityNeedsManualReview !== "boolean")
+    .map((provider) => provider.id);
+
+  const invalidAvailability = providers
+    .filter((provider) => !["accepting", "waitlist", "not_accepting", "referrals_paused", "unknown", "not_published"].includes(provider.availabilityStatus))
+    .map((provider) => `${provider.id}:${provider.availabilityStatus}`);
+
   assert.deepEqual(missing, []);
   assert.deepEqual(invalidConfidence, []);
+  assert.deepEqual(missingAvailability, []);
+  assert.deepEqual(invalidAvailability, []);
 });
 
 test("privacy, disclaimer, correction, and crisis links are visible from the home page", () => {

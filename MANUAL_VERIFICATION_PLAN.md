@@ -75,8 +75,11 @@ manual-review fallback options rather than local listings.
 
 ## Blocked-By-Site Links Needing Human Review
 
-The automated link checker cannot verify these because the site blocks automated
-requests or returns a site-level access response. Review in a normal browser:
+The automated link checker cannot verify some sources because the site blocks
+automated requests or returns a site-level access response. The 2026-05-25 link
+check completed with 0 broken links and 87 blocked-by-site responses; most were
+Healthpoint, Health NZ, or provider sites that still need normal-browser review
+during manual verification. Review these priority sources in a normal browser:
 
 - `https://depression.org.nz/`
 - `https://info.health.nz/locations/rotorua-taupo-lakes/mental-health-addiction/adult-mhas-taupo`
@@ -96,6 +99,19 @@ requests or returns a site-level access response. Review in a normal browser:
 
 Also manually re-check `https://www.starfishclinic.com/contact/`, which has
 shown a TLS certificate hostname mismatch during source-link testing.
+
+## Availability Recheck Failures Needing Human Review
+
+The cautious availability recheck on 2026-05-25 could not read these watchlist
+sources. Do not infer that they are accepting clients; open in a browser or
+contact the provider before moving anything back into the live provider list:
+
+- Nelson, Marlborough and Tasman: Durkin Zintl Psychology,
+  `https://www.durkinzintlpsychology.co.nz/`
+- Taranaki: Tosca Lammerts van Bueren Counselling,
+  `https://www.counsellingnewplymouth.nz/`
+- Hawke's Bay: Janneke van Rooijen Psychology,
+  `https://www.jvrpsychology.com/`
 
 ## Suggested Call Script
 

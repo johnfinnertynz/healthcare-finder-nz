@@ -76,6 +76,8 @@ providers.json         Local provider and directory data
 provider-sources.json  Refresh source manifest
 PROVIDER_SOURCE_FIT_AUDIT.md
                        Latest audit of provider tags against source evidence
+AVAILABILITY_RECHECK_REPORT.md
+                       Latest provider availability freshness audit
 data/imports/          Approved source exports, not usually committed
 data/monitors/         Watchlists for promising providers not currently available
 data/registers/        Backend-only professional register outputs
@@ -107,8 +109,10 @@ details only. Direct care records should include at least one usable contact
 method such as phone, email, text, or an official website/contact page.
 Provider coordinates can be stored as `lat` and `lon` for distance ranking.
 Each provider should also have `confidence`, `sourceQuality`, `lastVerified`,
-`needsManualVerification`, and `needScope` so launch risk and narrow-service
-scope are visible.
+`needsManualVerification`, `needScope`, `availabilityStatus`,
+`availabilityCheckedAt`, `availabilitySource`, and
+`availabilityNeedsManualReview` so launch risk, narrow-service scope, and
+availability freshness are visible.
 
 Address lookup for users is done in the browser and is only used to rank nearby
 providers. If a user chooses address lookup, the address text is sent to the
@@ -135,9 +139,10 @@ present, refreshes opt-in RANZCP psychiatrists, geocodes public provider
 addresses, imports the curated gap-verified provider set, and writes a report to
 `data/reports/provider-refresh-report.json`.
 The GitHub Actions workflow `.github/workflows/provider-data-audit.yml` runs the
-same checks weekly, refreshes DoctorPricer GP clinic listings at a conservative
-rate, and can use `HEALTHPOINT_API_URL` / `HEALTHPOINT_API_TOKEN` repository
-secrets if approved API access is granted.
+deterministic checks on pull requests, then runs the live refresh/recheck steps
+weekly or by manual dispatch. It refreshes DoctorPricer GP clinic listings at a
+conservative rate and can use `HEALTHPOINT_API_URL` / `HEALTHPOINT_API_TOKEN`
+repository secrets if approved API access is granted.
 
 Refresh the GP clinic database from DoctorPricer directly:
 
@@ -166,9 +171,10 @@ node tools/import-psychologists-board-register.mjs data/imports/psychologists-bo
 Check provider contact quality:
 
 ```sh
-node tools/validate-provider-data.mjs
-node tools/audit-provider-source-fit.mjs
-node tools/audit-provider-quality.mjs
+npm run validate:data
+npm run audit:source-fit
+npm run audit:availability
+npm run audit:quality
 node tools/audit-support-preferences.mjs
 node tools/audit-address-coverage.mjs
 ```
@@ -184,22 +190,33 @@ reviewer, review date, and expiry date.
 Run the automated data and simulated workflow tests:
 
 ```sh
-node --test tests/*.test.mjs
+npm test
 ```
 
-Check promising providers that are not currently taking new clients:
+Audit and cautiously recheck provider availability:
 
 ```sh
 node tools/find-unavailable-providers.mjs
 node tools/audit-availability-watchlist.mjs
-node tools/check-provider-availability.mjs
+node tools/audit-provider-availability.mjs
+node tools/recheck-provider-availability.mjs
 ```
 
 The watchlist lives at `data/monitors/provider-availability-watchlist.json`.
 These records are not shown as live first-contact options until their page stops
-matching unavailable wording and is manually reviewed. The weekly GitHub Actions
-audit writes `data/reports/provider-unavailable-candidates.json` and
-`data/reports/provider-availability-monitor.json` as artifacts.
+matching unavailable wording and is manually reviewed. The availability audit
+writes `data/provider-availability-audit.json` and
+`AVAILABILITY_RECHECK_REPORT.md`. The cautious live recheck writes
+`data/provider-availability-recheck-results.json`; it does not overwrite
+provider records.
+
+Availability statuses are intentionally conservative:
+
+- `accepting` needs explicit source evidence and gets only a small ranking boost.
+- `unknown` and `not_published` stay eligible but show confirm-availability wording.
+- `waitlist` is ranked lower.
+- `not_accepting` and `referrals_paused` are kept out of the first three care
+  cards unless there are no alternatives, and are labelled clearly.
 
 Geocode public provider addresses for distance ranking:
 

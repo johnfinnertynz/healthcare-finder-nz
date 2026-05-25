@@ -1,4 +1,12 @@
 import fs from "node:fs";
+import {
+  availabilityEvidenceText,
+  availabilityStatuses,
+  detectAvailabilityFromText,
+  isCrisisProvider,
+  isDirectoryLike,
+  restrictiveStatuses
+} from "./lib/provider-availability.mjs";
 
 const [, , providersPath = "providers.json"] = process.argv;
 const providers = JSON.parse(fs.readFileSync(providersPath, "utf8"));
@@ -51,7 +59,10 @@ const requiredFields = [
   "verified",
   "lastVerified",
   "confidence",
-  "sourceQuality"
+  "sourceQuality",
+  "availabilityStatus",
+  "availabilityCheckedAt",
+  "availabilitySource"
 ];
 
 const allowedConfidence = new Set(["high", "medium", "low"]);
@@ -89,6 +100,10 @@ function monthAge(value) {
   const [year, month] = value.split("-").map(Number);
   const now = new Date();
   return (now.getFullYear() - year) * 12 + (now.getMonth() + 1 - month);
+}
+
+function isMonthOrDate(value) {
+  return /^\d{4}-\d{2}(-\d{2})?$/.test(value || "");
 }
 
 function recordIssue(bucket, provider, message) {
@@ -130,6 +145,24 @@ if (!Array.isArray(providers)) {
     if (monthAge(provider.lastVerified) > 6) recordIssue(errors, provider, `lastVerified month is missing or older than 6 months (${provider.lastVerified || "missing"})`);
     if (provider.confidence && !allowedConfidence.has(provider.confidence)) recordIssue(errors, provider, `invalid confidence "${provider.confidence}"`);
     if (typeof provider.needsManualVerification !== "boolean") recordIssue(errors, provider, "needsManualVerification must be true or false");
+    if (!availabilityStatuses.has(provider.availabilityStatus)) recordIssue(errors, provider, `invalid availabilityStatus "${provider.availabilityStatus}"`);
+    if (!isMonthOrDate(provider.availabilityCheckedAt)) recordIssue(errors, provider, "availabilityCheckedAt must be YYYY-MM or YYYY-MM-DD");
+    if (provider.availabilitySource && !isUrl(provider.availabilitySource)) recordIssue(errors, provider, "availabilitySource must be an http(s) URL");
+    if (typeof provider.availabilityNeedsManualReview !== "boolean") recordIssue(errors, provider, "availabilityNeedsManualReview must be true or false");
+
+    const detectedAvailability = detectAvailabilityFromText(availabilityEvidenceText(provider));
+    if (provider.availabilityStatus === "accepting" && detectedAvailability.status !== "accepting" && !provider.availabilityEvidence) {
+      recordIssue(errors, provider, "availabilityStatus accepting requires explicit accepting-new-clients evidence");
+    }
+    if (restrictiveStatuses.has(detectedAvailability.status) && !restrictiveStatuses.has(provider.availabilityStatus)) {
+      recordIssue(errors, provider, `availability source fields look restrictive (${detectedAvailability.status}) but record is ${provider.availabilityStatus}`);
+    }
+    if (isDirectoryLike(provider) && provider.availabilityStatus === "accepting") {
+      recordIssue(errors, provider, "directory records must not be marked as accepting direct provider availability");
+    }
+    if (isCrisisProvider(provider) && provider.availabilityStatus === "accepting") {
+      recordIssue(errors, provider, "crisis providers must not be marked as routine accepting providers");
+    }
 
     if (provider.type !== "directory" && !hasUsableContact(provider)) {
       recordIssue(errors, provider, "direct-service records need at least one public contact method");

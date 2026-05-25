@@ -2,6 +2,7 @@ name: Provider data audit
 
 on:
   workflow_dispatch:
+  pull_request:
   schedule:
     - cron: "0 20 * * 0"
 
@@ -21,10 +22,7 @@ jobs:
           node-version: "22"
 
       - name: Check scripts
-        run: |
-          node --check script.js
-          for file in tools/*.mjs; do node --check "$file"; done
-          for file in tests/*.mjs; do node --check "$file"; done
+        run: node tools/check-syntax.mjs
 
       - name: Run provider data validation
         run: node tools/validate-provider-data.mjs
@@ -32,22 +30,29 @@ jobs:
       - name: Audit provider source fit
         run: node tools/audit-provider-source-fit.mjs
 
+      - name: Audit provider availability freshness
+        run: node tools/audit-provider-availability.mjs
+
       - name: Run unit and workflow tests
         run: node --test tests/*.test.mjs
 
       - name: Refresh approved provider data
+        if: github.event_name != 'pull_request'
         run: node tools/refresh-provider-database.mjs
 
       - name: Discover unavailable provider candidates
+        if: github.event_name != 'pull_request'
         run: node tools/find-unavailable-providers.mjs
 
       - name: Audit unavailable provider watchlist
         run: node tools/audit-availability-watchlist.mjs
 
-      - name: Check unavailable provider watchlist
-        run: node tools/check-provider-availability.mjs
+      - name: Cautiously recheck provider availability watchlist
+        if: github.event_name != 'pull_request'
+        run: node tools/recheck-provider-availability.mjs
 
       - name: Check provider links
+        if: github.event_name != 'pull_request'
         run: node tools/check-links.mjs
 
       - name: Upload refresh report
@@ -61,8 +66,17 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: provider-availability-monitor
-          path: data/reports/provider-availability-monitor.json
+          name: provider-availability-recheck
+          path: data/provider-availability-recheck-results.json
+
+      - name: Upload provider availability audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-availability-audit
+          path: |
+            data/provider-availability-audit.json
+            AVAILABILITY_RECHECK_REPORT.md
 
       - name: Upload unavailable candidate report
         if: always()

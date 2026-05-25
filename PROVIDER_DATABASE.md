@@ -44,6 +44,14 @@ published as professional contact details.
   `third-party public GP listing`
 - `needsManualVerification`: `true` when details should be checked by a person
   before broader public promotion
+- `availabilityStatus`: one of `accepting`, `waitlist`, `not_accepting`,
+  `referrals_paused`, `unknown`, or `not_published`
+- `availabilityCheckedAt`: month or date when availability was last checked
+- `availabilityEvidence`: short source phrase supporting explicit availability,
+  if one exists
+- `availabilitySource`: URL used for the availability status
+- `availabilityNeedsManualReview`: `true` when the status is uncertain,
+  restrictive, stale, or indirectly sourced
 
 ## Import Rule
 
@@ -62,25 +70,32 @@ not appear as a routine adult option.
 
 ## Availability Watchlist
 
-Do not keep a provider in `providers.json` when the source clearly says they are
-full, closed to new clients, or unable to accept new referrals. Put them in
-`data/monitors/provider-availability-watchlist.json` instead.
+Do not promote a provider as a normal first-contact option when the source
+clearly says they are full, closed to new clients, or unable to accept new
+referrals. Prefer moving them to
+`data/monitors/provider-availability-watchlist.json`. If a restrictive record is
+kept as a deliberate fallback, mark it with `availabilityStatus:
+"not_accepting"` or `"referrals_paused"` and `availabilityNeedsManualReview:
+true`.
 
-Run the monitor to re-check those pages:
+Run the audit and cautious monitor:
 
 ```sh
 node tools/find-unavailable-providers.mjs
 node tools/audit-availability-watchlist.mjs
-node tools/check-provider-availability.mjs
+node tools/audit-provider-availability.mjs
+node tools/recheck-provider-availability.mjs
 ```
 
 `find-unavailable-providers.mjs` scans current direct-care provider websites and
 writes `data/reports/provider-unavailable-candidates.json` for manual review.
 `audit-availability-watchlist.mjs` checks that unavailable watchlist records are
 not also live in `providers.json` and that tracked "monitor, not added" notes
-have matching watchlist URLs. `check-provider-availability.mjs` re-checks the
-watchlist and writes `data/reports/provider-availability-monitor.json`. A
-detected change should be manually reviewed before adding the provider back to
+have matching watchlist URLs. `audit-provider-availability.mjs` writes
+`data/provider-availability-audit.json` and
+`AVAILABILITY_RECHECK_REPORT.md`. `recheck-provider-availability.mjs` re-checks
+the watchlist slowly and writes `data/provider-availability-recheck-results.json`.
+A detected change should be manually reviewed before adding the provider back to
 the live database, because "possibly available" wording may still require a phone
 or email confirmation.
 

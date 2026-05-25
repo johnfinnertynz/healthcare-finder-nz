@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const [, , providersPath = "providers.json"] = process.argv;
 
@@ -156,7 +157,7 @@ for (const profileUrl of profileUrls) {
   const evidenceText = `${role} ${areas.join(" ")} ${therapies.join(" ")} ${worksWith} ${registration} ${membership}`;
   const id = `national-mindwell-${slugId(profileUrl)}`;
   const previous = byId.get(id) || {};
-  const record = {
+  const record = withAvailabilityDefaults({
     ...previous,
     id,
     name: `${name}, Mindwell Online Psychology`,
@@ -198,7 +199,7 @@ for (const profileUrl of profileUrls) {
     membership,
     qualification,
     experience
-  };
+  }, { checkedAt: verifiedMonth });
 
   if (byId.has(id)) {
     const index = providers.findIndex((provider) => provider.id === id);

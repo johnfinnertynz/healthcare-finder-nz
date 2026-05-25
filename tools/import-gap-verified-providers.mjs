@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
+import { statusFromWatchlistItem, withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const [, , providersPath = "providers.json", watchlistPath = "data/monitors/provider-availability-watchlist.json"] = process.argv;
 const verifiedMonth = "2026-05";
@@ -34,7 +35,7 @@ function addWatchItem(watchlist, item) {
 }
 
 function base(record) {
-  return {
+  return withAvailabilityDefaults({
     address: "",
     phone: "",
     text: "",
@@ -52,7 +53,7 @@ function base(record) {
     inPerson: true,
     needScope: [],
     ...record
-  };
+  }, { checkedAt });
 }
 
 const liveProviders = [
@@ -1964,7 +1965,15 @@ let watchUpdated = 0;
 
 for (const item of watchItems) {
   if (removeWatchlistIds.has(item.id)) continue;
-  const action = addWatchItem(watchlist, item);
+  const enrichedItem = {
+    ...item,
+    availabilityStatus: item.availabilityStatus || statusFromWatchlistItem(item),
+    availabilityCheckedAt: item.availabilityCheckedAt || checkedAt,
+    availabilityEvidence: item.availabilityEvidence || item.reason || "",
+    availabilitySource: item.availabilitySource || item.url || "",
+    availabilityNeedsManualReview: true
+  };
+  const action = addWatchItem(watchlist, enrichedItem);
   if (action === "added") watchAdded += 1;
   else watchUpdated += 1;
 }

@@ -1,0 +1,22 @@
+{
+  "name": "healthcare-finder-nz",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static NZ mental health and healthcare support finder with local provider data validation tools.",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check:syntax": "node tools/check-syntax.mjs",
+    "validate:data": "node tools/validate-provider-data.mjs",
+    "audit:availability": "node tools/audit-provider-availability.mjs",
+    "recheck:availability": "node tools/recheck-provider-availability.mjs",
+    "audit:source-fit": "node tools/audit-provider-source-fit.mjs",
+    "audit:quality": "node tools/audit-provider-quality.mjs providers.json",
+    "audit:support-preferences": "node tools/audit-support-preferences.mjs providers.json",
+    "audit:addresses": "node tools/audit-address-coverage.mjs providers.json",
+    "audit:watchlist": "node tools/audit-availability-watchlist.mjs",
+    "check:links": "node tools/check-links.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

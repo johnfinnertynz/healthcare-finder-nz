@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
+import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -204,7 +205,7 @@ function toRecord(profile) {
   const patientGroupText = patientGroups.length ? ` Patient groups listed include ${patientGroups.slice(0, 8).join(", ")}.` : "";
   const verifiedMonth = new Date().toISOString().slice(0, 7);
 
-  return {
+  return withAvailabilityDefaults({
     id: `ranzcp-${slugify(profile.ranzcP_ID || profile.id || profile.name)}`,
     name: profile.name,
     type: "psychiatrist",
@@ -238,7 +239,7 @@ function toRecord(profile) {
     sourceQuality: "professional register or directory",
     needsManualVerification: true,
     sourceUpdated: profile.lastUpdatedDate ? profile.lastUpdatedDate.slice(0, 10) : ""
-  };
+  }, { checkedAt: verifiedMonth });
 }
 
 const existing = JSON.parse(fs.readFileSync(providersPath, "utf8"));

@@ -39,6 +39,32 @@ function hasContact(provider) {
   return Boolean(provider.phone || provider.text || provider.email || provider.website);
 }
 
+function availabilityStatus(provider) {
+  return ["accepting", "waitlist", "not_accepting", "referrals_paused", "unknown", "not_published"].includes(provider.availabilityStatus)
+    ? provider.availabilityStatus
+    : "not_published";
+}
+
+function unavailableForFirstRecommendations(provider) {
+  return ["not_accepting", "referrals_paused"].includes(availabilityStatus(provider));
+}
+
+function availabilityTier(provider) {
+  const status = availabilityStatus(provider);
+  if (status === "accepting" && provider.availabilityEvidence) return 3;
+  if (status === "unknown" || status === "not_published") return 2;
+  if (status === "waitlist") return 1;
+  return unavailableForFirstRecommendations(provider) ? 0 : 2;
+}
+
+function availabilityScore(provider) {
+  const status = availabilityStatus(provider);
+  if (status === "accepting" && provider.availabilityEvidence) return 2;
+  if (status === "waitlist") return -10;
+  if (unavailableForFirstRecommendations(provider)) return -120;
+  return 0;
+}
+
 function isTelehealthProvider(provider) {
   const tags = provider.tags || [];
   if (tags.includes("telehealth") || tags.includes("online")) return true;
@@ -117,7 +143,7 @@ function providerMatchesAge(provider, age) {
 
 function score(provider, persona, type) {
   const tags = provider.tags || [];
-  let value = 0;
+  let value = availabilityScore(provider);
   if (provider.region === persona.region) value += 12;
   if (hasNationalServiceReach(provider)) value += persona.barriers.includes("transport") || persona.preferences.includes("telehealth") ? 5 : -3;
   if (!matchesSelectedNeeds(provider, persona.needs)) value -= 80;
@@ -143,9 +169,10 @@ function recommendations(persona) {
     .filter((provider) => providerMatchesAge(provider, persona.age))
     .filter((provider) => matchesSelectedNeeds(provider, persona.needs))
     .filter((provider) => !provider.tags?.includes("crisis"))
+    .filter((provider) => !unavailableForFirstRecommendations(provider))
     .filter((provider) => !isDirectoryLike(provider) && hasContact(provider))
     .map((provider) => ({ provider, score: score(provider, persona, type) }))
-    .sort((a, b) => b.score - a.score || a.provider.name.localeCompare(b.provider.name))
+    .sort((a, b) => b.score - a.score || availabilityTier(b.provider) - availabilityTier(a.provider) || a.provider.name.localeCompare(b.provider.name))
     .map((entry) => entry.provider);
 
   const fill = providers
@@ -154,9 +181,10 @@ function recommendations(persona) {
     .filter((provider) => providerMatchesAge(provider, persona.age))
     .filter((provider) => matchesSelectedNeeds(provider, persona.needs))
     .filter((provider) => !provider.tags?.includes("crisis"))
+    .filter((provider) => !unavailableForFirstRecommendations(provider))
     .filter((provider) => !isDirectoryLike(provider) && hasContact(provider))
     .map((provider) => ({ provider, score: score(provider, persona, "all") }))
-    .sort((a, b) => b.score - a.score || a.provider.name.localeCompare(b.provider.name))
+    .sort((a, b) => b.score - a.score || availabilityTier(b.provider) - availabilityTier(a.provider) || a.provider.name.localeCompare(b.provider.name))
     .map((entry) => entry.provider);
 
   const merged = type === "all" || !strictExactTypes.has(type)
@@ -199,6 +227,7 @@ test("20 simulated user workflows reach actionable, non-directory options", () =
     assert.ok(matches.length <= 3, `${persona.name}: should keep the first decision small`);
     assert.equal(matches.some(isDirectoryLike), false, `${persona.name}: recommendations should not be directories`);
     assert.equal(matches.some((provider) => provider.tags?.includes("crisis")), false, `${persona.name}: crisis teams should not appear as default recommendations`);
+    assert.equal(matches.some(unavailableForFirstRecommendations), false, `${persona.name}: first recommendations should not start with providers listed as unavailable`);
     assert.ok(matches.every(hasContact), `${persona.name}: every recommendation needs a public contact route`);
     assert.ok(
       matches.every((provider) => matchesSelectedNeeds(provider, persona.needs)),
@@ -277,6 +306,51 @@ test("Greymouth work-related psychologist flow may include scoped rehabilitation
 
   assert.ok(matches.length > 0, "Greymouth work-related psychologist flow should still find options");
   assert.equal(matches.some((provider) => provider.id === "west-coast-proactive-greymouth-psychology"), true);
+});
+
+test("availability metadata lowers waitlists and removes unavailable providers from first recommendations", () => {
+  const accepting = {
+    id: "accepting-local",
+    name: "Accepting Local Psychology",
+    type: "psychologist",
+    region: "Otago",
+    city: "Dunedin",
+    phone: "03 000 0000",
+    tags: ["psychologist", "depression", "direct-contact"],
+    fit: "Depression support.",
+    availabilityStatus: "accepting",
+    availabilityEvidence: "Accepting new clients"
+  };
+  const waitlist = {
+    ...accepting,
+    id: "waitlist-local",
+    name: "Waitlist Local Psychology",
+    availabilityStatus: "waitlist",
+    availabilityEvidence: "Limited availability"
+  };
+  const unavailable = {
+    ...accepting,
+    id: "unavailable-local",
+    name: "Unavailable Local Psychology",
+    availabilityStatus: "not_accepting",
+    availabilityEvidence: "Currently not accepting new clients"
+  };
+  const persona = {
+    region: "Otago",
+    age: 27,
+    want: "psychologist",
+    needs: ["depression"],
+    preferences: [],
+    barriers: []
+  };
+
+  const ranked = [waitlist, unavailable, accepting]
+    .filter((provider) => !unavailableForFirstRecommendations(provider))
+    .map((provider) => ({ provider, score: score(provider, persona, "psychologist") }))
+    .sort((a, b) => b.score - a.score || availabilityTier(b.provider) - availabilityTier(a.provider))
+    .map((entry) => entry.provider.id);
+
+  assert.deepEqual(ranked, ["accepting-local", "waitlist-local"]);
 });
 
 test("all main intake choices have matching logic coverage", () => {

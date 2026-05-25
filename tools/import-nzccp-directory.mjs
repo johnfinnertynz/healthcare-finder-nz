@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
+import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -244,8 +245,9 @@ for (const record of extractDirectoryRecords(directoryHtml)) {
   const tags = tagsFromText([...record.specialties, ...record.treatments, record.city]);
   const city = record.city || "Aotearoa New Zealand";
   const source = record.href;
+  const verifiedMonth = new Date().toISOString().slice(0, 7);
 
-  const provider = {
+  const provider = withAvailabilityDefaults({
     id,
     name: record.name,
     type: "psychologist",
@@ -265,12 +267,12 @@ for (const record of extractDirectoryRecords(directoryHtml)) {
       ? "Email a short enquiry asking about availability, fees, telehealth, and whether they are a good fit for what is happening."
       : "Open the profile and send a short enquiry asking about availability, fees, telehealth, and whether they are a good fit for what is happening.",
     source,
-    verified: new Date().toISOString().slice(0, 7),
-    lastVerified: new Date().toISOString().slice(0, 7),
+    verified: verifiedMonth,
+    lastVerified: verifiedMonth,
     confidence: "medium",
     sourceQuality: "professional register or directory",
     needsManualVerification: true
-  };
+  }, { checkedAt: verifiedMonth });
 
   if (providersById.has(id)) updated += 1;
   else added += 1;

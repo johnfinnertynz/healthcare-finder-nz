@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-05-25T03:18:19.765Z",
+  "currentBehaviour": {
+    "scheduledRecheckPreviouslyExisted": true,
+    "notes": [
+      "Before this availability-freshness layer, unavailable providers were usually removed from providers.json and stored in data/monitors/provider-availability-watchlist.json.",
+      "The weekly GitHub Actions workflow already ran tools/check-provider-availability.mjs against that watchlist and uploaded data/reports/provider-availability-monitor.json.",
+      "Live providers did not have explicit availabilityStatus metadata, and the UI ranking did not use availability status directly.",
+      "The link checker checked reachability only; it did not infer provider availability."
+    ]
+  },
+  "providersScanned": 1210,
+  "watchlistItemsScanned": 19,
+  "recheckResultsScanned": 19,
+  "allowedAvailabilityStatuses": [
+    "accepting",
+    "waitlist",
+    "not_accepting",
+    "referrals_paused",
+    "unknown",
+    "not_published"
+  ],
+  "cadenceDays": {
+    "accepting": 90,
+    "waitlist": 30,
+    "not_accepting": 14,
+    "referrals_paused": 14,
+    "unknown": 90,
+    "not_published": 90
+  },
+  "statusCounts": {
+    "liveProviders": {
+      "not_published": 1177,
+      "waitlist": 29,
+      "accepting": 4
+    },
+    "watchlist": {
+      "not_accepting": 14,
+      "referrals_paused": 5
+    }
+  },
+  "regionsAffectedByUnavailable": {
+    "West Coast": 1,
+    "Canterbury": 1,
+    "Auckland": 1,
+    "Taranaki": 4,
+    "Waikato": 2,
+    "Northland": 5,
+    "Southland": 1,
+    "Nelson Marlborough Tasman": 1,
+    "Tairawhiti": 1,
+    "Hawke's Bay": 2
+  },
+  "findings": [
+    {
+      "providerId": "hawkes-bay-janneke-van-rooijen-psychology",
+      "providerName": "Janneke van Rooijen Psychology",
+      "region": "Hawke's Bay",
+      "city": "Napier",
+      "type": "psychologist",
+      "source": "https://www.jvrpsychology.com/",
+      "availabilityStatus": "check_failed",
+      "availabilityCheckedAt": "2026-05-25T02:58:53.843Z",
+      "rule": "blocked-or-unreachable-source",
+      "severity": "medium",
+      "issue": "Availability recheck could not read the source (404).",
+      "suggestedAction": "Create a manual call/email/browser review item. Do not infer accepting or unavailable from a blocked page.",
+      "allowlisted": false
+    },
+    {
+      "providerId": "marlborough-durkin-zintl-psychology",
+      "providerName": "Durkin Zintl Psychology",
+      "region": "Nelson Marlborough Tasman",
+      "city": "Blenheim and telehealth",
+      "type": "psychologist",
+      "source": "https://www.durkinzintlpsychology.co.nz/",
+      "availabilityStatus": "check_failed",
+      "availabilityCheckedAt": "2026-05-25T02:58:53.843Z",
+      "rule": "blocked-or-unreachable-source",
+      "severity": "medium",
+      "issue": "Availability recheck could not read the source (ERR).",
+      "suggestedAction": "Create a manual call/email/browser review item. Do not infer accepting or unavailable from a blocked page.",
+      "allowlisted": false
+    },
+    {
+      "providerId": "taranaki-tosca-counselling",
+      "providerName": "Tosca Lammerts van Bueren Counselling",
+      "region": "Taranaki",
+      "city": "New Plymouth",
+      "type": "counsellor",
+      "source": "https://www.counsellingnewplymouth.nz/",
+      "availabilityStatus": "check_failed",
+      "availabilityCheckedAt": "2026-05-25T02:58:53.843Z",
+      "rule": "blocked-or-unreachable-source",
+      "severity": "medium",
+      "issue": "Availability recheck could not read the source (404).",
+      "suggestedAction": "Create a manual call/email/browser review item. Do not infer accepting or unavailable from a blocked page.",
+      "allowlisted": false
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "high": 0,
+    "medium": 3,
+    "low": 0,
+    "highUnallowlisted": 0,
+    "allowlisted": 0
+  }
+}

@@ -661,6 +661,17 @@ input[type="checkbox"] {
   box-shadow: 0 12px 28px rgba(11, 77, 57, 0.08);
 }
 
+.recommendation-card--availability-waitlist,
+.provider-card--availability-waitlist {
+  border-left-color: #a46a05;
+}
+
+.recommendation-card--availability-not_accepting,
+.recommendation-card--availability-referrals_paused {
+  border-color: #d5c6bd;
+  background: #fffaf7;
+}
+
 .recommendation-card__header,
 .provider-card__header {
   display: flex;
@@ -697,6 +708,26 @@ input[type="checkbox"] {
 .recommendation-card p {
   margin: 0;
   color: var(--muted);
+}
+
+.availability-note {
+  margin-top: 0.45rem !important;
+  color: #4f5c58 !important;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.availability-note--accepting {
+  color: #0b4d39 !important;
+}
+
+.availability-note--waitlist {
+  color: #6b4a05 !important;
+}
+
+.availability-note--not_accepting,
+.availability-note--referrals_paused {
+  color: #75665f !important;
 }
 
 .recommendation-card .provider-type-badge {
@@ -855,6 +886,12 @@ input[type="checkbox"] {
 .provider-card.selected {
   border-left-color: var(--green);
   box-shadow: var(--shadow);
+}
+
+.provider-card--availability-not_accepting,
+.provider-card--availability-referrals_paused {
+  border-left-color: #a68a7c;
+  background: #fffdfb;
 }
 
 .provider-card p {

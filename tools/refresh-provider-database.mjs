@@ -208,6 +208,11 @@ steps.push(runStep("Audit provider source fit", [
   providersPath
 ]));
 
+steps.push(runStep("Audit provider availability freshness", [
+  "tools/audit-provider-availability.mjs",
+  providersPath
+]));
+
 steps.push(runStep("Audit address and coordinate coverage", [
   "tools/audit-address-coverage.mjs",
   providersPath
