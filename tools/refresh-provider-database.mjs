@@ -147,6 +147,21 @@ if (live.ranzcpPsychiatrists) {
   ], { optional: true }));
 }
 
+if (live.mindwellPsychologists) {
+  steps.push(runStep("Refresh Mindwell online psychologists", [
+    "tools/import-mindwell-psychologists.mjs",
+    providersPath
+  ], { optional: true }));
+}
+
+if (live.gapVerifiedProviders) {
+  steps.push(runStep("Refresh Chrome/search verified gap-fill providers", [
+    "tools/import-gap-verified-providers.mjs",
+    providersPath,
+    config.monitors?.availabilityWatchlist || "data/monitors/provider-availability-watchlist.json"
+  ], { optional: true }));
+}
+
 if (exists(imports.mcnzRegisterCsv)) {
   steps.push(runStep("Import backend-only MCNZ doctor register", [
     "tools/import-mcnz-register.mjs",

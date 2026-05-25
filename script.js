@@ -67,6 +67,13 @@ const needLabels = {
   work: "work, study, money, or housing stress"
 };
 
+const scopedNeedLabels = {
+  trauma: "trauma or sexual harm",
+  addiction: "alcohol, drug, or gambling harm"
+};
+
+const broadNeedTags = ["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"];
+
 const barrierLabels = {
   cost: "cost",
   wait: "long waits",
@@ -197,13 +204,15 @@ function intakeStatus() {
   const hasResolvedAddress = Boolean(matchedRegion || userCoords);
   const identity = document.querySelector("#identity").value;
   const needs = checkedValues("need");
+  const preferences = checkedValues("preference");
+  const telehealthPreferred = preferences.includes("telehealth");
   const preference = contactPreference.value;
   const missing = [];
   let completed = 0;
 
   if (age) completed += 1;
   else missing.push("age");
-  if (address && hasResolvedAddress) completed += 1;
+  if (telehealthPreferred || (address && hasResolvedAddress)) completed += 1;
   else missing.push("street address or suburb");
   if (identity) completed += 1;
   else missing.push("gender");
@@ -221,6 +230,20 @@ function renderProgress(status) {
   formProgressText.textContent = status.complete
     ? "Guide questions complete"
     : `${status.completed} of ${status.total} guide questions complete`;
+}
+
+function syncAddressRequirement() {
+  const telehealthPreferred = checkedValues("preference").includes("telehealth");
+  const addressEmpty = !addressInput.value.trim() && !matchedRegion && !userCoords;
+
+  addressInput.required = !telehealthPreferred;
+  addressInput.setAttribute("aria-required", telehealthPreferred ? "false" : "true");
+
+  if (telehealthPreferred && addressEmpty) {
+    addressStatus.textContent = "Address is optional when you choose telehealth.";
+  } else if (!telehealthPreferred && addressEmpty) {
+    addressStatus.textContent = "Start typing a New Zealand address or suburb.";
+  }
 }
 
 function sentenceList(items) {
@@ -341,6 +364,48 @@ function hasSpecialtyMatch(provider, need) {
   return terms.some((term) => text.includes(term));
 }
 
+function providerSourcePath(provider) {
+  try {
+    return new URL(provider.source || provider.website || "").pathname.toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+function providerNeedScope(provider) {
+  if (Array.isArray(provider.needScope) && provider.needScope.length) {
+    return [...new Set(provider.needScope.filter((need) => scopedNeedLabels[need]))];
+  }
+
+  const tags = provider.tags || [];
+  const text = profileText(provider);
+  const scopes = [];
+  const hasBroadNeed = broadNeedTags.some((tag) => tags.includes(tag));
+  const sexualHarmOnly = (tags.includes("sexual-harm")
+      || tags.includes("sensitive-claims")
+      || providerSourcePath(provider).includes("/sexual-harm/")
+      || /rape|sexual abuse|sexual harm|sensitive claims/i.test(text))
+    && !hasBroadNeed;
+  const addictionOnly = (provider.type === "addiction"
+      || (provider.type === "helpline" && tags.includes("addiction"))
+      || tags.includes("gambling"))
+    && !["depression", "anxiety", "trauma", "work"].some((tag) => tags.includes(tag));
+
+  if (sexualHarmOnly) scopes.push("trauma");
+  if (addictionOnly) scopes.push("addiction");
+  return [...new Set(scopes)];
+}
+
+function providerMatchesSelectedNeeds(provider, needs = checkedValues("need")) {
+  const scope = providerNeedScope(provider);
+  return !scope.length || !needs.length || scope.some((need) => needs.includes(need));
+}
+
+function providerNeedScopeLabel(provider) {
+  const scope = providerNeedScope(provider);
+  return scope.map((need) => scopedNeedLabels[need]).filter(Boolean).join(" or ");
+}
+
 function providerSpecialties(provider) {
   if (Array.isArray(provider.specialties) && provider.specialties.length) {
     return provider.specialties.slice(0, 6).join(", ");
@@ -396,6 +461,7 @@ function providerMatchesSelectedType(provider, type, directoryFallback = false) 
 
   return provider.type === type
     || (type === "counsellor" && provider.type === "mens-centre")
+    || (type === "psychiatrist" && tags.includes("psychiatry-service"))
     || (type === "addiction" && tags.includes("addiction"));
 }
 
@@ -404,6 +470,25 @@ function selectedContactType() {
   if (preference === "therapist") return "counsellor";
   if (preference === "unsure") return "all";
   return preference;
+}
+
+function providerMatchesAge(provider) {
+  const age = Number(document.querySelector("#age").value || 0);
+  if (!age || !Array.isArray(provider.ageGroups) || !provider.ageGroups.length) return true;
+
+  const text = [...provider.ageGroups, ...(provider.patientGroups || [])].join(" ").toLowerCase();
+  const allowsChild = /child|children|tamariki|under\s*13|0\s*-\s*12|5\s*years/i.test(text);
+  const allowsAdolescent = /adolescent|teen|rangatahi|youth|young adult|13|17|18/i.test(text);
+  const allowsAdult = /adult|pakeke|18|25|60/i.test(text);
+  const allowsOlder = /older|kaumatua|kaumātua|senior|65|60\+/i.test(text);
+  const hasSpecificAge = allowsChild || allowsAdolescent || allowsAdult || allowsOlder;
+
+  if (!hasSpecificAge) return true;
+  if (age < 13) return allowsChild;
+  if (age < 18) return allowsAdolescent || allowsChild;
+  if (age < 25) return allowsAdult || allowsAdolescent;
+  if (age < 65) return allowsAdult;
+  return allowsOlder || allowsAdult;
 }
 
 function providerMatchesProfile(provider) {
@@ -416,12 +501,14 @@ function providerMatchesProfile(provider) {
   const distance = distanceToProvider(provider);
   const telehealth = isTelehealthProvider(provider);
   const wantsTelehealth = preferences.includes("telehealth");
+  const needScopedMatch = providerMatchesSelectedNeeds(provider, needs);
 
   let score = 0;
+  if (!needScopedMatch) score -= 80;
   const preferenceType = selectedContactType();
-  if (provider.region === "National") score += barriers.includes("transport") ? 2 : 0;
-  if (provider.region === location) score += 5;
-  if (distance !== null) {
+  if (hasNationalServiceReach(provider)) score += wantsTelehealth ? 4 : (barriers.includes("transport") ? 2 : 0);
+  if (!wantsTelehealth && provider.region === location) score += 5;
+  if (!wantsTelehealth && distance !== null) {
     if (distance <= 5) score += telehealth ? 2 : 8;
     else if (distance <= 15) score += telehealth ? 1 : 6;
     else if (distance <= 40) score += telehealth ? 0 : 4;
@@ -443,10 +530,10 @@ function providerMatchesProfile(provider) {
     if (tags.includes(barrier)) score += 1;
   });
   if (telehealth) {
-    if (wantsTelehealth) score += 12;
+    if (wantsTelehealth) score += 30;
     else score += barriers.includes("transport") ? -2 : -14;
   } else if (wantsTelehealth) {
-    score -= 3;
+    score -= 18;
   }
   const matchedSupportPreferences = supportPreferenceMatches(tags, preferences);
   if (selectedSupportPreferences(preferences).length) {
@@ -477,9 +564,9 @@ function providerSortValue(provider) {
     telehealthMatch: wantsTelehealth && telehealth ? 1 : 0,
     specialtyMatches,
     directContacts,
-    isLocal: provider.region === (matchedRegion || "") ? 1 : 0,
+    isLocal: !wantsTelehealth && provider.region === (matchedRegion || "") ? 1 : 0,
     isTelehealth: telehealth ? 1 : 0,
-    distance: distance === null ? Infinity : distance
+    distance: wantsTelehealth ? Infinity : (distance === null ? Infinity : distance)
   };
 }
 
@@ -502,6 +589,7 @@ function filteredProviders() {
   const type = providerType.value;
   const cost = providerCost.value;
   const location = matchedRegion || "";
+  const needs = checkedValues("need");
   const preferences = checkedValues("preference");
 
   const matchesFor = ({ directoriesOnly = false, directoryFallback = false } = {}) => providers
@@ -522,10 +610,12 @@ function filteredProviders() {
 
       const typeOk = providerMatchesSelectedType(provider, type, directoryFallback);
       const queryOk = !query || haystack.includes(query);
-      const regionOk = provider.region === "National" || provider.region === location || Boolean(query);
+      const regionOk = providerMatchesSelectedRegion(provider, location, preferences, query);
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
       const genderOk = !hasProviderGenderConflict(provider.tags || [], preferences);
+      const ageOk = providerMatchesAge(provider);
+      const needOk = Boolean(query) || providerMatchesSelectedNeeds(provider, needs);
       const crisisOk = !provider.tags?.includes("crisis");
       const contactOk = directoriesOnly
         ? directory && Boolean(provider.website)
@@ -535,7 +625,7 @@ function filteredProviders() {
         || (cost === "free" && /free|public|funded/.test(costText))
         || (cost === "winz" && /winz|cost|funded|directory/.test(costText));
 
-      return typeOk && queryOk && regionOk && preferenceOk && genderOk && crisisOk && contactOk && costOk;
+      return typeOk && queryOk && regionOk && preferenceOk && genderOk && ageOk && needOk && crisisOk && contactOk && costOk;
     })
     .sort(compareProviders);
 
@@ -553,6 +643,7 @@ function filteredProviders() {
 
 function recommendationCandidates(type = "all") {
   const location = matchedRegion || "";
+  const needs = checkedValues("need");
   const preferences = checkedValues("preference");
 
   return providers
@@ -561,14 +652,17 @@ function recommendationCandidates(type = "all") {
       const typeOk = type === "all"
         || provider.type === type
         || (type === "counsellor" && provider.type === "mens-centre")
+        || (type === "psychiatrist" && provider.tags?.includes("psychiatry-service"))
         || (type === "addiction" && provider.tags?.includes("addiction"));
-      const regionOk = provider.region === "National" || provider.region === location;
+      const regionOk = providerMatchesSelectedRegion(provider, location, preferences);
       const optInTags = (provider.tags || []).filter((tag) => optInPreferenceTags.includes(tag));
       const preferenceOk = optInTags.length === 0 || optInTags.some((tag) => preferences.includes(tag));
       const genderOk = !hasProviderGenderConflict(provider.tags || [], preferences);
+      const ageOk = providerMatchesAge(provider);
+      const needOk = providerMatchesSelectedNeeds(provider, needs);
       const crisisOk = !provider.tags?.includes("crisis");
       const directOk = isDirectContact(provider);
-      return typeOk && regionOk && preferenceOk && genderOk && crisisOk && directOk;
+      return typeOk && regionOk && preferenceOk && genderOk && ageOk && needOk && crisisOk && directOk;
     })
     .sort(compareProviders);
 }
@@ -586,6 +680,38 @@ function providerTypeLabel(type) {
     directory: "Navigator",
     "public-service": "Public service"
   }[type] || type;
+}
+
+function providerTypeClass(type) {
+  return String(type || "provider").toLowerCase().replace(/[^a-z0-9-]+/g, "-");
+}
+
+function providerTypeIconAsset(type) {
+  const icons = {
+    gp: "assets/provider-icons/doctor.png",
+    counsellor: "assets/provider-icons/counsellor-therapist.png",
+    psychologist: "assets/provider-icons/psychologist.png",
+    psychiatrist: "assets/provider-icons/psychiatrist.png",
+    helpline: "assets/provider-icons/telehealth.png",
+    "mens-centre": "assets/provider-icons/counsellor-therapist.png",
+    youth: "assets/provider-icons/counsellor-therapist.png",
+    addiction: "assets/provider-icons/counsellor-therapist.png",
+    directory: "assets/provider-icons/telehealth.png",
+    "public-service": "assets/provider-icons/doctor.png"
+  };
+  return icons[type] || "assets/provider-icons/counsellor-therapist.png";
+}
+
+function providerTypeBadge(provider) {
+  const label = escapeHtml(providerTypeLabel(provider.type));
+  const typeClass = escapeHtml(providerTypeClass(provider.type));
+  const iconPath = escapeHtml(providerTypeIconAsset(provider.type));
+  return `
+    <span class="provider-type-badge provider-type-badge--${typeClass}" aria-label="${label}" title="${label}">
+      <img src="${iconPath}" alt="" aria-hidden="true" loading="lazy" decoding="async" width="32" height="32">
+      <span>${label}</span>
+    </span>
+  `;
 }
 
 function renderProviders() {
@@ -627,9 +753,9 @@ function renderProviders() {
       const distance = distanceToProvider(provider);
       const distanceLabel = providerDistanceLabel(provider, distance);
       const website = safeHref(provider.website);
+      const booking = safeHref(provider.bookingUrl);
       const providerId = escapeHtml(provider.id);
       const providerName = escapeHtml(provider.name);
-      const providerType = escapeHtml(providerTypeLabel(provider.type));
       const providerRegion = escapeHtml(provider.region);
       const providerCity = escapeHtml(provider.city);
       const providerFit = escapeHtml(provider.fit);
@@ -669,14 +795,20 @@ function renderProviders() {
           : `
             ${provider.phone ? `<a class="button button--quiet" href="tel:${normalisePhone(provider.phone)}">Call</a>` : ""}
             ${provider.text ? `<a class="button button--quiet" href="sms:${normalisePhone(provider.text)}">Text</a>` : ""}
-            ${website ? `<a class="button button--quiet" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Website</a>` : ""}
+            ${booking ? `<a class="button button--quiet" href="${escapeHtml(booking)}"${externalLinkAttrs(booking)}>Book online</a>` : ""}
+            ${website ? `<a class="button button--quiet" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>${booking ? "Profile" : "Website"}</a>` : ""}
           `;
 
       return `
         <article class="provider-card ${isSelected ? "selected" : ""}">
-          <div>
-            <p class="provider-meta">${providerType} | ${providerRegion}${provider.city ? ` | ${providerCity}` : ""}${distanceLabel ? ` | ${providerDistance}` : ""}</p>
-            <h3>${providerName}</h3>
+          <div class="provider-card__header">
+            <div>
+              <h3>${providerName}</h3>
+              <p class="provider-meta">${providerRegion}${provider.city ? ` | ${providerCity}` : ""}${distanceLabel ? ` | ${providerDistance}` : ""}</p>
+            </div>
+            ${providerTypeBadge(provider)}
+          </div>
+          <div class="provider-card__body">
             <p>${providerFit}</p>
             ${specialty ? `<p class="provider-detail"><strong>Specialties:</strong> ${providerSpecialty}</p>` : ""}
             ${patientGroups ? `<p class="provider-detail"><strong>Patient groups:</strong> ${providerPatientGroup}</p>` : ""}
@@ -752,11 +884,34 @@ function distanceToProvider(provider) {
 }
 
 function isTelehealthProvider(provider) {
-  return provider.tags?.includes("telehealth") || provider.region === "National";
+  const tags = provider.tags || [];
+  if (tags.includes("telehealth") || tags.includes("online")) return true;
+  if (provider.onlineAvailable === true || provider.phoneSupport === true) return true;
+  if (provider.type === "helpline") return true;
+  return provider.region === "National"
+    && ["addiction", "youth"].includes(provider.type)
+    && Boolean(provider.phone || provider.text || tags.includes("online"));
+}
+
+function hasNationalServiceReach(provider) {
+  if (provider.region !== "National") return false;
+  if (isTelehealthProvider(provider)) return true;
+  if (isDirectoryLike(provider)) return true;
+  if (provider.type === "helpline") return true;
+
+  return ["addiction", "public-service", "youth"].includes(provider.type)
+    && Boolean(provider.phone || provider.text || provider.email || provider.website);
+}
+
+function providerMatchesSelectedRegion(provider, location, preferences = [], query = "") {
+  if (query) return true;
+  if (provider.region === location) return true;
+  if (hasNationalServiceReach(provider)) return true;
+  return preferences.includes("telehealth") && isTelehealthProvider(provider);
 }
 
 function providerDistanceLabel(provider, distance = distanceToProvider(provider)) {
-  if (isTelehealthProvider(provider) && (distance === null || distance > telehealthDistanceThresholdKm)) return "Telehealth provider";
+  if (isTelehealthProvider(provider) && (checkedValues("preference").includes("telehealth") || distance === null || distance > telehealthDistanceThresholdKm)) return "Telehealth provider";
   if (distance === null) return "";
   return `${distance.toFixed(1)} km away`;
 }
@@ -1087,17 +1242,20 @@ async function resolveAddressFromInput(reason = "pause") {
 
 function buildPaths() {
   const age = Number(document.querySelector("#age").value || 0);
-  const location = matchedRegion || "your area";
   const identity = document.querySelector("#identity").value;
   const needs = checkedValues("need");
   const barriers = checkedValues("barrier");
   const preferences = checkedValues("preference");
+  const location = matchedRegion || "your area";
+  const profileLocation = preferences.includes("telehealth") && !matchedRegion
+    ? "looking for telehealth care"
+    : `in ${location}`;
   const paths = [];
 
   const needText = needs.length ? labelledList(needs, needLabels) : "general wellbeing support";
   const barrierText = barriers.length ? `Main barriers: ${labelledList(barriers, barrierLabels)}.` : "No major barriers selected.";
   const preferenceText = preferences.length ? ` Preferences: ${labelledList(preferences, preferenceLabels)}.` : "";
-  profileLine.textContent = `${age || "Adult"} in ${location}: ${needText}. ${barrierText}${preferenceText}`;
+  profileLine.textContent = `${age || "Adult"} ${profileLocation}: ${needText}. ${barrierText}${preferenceText}`;
 
   addPath(paths, {
     title: "Book a GP or nurse appointment",
@@ -1251,6 +1409,11 @@ function reasonForProvider(provider) {
   const matchedNeeds = needs.filter((need) => hasSpecialtyMatch(provider, need));
   const distance = distanceToProvider(provider);
   const distanceLabel = providerDistanceLabel(provider, distance);
+  const needScopeLabel = providerNeedScopeLabel(provider);
+
+  if (needScopeLabel) {
+    reasons.push(`This service is specifically for ${needScopeLabel}, which matches what you selected.`);
+  }
 
   if (distanceLabel === "Telehealth provider") {
     reasons.push(preferences.includes("telehealth")
@@ -1281,8 +1444,10 @@ function reasonForProvider(provider) {
     if (preferences.length) reasons.push("Your preferences can be named in the first message so you do not have to explain them on the spot.");
   }
 
-  if (provider.type === "psychiatrist") {
-    reasons.push("A psychiatrist is a medical specialist, which can fit medication complexity, diagnosis questions, high risk, or care that has not improved.");
+  if (provider.type === "psychiatrist" || tags.includes("psychiatry-service")) {
+    reasons.push(tags.includes("psychiatry-service") && provider.type !== "psychiatrist"
+      ? "This is a specialist mental-health service that can assess whether psychiatry or medication support is needed."
+      : "A psychiatrist is a medical specialist, which can fit medication complexity, diagnosis questions, high risk, or care that has not improved.");
     if (specialty) reasons.push(`Their listed focus includes ${specialty}.`);
     if (matchedNeeds.length) reasons.push(`That directly matches ${labelledList(matchedNeeds, needLabels)} from your answers.`);
   }
@@ -1349,6 +1514,7 @@ function recommendationMatchesSelectedType(provider, type = selectedContactType(
   if (type === "all") return true;
   if (type === "counsellor") return provider.type === "counsellor" || provider.type === "mens-centre";
   if (type === "addiction") return provider.type === "addiction" || provider.tags?.includes("addiction");
+  if (type === "psychiatrist") return provider.type === "psychiatrist" || provider.tags?.includes("psychiatry-service");
   return provider.type === type;
 }
 
@@ -1463,7 +1629,8 @@ function contactTarget() {
       email: directory ? "" : provider.email || "",
       phone: directory ? "" : provider.phone || "",
       text: directory ? "" : provider.text || "",
-      website: safeHref(provider.website),
+      website: safeHref(provider.bookingUrl || provider.website),
+      websiteLabel: provider.bookingUrl ? "Open booking page" : `Open ${provider.name} website`,
       isDirectory: directory,
       subject: `Support request for ${provider.name}`,
       greeting: provider.name.includes("1737") ? "Kia ora" : `Kia ora ${provider.name}`
@@ -1663,7 +1830,7 @@ function updateContactActions(target, message) {
   setContactAction(emailMessage, contactMailtoHref(target, message), `Email ${target.label}`);
   setContactAction(callTarget, target.phone ? `tel:${normalisePhone(target.phone)}` : "", `Call ${target.label}`);
   setContactAction(textTarget, target.text ? `sms:${normalisePhone(target.text)}` : "", `Text ${target.label}`);
-  setContactAction(websiteTarget, target.website || "", `Open ${target.label} website`);
+  setContactAction(websiteTarget, target.website || "", target.websiteLabel || `Open ${target.label} website`);
 }
 
 function renderContact() {
@@ -1718,6 +1885,7 @@ function render() {
   wasIntakeComplete = status.complete;
   if (becameComplete) pendingCarePathScroll = true;
   renderProgress(status);
+  syncAddressRequirement();
   providerFinder.hidden = !status.complete;
   contactLayout.hidden = !status.complete;
 
@@ -1769,12 +1937,20 @@ function render() {
   resultList.innerHTML = `
     ${moves.length ? `
       <div class="recommendation-grid" aria-label="Recommended first contact options">
-        ${moves.map((move, index) => `
+        ${moves.map((move, index) => {
+          const distanceLabel = providerDistanceLabel(move.provider);
+          return `
         <article class="recommendation-card ${index === 0 ? "recommendation-card--primary" : ""}">
           <div class="recommendation-rank">${index + 1}</div>
           <div>
-            <p class="recommendation-kicker">${escapeHtml(move.title)}</p>
-            <h3>${escapeHtml(move.provider.name)}</h3>
+            <div class="recommendation-card__header">
+              <div>
+                <p class="recommendation-kicker">${escapeHtml(move.title)}</p>
+                <h3>${escapeHtml(move.provider.name)}</h3>
+                <p class="recommendation-meta">${escapeHtml(move.provider.region)}${move.provider.city ? ` | ${escapeHtml(move.provider.city)}` : ""}${distanceLabel ? ` | ${escapeHtml(distanceLabel)}` : ""}</p>
+              </div>
+              ${providerTypeBadge(move.provider)}
+            </div>
             <p>${escapeHtml(move.provider.firstStep)}</p>
             <ul>
               ${move.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}
@@ -1789,7 +1965,8 @@ function render() {
             </div>
           </div>
         </article>
-        `).join("")}
+        `;
+        }).join("")}
       </div>
     ` : `
       <article class="intake-gate">

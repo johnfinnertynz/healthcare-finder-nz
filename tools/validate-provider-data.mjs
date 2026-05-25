@@ -55,6 +55,8 @@ const requiredFields = [
 ];
 
 const allowedConfidence = new Set(["high", "medium", "low"]);
+const allowedNeedScope = new Set(["depression", "anxiety", "trauma", "addiction", "work"]);
+const broadNeedTags = new Set(["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"]);
 
 const unavailablePattern = /\b(not taking new (clients|patients)|not accepting (new )?(clients|patients|referrals)|books are closed|closed to new (clients|patients)|unable to accept new (clients|patients|referrals))\b/i;
 const errors = [];
@@ -71,6 +73,14 @@ function hasUsableContact(provider) {
 
 function isUrl(value) {
   return /^https?:\/\//i.test(String(value || ""));
+}
+
+function urlPath(value) {
+  try {
+    return new URL(value).pathname.toLowerCase();
+  } catch {
+    return "";
+  }
 }
 
 function monthAge(value) {
@@ -100,8 +110,18 @@ if (!Array.isArray(providers)) {
     if (!allowedTypes.has(provider.type)) recordIssue(errors, provider, `invalid type "${provider.type}"`);
     if (!allowedRegions.has(provider.region)) recordIssue(errors, provider, `invalid region "${provider.region}"`);
     if (!Array.isArray(provider.tags)) recordIssue(errors, provider, "tags must be an array");
+    if (provider.needScope !== undefined) {
+      if (!Array.isArray(provider.needScope)) {
+        recordIssue(errors, provider, "needScope must be an array when supplied");
+      } else {
+        for (const need of provider.needScope) {
+          if (!allowedNeedScope.has(need)) recordIssue(errors, provider, `invalid needScope "${need}"`);
+        }
+      }
+    }
     if (provider.source && !isUrl(provider.source)) recordIssue(errors, provider, "source must be an http(s) URL");
     if (provider.website && !isUrl(provider.website)) recordIssue(errors, provider, "website must be an http(s) URL");
+    if (provider.bookingUrl && !isUrl(provider.bookingUrl)) recordIssue(errors, provider, "bookingUrl must be an http(s) URL");
     if (provider.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(provider.email)) recordIssue(errors, provider, `invalid email "${provider.email}"`);
     if (monthAge(provider.verified) > 6) recordIssue(errors, provider, `verified month is missing or older than 6 months (${provider.verified || "missing"})`);
     if (monthAge(provider.lastVerified) > 6) recordIssue(errors, provider, `lastVerified month is missing or older than 6 months (${provider.lastVerified || "missing"})`);
@@ -123,6 +143,24 @@ if (!Array.isArray(providers)) {
     const availabilityText = [provider.name, provider.fit, provider.firstStep, provider.hours].join(" ");
     if (unavailablePattern.test(availabilityText)) {
       recordIssue(errors, provider, "appears unavailable to new clients; move to provider availability watchlist");
+    }
+
+    const scopeText = [
+      provider.type,
+      provider.fit,
+      provider.firstStep,
+      ...(provider.tags || []),
+      ...(provider.specialties || [])
+    ].join(" ");
+    if (urlPath(provider.source).includes("/sexual-harm/")
+      && /\b(neuropsychology|psychological services|mental injury)\b/i.test(scopeText)) {
+      recordIssue(errors, provider, "sexual-harm source appears over-scoped; remove unsupported broad psychology/neuropsychology wording");
+    }
+
+    const sexualHarmOnly = provider.tags?.includes("sexual-harm")
+      && !provider.tags.some((tag) => broadNeedTags.has(tag));
+    if (sexualHarmOnly && !provider.needScope?.includes("trauma")) {
+      recordIssue(errors, provider, "sexual-harm-only services must include needScope [\"trauma\"] so unrelated concerns do not rank them");
     }
 
     const hasLat = provider.lat !== undefined && provider.lat !== "";

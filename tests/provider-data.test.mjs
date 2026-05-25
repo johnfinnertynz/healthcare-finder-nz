@@ -5,7 +5,16 @@ import test from "node:test";
 
 const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
 const indexHtml = fs.readFileSync("index.html", "utf8");
+const publicHtmlPages = [
+  "index.html",
+  "privacy.html",
+  "terms.html",
+  "data-sources.html",
+  "crisis.html",
+  "medium-healthcare-pitfalls.html"
+];
 const optInPreferenceTags = new Set(["maori", "pasifika", "asian", "rainbow"]);
+const broadNeedTags = new Set(["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"]);
 const exactTypes = ["gp", "counsellor", "psychologist", "psychiatrist"];
 const expectedRegions = [
   "Northland",
@@ -35,6 +44,32 @@ function hasContact(provider) {
   return Boolean(provider.phone || provider.text || provider.email || provider.website);
 }
 
+function isTelehealthProvider(provider) {
+  const tags = provider.tags || [];
+  if (tags.includes("telehealth") || tags.includes("online")) return true;
+  if (provider.onlineAvailable === true || provider.phoneSupport === true) return true;
+  if (provider.type === "helpline") return true;
+  return provider.region === "National"
+    && ["addiction", "youth"].includes(provider.type)
+    && Boolean(provider.phone || provider.text || tags.includes("online"));
+}
+
+function hasNationalServiceReach(provider) {
+  if (provider.region !== "National") return false;
+  if (isTelehealthProvider(provider)) return true;
+  if (isDirectoryLike(provider)) return true;
+  if (provider.type === "helpline") return true;
+  return ["addiction", "public-service", "youth"].includes(provider.type)
+    && Boolean(provider.phone || provider.text || provider.email || provider.website);
+}
+
+function matchesRegion(provider, region, preferences = [], query = "") {
+  if (query) return true;
+  if (provider.region === region) return true;
+  if (hasNationalServiceReach(provider)) return true;
+  return preferences.includes("telehealth") && isTelehealthProvider(provider);
+}
+
 function hasGenderConflict(provider, preferences) {
   const wantsFemale = preferences.includes("female-provider");
   const wantsMale = preferences.includes("male-provider");
@@ -52,10 +87,23 @@ function providerMatchesType(provider, type) {
   if (type === "directory") return isDirectoryLike(provider);
   return provider.type === type
     || (type === "counsellor" && provider.type === "mens-centre")
+    || (type === "psychiatrist" && provider.tags?.includes("psychiatry-service"))
     || (type === "addiction" && provider.tags?.includes("addiction"));
 }
 
-function visibleMatches({ region, type = "all", preferences = [], query = "" }) {
+function providerNeedScope(provider) {
+  if (Array.isArray(provider.needScope) && provider.needScope.length) return provider.needScope;
+  if (provider.tags?.includes("sexual-harm") && !provider.tags.some((tag) => broadNeedTags.has(tag))) return ["trauma"];
+  if ((provider.type === "addiction" || (provider.type === "helpline" && provider.tags?.includes("addiction"))) && !["depression", "anxiety", "trauma", "work"].some((tag) => provider.tags?.includes(tag))) return ["addiction"];
+  return [];
+}
+
+function matchesSelectedNeeds(provider, needs) {
+  const scope = providerNeedScope(provider);
+  return !scope.length || !needs.length || scope.some((need) => needs.includes(need));
+}
+
+function visibleMatches({ region, type = "all", preferences = [], needs = [], query = "" }) {
   const normalisedQuery = query.trim().toLowerCase();
   return providers.filter((provider) => {
     const text = [
@@ -71,10 +119,11 @@ function visibleMatches({ region, type = "all", preferences = [], query = "" }) 
     ].join(" ").toLowerCase();
 
     return providerMatchesType(provider, type)
-      && (provider.region === region || provider.region === "National" || Boolean(normalisedQuery))
+      && matchesRegion(provider, region, preferences, normalisedQuery)
       && (!normalisedQuery || text.includes(normalisedQuery))
       && matchesPreferencePrivacy(provider, preferences)
       && !hasGenderConflict(provider, preferences)
+      && (Boolean(normalisedQuery) || matchesSelectedNeeds(provider, needs))
       && !provider.tags?.includes("crisis")
       && !isDirectoryLike(provider)
       && hasContact(provider);
@@ -91,16 +140,32 @@ test("all current region filters have useful visible direct contacts", () => {
   }
 });
 
-test("location filtering only returns the selected region or national providers", () => {
+test("location filtering only returns the selected region or confirmed national-reach providers", () => {
   for (const region of expectedRegions) {
     const offRegion = visibleMatches({ region })
-      .filter((provider) => provider.region !== region && provider.region !== "National")
+      .filter((provider) => provider.region !== region && !hasNationalServiceReach(provider))
       .map((provider) => `${provider.id}:${provider.region}`);
 
     assert.deepEqual(offRegion, []);
   }
 
   assert.equal(visibleMatches({ region: "South Canterbury" }).some((provider) => provider.id === "canterbury-mens-centre"), false);
+});
+
+test("individual psychologists are not treated as nationally available without confirmed telehealth", () => {
+  const alex = providers.find((provider) => provider.id === "nzccp-alex-richards");
+  assert.ok(alex);
+  assert.equal(alex.region, "Canterbury");
+  assert.equal(isTelehealthProvider(alex), false);
+  assert.equal(hasNationalServiceReach(alex), false);
+
+  const westCoastPsychologists = visibleMatches({
+    region: "West Coast",
+    type: "psychologist",
+    needs: ["depression"]
+  });
+
+  assert.equal(westCoastPsychologists.some((provider) => provider.id === "nzccp-alex-richards"), false);
 });
 
 test("exact professional filters do not substitute unrelated provider types", () => {
@@ -110,10 +175,22 @@ test("exact professional filters do not substitute unrelated provider types", ()
       assert.ok(matches.length > 0, `${region} should have at least one ${type} or valid counsellor adjunct result`);
       const invalid = matches.filter((provider) => {
         if (type === "counsellor") return !["counsellor", "mens-centre"].includes(provider.type);
+        if (type === "psychiatrist") return provider.type !== "psychiatrist" && !provider.tags?.includes("psychiatry-service");
         return provider.type !== type;
       });
       assert.deepEqual(invalid.map((provider) => `${provider.id}:${provider.type}`), []);
     }
+  }
+});
+
+test("psychiatrist filters may include specialist public psychiatry services but not unrelated contacts", () => {
+  for (const region of ["Rotorua and Taupo", "Tairawhiti", "Taranaki", "Wairarapa"]) {
+    const matches = visibleMatches({ region, type: "psychiatrist" });
+    assert.ok(matches.length > 0, `${region} should have a psychiatrist or specialist psychiatry-service pathway`);
+    const unrelated = matches.filter((provider) =>
+      provider.type !== "psychiatrist" && !provider.tags?.includes("psychiatry-service")
+    );
+    assert.deepEqual(unrelated.map((provider) => `${provider.id}:${provider.type}`), []);
   }
 });
 
@@ -123,6 +200,55 @@ test("opt-in cultural providers stay hidden unless selected", () => {
 
   assert.equal(general.some((provider) => provider.id === "national-asian-family-services"), false);
   assert.equal(asianSelected.some((provider) => provider.id === "national-asian-family-services"), true);
+});
+
+test("telehealth psychologist preference has multiple direct online options", () => {
+  const matches = visibleMatches({
+    region: "Otago",
+    type: "psychologist",
+    preferences: ["telehealth"]
+  }).filter((provider) => provider.region === "National" && provider.tags?.includes("telehealth"));
+
+  assert.ok(matches.length >= 3, "telehealth psychologist searches should not collapse to one online clinician");
+});
+
+test("telehealth preference can use online providers outside the entered region", () => {
+  const matches = visibleMatches({
+    region: "West Coast",
+    type: "psychiatrist",
+    preferences: ["telehealth"]
+  });
+
+  assert.ok(matches.some((provider) => provider.id === "bay-of-plenty-anteris-private-psychiatry"));
+});
+
+test("Xtrapsychplus is scoped to sexual harm counselling, not broad psychology", () => {
+  const provider = providers.find((item) => item.id === "northland-xtrapsychplus");
+  assert.ok(provider);
+  assert.equal(provider.type, "counsellor");
+  assert.equal(provider.phone, "");
+  assert.equal(provider.address, "");
+  assert.equal(provider.tags.includes("psychologist"), false);
+  assert.equal(provider.tags.includes("neuropsychology"), false);
+  assert.deepEqual(provider.needScope, ["trauma"]);
+  assert.equal(/neuropsychology|psychological services|mental injury/i.test(provider.fit), false);
+  assert.match(provider.fit, /sexual harm counselling/i);
+});
+
+test("need-scoped sexual harm services do not rank for unrelated concern selections", () => {
+  const anxietyMatches = visibleMatches({
+    region: "Northland",
+    type: "counsellor",
+    needs: ["anxiety"]
+  });
+  const traumaMatches = visibleMatches({
+    region: "Northland",
+    type: "counsellor",
+    needs: ["trauma"]
+  });
+
+  assert.equal(anxietyMatches.some((provider) => provider.id === "northland-xtrapsychplus"), false);
+  assert.equal(traumaMatches.some((provider) => provider.id === "northland-xtrapsychplus"), true);
 });
 
 test("provider records used for contact have safe public contact fields", () => {
@@ -155,4 +281,16 @@ test("privacy, disclaimer, correction, and crisis links are visible from the hom
   assert.match(indexHtml, /Report a correction/i);
   assert.match(indexHtml, /Soft launch pilot/i);
   assert.match(indexHtml, /Provider database last updated/i);
+});
+
+test("public pages include the Shielded Site widget assets", () => {
+  const shieldedScript = fs.readFileSync("assets/shielded-site.js", "utf8");
+  assert.match(shieldedScript, /https:\/\/staticcdn\.co\.nz\/embed\/embed\.js/, "Shielded Site initializer should load the official embed script");
+  assert.match(shieldedScript, /https:\/\/shielded\.co\.nz\/img\/custom-logo\.png/, "Shielded Site initializer should use the official button logo");
+
+  for (const pagePath of publicHtmlPages) {
+    const html = fs.readFileSync(pagePath, "utf8");
+    assert.match(html, /href="assets\/shielded-site\.css"/, `${pagePath} should load Shielded Site styles`);
+    assert.match(html, /src="assets\/shielded-site\.js"/, `${pagePath} should initialise the Shielded Site button`);
+  }
 });

@@ -1,21 +1,18 @@
-import assert from "node:assert/strict";
 import fs from "node:fs";
-import test from "node:test";
+import { pathToFileURL } from "node:url";
 
 const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
-const indexHtml = fs.readFileSync("index.html", "utf8");
-const trustPages = ["privacy.html", "terms.html", "data-sources.html", "crisis.html"];
 const optInPreferenceTags = new Set(["maori", "pasifika", "asian", "rainbow"]);
 const broadNeedTags = new Set(["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"]);
 
-const personas = [
-  { name: "16-year-old female in Northland with anxiety", region: "Northland", age: 16, want: "therapist", needs: ["anxiety"], preferences: ["female-provider"], barriers: ["privacy"], goal: "find age-appropriate anxiety support without sexual-harm-only services" },
+export const personas = [
+  { name: "16-year-old female in Northland with anxiety", region: "Northland", age: 16, want: "therapist", needs: ["anxiety"], preferences: ["female-provider"], barriers: ["privacy"], goal: "avoid sexual-harm-only services" },
   { name: "Auckland parent looking for ADHD assessment for child", region: "Auckland", age: 42, want: "psychologist", needs: ["work"], preferences: [], barriers: ["cost"], goal: "find assessment-capable professionals" },
   { name: "Wellington university student with depression", region: "Wellington", age: 20, want: "therapist", needs: ["depression"], preferences: [], barriers: ["cost"], goal: "find low-cost counselling" },
   { name: "Rural South Island user with poor transport", region: "Southland", age: 31, want: "therapist", needs: ["anxiety"], preferences: ["telehealth"], barriers: ["transport"], goal: "find phone or video options" },
   { name: "Maori user seeking culturally appropriate support", region: "Northland", age: 34, want: "unsure", needs: ["depression"], preferences: ["maori"], barriers: ["culture"], goal: "find kaupapa Maori or culturally safe support" },
   { name: "Pacific family needing free counselling", region: "Auckland", age: 38, want: "therapist", needs: ["work"], preferences: ["pasifika"], barriers: ["cost"], goal: "find Pasifika-friendly support" },
-  { name: "User in crisis needing immediate help", region: "Waikato", age: 29, want: "unsure", needs: ["depression"], preferences: [], barriers: ["privacy"], crisis: true, goal: "see 111 and 1737 immediately" },
+  { name: "User in crisis needing immediate help", region: "Waikato", age: 29, want: "unsure", needs: ["depression"], preferences: [], barriers: ["privacy"], goal: "see crisis guidance immediately" },
   { name: "Person looking for addiction support", region: "Bay of Plenty", age: 45, want: "addiction", needs: ["addiction"], preferences: [], barriers: ["cost"], goal: "find alcohol, drug, or gambling help" },
   { name: "Male trades worker reluctant to seek help", region: "Canterbury", age: 36, want: "therapist", needs: ["depression"], preferences: ["male-provider"], barriers: ["privacy"], goal: "find a lower-pressure first contact" },
   { name: "LGBTQIA+ youth seeking safe support", region: "Wellington", age: 17, want: "unsure", needs: ["anxiety"], preferences: ["rainbow"], barriers: ["culture"], goal: "find Rainbow-affirming support" },
@@ -120,7 +117,6 @@ function score(provider, persona, type) {
   let value = 0;
   if (provider.region === persona.region) value += 12;
   if (hasNationalServiceReach(provider)) value += persona.barriers.includes("transport") || persona.preferences.includes("telehealth") ? 5 : -3;
-  if (!matchesSelectedNeeds(provider, persona.needs)) value -= 80;
   if (provider.type === type) value += 8;
   if (type === "all" && ["gp", "counsellor", "psychologist", "public-service", "youth"].includes(provider.type)) value += 2;
   for (const need of persona.needs) if (tags.includes(need) || provider.fit?.toLowerCase().includes(need)) value += 5;
@@ -133,28 +129,27 @@ function score(provider, persona, type) {
   return value;
 }
 
-function recommendations(persona) {
+export function recommendations(persona) {
   const type = selectedType(persona.want);
   const strictExactTypes = new Set(["gp", "psychologist", "psychiatrist"]);
+  const baseFilter = (provider) =>
+    matchesRegion(provider, persona.region, persona.preferences)
+    && preferenceAllowed(provider, persona.preferences)
+    && providerMatchesAge(provider, persona.age)
+    && matchesSelectedNeeds(provider, persona.needs)
+    && !provider.tags?.includes("crisis")
+    && !isDirectoryLike(provider)
+    && hasContact(provider);
+
   const primary = providers
     .filter((provider) => matchesType(provider, type))
-    .filter((provider) => matchesRegion(provider, persona.region, persona.preferences))
-    .filter((provider) => preferenceAllowed(provider, persona.preferences))
-    .filter((provider) => providerMatchesAge(provider, persona.age))
-    .filter((provider) => matchesSelectedNeeds(provider, persona.needs))
-    .filter((provider) => !provider.tags?.includes("crisis"))
-    .filter((provider) => !isDirectoryLike(provider) && hasContact(provider))
+    .filter(baseFilter)
     .map((provider) => ({ provider, score: score(provider, persona, type) }))
     .sort((a, b) => b.score - a.score || a.provider.name.localeCompare(b.provider.name))
     .map((entry) => entry.provider);
 
   const fill = providers
-    .filter((provider) => matchesRegion(provider, persona.region, persona.preferences))
-    .filter((provider) => preferenceAllowed(provider, persona.preferences))
-    .filter((provider) => providerMatchesAge(provider, persona.age))
-    .filter((provider) => matchesSelectedNeeds(provider, persona.needs))
-    .filter((provider) => !provider.tags?.includes("crisis"))
-    .filter((provider) => !isDirectoryLike(provider) && hasContact(provider))
+    .filter(baseFilter)
     .map((provider) => ({ provider, score: score(provider, persona, "all") }))
     .sort((a, b) => b.score - a.score || a.provider.name.localeCompare(b.provider.name))
     .map((entry) => entry.provider);
@@ -174,128 +169,38 @@ function recommendations(persona) {
     .slice(0, 3);
 }
 
-test("emergency guidance is visible without using filters", () => {
-  assert.match(indexHtml, /call\s+111/i);
-  assert.match(indexHtml, /1737/i);
-  assert.match(indexHtml, /not an emergency service|not a replacement/i);
-  assert.match(indexHtml, /href="crisis\.html"/i);
-});
+function escapeCell(value) {
+  return String(value || "").replace(/\|/g, "\\|").replace(/\s+/g, " ").trim();
+}
 
-test("trust pages render with safety navigation", () => {
-  for (const page of trustPages) {
-    const html = fs.readFileSync(page, "utf8");
-    assert.match(html, /<title>.+Care Finder Aotearoa<\/title>/i, `${page} should have a title`);
-    assert.match(html, /<h1>/i, `${page} should have a main heading`);
-    assert.match(html, /1737/i, `${page} should include 1737 guidance`);
-    assert.match(html, /111/i, `${page} should include 111 guidance`);
-    assert.match(html, /index\.html/i, `${page} should link back to the app`);
-  }
-});
-
-test("20 simulated user workflows reach actionable, non-directory options", () => {
-  for (const persona of personas) {
+export function runAudit() {
+  return personas.map((persona) => {
     const matches = recommendations(persona);
-    assert.ok(matches.length > 0, `${persona.name}: should reach at least one actionable provider`);
-    assert.ok(matches.length <= 3, `${persona.name}: should keep the first decision small`);
-    assert.equal(matches.some(isDirectoryLike), false, `${persona.name}: recommendations should not be directories`);
-    assert.equal(matches.some((provider) => provider.tags?.includes("crisis")), false, `${persona.name}: crisis teams should not appear as default recommendations`);
-    assert.ok(matches.every(hasContact), `${persona.name}: every recommendation needs a public contact route`);
-    assert.ok(
-      matches.every((provider) => matchesSelectedNeeds(provider, persona.needs)),
-      `${persona.name}: recommendations should not include need-scoped providers for unrelated concerns`
-    );
-    assert.ok(
-      matches.every((provider) => providerMatchesAge(provider, persona.age)),
-      `${persona.name}: recommendations should respect age-gated services`
-    );
-
-    if (["gp", "psychologist", "psychiatrist"].includes(selectedType(persona.want))) {
-      assert.ok(matches.every((provider) => matchesType(provider, selectedType(persona.want))), `${persona.name}: exact contact type should be respected`);
-    }
-
-    if (persona.preferences.some((preference) => optInPreferenceTags.has(preference))) {
-      assert.ok(
-        matches.some((provider) => persona.preferences.some((preference) => provider.tags?.includes(preference))),
-        `${persona.name}: should include at least one requested opt-in cultural/safety match`
-      );
-    }
-
-    if (persona.barriers.includes("cost")) {
-      assert.ok(
-        matches.some((provider) => /free|funded|public|winz|low-cost|reduced/i.test(`${provider.cost} ${(provider.tags || []).join(" ")}`)),
-        `${persona.name}: should surface a free, funded, public, or cost-aware option`
-      );
-    }
-
-    if (persona.preferences.includes("telehealth")) {
-      assert.ok(
-        matches.some((provider) => provider.region === "National" || provider.tags?.includes("telehealth")),
-        `${persona.name}: should surface at least one telehealth or remote-friendly option`
-      );
-    }
-  }
-});
-
-test("Northland teenage anxiety flow does not recommend Xtrapsychplus", () => {
-  const persona = personas.find((item) => item.name === "16-year-old female in Northland with anxiety");
-  const matches = recommendations(persona);
-  assert.ok(matches.length > 0, "teenage Northland anxiety flow should still find options");
-  assert.equal(matches.some((provider) => provider.id === "northland-xtrapsychplus"), false);
-  assert.equal(matches.some((provider) => provider.needScope?.includes("trauma")), false);
-});
-
-test("Greymouth psychologist flow does not recommend Christchurch providers as telehealth by accident", () => {
-  const matches = recommendations({
-    name: "19-year-old male in Greymouth with low mood seeking a psychologist",
-    region: "West Coast",
-    age: 19,
-    want: "psychologist",
-    needs: ["depression"],
-    preferences: [],
-    barriers: []
+    const optInPreferences = persona.preferences.filter((preference) => optInPreferenceTags.has(preference));
+    return {
+      persona: persona.name,
+      goal: persona.goal,
+      topThree: matches.map((provider) => provider.name),
+      passed: matches.length > 0
+        && matches.every((provider) => matchesSelectedNeeds(provider, persona.needs))
+        && matches.every((provider) => providerMatchesAge(provider, persona.age))
+        && !matches.some((provider) => provider.tags?.includes("crisis"))
+        && !matches.some(isDirectoryLike)
+        && (!optInPreferences.length || matches.some((provider) => optInPreferences.some((preference) => provider.tags?.includes(preference))))
+    };
   });
+}
 
-  assert.ok(matches.length > 0, "Greymouth psychologist flow should still find options");
-  assert.equal(matches.some((provider) => provider.id === "nzccp-alex-richards"), false);
-  assert.ok(
-    matches.every((provider) => provider.region === "West Coast" || hasNationalServiceReach(provider)),
-    "out-of-region recommendations must have confirmed national or telehealth reach"
-  );
-});
-
-test("all main intake choices have matching logic coverage", () => {
-  const needs = ["depression", "anxiety", "trauma", "addiction", "work"];
-  const wants = ["unsure", "gp", "therapist", "psychologist", "psychiatrist"];
-  const preferenceSets = [
-    ["maori"],
-    ["pasifika"],
-    ["asian"],
-    ["rainbow"],
-    ["trauma-informed"],
-    ["telehealth"],
-    ["female-provider"],
-    ["male-provider"]
-  ];
-
-  for (const need of needs) {
-    const matches = recommendations({ name: `need ${need}`, region: "Auckland", age: 30, want: "unsure", needs: [need], preferences: [], barriers: [] });
-    assert.ok(matches.length > 0, `need ${need} should produce recommendations`);
-    assert.ok(matches.every((provider) => matchesSelectedNeeds(provider, [need])), `need ${need} should not return unrelated scoped services`);
-  }
-
-  for (const want of wants) {
-    const matches = recommendations({ name: `want ${want}`, region: "Wellington", age: 30, want, needs: ["anxiety"], preferences: [], barriers: [] });
-    assert.ok(matches.length > 0, `contact preference ${want} should produce recommendations`);
-    if (["gp", "psychologist", "psychiatrist"].includes(selectedType(want))) {
-      assert.ok(matches.every((provider) => matchesType(provider, selectedType(want))), `contact preference ${want} should stay exact`);
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const rows = runAudit();
+  if (process.argv.includes("--json")) {
+    console.log(JSON.stringify(rows, null, 2));
+  } else {
+    console.log("| Persona | Goal | Top three | Result |");
+    console.log("| --- | --- | --- | --- |");
+    for (const row of rows) {
+      console.log(`| ${escapeCell(row.persona)} | ${escapeCell(row.goal)} | ${escapeCell(row.topThree.join("; "))} | ${row.passed ? "Pass" : "Review"} |`);
     }
   }
-
-  for (const preferences of preferenceSets) {
-    const matches = recommendations({ name: `preferences ${preferences.join(",")}`, region: "Auckland", age: 30, want: "unsure", needs: ["anxiety"], preferences, barriers: [] });
-    assert.ok(matches.length > 0, `support preference ${preferences.join(",")} should still produce recommendations`);
-    if (preferences.some((preference) => optInPreferenceTags.has(preference))) {
-      assert.ok(matches.some((provider) => preferences.some((preference) => provider.tags?.includes(preference))), `support preference ${preferences.join(",")} should surface at least one matched provider`);
-    }
-  }
-});
+  process.exitCode = rows.every((row) => row.passed) ? 0 : 1;
+}

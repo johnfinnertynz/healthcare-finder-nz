@@ -25,7 +25,8 @@ published as professional contact details.
 - `hours`: contact hours or access notes
 - `cost`: free, funded, private, public service, or varies
 - `tags`: search and matching tags such as `depression`, `anxiety`, `trauma`,
-  `cost`, `male`, `rangatahi`, `same-day`, `privacy`
+  `cost`, `male`, `rangatahi`, `same-day`, `privacy`, `telehealth`, and
+  `psychiatry-service`
 - `specialties`: optional public focus areas or clinical interests listed by the
   provider or directory
 - `patientGroups`: optional patient groups explicitly listed by the source, such
@@ -49,6 +50,15 @@ published as professional contact details.
 If a listing is only a directory and not a direct provider, mark `type` as
 `directory`. Direct contact details are more useful, but directories are still
 valuable when they help users find fit, cost, culture, or availability.
+
+Use `psychiatry-service` when a public specialist mental health team is a direct
+pathway to psychiatry assessment or medication-specialist support, but is not a
+private named psychiatrist. Keep the visible `type` as `public-service` or
+`youth` so users see what they are contacting.
+
+Use `ageGroups` whenever a source clearly limits access. The app filters these
+records by the user's age so, for example, child/adolescent-only psychiatry does
+not appear as a routine adult option.
 
 ## Availability Watchlist
 
@@ -144,9 +154,26 @@ node tools/refresh-provider-database.mjs
 ```
 
 This imports approved GP/practice data, direct-care CSVs, approved FHIR bundles,
-backend-only professional registers, opt-in RANZCP psychiatrist listings, and
+backend-only professional registers, opt-in RANZCP psychiatrist listings,
+Mindwell online psychologists, and the curated search/Chrome gap-fill records,
 then runs address/contact audits. It also geocodes public provider addresses so
 distance ranking can use `lat` and `lon`.
+
+## Curated Gap-Fill Records
+
+`tools/import-gap-verified-providers.mjs` stores a small curated set of direct
+contacts found during region/type gap checks. It is intentionally conservative:
+provider-owned pages and trusted health/community directories are preferred, and
+services that are closed, full, or only available for limited assessments are
+written to `data/monitors/provider-availability-watchlist.json` instead of being
+served as first-contact options.
+
+Run it after a manual Google/Bing/Chrome search pass or as part of the full
+refresh pipeline:
+
+```sh
+node tools/import-gap-verified-providers.mjs
+```
 
 ## Long-Term Contact Import
 
@@ -185,6 +212,8 @@ Direct-care source shortlist:
   https://www.ranzcp.org/college-committees/public-partners/find-a-psychiatrist
 - Your Health in Mind Find a Psychiatrist:
   https://www.yourhealthinmind.org/find-a-psychiatrist
+- Mindwell Online Psychology:
+  https://www.mindwell.co.nz/
 - TalkingWorks practitioner directory:
   https://www.talkingworks.co.nz/
 - NZAC / Counselling Aotearoa approved exports, if a data-sharing agreement is
@@ -259,7 +288,7 @@ includes `lat` and `lon`, those coordinates are kept and no lookup is needed.
 
 Required columns: `name`, `type`, `region`, `city`, `source`.
 Optional columns include `id`, `address`, `lat`, `lon`, `phone`, `text`,
-`email`, `website`, `cost`, `hours`, `tags`, `fit`, `firstStep`, and
+`email`, `website`, `bookingUrl`, `cost`, `hours`, `tags`, `fit`, `firstStep`, and
 `verified`. Importers should also populate `lastVerified`, `confidence`,
 `sourceQuality`, and `needsManualVerification`; use honest `medium` or `low`
 confidence rather than implying a provider has been manually checked.
@@ -290,6 +319,16 @@ The directory states that information is provided by individual psychiatrists an
 that psychiatrists opt in to be included. Imported records should still be
 reviewed regularly because wait times, new-patient status, and contact details
 can change.
+
+To import Mindwell's public online psychologist profiles:
+
+```sh
+node tools/import-mindwell-psychologists.mjs
+```
+
+This importer uses Mindwell's sitemap and provider-owned profile pages. Keep
+the shared `team@mindwell.co.nz` contact attached to the service rather than
+inventing individual clinician emails.
 
 To use the New Zealand Psychologists Board register as a verification and
 research source:

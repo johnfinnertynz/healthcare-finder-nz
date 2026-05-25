@@ -1,5 +1,69 @@
 # User Test Report
 
+Date: 2026-05-25
+
+## Need-Scope Regression Pass
+
+This pass focused on whether the intake controls match people to services that
+actually fit their selected concern. The trigger case was a 16-year-old female in
+Northland selecting anxiety, panic, or overwhelm and being offered Xtrapsychplus,
+which is scoped to sexual harm / ACC Sensitive Claims counselling.
+
+Implemented outcome:
+
+- Narrow sexual-harm-only and addiction-only services now have explicit or
+  inferred `needScope` rules.
+- A scoped service is only recommended when the selected "What is happening?"
+  option matches that scope.
+- Age-gated services are checked in the simulated workflow audit.
+- Xtrapsychplus now has `needScope: ["trauma"]` and does not appear for the
+  Northland teenage anxiety flow.
+
+Browser verification:
+
+- Scenario: age 16, Northland, female, anxiety/panic/overwhelm, privacy barrier,
+  prefer female provider, counsellor/therapist.
+- Result: top suggestions were Puawaitanga, Rust Avenue Medical Centre, and 1737.
+  Xtrapsychplus did not appear in top suggestions or visible provider cards.
+
+## 20 Example Flow Results
+
+Command run: `node tools/user-flow-audit.mjs`
+
+| Persona | Goal | Top three | Result |
+| --- | --- | --- | --- |
+| 16-year-old female in Northland with anxiety | avoid sexual-harm-only services | Puawaitanga; Bank Street Medical; Bream Bay Medical Centre | Pass |
+| Auckland parent looking for ADHD assessment for child | find assessment-capable professionals | Auckland Mental Wellness Centre; Millennium Consulting; Alex Hayns | Pass |
+| Wellington university student with depression | find low-cost counselling | Puawaitanga; Vibe Youth Services; Youthline Wellington | Pass |
+| Rural South Island user with poor transport | find phone or video options | Growth Online Counselling; Puawaitanga; Dr Agata Moody - Coliber Psychiatry | Pass |
+| Maori user seeking culturally appropriate support | find kaupapa Maori or culturally safe support | Jigsaw North Manaaki Whanau Counselling; Te Hau Awhiowhio o Otangarei Trust; Te Hau Ora o Ngapuhi | Pass |
+| Pacific family needing free counselling | find Pasifika-friendly support | Vaka Tautua Mental Health Support; Etu Pasifika Auckland Ltd (Formerly Mt Wellington Integrated Healthcare); Etu Pasifika South Auckland (formerly Cavendish Doctors) | Pass |
+| User in crisis needing immediate help | see crisis guidance immediately | Counsellingworx; PsychologyWorx; The Psychology Centre | Pass |
+| Person looking for addiction support | find alcohol, drug, or gambling help | Adult Community Mental Health Service \| Bay of Plenty; Turning Point Trust; Get Smart Tauranga | Pass |
+| Male trades worker reluctant to seek help | find a lower-pressure first contact | Merivale Psychotherapy and Counselling; Lucid Psychotherapy and Counselling; Talking Therapy Psychotherapy and Counselling Centre | Pass |
+| LGBTQIA+ youth seeking safe support | find Rainbow-affirming support | Evolve Wellington Youth Service; Alana Malloy; Dr Sally Rimkeit | Pass |
+| Low technical literacy user | get one obvious contact | Bellomo Family Health; Carefirst - Bell Block Medical Centre; Carefirst Merrilands Medical Centre | Pass |
+| Elderly person searching on mobile | find nearby primary care | Carterton Medical Centre; Kuripuni Medical Centre; Mahara Health | Pass |
+| User with limited English | find culturally matched support | Asian Family Services; Dr M Shanmukha Swamy Lokesh; Hong Kong Surgery | Pass |
+| Domestic violence victim seeking discreet help | find trauma-informed help | Puawaitanga; Katherine Lee, Mindwell Online Psychology; LaNae Fisk Psychology | Pass |
+| Someone searching at 2am while distressed | find something usable after hours | Drew Crannitch Psychologists; DrewCrannitch Psychologists; University of Otago Clinical Psychology Centre | Pass |
+| User looking for free or low-cost support only | find funded options | Alive! Psychological Services; CRISP Counselling; Dr Craig Colhoun Psychology | Pass |
+| User overwhelmed by too many options | see a small ranked set | Auckland Mental Wellness Centre; Birkenhead Medical Centre; Ember Community Support | Pass |
+| User unsure whether serious enough | feel allowed to ask a GP | Florence Medical Centre; Golden Bay Community Health Centre; Greenwood Health | Pass |
+| User helping a friend or family member | find practical first contacts | M.I.S.T Whanganui; MASH Trust; Palmerston North Psychology Clinic - Massey University | Pass |
+| Comparing online vs in-person services | compare telehealth and local providers | Candice van der Merwe, Mindwell Online Psychology; Jeremy Mason, Mindwell Online Psychology; Katherine Lee, Mindwell Online Psychology | Pass |
+
+Residual notes:
+
+- Crisis guidance is still immediate and prominent, but the audit script checks
+  provider recommendation quality separately from the always-visible crisis
+  banner.
+- The Otago flow exposes a likely duplicate naming issue for Drew Crannitch /
+  DrewCrannitch Psychologists. This did not affect the need-scope fix but should
+  be deduplicated in a provider data cleanup pass.
+
+---
+
 Date: 2026-05-24
 
 ## Method

@@ -23,6 +23,7 @@
   },
   "liveSources": {
     "ranzcpPsychiatrists": true,
+    "mindwellPsychologists": true,
     "doctorPricerGpPractices": {
       "enabled": true,
       "rateLimitMs": 3500,
@@ -31,7 +32,8 @@
     "healthpointApi": {
       "urlEnv": "HEALTHPOINT_API_URL",
       "tokenEnv": "HEALTHPOINT_API_TOKEN"
-    }
+    },
+    "gapVerifiedProviders": true
   },
   "geocoding": {
     "cachePath": "data/geocode-cache.json",

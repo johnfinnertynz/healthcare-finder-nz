@@ -661,6 +661,20 @@ input[type="checkbox"] {
   box-shadow: 0 12px 28px rgba(11, 77, 57, 0.08);
 }
 
+.recommendation-card__header,
+.provider-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.55rem;
+}
+
+.recommendation-card__header > div,
+.provider-card__header > div {
+  min-width: 0;
+}
+
 .recommendation-rank {
   display: inline-flex;
   align-items: center;
@@ -683,6 +697,34 @@ input[type="checkbox"] {
 .recommendation-card p {
   margin: 0;
   color: var(--muted);
+}
+
+.recommendation-card .provider-type-badge {
+  width: 2.15rem;
+  height: 2.15rem;
+  min-height: 2.15rem;
+  padding: 0;
+}
+
+.recommendation-card .provider-type-badge span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.recommendation-meta {
+  margin-top: 0.2rem !important;
+  color: var(--green-dark) !important;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .recommendation-card ul {
@@ -801,7 +843,7 @@ input[type="checkbox"] {
 .provider-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
+  gap: 0.85rem 1rem;
   align-items: start;
   padding: 1rem;
   border: 1px solid var(--line);
@@ -821,7 +863,16 @@ input[type="checkbox"] {
 }
 
 .provider-card h3 {
+  margin: 0;
   font-size: 1.25rem;
+}
+
+.provider-card > .provider-card__header {
+  grid-column: 1 / -1;
+}
+
+.provider-card__body {
+  min-width: 0;
 }
 
 .provider-meta {
@@ -829,6 +880,68 @@ input[type="checkbox"] {
   font-weight: 800;
   font-size: 0.85rem;
   text-transform: uppercase;
+}
+
+.provider-type-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  max-width: 13.5rem;
+  min-height: 2rem;
+  padding: 0.34rem 0.55rem;
+  border: 1px solid rgba(7, 67, 49, 0.18);
+  border-radius: 999px;
+  color: var(--green-dark);
+  background: #eef7f1;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: right;
+}
+
+.provider-type-badge img {
+  flex: 0 0 auto;
+  width: 1.45rem;
+  height: 1.45rem;
+  object-fit: contain;
+}
+
+.provider-type-badge span {
+  overflow-wrap: anywhere;
+}
+
+.provider-type-badge--gp {
+  color: #074331;
+  background: #e9f6ec;
+}
+
+.provider-type-badge--counsellor,
+.provider-type-badge--psychologist {
+  color: #27506a;
+  background: #edf6fb;
+}
+
+.provider-type-badge--psychiatrist {
+  color: #5b3a76;
+  background: #f4eef9;
+}
+
+.provider-type-badge--helpline,
+.provider-type-badge--public-service {
+  color: #6b4a05;
+  background: #fbf4df;
+}
+
+.provider-type-badge--addiction {
+  color: #6d2f2f;
+  background: #faeeee;
+}
+
+.provider-type-badge--directory {
+  color: #4f5c58;
+  background: #f1f4f2;
 }
 
 .provider-detail strong {
@@ -1155,6 +1268,17 @@ footer nav {
 
   h1 {
     font-size: 3.2rem;
+  }
+
+  .recommendation-card__header,
+  .provider-card__header {
+    align-items: flex-start;
+  }
+
+  .provider-type-badge {
+    max-width: 8.5rem;
+    padding: 0.32rem 0.45rem;
+    font-size: 0.72rem;
   }
 
 }

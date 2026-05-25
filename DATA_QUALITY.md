@@ -35,6 +35,7 @@ Recommended fields:
 - `text`
 - `email`
 - `website`
+- `bookingUrl`
 - `hours`
 - `confidence`
 - `sourceQuality`
@@ -62,7 +63,7 @@ Current schema aliases:
   publishes them, especially for support-preference evidence.
 - `tags` currently carry support flags such as `maori`, `pasifika`, `asian`,
   `rainbow`, `trauma-informed`, `telehealth`, `female`, `male`, `cost`,
-  `crisis`, `addiction`, and `direct-contact`.
+  `crisis`, `addiction`, `psychiatry-service`, and `direct-contact`.
 
 ## Verification Rules
 
@@ -76,6 +77,13 @@ Current schema aliases:
   They must not show "Use this contact" in the UI.
 - Crisis records must be tagged `crisis` and should only appear in crisis or
   fallback contexts, not as routine first-contact recommendations.
+- Use `psychiatry-service` for public specialist mental health teams that are a
+  valid route to psychiatry or medication-specialist assessment, but are not
+  private psychiatrist listings. Keep their `type` as `public-service` or
+  `youth` unless the listing is a named psychiatrist or psychiatry practice.
+- Use `ageGroups` where a source limits access. The website filters these
+  records so child/adolescent-only and older-adult-only services are not shown
+  to clearly incompatible ages.
 - If a provider page says books are closed, not taking new clients, or not
   accepting referrals, remove it from `providers.json` and add it to
   `data/monitors/provider-availability-watchlist.json`.

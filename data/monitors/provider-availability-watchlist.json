@@ -257,6 +257,573 @@
       },
       "checkedAt": "2026-05-24",
       "notes": "Removed from live provider results while unavailable."
+    },
+    {
+      "id": "northland-creative-counselling-kerikeri",
+      "name": "Creative Counselling",
+      "type": "counsellor",
+      "region": "Northland",
+      "city": "Kerikeri",
+      "url": "https://www.creativecounselling.co.nz/services/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page says they are currently not accepting new clients.",
+      "unavailablePatterns": [
+        "currently\\s+not\\s+accepting\\s+new\\s+clients"
+      ],
+      "availablePatterns": [
+        "accepting\\s+new\\s+clients",
+        "taking\\s+new\\s+clients",
+        "new\\s+client\\s+enquir"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Strong Northland child, youth, and adult counselling candidate when availability reopens.",
+      "providerCandidate": {
+        "name": "Creative Counselling",
+        "type": "counsellor",
+        "region": "Northland",
+        "city": "Kerikeri",
+        "phone": "021 220 2832",
+        "email": "fleur@creativecounselling.co.nz",
+        "website": "https://www.creativecounselling.co.nz/services/",
+        "source": "https://www.creativecounselling.co.nz/services/",
+        "tags": [
+          "counsellor",
+          "therapy",
+          "child",
+          "youth",
+          "depression",
+          "anxiety",
+          "grief",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "northland-mindme-clinical-psychology",
+      "name": "MindMe Clinical Psychology",
+      "type": "psychologist",
+      "region": "Northland",
+      "city": "Mid-North and Whangarei",
+      "url": "https://www.mindme.co.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page says they are not accepting new referrals due to high demand.",
+      "unavailablePatterns": [
+        "not\\s+accepting\\s+new\\s+referrals"
+      ],
+      "availablePatterns": [
+        "accepting\\s+new\\s+referrals",
+        "taking\\s+new\\s+clients",
+        "new\\s+client\\s+enquir"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Add back only if the high-demand notice is removed.",
+      "providerCandidate": {
+        "name": "MindMe Clinical Psychology",
+        "type": "psychologist",
+        "region": "Northland",
+        "city": "Mid-North and Whangarei",
+        "phone": "021 027 9963",
+        "email": "info@mindme.co.nz",
+        "website": "https://www.mindme.co.nz/",
+        "source": "https://www.mindme.co.nz/",
+        "tags": [
+          "psychologist",
+          "clinical-psychologist",
+          "assessment",
+          "therapy",
+          "emdr",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "northland-wayfinder-psychology",
+      "name": "Wayfinder Psychology",
+      "type": "psychologist",
+      "region": "Northland",
+      "city": "Whangarei",
+      "url": "https://wayfinderpsychology.co.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page says they are currently not taking new clients.",
+      "unavailablePatterns": [
+        "currently\\s+not\\s+taking\\s+any\\s+new\\s+clients"
+      ],
+      "availablePatterns": [
+        "taking\\s+new\\s+clients",
+        "accepting\\s+new\\s+clients",
+        "new\\s+client\\s+enquir"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Strong Northland private psychology candidate when availability reopens.",
+      "providerCandidate": {
+        "name": "Wayfinder Psychology",
+        "type": "psychologist",
+        "region": "Northland",
+        "city": "Whangarei",
+        "phone": "021 270 6556",
+        "email": "wendy@wayfinderpsychology.co.nz",
+        "website": "https://wayfinderpsychology.co.nz/",
+        "source": "https://wayfinderpsychology.co.nz/",
+        "tags": [
+          "psychologist",
+          "therapy",
+          "depression",
+          "anxiety",
+          "trauma",
+          "ptsd",
+          "grief",
+          "sleep",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "northland-whangarei-care-centre-counselling",
+      "name": "Whangarei Care Centre Counselling",
+      "type": "counsellor",
+      "region": "Northland",
+      "city": "Whangarei",
+      "url": "https://whgcare.org.nz/counselling-whangarei/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Website notice says Whangarei Care will close on Friday 29 May 2026.",
+      "unavailablePatterns": [
+        "will\\s+close\\s+on\\s+Friday\\s+29\\s+May\\s+2026"
+      ],
+      "availablePatterns": [
+        "counselling\\s+service\\s+open",
+        "taking\\s+new\\s+clients",
+        "accepting\\s+new\\s+clients"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Do not add as a live soft-launch result because closure is imminent.",
+      "providerCandidate": {
+        "name": "Whangarei Care Centre Counselling",
+        "type": "counsellor",
+        "region": "Northland",
+        "city": "Whangarei",
+        "address": "1 Mill Road, Regent, Whangarei",
+        "phone": "09 437 6397",
+        "email": "whgcare@whgcare.org.nz",
+        "website": "https://whgcare.org.nz/counselling-whangarei/",
+        "source": "https://whgcare.org.nz/counselling-whangarei/",
+        "tags": [
+          "counsellor",
+          "therapy",
+          "low-cost",
+          "cost",
+          "depression",
+          "anxiety",
+          "grief",
+          "trauma",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "waikato-waikato-counselling",
+      "name": "Waikato Counselling",
+      "type": "counsellor",
+      "region": "Waikato",
+      "city": "Hamilton",
+      "url": "https://www.waikatocounselling.net/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page says they are currently not taking new clients.",
+      "unavailablePatterns": [
+        "currently\\s+we\\s+are\\s+not\\s+taking\\s+new\\s+clients"
+      ],
+      "availablePatterns": [
+        "taking\\s+new\\s+clients",
+        "accepting\\s+new\\s+clients",
+        "new\\s+client\\s+enquir"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Good Waikato counselling and ACC Sensitive Claims candidate when availability reopens.",
+      "providerCandidate": {
+        "name": "Waikato Counselling",
+        "type": "counsellor",
+        "region": "Waikato",
+        "city": "Hamilton",
+        "address": "Brymer Road, Grandview Heights, Hamilton",
+        "phone": "022 019 4540",
+        "email": "philterrey@outlook.com",
+        "website": "https://www.waikatocounselling.net/",
+        "source": "https://www.waikatocounselling.net/",
+        "tags": [
+          "counsellor",
+          "therapy",
+          "family-violence",
+          "addiction",
+          "mental-health",
+          "acc",
+          "sensitive-claims",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "northland-northland-psychiatry-dr-foote",
+      "name": "Northland Psychiatry - Dr Joseph Foote",
+      "type": "psychiatrist",
+      "region": "Northland",
+      "city": "Whangarei and telepsychiatry",
+      "url": "https://www.northlandpsychiatry.co.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page says availability is ACC/VA assessments only and not ongoing treatment work.",
+      "unavailablePatterns": [
+        "ACC\\/VA\\s+ASSESSMENTS\\s+ONLY",
+        "not\\s+available\\s+for\\s+ongoing\\s+treatment"
+      ],
+      "availablePatterns": [
+        "ongoing\\s+treatment",
+        "accepting\\s+new\\s+patients",
+        "taking\\s+new\\s+clients"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Do not add as a live first-contact psychiatry option unless ongoing treatment availability changes.",
+      "providerCandidate": {
+        "name": "Northland Psychiatry",
+        "type": "psychiatrist",
+        "region": "Northland",
+        "city": "Whangarei and telepsychiatry",
+        "phone": "09 553 3255",
+        "email": "admin@northlandpsychiatry.co.nz",
+        "website": "https://www.northlandpsychiatry.co.nz/",
+        "source": "https://www.northlandpsychiatry.co.nz/",
+        "tags": [
+          "psychiatrist",
+          "telehealth",
+          "assessment",
+          "acc",
+          "veterans",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "taranaki-calming-minds-dr-candy-fox",
+      "name": "Calming Minds",
+      "type": "psychiatrist",
+      "region": "Taranaki",
+      "city": "Rural Taranaki",
+      "url": "https://calmingminds.co.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Homepage says the psychiatrist is not currently accepting new clients.",
+      "unavailablePatterns": [
+        "not\\s+currently\\s+accepting\\s+new\\s+clients"
+      ],
+      "availablePatterns": [
+        "accepting\\s+new\\s+clients",
+        "taking\\s+new\\s+clients"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Strong local Taranaki psychiatry candidate when availability reopens.",
+      "providerCandidate": {
+        "name": "Calming Minds",
+        "type": "psychiatrist",
+        "region": "Taranaki",
+        "city": "Rural Taranaki",
+        "website": "https://calmingminds.co.nz/",
+        "source": "https://calmingminds.co.nz/",
+        "tags": [
+          "psychiatrist",
+          "medical-specialist",
+          "fit"
+        ]
+      }
+    },
+    {
+      "id": "southland-south-coast-psychology-psychiatry",
+      "name": "South Coast Psychology Psychiatry",
+      "type": "psychiatrist",
+      "region": "Southland",
+      "city": "Invercargill and Gore",
+      "url": "https://southcoastpsychology.co.nz/service/psychiatry/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Psychiatry page says there are currently no providers available.",
+      "unavailablePatterns": [
+        "currently\\s+don't\\s+have\\s+any\\s+providers\\s+available",
+        "currently\\s+do\\s+not\\s+have\\s+any\\s+providers\\s+available"
+      ],
+      "availablePatterns": [
+        "meet\\s+our\\s+providers",
+        "psychiatrist\\s+provider",
+        "available\\s+providers"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Do not add as a live psychiatry result until provider availability is visible.",
+      "providerCandidate": {
+        "name": "South Coast Psychology Psychiatry",
+        "type": "psychiatrist",
+        "region": "Southland",
+        "city": "Invercargill and Gore",
+        "email": "admin@southcoastpsychology.co.nz",
+        "website": "https://southcoastpsychology.co.nz/service/psychiatry/",
+        "source": "https://southcoastpsychology.co.nz/service/psychiatry/",
+        "tags": [
+          "psychiatrist",
+          "telehealth",
+          "acc",
+          "assessment",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "marlborough-durkin-zintl-psychology",
+      "name": "Durkin Zintl Psychology",
+      "type": "psychologist",
+      "region": "Nelson Marlborough Tasman",
+      "city": "Blenheim and telehealth",
+      "url": "https://www.durkinzintlpsychology.co.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page says the practice is currently closed to new referrals.",
+      "unavailablePatterns": [
+        "currently\\s+closed\\s+to\\s+new\\s+referrals",
+        "closed\\s+to\\s+new\\s+referrals"
+      ],
+      "availablePatterns": [
+        "accepting\\s+new\\s+referrals",
+        "taking\\s+new\\s+clients",
+        "new\\s+client\\s+enquir"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Strong child, adolescent, family, ACC Sensitive Claims, and teletherapy candidate when referrals reopen.",
+      "providerCandidate": {
+        "name": "Durkin Zintl Psychology",
+        "type": "psychologist",
+        "region": "Nelson Marlborough Tasman",
+        "city": "Blenheim and telehealth",
+        "website": "https://www.durkinzintlpsychology.co.nz/",
+        "source": "https://www.durkinzintlpsychology.co.nz/",
+        "tags": [
+          "psychologist",
+          "assessment",
+          "therapy",
+          "child",
+          "adolescent",
+          "family",
+          "trauma",
+          "acc",
+          "sensitive-claims",
+          "telehealth",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "tairawhiti-mauri-psychology",
+      "name": "Mauri Psychology",
+      "type": "psychologist",
+      "region": "Tairawhiti",
+      "city": "Gisborne",
+      "url": "https://www.mauripsychology.com/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page marks trauma therapy and holistic psychological counselling as currently unavailable or fully booked.",
+      "unavailablePatterns": [
+        "currently\\s+unavailable\\/fully\\s+booked",
+        "fully\\s+booked"
+      ],
+      "availablePatterns": [
+        "accepting\\s+new\\s+clients",
+        "taking\\s+new\\s+clients",
+        "book\\s+now"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Maori-led Gisborne psychology practice; manually verify availability before adding as a live result.",
+      "providerCandidate": {
+        "name": "Mauri Psychology",
+        "type": "psychologist",
+        "region": "Tairawhiti",
+        "city": "Gisborne",
+        "phone": "021 539 555",
+        "website": "https://www.mauripsychology.com/",
+        "source": "https://www.mauripsychology.com/",
+        "tags": [
+          "psychologist",
+          "maori",
+          "kaupapa-maori",
+          "trauma",
+          "telehealth",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "taranaki-jade-psychology",
+      "name": "Jade Psychology",
+      "type": "psychologist",
+      "region": "Taranaki",
+      "city": "New Plymouth",
+      "url": "https://www.jade-psychology.com/contact",
+      "lastKnownStatus": "unavailable",
+      "reason": "Contact page says the psychologist has commenced maternity leave and is not seeing clients or checking emails.",
+      "unavailablePatterns": [
+        "maternity\\s+leave",
+        "not\\s+seeing\\s+clients",
+        "not\\s+checking\\s+emails"
+      ],
+      "availablePatterns": [
+        "accepting\\s+new\\s+clients",
+        "taking\\s+new\\s+clients",
+        "contact\\s+me"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Review manually before moving to live results.",
+      "providerCandidate": {
+        "name": "Jade Psychology",
+        "type": "psychologist",
+        "region": "Taranaki",
+        "city": "New Plymouth",
+        "email": "Jade@jade-psychology.com",
+        "website": "https://www.jade-psychology.com/contact",
+        "source": "https://www.jade-psychology.com/contact",
+        "tags": [
+          "psychologist",
+          "therapy",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "taranaki-tosca-counselling",
+      "name": "Tosca Lammerts van Bueren Counselling",
+      "type": "counsellor",
+      "region": "Taranaki",
+      "city": "New Plymouth",
+      "url": "https://www.counsellingnewplymouth.nz/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Provider page still states temporarily closed until November 2025, which is stale as of this 2026 check and needs human verification.",
+      "unavailablePatterns": [
+        "temporarily\\s+closed"
+      ],
+      "availablePatterns": [
+        "accepting\\s+new\\s+clients",
+        "taking\\s+new\\s+clients",
+        "individual\\s+counselling"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Do not serve live until someone confirms current status.",
+      "providerCandidate": {
+        "name": "Tosca Lammerts van Bueren Counselling",
+        "type": "counsellor",
+        "region": "Taranaki",
+        "city": "New Plymouth",
+        "address": "Unit 1/55 Rimu Street, Strandon, New Plymouth",
+        "phone": "+64 20 4020 6817",
+        "email": "connexionwithcompassion@gmail.com",
+        "website": "https://www.counsellingnewplymouth.nz/",
+        "source": "https://www.counsellingnewplymouth.nz/",
+        "tags": [
+          "counsellor",
+          "therapy",
+          "family",
+          "whanau",
+          "trauma",
+          "depression",
+          "anxiety",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "hawkes-bay-nova-mentem-broad-streams",
+      "name": "Nova Mentem broad psychiatry streams",
+      "type": "psychiatrist",
+      "region": "Hawke's Bay",
+      "city": "Napier",
+      "url": "https://www.futureready.org.nz/listing/nova-mentem-mind-health-specialists/",
+      "lastKnownStatus": "unavailable",
+      "reason": "Source marks anxiety, mood, trauma, and psychotic condition streams as currently at capacity for new clients.",
+      "unavailablePatterns": [
+        "Anxiety\\s+disorders[\\s\\S]{0,120}?Currently\\s+at\\s+capacity",
+        "Mood\\s+disorders[\\s\\S]{0,120}?Currently\\s+at\\s+capacity",
+        "Trauma\\s+related\\s+conditions[\\s\\S]{0,120}?Currently\\s+at\\s+capacity",
+        "Psychotic\\s+conditions[\\s\\S]{0,120}?Currently\\s+at\\s+capacity"
+      ],
+      "availablePatterns": [
+        "Anxiety\\s+disorders[\\s\\S]{0,200}?accepting",
+        "Mood\\s+disorders[\\s\\S]{0,200}?accepting",
+        "Trauma\\s+related\\s+conditions[\\s\\S]{0,200}?accepting"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Live record is limited to currently open neurodevelopmental/assessment fit. Watch this page before tagging broad depression, anxiety, trauma, or psychosis support.",
+      "providerCandidate": {
+        "name": "Nova Mentem Mind Health Specialists",
+        "type": "psychiatrist",
+        "region": "Hawke's Bay",
+        "city": "Napier",
+        "phone": "021 108 7539",
+        "email": "info@novamentem.com",
+        "website": "https://www.futureready.org.nz/listing/nova-mentem-mind-health-specialists/",
+        "source": "https://www.futureready.org.nz/listing/nova-mentem-mind-health-specialists/",
+        "tags": [
+          "psychiatrist",
+          "psychologist",
+          "depression",
+          "anxiety",
+          "trauma",
+          "psychosis",
+          "fit",
+          "direct-contact"
+        ]
+      }
+    },
+    {
+      "id": "hawkes-bay-janneke-van-rooijen-psychology",
+      "name": "Janneke van Rooijen Psychology",
+      "type": "psychologist",
+      "region": "Hawke's Bay",
+      "city": "Napier",
+      "url": "https://www.jvrpsychology.com/",
+      "lastKnownStatus": "unavailable",
+      "reason": "The provider-owned website currently returns 404 in the link checker, so public contact details need human verification before this is served live.",
+      "unavailablePatterns": [
+        "404",
+        "not\\s+found"
+      ],
+      "availablePatterns": [
+        "jvrpsychology@gmail\\.com",
+        "Janneke\\s+van\\s+Rooijen",
+        "registered\\s+psychologist"
+      ],
+      "checkedAt": "2026-05-24",
+      "notes": "Search snippets still show useful child and adolescent psychology details, but do not serve live until the site or another public source resolves.",
+      "providerCandidate": {
+        "name": "Janneke van Rooijen Psychology",
+        "type": "psychologist",
+        "region": "Hawke's Bay",
+        "city": "Napier",
+        "address": "49 Tennyson Street, The Daily Telegraph Building, Napier",
+        "email": "jvrpsychology@gmail.com",
+        "website": "https://www.jvrpsychology.com/",
+        "source": "https://www.jvrpsychology.com/",
+        "tags": [
+          "psychologist",
+          "assessment",
+          "child",
+          "adolescent",
+          "youth",
+          "parenting",
+          "learning",
+          "depression",
+          "anxiety",
+          "adhd",
+          "cost",
+          "fit",
+          "direct-contact"
+        ]
+      }
     }
   ]
 }

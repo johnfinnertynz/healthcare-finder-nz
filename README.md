@@ -129,7 +129,8 @@ node tools/refresh-provider-database.mjs
 The refresh pipeline reads `provider-sources.json`, imports any approved GP,
 FHIR, direct-care, MCNZ, Psychologists Board, and NZCCP source files that are
 present, refreshes opt-in RANZCP psychiatrists, geocodes public provider
-addresses, and writes a report to `data/reports/provider-refresh-report.json`.
+addresses, imports the curated gap-verified provider set, and writes a report to
+`data/reports/provider-refresh-report.json`.
 The GitHub Actions workflow `.github/workflows/provider-data-audit.yml` runs the
 same checks weekly, refreshes DoctorPricer GP clinic listings at a conservative
 rate, and can use `HEALTHPOINT_API_URL` / `HEALTHPOINT_API_TOKEN` repository
@@ -215,6 +216,19 @@ Refresh TalkingPoint public psychology practice listings:
 
 ```sh
 node tools/import-talkingpoint.mjs
+```
+
+Refresh Mindwell online psychologist profiles:
+
+```sh
+node tools/import-mindwell-psychologists.mjs
+```
+
+Refresh the curated Google/Bing/Chrome gap-fill records and availability
+watchlist:
+
+```sh
+node tools/import-gap-verified-providers.mjs
 ```
 
 Prepare a psychologist verification and public-contact research queue from an
