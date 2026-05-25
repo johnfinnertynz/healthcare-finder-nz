@@ -354,4 +354,12 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /target = "_blank"/);
   assert.match(js, /rel = "noopener noreferrer"/);
   assert.match(html, /data\/provider-review-queue\.json/);
+  assert.match(html, /Auditor guide/);
+  assert.match(html, /Common corrections/);
+  assert.match(html, /Generated correctedFields preview/);
+  assert.match(js, /Stored:/);
+  assert.match(js, /Confidence:/);
+  assert.match(js, /availabilityStatus/);
+  assert.match(js, /referralType/);
+  assert.match(js, /choice-grid/);
 });

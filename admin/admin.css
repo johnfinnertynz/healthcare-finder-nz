@@ -96,6 +96,27 @@ textarea:focus-visible {
   color: var(--muted);
 }
 
+.review-progress {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+progress {
+  width: 100%;
+  height: 10px;
+  accent-color: var(--accent);
+}
+
 .header-actions {
   display: flex;
   gap: 10px;
@@ -307,6 +328,37 @@ textarea {
   font-size: 1rem;
 }
 
+.review-job {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+  gap: 18px;
+  background: var(--surface-soft);
+}
+
+.review-job ol,
+.item-checklist ul,
+.safety-warnings ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.review-job li,
+.item-checklist li,
+.safety-warnings li {
+  margin: 6px 0;
+}
+
+.item-checklist {
+  border-left: 4px solid var(--accent);
+  background: #fff;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.item-checklist h3 {
+  margin: 0 0 8px;
+}
+
 .grid-sections {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -416,10 +468,176 @@ pre {
   width: auto;
 }
 
+.decision-help {
+  border-left: 4px solid var(--accent);
+  background: var(--surface-soft);
+  border-radius: 6px;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+}
+
+.safety-warnings {
+  border: 1px solid #f0d5a6;
+  border-radius: 6px;
+  background: #fffaf0;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+.correction-builder {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 14px 0;
+  padding: 14px;
+}
+
+.correction-builder legend {
+  color: var(--accent-dark);
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0 6px;
+}
+
+.correction-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.correction-group {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.correction-group:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.correction-group h4 {
+  margin: 0 0 10px;
+  color: var(--accent-dark);
+  font-size: 0.95rem;
+}
+
+.correction-row {
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) minmax(190px, 0.8fr);
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #fff;
+}
+
+.correction-row.needs-review {
+  border-color: #e3b86f;
+  background: #fffdf6;
+}
+
+.correction-label {
+  margin: 0;
+}
+
+.current-value {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.field-meta {
+  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field-meta a,
+.field-status {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--accent-dark);
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  text-decoration: none;
+}
+
+.field-status.needs-check {
+  background: #fff0d6;
+  border-color: #e3b86f;
+  color: var(--warning);
+}
+
+.field-status.source-backed {
+  background: #e9f5ec;
+  border-color: #bad9c4;
+  color: #285c39;
+}
+
+.field-evidence {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.choice-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.choice-pill {
+  align-items: center;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.82rem;
+  gap: 5px;
+  margin: 0;
+  padding: 5px 8px;
+}
+
+.choice-pill input {
+  width: auto;
+}
+
+.choice-extra {
+  flex: 1 1 180px;
+  margin: 0;
+}
+
+.advanced-corrections,
+.correction-preview {
+  margin-bottom: 12px;
+}
+
+.advanced-corrections summary,
+.correction-preview summary {
+  cursor: pointer;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.correction-preview pre {
+  min-height: 64px;
+}
+
+.correction-preview pre.error {
+  background: #fff3f3;
+  color: var(--danger);
 }
 
 .decision-section label {
@@ -443,6 +661,8 @@ pre {
 
   .grid-sections,
   .form-grid,
+  .review-job,
+  .correction-row,
   .decision-buttons {
     grid-template-columns: 1fr;
   }

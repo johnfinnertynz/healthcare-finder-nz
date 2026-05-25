@@ -17,6 +17,7 @@
       <div class="header-actions">
         <button id="exportDecisions" type="button">Export decisions JSON</button>
         <a class="secondary-link" href="../data/provider-review-queue.json" target="_blank" rel="noopener noreferrer">Open queue JSON</a>
+        <a class="secondary-link" href="../AUDITOR_README.md" target="_blank" rel="noopener noreferrer">Auditor guide</a>
       </div>
     </header>
 
@@ -25,6 +26,13 @@
         <section class="panel-block">
           <h2>Queue</h2>
           <p id="queueSummary" class="muted">Loading review queue...</p>
+          <div class="review-progress" aria-label="Review progress">
+            <div class="progress-row">
+              <span id="progressText">No decisions saved yet.</span>
+              <span id="progressPercent">0%</span>
+            </div>
+            <progress id="reviewProgress" max="1" value="0"></progress>
+          </div>
         </section>
 
         <section class="panel-block filters" aria-label="Queue filters">
@@ -102,12 +110,27 @@
           </header>
 
           <nav class="section-tabs" aria-label="Review sections">
+            <a href="#review-job">What to do now</a>
             <a href="#users-see">What users would see</a>
             <a href="#flagged">Why flagged</a>
             <a href="#ranking">Ranking fields</a>
             <a href="#evidence">Source evidence</a>
             <a href="#decision">Decision</a>
           </nav>
+
+          <section id="review-job" class="card-section review-job">
+            <div>
+              <h3>What to do now</h3>
+              <ol>
+                <li>Open the source in a new tab.</li>
+                <li>Compare the source with the fields below, especially ranking, availability, referral, location, and tags.</li>
+                <li>Use common corrections for small fixes. Fields start with stored data; only changed values are exported.</li>
+                <li>Choose a decision, add a short source excerpt or note, then save locally.</li>
+                <li>Export the batch JSON when the queue is ready to apply through validation.</li>
+              </ol>
+            </div>
+            <div id="itemChecklist" class="item-checklist" aria-live="polite"></div>
+          </section>
 
           <section id="users-see" class="card-section">
             <h3>What users would see</h3>
@@ -161,6 +184,8 @@
           <section id="decision" class="card-section decision-section">
             <h3>Auditor decision</h3>
             <form id="decisionForm">
+              <div id="safetyWarnings" class="safety-warnings" aria-live="polite"></div>
+
               <div class="decision-buttons" role="radiogroup" aria-label="Review decision">
                 <label><input type="radio" name="decision" value="approve"> Approve</label>
                 <label><input type="radio" name="decision" value="adjust"> Adjust</label>
@@ -169,6 +194,7 @@
                 <label><input type="radio" name="decision" value="duplicate"> Duplicate</label>
                 <label><input type="radio" name="decision" value="needs_more_info"> Needs more info</label>
               </div>
+              <p id="decisionHelp" class="decision-help">Choose the decision that best describes what should happen to this provider record.</p>
 
               <div class="form-grid">
                 <label>
@@ -189,14 +215,30 @@
                 </label>
               </div>
 
+              <fieldset class="correction-builder">
+                <legend>Common corrections</legend>
+                <p class="muted">Fields are prefilled from the current record. Only changed values are exported. List fields accept comma-separated values. Use the advanced JSON box only for less common fields.</p>
+                <div id="commonCorrections" class="correction-grid"></div>
+              </fieldset>
+
               <label>
                 Source excerpt
                 <textarea id="sourceExcerpt" name="sourceExcerpt" rows="4" placeholder="Short excerpt only. Do not paste whole pages."></textarea>
               </label>
-              <label>
-                Corrected fields JSON
-                <textarea id="correctedFields" name="correctedFields" rows="8" spellcheck="false" placeholder='{"availabilityStatus":"unknown"}'></textarea>
-              </label>
+
+              <details class="advanced-corrections">
+                <summary>Advanced JSON corrections</summary>
+                <label>
+                  Corrected fields JSON
+                  <textarea id="correctedFields" name="correctedFields" rows="8" spellcheck="false" placeholder='{"availabilityStatus":"unknown"}'></textarea>
+                </label>
+              </details>
+
+              <details class="correction-preview" open>
+                <summary>Generated correctedFields preview</summary>
+                <pre id="correctionPreview">{}</pre>
+              </details>
+
               <label>
                 Review notes
                 <textarea id="reviewNotes" name="reviewNotes" rows="4"></textarea>

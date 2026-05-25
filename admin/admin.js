@@ -1,6 +1,129 @@
 const QUEUE_URL = "../data/provider-review-queue.json";
 const DECISION_STORAGE_KEY = "healthcare-finder-provider-review-decisions-v1";
 
+const TYPE_OPTIONS = [
+  "gp",
+  "counsellor",
+  "psychologist",
+  "psychiatrist",
+  "public-service",
+  "youth",
+  "addiction",
+  "directory",
+  "helpline",
+  "mens-centre"
+];
+
+const AVAILABILITY_OPTIONS = [
+  "accepting",
+  "waitlist",
+  "not_accepting",
+  "referrals_paused",
+  "unknown",
+  "not_published"
+];
+
+const REFERRAL_OPTIONS = ["gp", "self", "specialist", "unknown"];
+const CONFIDENCE_OPTIONS = ["high", "medium", "low"];
+const SOURCE_QUALITY_OPTIONS = [
+  "provider-owned page",
+  "provider-owned or NGO public page",
+  "trusted health directory",
+  "trusted health directory reviewed by service",
+  "official government or health agency",
+  "professional register or directory",
+  "third-party public GP listing",
+  "watchlist candidate",
+  "unknown"
+];
+
+const TAG_OPTIONS = [
+  "maori",
+  "pasifika",
+  "asian",
+  "rainbow",
+  "trauma-informed",
+  "telehealth",
+  "online",
+  "phone",
+  "directory",
+  "crisis",
+  "youth",
+  "men",
+  "addiction",
+  "gp",
+  "counsellor",
+  "psychologist",
+  "psychiatrist",
+  "psychiatry-service"
+];
+
+const NEED_SCOPE_OPTIONS = ["depression", "anxiety", "trauma", "addiction", "work", "stress", "relationships", "grief"];
+const AGE_GROUP_OPTIONS = ["child", "youth", "adult", "older-adult", "all-ages"];
+const PATIENT_GROUP_OPTIONS = ["maori", "pasifika", "asian", "rainbow", "men", "women", "youth", "family", "acc", "sensitive-claims"];
+
+const COMMON_CORRECTION_FIELDS = [
+  { field: "name", label: "Provider display name", group: "Identity", kind: "text" },
+  { field: "clinicianName", label: "Clinician name", group: "Identity", kind: "text" },
+  { field: "practiceName", label: "Practice name", group: "Identity", kind: "text" },
+  { field: "type", label: "Provider type", group: "Identity", kind: "select", options: TYPE_OPTIONS },
+  { field: "confidence", label: "Record confidence", group: "Evidence quality", kind: "select", options: CONFIDENCE_OPTIONS },
+  { field: "sourceQuality", label: "Source quality", group: "Evidence quality", kind: "select", options: SOURCE_QUALITY_OPTIONS },
+  { field: "needsManualVerification", label: "Needs manual verification", group: "Evidence quality", kind: "boolean" },
+  { field: "verified", label: "Verified month", group: "Evidence quality", kind: "text", placeholder: "YYYY-MM" },
+  { field: "lastVerified", label: "Last verified month", group: "Evidence quality", kind: "text", placeholder: "YYYY-MM" },
+  { field: "region", label: "Region", group: "Location", kind: "dynamic-select", source: "region" },
+  { field: "city", label: "City or town", group: "Location", kind: "text" },
+  { field: "address", label: "Address", group: "Location", kind: "text" },
+  { field: "lat", label: "Latitude", group: "Location", kind: "number" },
+  { field: "lon", label: "Longitude", group: "Location", kind: "number" },
+  { field: "coordinateSource", label: "Coordinate source", group: "Location", kind: "text" },
+  { field: "coordinateConfidence", label: "Coordinate confidence", group: "Location", kind: "select", options: CONFIDENCE_OPTIONS },
+  { field: "phone", label: "Phone", group: "Contact", kind: "text" },
+  { field: "text", label: "Text/SMS", group: "Contact", kind: "text" },
+  { field: "email", label: "Email", group: "Contact", kind: "text" },
+  { field: "website", label: "Website", group: "Contact", kind: "url" },
+  { field: "bookingUrl", label: "Booking URL", group: "Contact", kind: "url" },
+  { field: "source", label: "Main source URL", group: "Contact", kind: "url" },
+  { field: "availabilityStatus", label: "Availability status", group: "Availability", kind: "select", options: AVAILABILITY_OPTIONS },
+  { field: "availabilityEvidence", label: "Availability evidence", group: "Availability", kind: "textarea" },
+  { field: "availabilityCheckedAt", label: "Availability checked", group: "Availability", kind: "text", placeholder: "YYYY-MM or YYYY-MM-DD" },
+  { field: "availabilitySource", label: "Availability source URL", group: "Availability", kind: "url" },
+  { field: "availabilityNeedsManualReview", label: "Availability needs review", group: "Availability", kind: "boolean" },
+  { field: "requiresReferral", label: "Requires referral", group: "Referral", kind: "boolean" },
+  { field: "referralType", label: "Referral type", group: "Referral", kind: "select", options: REFERRAL_OPTIONS },
+  { field: "referralSourceUrl", label: "Referral source URL", group: "Referral", kind: "url" },
+  { field: "referralSourceExcerpt", label: "Referral source excerpt", group: "Referral", kind: "textarea" },
+  { field: "referralConfidence", label: "Referral confidence", group: "Referral", kind: "select", options: CONFIDENCE_OPTIONS },
+  { field: "referralLastChecked", label: "Referral checked", group: "Referral", kind: "text", placeholder: "YYYY-MM or YYYY-MM-DD" },
+  { field: "referralNeedsManualReview", label: "Referral needs review", group: "Referral", kind: "boolean" },
+  { field: "onlineAvailable", label: "Telehealth/video available", group: "Access mode", kind: "boolean" },
+  { field: "phoneSupport", label: "Phone support available", group: "Access mode", kind: "boolean" },
+  { field: "inPerson", label: "In-person service", group: "Access mode", kind: "boolean" },
+  { field: "crisisOnly", label: "Crisis-only service", group: "Access mode", kind: "boolean" },
+  { field: "tags", label: "Tags", group: "Scope and support", kind: "checks", options: TAG_OPTIONS },
+  { field: "needScope", label: "Need scope", group: "Scope and support", kind: "checks", options: NEED_SCOPE_OPTIONS },
+  { field: "patientGroups", label: "Patient groups", group: "Scope and support", kind: "checks", options: PATIENT_GROUP_OPTIONS },
+  { field: "ageGroups", label: "Age groups", group: "Scope and support", kind: "checks", options: AGE_GROUP_OPTIONS },
+  { field: "services", label: "Services", group: "Scope and support", kind: "list" },
+  { field: "specialties", label: "Specialties", group: "Scope and support", kind: "list" },
+  { field: "fit", label: "Public fit text", group: "Public card text", kind: "textarea" },
+  { field: "firstStep", label: "First step text", group: "Public card text", kind: "textarea" },
+  { field: "cost", label: "Cost/support notes", group: "Public card text", kind: "textarea" },
+  { field: "hours", label: "Hours", group: "Public card text", kind: "textarea" }
+];
+
+const COMMON_FIELD_NAMES = new Set(COMMON_CORRECTION_FIELDS.map((config) => config.field));
+
+const DECISION_HELP = {
+  approve: "Use only when the current record is accurate enough and risky fields have evidence or clear notes.",
+  adjust: "Use when the provider is valid but one or more fields need changing. The generated correctedFields preview shows what will be applied.",
+  reject: "Use when the record should not stay in live provider data, such as a wrong type, bad source, duplicate source, or unsafe listing.",
+  move_to_watchlist: "Use when the provider may be useful later but should not appear in first recommendations now, usually because availability is closed or paused.",
+  duplicate: "Use when another provider record should be kept instead. Fill in the kept provider ID.",
+  needs_more_info: "Use when the source is unclear, blocked, conflicting, or needs a phone/email check before changing public recommendations."
+};
+
 const state = {
   queue: null,
   items: [],
@@ -11,6 +134,9 @@ const state = {
 
 const els = {
   queueSummary: document.querySelector("#queueSummary"),
+  progressText: document.querySelector("#progressText"),
+  progressPercent: document.querySelector("#progressPercent"),
+  reviewProgress: document.querySelector("#reviewProgress"),
   queueList: document.querySelector("#queueList"),
   emptyState: document.querySelector("#emptyState"),
   detailView: document.querySelector("#detailView"),
@@ -18,6 +144,7 @@ const els = {
   detailTitle: document.querySelector("#detailTitle"),
   detailSubtitle: document.querySelector("#detailSubtitle"),
   detailBadges: document.querySelector("#detailBadges"),
+  itemChecklist: document.querySelector("#itemChecklist"),
   publicPreview: document.querySelector("#publicPreview"),
   auditFindings: document.querySelector("#auditFindings"),
   rankingFields: document.querySelector("#rankingFields"),
@@ -29,7 +156,11 @@ const els = {
   sourcePreview: document.querySelector("#sourcePreview"),
   sourceEvidenceJson: document.querySelector("#sourceEvidenceJson"),
   rawProvider: document.querySelector("#rawProvider"),
+  safetyWarnings: document.querySelector("#safetyWarnings"),
   decisionForm: document.querySelector("#decisionForm"),
+  decisionHelp: document.querySelector("#decisionHelp"),
+  commonCorrections: document.querySelector("#commonCorrections"),
+  correctionPreview: document.querySelector("#correctionPreview"),
   decisionStatus: document.querySelector("#decisionStatus"),
   exportDecisions: document.querySelector("#exportDecisions"),
   clearDecision: document.querySelector("#clearDecision"),
@@ -71,6 +202,52 @@ function compact(value, max = 180) {
   return clean.length > max ? `${clean.slice(0, max - 1)}...` : clean;
 }
 
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
+}
+
+function asArray(value) {
+  if (Array.isArray(value)) return value;
+  if (value === undefined || value === null || value === "") return [];
+  return [value];
+}
+
+function unique(values) {
+  return [...new Set(values.map((value) => String(value || "").trim()).filter(Boolean))];
+}
+
+function today() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function providerValue(item, field) {
+  const provider = item.currentProvider || {};
+  return provider[field] ?? item[field];
+}
+
+function editableValue(value) {
+  if (Array.isArray(value)) return value.join(", ");
+  if (value === undefined || value === null) return "";
+  return String(value);
+}
+
+function normalizeForCompare(value) {
+  if (Array.isArray(value)) return JSON.stringify(unique(value).sort());
+  if (typeof value === "boolean") return value ? "true" : "false";
+  if (value === undefined || value === null) return "";
+  return String(value).trim();
+}
+
 function optionList(select, values, currentLabel = "") {
   const first = select.querySelector("option");
   select.replaceChildren(first);
@@ -97,6 +274,21 @@ function itemDecision(item) {
   return state.decisions[item.reviewId]?.action || state.decisions[item.reviewId]?.reviewDecision || "";
 }
 
+function decisionsForCurrentQueue() {
+  const ids = new Set(state.items.map((item) => item.reviewId));
+  return Object.keys(state.decisions).filter((reviewId) => ids.has(reviewId));
+}
+
+function updateProgress() {
+  const savedCount = decisionsForCurrentQueue().length;
+  const total = state.items.length || 1;
+  const percent = Math.round((savedCount / total) * 100);
+  els.progressText.textContent = `${savedCount} of ${state.items.length} queue item(s) have local decisions.`;
+  els.progressPercent.textContent = `${percent}%`;
+  els.reviewProgress.max = total;
+  els.reviewProgress.value = savedCount;
+}
+
 function filterItems() {
   const query = els.filters.search.value.trim().toLowerCase();
   const filters = {
@@ -119,6 +311,7 @@ function filterItems() {
       item.region,
       item.source,
       item.website,
+      item.sourceEvidenceSummary,
       ...(item.auditRules || []),
       ...(item.reviewReasons || [])
     ].join(" ").toLowerCase();
@@ -136,7 +329,8 @@ function filterItems() {
 }
 
 function renderQueue() {
-  els.queueSummary.textContent = `${state.filtered.length} shown from ${state.items.length} review items. ${Object.keys(state.decisions).length} local decision(s) saved.`;
+  updateProgress();
+  els.queueSummary.textContent = `${state.filtered.length} shown from ${state.items.length} review items.`;
   els.queueList.replaceChildren();
   for (const item of state.filtered) {
     const li = document.createElement("li");
@@ -157,16 +351,6 @@ function renderQueue() {
   }
 }
 
-function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  }[char]));
-}
-
 function dl(container, rows) {
   container.replaceChildren();
   for (const [label, value] of rows) {
@@ -176,6 +360,119 @@ function dl(container, rows) {
     dd.textContent = text(value);
     container.append(dt, dd);
   }
+}
+
+function evidenceBuckets(item) {
+  const evidence = item.sourceEvidence || {};
+  const entries = [];
+  for (const value of Object.values(evidence)) {
+    if (Array.isArray(value)) entries.push(...value);
+    else if (value && typeof value === "object") {
+      for (const nested of Object.values(value)) entries.push(...asArray(nested));
+    }
+  }
+  return entries.filter(Boolean);
+}
+
+function evidenceForField(item, field) {
+  const entries = evidenceBuckets(item).filter((entry) => entry.field === field || (field === "tags" && entry.field === "tags"));
+  if (field === "availabilityStatus") return entries.concat(asArray(item.sourceEvidence?.availability));
+  if (field === "referralType") return entries.concat(asArray(item.sourceEvidence?.referral));
+  if (["phone", "text", "email", "website", "bookingUrl"].includes(field)) return entries.concat(asArray(item.sourceEvidence?.contact).filter((entry) => entry.field === field));
+  if (["address", "lat", "lon"].includes(field)) return entries.concat(asArray(item.sourceEvidence?.address));
+  return entries;
+}
+
+function bestEvidence(item, field) {
+  const entries = evidenceForField(item, field);
+  return entries.find((entry) => entry.excerpt || entry.sourceUrl || entry.confidence) || null;
+}
+
+function sourceUrlForField(item, field) {
+  const evidence = bestEvidence(item, field);
+  return evidence?.sourceUrl || item[`${field}Source`] || item.source || item.website || item.sourceUrls?.[0] || "";
+}
+
+function confidenceForField(item, field) {
+  const evidence = bestEvidence(item, field);
+  if (evidence?.confidence) return evidence.confidence;
+  if (field.startsWith("referral")) return item.referralConfidence || item.confidence || "unknown";
+  if (field.startsWith("coordinate") || ["address", "lat", "lon"].includes(field)) return item.coordinateConfidence || item.confidence || "unknown";
+  return item.confidence || "unknown";
+}
+
+function needsFieldReview(item, field) {
+  const value = providerValue(item, field);
+  const evidence = evidenceForField(item, field);
+  if (evidence.some((entry) => entry.needsManualReview)) return true;
+  if (["email", "phone", "website", "source"].includes(field) && !value) return true;
+  if (["clinicianName", "practiceName"].includes(field) && item.type !== "gp" && !value) return true;
+  if (["lat", "lon"].includes(field) && item.address && !value && !item.onlineAvailable) return true;
+  if (field === "availabilityStatus" && ["accepting", "waitlist", "not_accepting", "referrals_paused"].includes(value || "") && !item.availabilityEvidence) return true;
+  if (field === "referralType" && item.type === "psychiatrist" && (!value || value === "unknown")) return true;
+  if (field === "tags" && asArray(value).some((tag) => TAG_OPTIONS.includes(tag))) return true;
+  if (field === "needScope" && asArray(value).length > 0) return true;
+  return false;
+}
+
+function renderChecklist(item) {
+  els.itemChecklist.replaceChildren();
+  const title = document.createElement("h3");
+  title.textContent = "Required checks for this item";
+  const list = document.createElement("ul");
+  const checks = unique([
+    ...(item.reviewReasons || []),
+    ...(item.auditFindings || []).map((finding) => finding.issue || finding.rule),
+    item.availabilityNeedsManualReview ? "Confirm availability status and do not mark accepting without explicit evidence." : "",
+    item.type === "psychiatrist" ? "Confirm whether a GP/specialist referral is required before direct contact." : "",
+    item.tags?.some((tag) => ["maori", "pasifika", "asian", "rainbow", "telehealth", "online"].includes(tag))
+      ? "Verify support-preference and telehealth tags from source evidence." : "",
+    item.needScope?.length ? "Check that needs such as depression, anxiety, trauma, addiction, or work stress are actually supported by the source." : "",
+    item.address && (!item.lat || !item.lon) ? "Check address and coordinates for distance ranking." : ""
+  ]).slice(0, 8);
+
+  if (!checks.length) checks.push("No special audit issue is attached. Confirm the public card and source link still match.");
+
+  for (const check of checks) {
+    const li = document.createElement("li");
+    li.textContent = check;
+    list.append(li);
+  }
+  els.itemChecklist.append(title, list);
+}
+
+function renderSafetyWarnings(item) {
+  els.safetyWarnings.replaceChildren();
+  const warnings = unique([
+    item.availabilityStatus === "accepting" && !item.availabilityEvidence
+      ? "Availability is marked accepting without explicit evidence. Add evidence or change the status." : "",
+    item.type === "psychiatrist" && item.referralType === "self" && !item.referralSourceExcerpt
+      ? "Self-referral for a psychiatrist needs explicit source evidence." : "",
+    item.type === "psychiatrist" && (!item.referralType || item.referralType === "unknown")
+      ? "Psychiatrist referral pathway is unknown. Confirm GP, specialist, self, or leave as unknown with notes." : "",
+    item.type === "directory" || item.tags?.includes("directory")
+      ? "Directory records should not be turned into direct providers unless a separate direct provider source exists." : "",
+    item.sourceQuality?.includes("register")
+      ? "Register-only records need a separate public practice/contact source before being treated as direct providers." : "",
+    item.tags?.some((tag) => ["maori", "pasifika", "asian", "rainbow", "telehealth", "online"].includes(tag))
+      ? "Support-preference and telehealth tags affect recommendations; keep only tags supported by source evidence or explicit review notes." : ""
+  ]);
+
+  if (!warnings.length) {
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = "No high-risk safety warning generated for this record. Still verify source evidence before approving.";
+    els.safetyWarnings.append(p);
+    return;
+  }
+
+  const list = document.createElement("ul");
+  for (const warning of warnings) {
+    const li = document.createElement("li");
+    li.textContent = warning;
+    list.append(li);
+  }
+  els.safetyWarnings.append(list);
 }
 
 function selectItem(reviewId) {
@@ -200,9 +497,11 @@ function selectItem(reviewId) {
       return badge;
     }));
 
+  renderChecklist(item);
   els.publicPreview.textContent = item.publicCardPreviewText || "No public preview available.";
   renderFindings(item);
   renderSources(item);
+  renderSafetyWarnings(item);
   renderDecision(item);
   dl(els.rankingFields, [
     ["Name", item.name],
@@ -290,24 +589,280 @@ function renderSources(item) {
     link.href = url;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.textContent = index === 0 ? "Open primary source in new tab" : `Open source ${index + 1}`;
+    link.textContent = index === 0 ? "Open primary source in new tab (required)" : `Open source ${index + 1}`;
     els.sourceLinks.append(link);
   }
   els.sourcePreview.src = links[0];
 }
 
+function buildCorrectionInput(config, value) {
+  if (config.kind === "select" || config.kind === "dynamic-select") {
+    const select = document.createElement("select");
+    select.dataset.correctionField = config.field;
+    const options = config.kind === "dynamic-select"
+      ? unique(state.items.map((item) => item[config.source])).sort((a, b) => a.localeCompare(b))
+      : [...config.options];
+    if (value && !options.includes(value)) options.unshift(value);
+    const empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "Not set";
+    select.append(empty);
+    for (const optionValue of options) {
+      const option = document.createElement("option");
+      option.value = optionValue;
+      option.textContent = optionValue;
+      select.append(option);
+    }
+    select.value = value || "";
+    return select;
+  }
+
+  if (config.kind === "boolean") {
+    const select = document.createElement("select");
+    select.dataset.correctionField = config.field;
+    for (const [optionValue, label] of [["", "Not set"], ["true", "Yes"], ["false", "No"]]) {
+      const option = document.createElement("option");
+      option.value = optionValue;
+      option.textContent = label;
+      select.append(option);
+    }
+    select.value = value === true ? "true" : value === false ? "false" : "";
+    return select;
+  }
+
+  if (config.kind === "checks") {
+    const wrapper = document.createElement("div");
+    wrapper.className = "choice-grid";
+    wrapper.dataset.checkGroup = config.field;
+    const selected = new Set(asArray(value).map(String));
+    const knownOptions = [...config.options];
+    const extraValues = [...selected].filter((entry) => !knownOptions.includes(entry));
+    for (const optionValue of knownOptions) {
+      const label = document.createElement("label");
+      label.className = "choice-pill";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.dataset.correctionField = config.field;
+      input.value = optionValue;
+      input.checked = selected.has(optionValue);
+      label.append(input, document.createTextNode(optionValue));
+      wrapper.append(label);
+    }
+    const extraLabel = document.createElement("label");
+    extraLabel.className = "choice-extra";
+    extraLabel.textContent = "Other values";
+    const extra = document.createElement("input");
+    extra.dataset.correctionExtraField = config.field;
+    extra.placeholder = "Comma-separated";
+    extra.value = extraValues.join(", ");
+    extraLabel.append(extra);
+    wrapper.append(extraLabel);
+    return wrapper;
+  }
+
+  if (config.kind === "textarea" || config.kind === "list") {
+    const textarea = document.createElement("textarea");
+    textarea.dataset.correctionField = config.field;
+    textarea.rows = config.kind === "list" ? 2 : 3;
+    textarea.placeholder = config.placeholder || (config.kind === "list" ? "Comma-separated" : "");
+    textarea.value = editableValue(value);
+    return textarea;
+  }
+
+  const input = document.createElement("input");
+  input.dataset.correctionField = config.field;
+  input.type = config.kind === "url" ? "url" : config.kind === "number" ? "number" : "text";
+  if (config.kind === "number") input.step = "any";
+  input.placeholder = config.placeholder || "";
+  input.value = editableValue(value);
+  return input;
+}
+
+function renderEvidenceMeta(row, item, config) {
+  const meta = document.createElement("div");
+  meta.className = "field-meta";
+  const sourceUrl = sourceUrlForField(item, config.field);
+  const evidence = bestEvidence(item, config.field);
+  const confidence = confidenceForField(item, config.field);
+  const status = needsFieldReview(item, config.field) ? "Needs check" : "Source-backed";
+  const statusClass = status === "Needs check" ? "needs-check" : "source-backed";
+
+  const statusBadge = document.createElement("span");
+  statusBadge.className = `field-status ${statusClass}`;
+  statusBadge.textContent = status;
+  meta.append(statusBadge);
+
+  const confidenceBadge = document.createElement("span");
+  confidenceBadge.className = "field-status";
+  confidenceBadge.textContent = `Confidence: ${confidence}`;
+  meta.append(confidenceBadge);
+
+  if (sourceUrl) {
+    const link = document.createElement("a");
+    link.href = sourceUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = "Source";
+    meta.append(link);
+  }
+  if (evidence?.excerpt) {
+    const excerpt = document.createElement("p");
+    excerpt.className = "field-evidence";
+    excerpt.textContent = compact(evidence.excerpt, 220);
+    meta.append(excerpt);
+  }
+  row.append(meta);
+}
+
+function renderCorrectionBuilder(item, correctedFields = {}) {
+  els.commonCorrections.replaceChildren();
+  const groups = new Map();
+  for (const config of COMMON_CORRECTION_FIELDS) {
+    if (!groups.has(config.group)) groups.set(config.group, []);
+    groups.get(config.group).push(config);
+  }
+
+  for (const [groupName, configs] of groups) {
+    const group = document.createElement("section");
+    group.className = "correction-group";
+    const heading = document.createElement("h4");
+    heading.textContent = groupName;
+    group.append(heading);
+
+    for (const config of configs) {
+      const currentValue = providerValue(item, config.field);
+      const value = Object.hasOwn(correctedFields, config.field) ? correctedFields[config.field] : currentValue;
+      const row = document.createElement("div");
+      row.className = `correction-row ${needsFieldReview(item, config.field) ? "needs-review" : ""}`;
+      row.dataset.field = config.field;
+
+      const label = document.createElement("label");
+      label.className = "correction-label";
+      const labelText = document.createElement("span");
+      labelText.textContent = config.label;
+      const current = document.createElement("span");
+      current.className = "current-value";
+      current.textContent = `Stored: ${text(currentValue)}`;
+      label.append(labelText, current);
+
+      const input = buildCorrectionInput(config, value);
+      label.append(input);
+      row.append(label);
+      renderEvidenceMeta(row, item, config);
+      group.append(row);
+    }
+    els.commonCorrections.append(group);
+  }
+
+  for (const control of els.commonCorrections.querySelectorAll("input, select, textarea")) {
+    control.addEventListener("input", renderCorrectionPreview);
+    control.addEventListener("change", renderCorrectionPreview);
+  }
+}
+
+function valueFromControl(config) {
+  if (config.kind === "checks") {
+    const checked = [...els.commonCorrections.querySelectorAll(`[data-correction-field="${config.field}"]:checked`)]
+      .map((input) => input.value);
+    const extra = els.commonCorrections.querySelector(`[data-correction-extra-field="${config.field}"]`)?.value || "";
+    return unique([...checked, ...extra.split(",")]);
+  }
+
+  const control = els.commonCorrections.querySelector(`[data-correction-field="${config.field}"]`);
+  if (!control) return undefined;
+  const value = control.value.trim();
+  if (config.kind === "boolean") {
+    if (value === "true") return true;
+    if (value === "false") return false;
+    return "";
+  }
+  if (config.kind === "number") {
+    if (!value) return "";
+    const number = Number(value);
+    return Number.isFinite(number) ? number : value;
+  }
+  if (config.kind === "list") return unique(value.split(","));
+  return value;
+}
+
+function commonCorrectionsFromHelper() {
+  const item = state.items.find((entry) => entry.reviewId === state.selectedId);
+  if (!item) return {};
+  const corrected = {};
+  for (const config of COMMON_CORRECTION_FIELDS) {
+    const next = valueFromControl(config);
+    if (next === undefined) continue;
+    const current = providerValue(item, config.field);
+    const currentComparable = config.kind === "list" || config.kind === "checks"
+      ? normalizeForCompare(asArray(current))
+      : normalizeForCompare(current);
+    const nextComparable = config.kind === "list" || config.kind === "checks"
+      ? normalizeForCompare(asArray(next))
+      : normalizeForCompare(next);
+    if (nextComparable !== currentComparable) corrected[config.field] = next;
+  }
+  return corrected;
+}
+
+function advancedCorrections() {
+  const value = els.decisionForm.correctedFields.value.trim();
+  if (!value) return {};
+  const parsed = JSON.parse(value);
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    throw new Error("Advanced corrected fields must be a JSON object.");
+  }
+  return parsed;
+}
+
+function mergedCorrectedFields() {
+  return {
+    ...commonCorrectionsFromHelper(),
+    ...advancedCorrections()
+  };
+}
+
+function renderCorrectionPreview() {
+  try {
+    const corrected = mergedCorrectedFields();
+    els.correctionPreview.classList.remove("error");
+    els.correctionPreview.textContent = `${JSON.stringify(corrected, null, 2)}\n`;
+  } catch (error) {
+    els.correctionPreview.classList.add("error");
+    els.correctionPreview.textContent = `Advanced JSON is not valid: ${error.message}`;
+  }
+}
+
+function splitCommonAndAdvanced(correctedFields = {}) {
+  const common = {};
+  const advanced = {};
+  for (const [field, value] of Object.entries(correctedFields || {})) {
+    if (COMMON_FIELD_NAMES.has(field)) common[field] = value;
+    else advanced[field] = value;
+  }
+  return { common, advanced };
+}
+
+function updateDecisionHelp() {
+  const selected = els.decisionForm.querySelector('input[name="decision"]:checked')?.value || "";
+  els.decisionHelp.textContent = DECISION_HELP[selected] || "Choose the decision that best describes what should happen to this provider record.";
+}
+
 function renderDecision(item) {
   const saved = state.decisions[item.reviewId] || {};
+  const { common, advanced } = splitCommonAndAdvanced(saved.correctedFields || {});
   els.decisionForm.reset();
   const radio = els.decisionForm.querySelector(`input[name="decision"][value="${saved.action || ""}"]`);
   if (radio) radio.checked = true;
   els.decisionForm.reviewer.value = saved.reviewer || "";
-  els.decisionForm.reviewedDate.value = saved.reviewedDate || new Date().toISOString().slice(0, 10);
+  els.decisionForm.reviewedDate.value = saved.reviewedDate || today();
   els.decisionForm.sourceUrl.value = saved.sourceUrl || item.sourceUrls?.[0] || "";
   els.decisionForm.keptProviderId.value = saved.keptProviderId || "";
   els.decisionForm.sourceExcerpt.value = saved.sourceExcerpt || "";
-  els.decisionForm.correctedFields.value = saved.correctedFields ? JSON.stringify(saved.correctedFields, null, 2) : "";
+  els.decisionForm.correctedFields.value = Object.keys(advanced).length ? JSON.stringify(advanced, null, 2) : "";
   els.decisionForm.reviewNotes.value = saved.reviewNotes || "";
+  renderCorrectionBuilder(item, common);
+  updateDecisionHelp();
+  renderCorrectionPreview();
   els.decisionStatus.textContent = saved.action ? `Saved local decision: ${saved.action}` : "No local decision saved for this provider.";
 }
 
@@ -317,9 +872,7 @@ function formDecision() {
   const action = data.get("decision");
   if (!item) throw new Error("No provider selected.");
   if (!action) throw new Error("Choose a decision.");
-  let correctedFields = {};
-  const correctedText = data.get("correctedFields").trim();
-  if (correctedText) correctedFields = JSON.parse(correctedText);
+  const correctedFields = mergedCorrectedFields();
   return {
     reviewId: item.reviewId,
     providerId: item.providerId,
@@ -346,6 +899,16 @@ els.decisionForm.addEventListener("submit", (event) => {
   } catch (error) {
     els.decisionStatus.textContent = `Decision not saved: ${error.message}`;
   }
+});
+
+els.decisionForm.addEventListener("input", (event) => {
+  if (event.target?.matches?.('input[name="decision"]')) updateDecisionHelp();
+  if (event.target?.matches?.("#correctedFields")) renderCorrectionPreview();
+});
+
+els.decisionForm.addEventListener("change", (event) => {
+  if (event.target?.matches?.('input[name="decision"]')) updateDecisionHelp();
+  if (event.target?.matches?.("#correctedFields")) renderCorrectionPreview();
 });
 
 els.clearDecision.addEventListener("click", () => {

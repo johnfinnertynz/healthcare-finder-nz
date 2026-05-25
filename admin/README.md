@@ -2,6 +2,8 @@
 
 This is a local/static prototype for reviewing provider data. It is not a production admin system and it does not write to `providers.json`.
 
+For the step-by-step human review process, start with `../AUDITOR_README.md`.
+
 ## Run
 
 1. Generate a focused queue:
