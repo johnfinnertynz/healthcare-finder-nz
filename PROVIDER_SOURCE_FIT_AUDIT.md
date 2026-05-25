@@ -1,10 +1,10 @@
 # Provider Source-Fit Audit
 
-Generated: 2026-05-25T03:18:19.780Z
+Generated: 2026-05-25T03:51:45.322Z
 
 Providers scanned: 1210
 
-Findings: 404 total, 2 high (0 unallowlisted), 276 medium, 126 low.
+Findings: 403 total, 2 high (0 unallowlisted), 275 medium, 126 low.
 
 High severity findings block CI unless allowlisted in `data/provider-source-fit-allowlist.json`.
 
@@ -112,7 +112,6 @@ High severity findings block CI unless allowlisted in `data/provider-source-fit-
 | medium | marlborough-rachael-sim-clinical-psychology - Dr Rachael Sim Clinical Psychology | Nelson Marlborough Tasman / Blenheim | psychologist | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.nzccp.co.nz/team/rachael-sim | no |
 | medium | marlborough-rosemary-crockett-counselling - Rosemary Crockett Counselling | Nelson Marlborough Tasman / Blenheim | counsellor | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.rosemarycrockettcounselling.com/ | no |
 | medium | marlborough-rosemary-crockett-counselling - Rosemary Crockett Counselling | Nelson Marlborough Tasman / Blenheim | counsellor | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://www.rosemarycrockettcounselling.com/ | no |
-| medium | marlborough-rosemary-crockett-counselling - Rosemary Crockett Counselling | Nelson Marlborough Tasman / Blenheim | counsellor | Telehealth or online availability is set but source fields do not clearly support remote care. | Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments. | https://www.rosemarycrockettcounselling.com/ | no |
 | medium | marlborough-top-of-the-south-psych-services - Top of the South Psych Services | Nelson Marlborough Tasman / Blenheim | psychologist | Broad tag "trauma" is present but source fields do not clearly support it. | Remove "trauma" or add source-backed specialties/services evidence. | https://southpsychservices.co.nz/ | no |
 | medium | national-asian-family-services - Asian Family Services | National / Auckland, Wellington, Christchurch and telehealth | counsellor | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.asianfamilyservices.nz/ | no |
 | medium | national-asian-family-services - Asian Family Services | National / Auckland, Wellington, Christchurch and telehealth | counsellor | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://www.asianfamilyservices.nz/ | no |
@@ -150,8 +149,8 @@ High severity findings block CI unless allowlisted in `data/provider-source-fit-
 | medium | nzccp-allanah-casey - Allanah Casey | Bay of Plenty / Tauranga | psychologist | Professional appears to come from a register/directory only and lacks a separate public practice contact route. | Keep as a research lead or add a provider-owned/practice contact source before treating as direct first contact. | https://www.nzccp.co.nz/team/allanah-casey | no |
 | medium | otago-ocasa - OCASA | Otago / Dunedin / Otago | counsellor | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.ocasa.org.nz/ | no |
 | medium | otago-ocasa - OCASA | Otago / Dunedin / Otago | counsellor | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://www.ocasa.org.nz/ | no |
-| medium | otago-psychiatry-down-south - Psychiatry Down South | Otago / Dunedin | psychiatrist | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.psychiatrydownsouth.co.nz/contact | no |
-| medium | otago-psychiatry-down-south - Psychiatry Down South | Otago / Dunedin | psychiatrist | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://www.psychiatrydownsouth.co.nz/contact | no |
+| medium | otago-psychiatry-down-south - Psychiatry Down South | Otago / Dunedin | psychiatrist | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.psychiatrydownsouth.co.nz/referrals | no |
+| medium | otago-psychiatry-down-south - Psychiatry Down South | Otago / Dunedin | psychiatrist | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://www.psychiatrydownsouth.co.nz/referrals | no |
 | medium | otago-te-kaika-toku-oranga - Te Kaika Toku Oranga | Otago / Dunedin / Oamaru | public-service | maori support tag is present but source fields do not clearly support it. | Remove the tag or add a stronger public source/structured patientGroups/languages evidence. | https://www.tekaika.nz/services/toku-oranga | no |
 | medium | otago-te-kaika-toku-oranga - Te Kaika Toku Oranga | Otago / Dunedin / Oamaru | public-service | Telehealth or online availability is set but source fields do not clearly support remote care. | Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments. | https://www.tekaika.nz/services/toku-oranga | no |
 | medium | otago-wellsouth-toku-oranga - WellSouth Toku Oranga Access and Choice | Otago / Otago | public-service | Telehealth or online availability is set but source fields do not clearly support remote care. | Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments. | https://wellsouth.nz/your-health/mental-health-and-wellbeing/toku-oranga-access-and-choice | no |

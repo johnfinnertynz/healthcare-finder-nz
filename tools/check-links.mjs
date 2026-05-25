@@ -13,7 +13,20 @@ const urls = new Set();
 const providerLinkMode = process.env.CHECK_PROVIDER_LINKS || "sample";
 const providerLinkLimit = Number(process.env.PROVIDER_LINK_LIMIT || 150);
 const checkProviderSources = process.env.CHECK_PROVIDER_SOURCES === "true";
-const linkCheckConcurrency = Math.max(1, Number(process.env.LINK_CHECK_CONCURRENCY || 12));
+const linkCheckConcurrency = Math.max(1, Number(process.env.LINK_CHECK_CONCURRENCY || 10));
+const linkCheckRetries = Math.max(0, Number(process.env.LINK_CHECK_RETRIES || 2));
+const headTimeoutMs = Math.max(5000, Number(process.env.LINK_CHECK_HEAD_TIMEOUT_MS || 15000));
+const getTimeoutMs = Math.max(10000, Number(process.env.LINK_CHECK_GET_TIMEOUT_MS || 45000));
+const browserUserAgent = process.env.LINK_CHECK_USER_AGENT
+  || "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
+const transientBlockedStatuses = new Set([401, 403, 429, 520, 522, 523, 524]);
+const transientBlockedHosts = new Set([
+  "healthpoint.co.nz",
+  "new.healthpoint.co.nz",
+  "www.healthpoint.co.nz",
+  "youthline.co.nz",
+  "www.youthline.co.nz"
+]);
 
 function collectFromText(text) {
   for (const match of text.matchAll(/https?:\/\/[^\s"'<>),]+/g)) {
@@ -77,7 +90,13 @@ async function request(url, method, timeoutMs) {
       method,
       redirect: "follow",
       signal: controller.signal,
-      headers: { "user-agent": "Mozilla/5.0 Care Finder link checker" }
+      headers: {
+        "user-agent": browserUserAgent,
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "accept-language": "en-NZ,en;q=0.9",
+        "cache-control": "no-cache",
+        "upgrade-insecure-requests": "1"
+      }
     });
     clearTimeout(timer);
     return { response };
@@ -87,20 +106,72 @@ async function request(url, method, timeoutMs) {
   }
 }
 
-async function check(url) {
-  let { response, error } = await request(url, "HEAD", 15000);
+function isTransientError(error) {
+  const code = error?.cause?.code || error?.code;
+  const message = String(error?.message || "");
+  return ["AbortError", "TimeoutError", "TypeError"].includes(error?.name)
+    || ["UND_ERR_CONNECT_TIMEOUT", "UND_ERR_HEADERS_TIMEOUT", "ECONNRESET", "ETIMEDOUT", "ENOTFOUND"].includes(code)
+    || /timeout|network|fetch failed|connection/i.test(message);
+}
 
-  if (error || [400, 403, 405].includes(response.status)) {
-    ({ response, error } = await request(url, "GET", 30000));
+function isTransientStatus(status) {
+  return status === 408 || status === 425 || status === 429 || status >= 500;
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function retryDelayMs(result, attempt) {
+  const retryAfter = result.response?.headers?.get("retry-after");
+  const retryAfterSeconds = Number(retryAfter);
+  if (Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0) {
+    return Math.min(retryAfterSeconds * 1000, 5000);
+  }
+  return 500 * (attempt + 1);
+}
+
+async function requestWithRetry(url, method, timeoutMs) {
+  let result;
+
+  for (let attempt = 0; attempt <= linkCheckRetries; attempt += 1) {
+    result = await request(url, method, timeoutMs);
+    if (!result.error && !isTransientStatus(result.response.status)) return result;
+    if (attempt < linkCheckRetries) await delay(retryDelayMs(result, attempt));
+  }
+
+  return result;
+}
+
+function isKnownBlockedHost(hostname) {
+  return [...transientBlockedHosts].some((host) => hostname === host || hostname.endsWith(`.${host}`));
+}
+
+function isBlockedResponse(status) {
+  return transientBlockedStatuses.has(status);
+}
+
+async function check(url) {
+  let { response, error } = await requestWithRetry(url, "HEAD", headTimeoutMs);
+
+  if (error || [400, 403, 405].includes(response.status) || isTransientStatus(response.status)) {
+    ({ response, error } = await requestWithRetry(url, "GET", getTimeoutMs));
   }
 
   if (error) {
+    let blockedBySite = false;
+    try {
+      const host = new URL(url).hostname;
+      blockedBySite = isKnownBlockedHost(host) && isTransientError(error);
+    } catch {
+      blockedBySite = false;
+    }
     return {
       url,
       status: "ERR",
       error: error.name,
       ok: false,
-      blocked: false
+      blocked: blockedBySite
     };
   }
 
@@ -109,7 +180,7 @@ async function check(url) {
     status: response.status,
     final: response.url,
     ok: response.status >= 200 && response.status < 400,
-    blocked: response.status === 401 || response.status === 403
+    blocked: isBlockedResponse(response.status)
   };
 }
 

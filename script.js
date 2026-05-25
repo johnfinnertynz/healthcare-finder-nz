@@ -49,6 +49,7 @@ let pendingCarePathScroll = false;
 let carePathScrollScheduled = false;
 const providerBatchSize = 5;
 const telehealthDistanceThresholdKm = 100;
+const localInPersonDistanceCapKm = 30;
 const availabilityStatuses = new Set([
   "accepting",
   "waitlist",
@@ -58,6 +59,9 @@ const availabilityStatuses = new Set([
   "not_published"
 ]);
 const restrictiveAvailabilityStatuses = new Set(["not_accepting", "referrals_paused"]);
+const psychiatristReferralTypes = new Set(["gp", "self", "specialist", "unknown"]);
+const psychiatristReferralConfidences = new Set(["high", "medium", "low"]);
+const distanceCappedLocalTypes = new Set(["gp", "counsellor", "psychologist", "psychiatrist", "mens-centre"]);
 const availabilityCadenceDays = {
   accepting: 90,
   waitlist: 30,
@@ -186,6 +190,7 @@ const fallbackAddressPlaces = [
   { name: "Lower Hutt", city: "Lower Hutt", region: "Wellington", lat: -41.2125, lon: 174.9003 },
   { name: "Porirua", city: "Porirua", region: "Wellington", lat: -41.1243, lon: 174.8393 },
   { name: "Nelson", city: "Nelson", region: "Nelson Marlborough Tasman", lat: -41.2706, lon: 173.284 },
+  { name: "Golden Bay / Takaka", city: "Takaka", region: "Nelson Marlborough Tasman", lat: -40.8564, lon: 172.8069 },
   { name: "Blenheim", city: "Blenheim", region: "Nelson Marlborough Tasman", lat: -41.5134, lon: 173.9612 },
   { name: "Greymouth", city: "Greymouth", region: "West Coast", lat: -42.4504, lon: 171.2108 },
   { name: "Christchurch Central", city: "Christchurch", region: "Canterbury", lat: -43.5321, lon: 172.6362 },
@@ -214,6 +219,17 @@ const matchablePreferenceTags = [
 
 function checkedValues(name) {
   return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map((item) => item.value);
+}
+
+function enforceExclusiveProviderGenderPreference(changedInput) {
+  if (!changedInput || changedInput.name !== "preference" || !changedInput.checked) return;
+  const opposite = {
+    "female-provider": "male-provider",
+    "male-provider": "female-provider"
+  }[changedInput.value];
+  if (!opposite) return;
+  const oppositeInput = document.querySelector(`input[name="preference"][value="${opposite}"]`);
+  if (oppositeInput) oppositeInput.checked = false;
 }
 
 function intakeStatus() {
@@ -416,6 +432,49 @@ function providerAvailabilityNote(provider, { compact = false } = {}) {
   return `${stalePrefix}${labels[status] || "Availability should be confirmed."}${suffix}`;
 }
 
+function isPsychiatryProvider(provider) {
+  return provider.type === "psychiatrist" || provider.tags?.includes("psychiatry-service");
+}
+
+function providerReferralType(provider) {
+  return psychiatristReferralTypes.has(provider.referralType) ? provider.referralType : "unknown";
+}
+
+function providerReferralConfidence(provider) {
+  return psychiatristReferralConfidences.has(provider.referralConfidence) ? provider.referralConfidence : "low";
+}
+
+function providerRequiresGpReferral(provider) {
+  return isPsychiatryProvider(provider)
+    && (provider.requiresReferral === true || providerReferralType(provider) === "gp");
+}
+
+function providerReferralSortTier(provider) {
+  if (!isPsychiatryProvider(provider)) return 2;
+  const type = providerReferralType(provider);
+  if (type === "self") return 3;
+  if (type === "unknown") return 2;
+  return type === "gp" || type === "specialist" ? 1 : 2;
+}
+
+function providerReferralScore(provider) {
+  if (selectedContactType() !== "psychiatrist" || !isPsychiatryProvider(provider)) return 0;
+  const type = providerReferralType(provider);
+  if (type === "self") return 8;
+  if (type === "unknown") return -2;
+  if (type === "gp" || type === "specialist") return -6;
+  return 0;
+}
+
+function providerReferralNote(provider) {
+  if (!isPsychiatryProvider(provider)) return "";
+  const type = providerReferralType(provider);
+  if (type === "self") return "Self-referral appears available. Please confirm current booking requirements.";
+  if (type === "gp") return "GP referral required. A GP appointment is the practical first step.";
+  if (type === "specialist") return "Specialist referral may be required. Please check the referral pathway first.";
+  return "Referral requirements unclear - please check with the provider or your GP.";
+}
+
 function safeHref(value, { allowHash = false } = {}) {
   const href = String(value || "").trim();
   if (allowHash && /^#[\w-]+$/.test(href)) return href;
@@ -607,7 +666,7 @@ function providerMatchesProfile(provider) {
   const wantsTelehealth = preferences.includes("telehealth");
   const needScopedMatch = providerMatchesSelectedNeeds(provider, needs);
 
-  let score = providerAvailabilityScore(provider);
+  let score = providerAvailabilityScore(provider) + providerReferralScore(provider);
   if (!needScopedMatch) score -= 80;
   const preferenceType = selectedContactType();
   if (hasNationalServiceReach(provider)) score += wantsTelehealth ? 4 : (barriers.includes("transport") ? 2 : 0);
@@ -666,6 +725,7 @@ function providerSortValue(provider) {
   return {
     preferenceMatches: supportPreferenceMatches(tags).length,
     availabilityTier: providerAvailabilitySortTier(provider),
+    referralTier: providerReferralSortTier(provider),
     telehealthMatch: wantsTelehealth && telehealth ? 1 : 0,
     specialtyMatches,
     directContacts,
@@ -681,6 +741,7 @@ function compareProviders(a, b) {
   return b.score - a.score
     || bSort.preferenceMatches - aSort.preferenceMatches
     || bSort.availabilityTier - aSort.availabilityTier
+    || bSort.referralTier - aSort.referralTier
     || bSort.telehealthMatch - aSort.telehealthMatch
     || bSort.specialtyMatches - aSort.specialtyMatches
     || bSort.isLocal - aSort.isLocal
@@ -899,6 +960,8 @@ function renderProviders() {
       const availabilityStatus = providerAvailabilityStatus(provider);
       const unavailable = isUnavailableForFirstRecommendations(provider);
       const availabilityNote = providerAvailabilityNote(provider, { compact: true });
+      const referralNote = providerReferralNote(provider);
+      const gpReferral = providerRequiresGpReferral(provider);
       const contact = [
         !directory && provider.phone ? `Phone ${escapeHtml(provider.phone)}` : "",
         !directory && provider.text ? `Text ${escapeHtml(provider.text)}` : "",
@@ -928,7 +991,7 @@ function renderProviders() {
                 ? `<a class="button button--primary" href="${escapeHtml(website)}"${externalLinkAttrs(website)}>Check availability</a>`
                 : ""
         : `<button class="button button--primary select-provider" type="button" data-provider-id="${providerId}">
-              Use this contact
+              ${gpReferral ? "Plan GP referral" : "Use this contact"}
             </button>`;
       const secondaryActions = directory
         ? ""
@@ -958,6 +1021,7 @@ function renderProviders() {
             ${specialty ? `<p class="provider-detail"><strong>Specialties:</strong> ${providerSpecialty}</p>` : ""}
             ${patientGroups ? `<p class="provider-detail"><strong>Patient groups:</strong> ${providerPatientGroup}</p>` : ""}
             <p class="provider-detail"><strong>First step:</strong> ${providerFirstStep}</p>
+            ${referralNote ? `<p class="provider-detail referral-note"><strong>Referral:</strong> ${escapeHtml(referralNote)}</p>` : ""}
             <p class="provider-detail"><strong>Cost:</strong> ${providerCost}</p>
             <p class="provider-detail availability-note availability-note--${escapeHtml(availabilityStatus)}"><strong>Availability:</strong> ${escapeHtml(availabilityNote)}</p>
             ${contact ? `<p class="provider-detail"><strong>Contact:</strong> ${contact}</p>` : ""}
@@ -1032,8 +1096,9 @@ function distanceToProvider(provider) {
 function isTelehealthProvider(provider) {
   const tags = provider.tags || [];
   if (tags.includes("telehealth") || tags.includes("online")) return true;
-  if (provider.onlineAvailable === true || provider.phoneSupport === true) return true;
+  if (provider.onlineAvailable === true) return true;
   if (provider.type === "helpline") return true;
+  if (provider.phoneSupport === true && (provider.region === "National" || ["helpline", "addiction", "youth"].includes(provider.type))) return true;
   return provider.region === "National"
     && ["addiction", "youth"].includes(provider.type)
     && Boolean(provider.phone || provider.text || tags.includes("online"));
@@ -1051,9 +1116,13 @@ function hasNationalServiceReach(provider) {
 
 function providerMatchesSelectedRegion(provider, location, preferences = [], query = "") {
   if (query) return true;
-  if (provider.region === location) return true;
   if (hasNationalServiceReach(provider)) return true;
-  return preferences.includes("telehealth") && isTelehealthProvider(provider);
+  if (preferences.includes("telehealth") && isTelehealthProvider(provider)) return true;
+  if (provider.region !== location) return false;
+  if (!userCoords || !distanceCappedLocalTypes.has(provider.type)) return true;
+  const distance = distanceToProvider(provider);
+  if (distance === null) return false;
+  return distance <= localInPersonDistanceCapKm;
 }
 
 function providerDistanceLabel(provider, distance = distanceToProvider(provider)) {
@@ -1602,6 +1671,13 @@ function reasonForProvider(provider) {
     reasons.push(tags.includes("psychiatry-service") && provider.type !== "psychiatrist"
       ? "This is a specialist mental-health service that can assess whether psychiatry or medication support is needed."
       : "A psychiatrist is a medical specialist, which can fit medication complexity, diagnosis questions, high risk, or care that has not improved.");
+    if (providerRequiresGpReferral(provider)) {
+      reasons.push("Their public information indicates a GP referral is needed, so the next practical step is booking with a GP.");
+    } else if (providerReferralType(provider) === "self") {
+      reasons.push("Their public information suggests self-referral or direct booking may be available.");
+    } else {
+      reasons.push("Referral requirements are not clear, so check before putting energy into a direct enquiry.");
+    }
     if (specialty) reasons.push(`Their listed focus includes ${specialty}.`);
     if (matchedNeeds.length) reasons.push(`That directly matches ${labelledList(matchedNeeds, needLabels)} from your answers.`);
   }
@@ -1784,19 +1860,27 @@ function contactTarget() {
   const provider = providers.find((item) => item.id === contactProviderId);
   if (provider) {
     const directory = isDirectoryLike(provider);
+    const gpReferral = providerRequiresGpReferral(provider);
     const label = providerPrimaryName(provider);
     const fullLabel = providerDisplayLabel(provider);
     const websiteOwner = provider.practiceName || provider.name;
     return {
-      label,
-      email: directory ? "" : provider.email || "",
-      phone: directory ? "" : provider.phone || "",
-      text: directory ? "" : provider.text || "",
+      label: gpReferral ? "your GP" : label,
+      email: directory || gpReferral ? "" : provider.email || "",
+      phone: directory || gpReferral ? "" : provider.phone || "",
+      text: directory || gpReferral ? "" : provider.text || "",
       website: safeHref(provider.bookingUrl || provider.website),
-      websiteLabel: provider.bookingUrl ? "Open booking page" : `Open ${websiteOwner} website`,
+      websiteLabel: gpReferral
+        ? `Open ${label} profile`
+        : provider.bookingUrl
+          ? "Open booking page"
+          : `Open ${websiteOwner} website`,
       isDirectory: directory,
-      subject: `Support request for ${fullLabel}`,
-      greeting: provider.name.includes("1737") ? "Kia ora" : `Kia ora ${label}`
+      isGpReferral: gpReferral,
+      referralProviderLabel: fullLabel,
+      referralNote: providerReferralNote(provider),
+      subject: gpReferral ? `Psychiatry referral request for ${fullLabel}` : `Support request for ${fullLabel}`,
+      greeting: provider.name.includes("1737") || gpReferral ? "Kia ora" : `Kia ora ${label}`
     };
   }
 
@@ -1903,12 +1987,26 @@ function buildContactMessage() {
   const comfort = contactComfort.value;
   const name = contactName.value.trim();
   const reply = contactReply.value.trim();
-  const lines = [
-    target.greeting,
-    "",
-    messageContextLine(age, location, needs),
-    askLine()
-  ];
+  const lines = target.isGpReferral
+    ? [
+        target.greeting,
+        "",
+        "I would like to book a GP appointment to talk about a psychiatry referral.",
+        messageContextLine(age, location, needs),
+        `If appropriate, I would like to discuss referral to ${target.referralProviderLabel}.`,
+        "Please let me know what information to bring, including symptoms, medication history, previous diagnoses, and any safety concerns."
+      ]
+    : [
+        target.greeting,
+        "",
+        messageContextLine(age, location, needs),
+        askLine()
+      ];
+
+  const selectedContactProvider = providers.find((item) => item.id === contactProviderId);
+  if (!target.isGpReferral && selectedContactProvider && isPsychiatryProvider(selectedContactProvider) && providerReferralType(selectedContactProvider) === "unknown") {
+    lines.push("Could you please let me know whether I need a GP referral before booking?");
+  }
 
   if (barriers.length && comfort !== "minimal") {
     lines.push(`The main things making care harder are ${labelledList(barriers, barrierLabels)}.`);
@@ -1944,22 +2042,28 @@ function contactAvailabilityNote(target, provider) {
   }
 
   const availability = providerAvailabilityNote(provider, { compact: true });
+  const referral = providerReferralNote(provider);
+  const referralText = referral ? ` ${referral}` : "";
 
   if (target.isDirectory) {
     return `This is a directory or navigator, not a direct provider. Email and call buttons are hidden; open the website and choose a specific service. ${availability}`;
+  }
+
+  if (target.isGpReferral) {
+    return `${referralText.trim()} Provider email and call buttons are hidden here because the next step is a GP referral conversation. You can still open the profile and copy the GP message. ${availability}`;
   }
 
   const missing = [];
   if (!target.email) missing.push("an email address");
   if (!target.phone && !target.text) missing.push("a phone or text number");
   if (!missing.length) return isUnavailableForFirstRecommendations(provider)
-    ? `${availability} Contact only if you want to check whether this has changed.`
-    : availability;
+    ? `${availability}${referralText} Contact only if you want to check whether this has changed.`
+    : `${availability}${referralText}`;
 
   const fallback = target.website
     ? " You can copy the message and use their website or contact form."
     : " Choose another provider if you need that contact method.";
-  return `${availability} This provider does not publish ${sentenceList(missing)} in our database.${fallback}`;
+  return `${availability}${referralText} This provider does not publish ${sentenceList(missing)} in our database.${fallback}`;
 }
 
 function setContactAction(element, href, label) {
@@ -2026,6 +2130,8 @@ function renderContact() {
   selectedProvider.textContent = provider
     ? target.isDirectory
       ? `${provider.name} is a directory or navigator. Use the website to choose a specific provider; this tool will not email or call it as if it were a provider.`
+      : target.isGpReferral
+        ? `${providerDisplayLabel(provider)} appears to need a GP referral. The message below is written for your GP, and provider email/call buttons are hidden.`
       : `Using ${providerDisplayLabel(provider)}. You can still edit the message before sending.`
     : "Choose a provider above, or use the message with any service you find.";
   contactAvailability.textContent = contactAvailabilityNote(target, provider);
@@ -2111,6 +2217,8 @@ function render() {
           const unavailable = isUnavailableForFirstRecommendations(move.provider);
           const availabilityStatus = providerAvailabilityStatus(move.provider);
           const availabilityNote = providerAvailabilityNote(move.provider, { compact: true });
+          const referralNote = providerReferralNote(move.provider);
+          const gpReferral = providerRequiresGpReferral(move.provider);
           return `
         <article class="recommendation-card recommendation-card--availability-${escapeHtml(availabilityStatus)} ${index === 0 ? "recommendation-card--primary" : ""}">
           <div class="recommendation-rank">${index + 1}</div>
@@ -2124,13 +2232,14 @@ function render() {
               ${providerTypeBadge(move.provider)}
             </div>
             <p>${escapeHtml(move.provider.firstStep)}</p>
+            ${referralNote ? `<p class="referral-note">${escapeHtml(referralNote)}</p>` : ""}
             <p class="availability-note availability-note--${escapeHtml(availabilityStatus)}">${escapeHtml(availabilityNote)}</p>
             <ul>
               ${move.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}
             </ul>
             <div class="recommendation-actions">
               <button class="button button--primary use-path" type="button" data-provider-id="${escapeHtml(move.provider.id)}">
-                ${unavailable ? "Check availability first" : "Use this path"}
+                ${unavailable ? "Check availability first" : gpReferral ? "Plan GP referral" : "Use this path"}
               </button>
               <button class="button button--quiet path-filter" type="button" data-provider-type="${escapeHtml(move.provider.type)}" data-provider-search="">
                 ${escapeHtml(move.similarAction)}
@@ -2169,7 +2278,10 @@ function render() {
 }
 
 form.addEventListener("submit", (event) => event.preventDefault());
-form.addEventListener("input", render);
+form.addEventListener("input", (event) => {
+  enforceExclusiveProviderGenderPreference(event.target);
+  render();
+});
 
 function chooseProviderForContact(providerId) {
   selectedProviderId = providerId;

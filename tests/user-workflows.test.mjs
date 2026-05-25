@@ -65,11 +65,28 @@ function availabilityScore(provider) {
   return 0;
 }
 
+function referralTier(provider) {
+  if (provider.type !== "psychiatrist" && !provider.tags?.includes("psychiatry-service")) return 2;
+  if (provider.referralType === "self") return 3;
+  if (provider.referralType === "unknown") return 2;
+  if (provider.referralType === "gp" || provider.referralType === "specialist") return 1;
+  return 2;
+}
+
+function referralScore(provider, type) {
+  if (type !== "psychiatrist" || (provider.type !== "psychiatrist" && !provider.tags?.includes("psychiatry-service"))) return 0;
+  if (provider.referralType === "self") return 8;
+  if (provider.referralType === "unknown") return -2;
+  if (provider.referralType === "gp" || provider.referralType === "specialist") return -6;
+  return 0;
+}
+
 function isTelehealthProvider(provider) {
   const tags = provider.tags || [];
   if (tags.includes("telehealth") || tags.includes("online")) return true;
-  if (provider.onlineAvailable === true || provider.phoneSupport === true) return true;
+  if (provider.onlineAvailable === true) return true;
   if (provider.type === "helpline") return true;
+  if (provider.phoneSupport === true && (provider.region === "National" || ["helpline", "addiction", "youth"].includes(provider.type))) return true;
   return provider.region === "National"
     && ["addiction", "youth"].includes(provider.type)
     && Boolean(provider.phone || provider.text || tags.includes("online"));
@@ -143,7 +160,7 @@ function providerMatchesAge(provider, age) {
 
 function score(provider, persona, type) {
   const tags = provider.tags || [];
-  let value = availabilityScore(provider);
+  let value = availabilityScore(provider) + referralScore(provider, type);
   if (provider.region === persona.region) value += 12;
   if (hasNationalServiceReach(provider)) value += persona.barriers.includes("transport") || persona.preferences.includes("telehealth") ? 5 : -3;
   if (!matchesSelectedNeeds(provider, persona.needs)) value -= 80;
@@ -172,7 +189,7 @@ function recommendations(persona) {
     .filter((provider) => !unavailableForFirstRecommendations(provider))
     .filter((provider) => !isDirectoryLike(provider) && hasContact(provider))
     .map((provider) => ({ provider, score: score(provider, persona, type) }))
-    .sort((a, b) => b.score - a.score || availabilityTier(b.provider) - availabilityTier(a.provider) || a.provider.name.localeCompare(b.provider.name))
+    .sort((a, b) => b.score - a.score || availabilityTier(b.provider) - availabilityTier(a.provider) || referralTier(b.provider) - referralTier(a.provider) || a.provider.name.localeCompare(b.provider.name))
     .map((entry) => entry.provider);
 
   const fill = providers
@@ -184,7 +201,7 @@ function recommendations(persona) {
     .filter((provider) => !unavailableForFirstRecommendations(provider))
     .filter((provider) => !isDirectoryLike(provider) && hasContact(provider))
     .map((provider) => ({ provider, score: score(provider, persona, "all") }))
-    .sort((a, b) => b.score - a.score || availabilityTier(b.provider) - availabilityTier(a.provider) || a.provider.name.localeCompare(b.provider.name))
+    .sort((a, b) => b.score - a.score || availabilityTier(b.provider) - availabilityTier(a.provider) || referralTier(b.provider) - referralTier(a.provider) || a.provider.name.localeCompare(b.provider.name))
     .map((entry) => entry.provider);
 
   const merged = type === "all" || !strictExactTypes.has(type)

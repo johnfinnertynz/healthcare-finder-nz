@@ -229,15 +229,20 @@ function toRecord(profile) {
     languages,
     appointmentWait: profile.appointmentWaitTIme || "",
     fit: `RANZCP Your Health in Mind psychiatrist listing.${focus}${serviceText}${patientGroupText}${ageText}`.trim(),
-    firstStep: address.email
-      ? "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step."
-      : "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    firstStep: "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     source: profileUrl,
     verified: verifiedMonth,
     lastVerified: verifiedMonth,
     confidence: "medium",
     sourceQuality: "professional register or directory",
     needsManualVerification: true,
+    requiresReferral: true,
+    referralType: "gp",
+    referralSourceUrl: profileUrl,
+    referralSourceExcerpt: "Your Health in Mind profile says people must first see their GP for a referral.",
+    referralConfidence: "high",
+    referralLastChecked: verifiedMonth,
+    referralNeedsManualReview: false,
     sourceUpdated: profile.lastUpdatedDate ? profile.lastUpdatedDate.slice(0, 10) : ""
   }, { checkedAt: verifiedMonth });
 }

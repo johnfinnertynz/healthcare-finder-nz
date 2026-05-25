@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-25T03:18:19.780Z",
+  "generatedAt": "2026-05-25T03:51:45.322Z",
   "providersScanned": 1210,
   "findings": [
     {
@@ -2759,7 +2759,9 @@
         "anxiety",
         "cost",
         "fit",
-        "direct-contact"
+        "direct-contact",
+        "telehealth",
+        "online"
       ],
       "needScope": [],
       "source": "https://www.rosemarycrockettcounselling.com/",
@@ -2787,7 +2789,9 @@
         "anxiety",
         "cost",
         "fit",
-        "direct-contact"
+        "direct-contact",
+        "telehealth",
+        "online"
       ],
       "needScope": [],
       "source": "https://www.rosemarycrockettcounselling.com/",
@@ -2795,34 +2799,6 @@
       "severity": "medium",
       "issue": "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
       "suggestedFix": "Remove \"anxiety\" or add source-backed specialties/services evidence.",
-      "allowlisted": false
-    },
-    {
-      "providerId": "marlborough-rosemary-crockett-counselling",
-      "providerName": "Rosemary Crockett Counselling",
-      "region": "Nelson Marlborough Tasman",
-      "city": "Blenheim",
-      "type": "counsellor",
-      "tags": [
-        "counsellor",
-        "therapy",
-        "trauma",
-        "sexual-harm",
-        "acc",
-        "sensitive-claims",
-        "grief",
-        "depression",
-        "anxiety",
-        "cost",
-        "fit",
-        "direct-contact"
-      ],
-      "needScope": [],
-      "source": "https://www.rosemarycrockettcounselling.com/",
-      "rule": "weak-telehealth-evidence",
-      "severity": "medium",
-      "issue": "Telehealth or online availability is set but source fields do not clearly support remote care.",
-      "suggestedFix": "Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments.",
       "allowlisted": false
     },
     {
@@ -3835,7 +3811,7 @@
         "direct-contact"
       ],
       "needScope": [],
-      "source": "https://www.psychiatrydownsouth.co.nz/contact",
+      "source": "https://www.psychiatrydownsouth.co.nz/referrals",
       "rule": "broad-tag-without-source-support",
       "severity": "medium",
       "issue": "Broad tag \"depression\" is present but source fields do not clearly support it.",
@@ -3860,7 +3836,7 @@
         "direct-contact"
       ],
       "needScope": [],
-      "source": "https://www.psychiatrydownsouth.co.nz/contact",
+      "source": "https://www.psychiatrydownsouth.co.nz/referrals",
       "rule": "broad-tag-without-source-support",
       "severity": "medium",
       "issue": "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
@@ -10724,9 +10700,9 @@
     }
   ],
   "summary": {
-    "total": 404,
+    "total": 403,
     "high": 2,
-    "medium": 276,
+    "medium": 275,
     "low": 126,
     "highUnallowlisted": 0,
     "allowlisted": 2

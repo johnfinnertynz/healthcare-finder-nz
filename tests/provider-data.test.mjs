@@ -20,6 +20,8 @@ const publicHtmlPages = [
 const optInPreferenceTags = new Set(["maori", "pasifika", "asian", "rainbow"]);
 const broadNeedTags = new Set(["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"]);
 const exactTypes = ["gp", "counsellor", "psychologist", "psychiatrist"];
+const localInPersonDistanceCapKm = 30;
+const distanceCappedLocalTypes = new Set(["gp", "counsellor", "psychologist", "psychiatrist", "mens-centre"]);
 const expectedRegions = [
   "Northland",
   "Auckland",
@@ -51,8 +53,9 @@ function hasContact(provider) {
 function isTelehealthProvider(provider) {
   const tags = provider.tags || [];
   if (tags.includes("telehealth") || tags.includes("online")) return true;
-  if (provider.onlineAvailable === true || provider.phoneSupport === true) return true;
+  if (provider.onlineAvailable === true) return true;
   if (provider.type === "helpline") return true;
+  if (provider.phoneSupport === true && (provider.region === "National" || ["helpline", "addiction", "youth"].includes(provider.type))) return true;
   return provider.region === "National"
     && ["addiction", "youth"].includes(provider.type)
     && Boolean(provider.phone || provider.text || tags.includes("online"));
@@ -67,11 +70,37 @@ function hasNationalServiceReach(provider) {
     && Boolean(provider.phone || provider.text || provider.email || provider.website);
 }
 
-function matchesRegion(provider, region, preferences = [], query = "") {
+function providerCoords(provider) {
+  const lat = Number(provider.lat ?? provider.latitude);
+  const lon = Number(provider.lon ?? provider.lng ?? provider.longitude);
+  return Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon } : null;
+}
+
+function distanceKm(a, b) {
+  const toRad = (value) => value * Math.PI / 180;
+  const radius = 6371;
+  const dLat = toRad(b.lat - a.lat);
+  const dLon = toRad(b.lon - a.lon);
+  const lat1 = toRad(a.lat);
+  const lat2 = toRad(b.lat);
+  const haversine = Math.sin(dLat / 2) ** 2
+    + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  return 2 * radius * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+}
+
+function localDistanceAllowed(provider, preferences = [], userCoords = null) {
+  if (!userCoords || !distanceCappedLocalTypes.has(provider.type)) return true;
+  if (preferences.includes("telehealth") && isTelehealthProvider(provider)) return true;
+  const coords = providerCoords(provider);
+  if (!coords) return false;
+  return distanceKm(userCoords, coords) <= localInPersonDistanceCapKm;
+}
+
+function matchesRegion(provider, region, preferences = [], query = "", userCoords = null) {
   if (query) return true;
-  if (provider.region === region) return true;
   if (hasNationalServiceReach(provider)) return true;
-  return preferences.includes("telehealth") && isTelehealthProvider(provider);
+  if (preferences.includes("telehealth") && isTelehealthProvider(provider)) return true;
+  return provider.region === region && localDistanceAllowed(provider, preferences, userCoords);
 }
 
 function hasGenderConflict(provider, preferences) {
@@ -107,7 +136,7 @@ function matchesSelectedNeeds(provider, needs) {
   return !scope.length || !needs.length || scope.some((need) => needs.includes(need));
 }
 
-function visibleMatches({ region, type = "all", preferences = [], needs = [], query = "" }) {
+function visibleMatches({ region, type = "all", preferences = [], needs = [], query = "", userCoords = null }) {
   const normalisedQuery = query.trim().toLowerCase();
   return providers.filter((provider) => {
     const text = [
@@ -123,7 +152,7 @@ function visibleMatches({ region, type = "all", preferences = [], needs = [], qu
     ].join(" ").toLowerCase();
 
     return providerMatchesType(provider, type)
-      && matchesRegion(provider, region, preferences, normalisedQuery)
+      && matchesRegion(provider, region, preferences, normalisedQuery, userCoords)
       && (!normalisedQuery || text.includes(normalisedQuery))
       && matchesPreferencePrivacy(provider, preferences)
       && !hasGenderConflict(provider, preferences)
@@ -172,6 +201,33 @@ test("provider availability audit passes without unallowlisted high-severity fin
   const report = JSON.parse(fs.readFileSync(path.join(tempDir, "provider-availability-audit.json"), "utf8"));
   assert.equal(report.summary.highUnallowlisted, 0);
   assert.ok(report.providersScanned >= providers.length);
+});
+
+test("psychiatrist referral audit passes and psychiatrist records carry referral metadata", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "psychiatrist-referrals-"));
+  execFileSync(process.execPath, [
+    "tools/audit-psychiatrist-referrals.mjs",
+    "providers.json",
+    "--json-out",
+    path.join(tempDir, "provider-psychiatrist-referral-audit.json"),
+    "--md-out",
+    path.join(tempDir, "PSYCHIATRIST_REFERRAL_AUDIT.md")
+  ], { stdio: "pipe" });
+
+  const report = JSON.parse(fs.readFileSync(path.join(tempDir, "provider-psychiatrist-referral-audit.json"), "utf8"));
+  assert.equal(report.summary.high, 0);
+
+  const psychiatryRecords = providers.filter((provider) => provider.type === "psychiatrist" || provider.tags?.includes("psychiatry-service"));
+  assert.ok(psychiatryRecords.length > 0);
+  assert.deepEqual(psychiatryRecords.filter((provider) =>
+    typeof provider.requiresReferral !== "boolean"
+    || !["gp", "self", "specialist", "unknown"].includes(provider.referralType)
+    || !provider.referralSourceUrl
+    || !provider.referralSourceExcerpt
+    || !["high", "medium", "low"].includes(provider.referralConfidence)
+    || !/^\d{4}-\d{2}/.test(provider.referralLastChecked || "")
+    || typeof provider.referralNeedsManualReview !== "boolean"
+  ).map((provider) => provider.id), []);
 });
 
 test("availability audit catches stale or unsafe availability metadata", () => {
@@ -407,12 +463,90 @@ test("psychiatrist filters may include specialist public psychiatry services but
   }
 });
 
+test("Dr Rachel Kan is marked as GP-referral first, not direct-contact first", () => {
+  const provider = providers.find((item) => item.id === "ranzcp-6009");
+  assert.ok(provider);
+  assert.equal(provider.name, "Dr Rachel Kan");
+  assert.equal(provider.requiresReferral, true);
+  assert.equal(provider.referralType, "gp");
+  assert.equal(provider.referralConfidence, "high");
+  assert.equal(provider.referralNeedsManualReview, false);
+  assert.match(provider.referralSourceUrl, /yourhealthinmind\.org\/find-a-psychiatrist\/profile\/6009/);
+  assert.match(provider.firstStep, /Book with your GP/i);
+  assert.doesNotMatch(provider.firstStep, /^Email the practice/i);
+});
+
 test("opt-in cultural providers stay hidden unless selected", () => {
   const general = visibleMatches({ region: "Auckland", type: "counsellor" });
   const asianSelected = visibleMatches({ region: "Auckland", type: "counsellor", preferences: ["asian"] });
 
   assert.equal(general.some((provider) => provider.id === "national-asian-family-services"), false);
   assert.equal(asianSelected.some((provider) => provider.id === "national-asian-family-services"), true);
+});
+
+test("male and female provider preferences are implemented as mutually exclusive controls", () => {
+  assert.match(indexHtml, /value="female-provider"/);
+  assert.match(indexHtml, /value="male-provider"/);
+  const script = fs.readFileSync("script.js", "utf8");
+  assert.match(script, /function enforceExclusiveProviderGenderPreference/);
+  assert.match(script, /"female-provider": "male-provider"/);
+  assert.match(script, /"male-provider": "female-provider"/);
+});
+
+test("Golden Bay counselling does not treat Blenheim as a local in-person match", () => {
+  const goldenBayCoords = { lat: -40.8564, lon: 172.8069 };
+  const rosemary = providers.find((provider) => provider.id === "marlborough-rosemary-crockett-counselling");
+  assert.ok(rosemary);
+  assert.equal(rosemary.city, "Blenheim");
+  assert.ok(distanceKm(goldenBayCoords, providerCoords(rosemary)) > 100);
+
+  const localMatches = visibleMatches({
+    region: "Nelson Marlborough Tasman",
+    type: "counsellor",
+    needs: ["anxiety"],
+    userCoords: goldenBayCoords
+  });
+  assert.equal(localMatches.some((provider) => provider.id === rosemary.id), false);
+
+  const telehealthMatches = visibleMatches({
+    region: "Nelson Marlborough Tasman",
+    type: "counsellor",
+    needs: ["anxiety"],
+    preferences: ["telehealth"],
+    userCoords: goldenBayCoords
+  });
+  assert.equal(telehealthMatches.some((provider) => provider.id === rosemary.id), true);
+});
+
+test("region match alone does not override the 30 km local in-person cap", () => {
+  const userCoords = { lat: -40.8564, lon: 172.8069 };
+  const farInPerson = {
+    id: "far-in-person",
+    name: "Far In Person",
+    type: "psychologist",
+    region: "Nelson Marlborough Tasman",
+    city: "Blenheim",
+    lat: -41.51603,
+    lon: 173.9528,
+    tags: ["psychologist", "depression", "direct-contact"],
+    phone: "03 000 0000"
+  };
+  const farTelehealth = {
+    ...farInPerson,
+    id: "far-telehealth",
+    tags: ["psychologist", "depression", "direct-contact", "telehealth"],
+    onlineAvailable: true
+  };
+  const missingCoords = {
+    ...farInPerson,
+    id: "missing-coords",
+    lat: "",
+    lon: ""
+  };
+
+  assert.equal(matchesRegion(farInPerson, "Nelson Marlborough Tasman", [], "", userCoords), false);
+  assert.equal(matchesRegion(farTelehealth, "Nelson Marlborough Tasman", ["telehealth"], "", userCoords), true);
+  assert.equal(matchesRegion(missingCoords, "Nelson Marlborough Tasman", [], "", userCoords), false);
 });
 
 test("telehealth psychologist preference has multiple direct online options", () => {

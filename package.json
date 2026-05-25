@@ -8,6 +8,7 @@
     "check:syntax": "node tools/check-syntax.mjs",
     "validate:data": "node tools/validate-provider-data.mjs",
     "audit:availability": "node tools/audit-provider-availability.mjs",
+    "audit:referrals": "node tools/audit-psychiatrist-referrals.mjs",
     "recheck:availability": "node tools/recheck-provider-availability.mjs",
     "audit:source-fit": "node tools/audit-provider-source-fit.mjs",
     "audit:quality": "node tools/audit-provider-quality.mjs providers.json",

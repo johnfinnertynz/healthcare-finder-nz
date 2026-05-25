@@ -7,6 +7,12 @@ import {
   isDirectoryLike,
   restrictiveStatuses
 } from "./lib/provider-availability.mjs";
+import {
+  isPsychiatryRecord,
+  normaliseReferralConfidence,
+  normaliseReferralType,
+  referralEvidenceText
+} from "./lib/provider-referrals.mjs";
 
 const [, , providersPath = "providers.json"] = process.argv;
 const providers = JSON.parse(fs.readFileSync(providersPath, "utf8"));
@@ -149,6 +155,22 @@ if (!Array.isArray(providers)) {
     if (!isMonthOrDate(provider.availabilityCheckedAt)) recordIssue(errors, provider, "availabilityCheckedAt must be YYYY-MM or YYYY-MM-DD");
     if (provider.availabilitySource && !isUrl(provider.availabilitySource)) recordIssue(errors, provider, "availabilitySource must be an http(s) URL");
     if (typeof provider.availabilityNeedsManualReview !== "boolean") recordIssue(errors, provider, "availabilityNeedsManualReview must be true or false");
+
+    if (isPsychiatryRecord(provider)) {
+      if (typeof provider.requiresReferral !== "boolean") recordIssue(errors, provider, "psychiatry records need requiresReferral true or false");
+      if (!normaliseReferralType(provider.referralType)) recordIssue(errors, provider, "psychiatry records need referralType gp, self, specialist, or unknown");
+      if (!hasValue(provider.referralSourceUrl) || !isUrl(provider.referralSourceUrl)) recordIssue(errors, provider, "psychiatry records need referralSourceUrl");
+      if (!hasValue(provider.referralSourceExcerpt)) recordIssue(errors, provider, "psychiatry records need referralSourceExcerpt");
+      if (!normaliseReferralConfidence(provider.referralConfidence)) recordIssue(errors, provider, "psychiatry records need referralConfidence high, medium, or low");
+      if (!isMonthOrDate(provider.referralLastChecked)) recordIssue(errors, provider, "psychiatry records need referralLastChecked YYYY-MM or YYYY-MM-DD");
+      if (typeof provider.referralNeedsManualReview !== "boolean") recordIssue(errors, provider, "psychiatry records need referralNeedsManualReview true or false");
+      if (provider.requiresReferral === true && !["gp", "specialist"].includes(provider.referralType)) recordIssue(errors, provider, "requiresReferral true must use referralType gp or specialist");
+      if (provider.referralType === "self" && provider.requiresReferral === true) recordIssue(errors, provider, "self-referral records must not have requiresReferral true");
+      const referralText = referralEvidenceText(provider);
+      if (/\bmust\s+first\s+see\s+(?:your\s+)?gp\b|\bgp\s+referral\s+(?:is\s+)?(?:required|needed)\b/i.test(referralText) && provider.referralType === "self") {
+        recordIssue(errors, provider, "referral evidence mentions GP referral but record is self-referral");
+      }
+    }
 
     const detectedAvailability = detectAvailabilityFromText(availabilityEvidenceText(provider));
     if (provider.availabilityStatus === "accepting" && detectedAvailability.status !== "accepting" && !provider.availabilityEvidence) {

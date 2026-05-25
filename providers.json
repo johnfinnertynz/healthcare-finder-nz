@@ -707,7 +707,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://aucklandmentalwellness.com/",
     "availabilityNeedsManualReview": true
@@ -2675,7 +2675,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Cognitive analytic therapy, Complex trauma, Dementia related disorders. Services include ACC Assessment, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care. Patient groups listed include Asylum seekers and refugees, Aboriginal and Torres Strait Islander, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intellectual disability, Intersex, Maori. Works with Ages 18-60, Ages 60+, Ages 16-24.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4499/dr-campbell-emmerton",
     "verified": "2026-05",
     "sourceUpdated": "2025-08-21",
@@ -2755,7 +2755,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4499/dr-campbell-emmerton",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4499/dr-campbell-emmerton",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-2665",
@@ -2784,7 +2791,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Shared care. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intellectual disability, Physical disability. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2665/dr-ian-goodwin",
     "verified": "2026-05",
     "sourceUpdated": "2023-04-17",
@@ -2833,7 +2840,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 3-6",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2665/dr-ian-goodwin",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2665/dr-ian-goodwin",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-2745",
@@ -2860,7 +2874,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Bipolar disorder, Dementia related disorders, Depression. Services include Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Gay and lesbian, Maori, Military and veterans, Non-English speaking, Physical disability. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2745/dr-jane-casey",
     "verified": "2026-05",
     "sourceUpdated": "2018-06-27",
@@ -2904,7 +2918,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2745/dr-jane-casey",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2745/dr-jane-casey",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-7046",
@@ -2935,7 +2956,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Pain management. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Experience with interpreters. Patient groups listed include Asylum seekers and refugees, Gender diverse, Maori, Military and veterans, Non-English speaking, Physical disability, Emergency services personnel. Works with Ages 18-60.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7046/dr-john-joseph",
     "verified": "2026-05",
     "sourceUpdated": "2021-09-07",
@@ -2988,7 +3009,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7046/dr-john-joseph",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7046/dr-john-joseph",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-dr-k-magan-surgery-36-9661-174-8259",
@@ -3066,7 +3094,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Treatment provider, Insurance opinions / reports, Shared care. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans, Non-English speaking, Physical disability. Works with Ages 18-60.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4859/dr-katie-ritchie",
     "verified": "2026-05",
     "sourceUpdated": "2021-09-06",
@@ -3113,7 +3141,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 3-6",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4859/dr-katie-ritchie",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4859/dr-katie-ritchie",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-7734",
@@ -3143,7 +3178,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Dementia related disorders, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Urgent assessments. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gay and lesbian, Maori, Non-English speaking. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7734/dr-m-shanmukha-swamy-lokesh",
     "verified": "2026-05",
     "sourceUpdated": "2018-08-28",
@@ -3193,7 +3228,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7734/dr-m-shanmukha-swamy-lokesh",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7734/dr-m-shanmukha-swamy-lokesh",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-576",
@@ -3216,7 +3258,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include Civil medicolegal, Professional supervision.",
-    "firstStep": "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/576/dr-murray-patton",
     "verified": "2026-05",
     "sourceUpdated": "2024-10-02",
@@ -3239,7 +3281,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/576/dr-murray-patton",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/576/dr-murray-patton",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-7045",
@@ -3264,7 +3313,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include ACC Assessment, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Shared care. Works with Ages 18-60.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7045/dr-neena-joseph",
     "verified": "2026-05",
     "sourceUpdated": "2023-11-25",
@@ -3295,7 +3344,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7045/dr-neena-joseph",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7045/dr-neena-joseph",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-dr-nicholas-cooper-36-8915-174-7709",
@@ -3371,7 +3427,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Conversion disorder, Depression, Interpersonal therapy, Obsessive-compulsive disorders. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Professional supervision, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans. Works with Ages 18-60.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4472/dr-patrick-daniels",
     "verified": "2026-05",
     "sourceUpdated": "2018-06-27",
@@ -3423,7 +3479,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4472/dr-patrick-daniels",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4472/dr-patrick-daniels",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-3358",
@@ -3448,7 +3511,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Post-traumatic stress disorder. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans. Works with Mother and baby, Ages 18-60.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3358/dr-sara-weeks",
     "verified": "2026-05",
     "sourceUpdated": "2018-07-17",
@@ -3477,7 +3540,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3358/dr-sara-weeks",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3358/dr-sara-weeks",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-4807",
@@ -3507,7 +3577,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Interpersonal therapy, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychodynamic psychotherapy. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Shared care. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Military and veterans. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4807/dr-scott-chambers",
     "verified": "2026-05",
     "sourceUpdated": "2018-07-17",
@@ -3555,7 +3625,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4807/dr-scott-chambers",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4807/dr-scott-chambers",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-dr-upsdell-s-surgery-36-9725-174-8341",
@@ -9477,7 +9554,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://millenniumconsulting.co.nz/contact",
     "availabilityNeedsManualReview": true
@@ -9843,7 +9920,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.mtedencounselling.co.nz/",
     "availabilityNeedsManualReview": true
@@ -10668,7 +10745,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.northspanwellbeing.org.nz/our-counsellors",
     "availabilityNeedsManualReview": true
@@ -17045,7 +17122,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://visionwest.org.nz/wellbeing-centre/contact-us/",
     "availabilityNeedsManualReview": true
@@ -18051,7 +18128,7 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/wingspan-formerly-home-and-family-counselling/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/wingspan-formerly-home-and-family-counselling/",
     "availabilityNeedsManualReview": true
@@ -18156,10 +18233,17 @@
     "source": "https://www.healthpoint.co.nz/public/psychiatry/adult-community-mental-health-service-bay/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/public/psychiatry/adult-community-mental-health-service-bay/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/public/psychiatry/adult-community-mental-health-service-bay/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "nzccp-allanah-casey",
@@ -18253,10 +18337,17 @@
     "source": "https://www.ancora.org.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.ancora.org.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.ancora.org.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "1017 Cameron Road, Tauranga",
@@ -18320,10 +18411,17 @@
     "source": "https://www.anteris.nz/service-private-psychiatry",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.anteris.nz/service-private-psychiatry",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.anteris.nz/service-private-psychiatry",
+    "referralSourceExcerpt": "Public information points people to a GP or doctor referral pathway.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "bay-of-plenty-bay-counselling",
@@ -18613,7 +18711,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Depression, Forensic, Mindfulness, Obsessive-compulsive disorders. Services include ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students, Intellectual disability, Maori, Military and veterans, Physical disability, Emergency services personnel. Works with Ages 1-17, Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6743/dr-caleb-armstrong",
     "verified": "2026-05",
     "sourceUpdated": "2023-04-18",
@@ -18671,7 +18769,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6743/dr-caleb-armstrong",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6743/dr-caleb-armstrong",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-epic-health-medical-practice-37-7256-176-1334",
@@ -22595,7 +22700,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.christchurchpsychmed.co.nz/about",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "ranzcp-13276",
@@ -22623,7 +22735,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Post-traumatic stress disorder, Psychosis. Patient groups listed include Families. Works with Ages 1-17, Ages 16-24.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/13276/dr-evan-wilson",
     "verified": "2026-05",
     "sourceUpdated": "2025-07-30",
@@ -22660,7 +22772,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/13276/dr-evan-wilson",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/13276/dr-evan-wilson",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "christchurch-psychmed-laura-hammersley",
@@ -22699,7 +22818,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.christchurchpsychmed.co.nz/about",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "christchurch-psychmed-nicholas-pascoe",
@@ -22741,7 +22867,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.christchurchpsychmed.co.nz/about",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "ranzcp-4946",
@@ -22768,7 +22901,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Electroconvulsive therapy (ECT), Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports. Patient groups listed include Military and veterans. Works with Ages 18-60.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4946/dr-paul-edgar",
     "verified": "2026-05",
     "sourceUpdated": "2018-06-27",
@@ -22813,7 +22946,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4946/dr-paul-edgar",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4946/dr-paul-edgar",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "christchurch-psychmed-samantha-chow",
@@ -22853,7 +22993,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.christchurchpsychmed.co.nz/about",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "christchurch-psychmed-sue-luty",
@@ -22891,7 +23038,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.christchurchpsychmed.co.nz/about",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-durham-health-43-3026-172-5917",
@@ -24210,7 +24364,7 @@
     "source": "https://www.lucidpsychotherapy.co.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.lucidpsychotherapy.co.nz/",
     "availabilityNeedsManualReview": true
@@ -24640,7 +24794,7 @@
     "source": "https://merivaletherapy.co.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://merivaletherapy.co.nz/",
     "availabilityNeedsManualReview": true
@@ -25372,7 +25526,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Bipolar disorder, Depression, Epilepsy, Functional neurological disorder, Neuropsychiatry. Services include Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Psychedelic-Assisted Therapy. Patient groups listed include Doctors, psychiatrists or medical students, Maori. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5226/prof-cameron-lacey",
     "verified": "2026-05",
     "sourceUpdated": "2025-08-06",
@@ -25410,7 +25564,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5226/prof-cameron-lacey",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5226/prof-cameron-lacey",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-promed-doctors-43-5153-172-6377",
@@ -26470,7 +26631,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://talkingtherapy.co.nz/",
     "availabilityNeedsManualReview": true
@@ -27798,7 +27959,7 @@
     "source": "https://www.crispcounselling.com/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.crispcounselling.com/",
     "availabilityNeedsManualReview": true
@@ -28138,10 +28299,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/community-mental-health-and-addiction-services/at/76-wellesley-road-napier-south-napier-1/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/community-mental-health-and-addiction-services/at/76-wellesley-road-napier-south-napier-1/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/community-mental-health-and-addiction-services/at/76-wellesley-road-napier-south-napier-1/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "hawkes-bay-healthpoint-gp-directory",
@@ -28320,7 +28488,7 @@
     "source": "https://lyndachisholm.nz/napier-counselling/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://lyndachisholm.nz/napier-counselling/",
     "availabilityNeedsManualReview": true
@@ -28528,10 +28696,17 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.futureready.org.nz/listing/nova-mentem-mind-health-specialists/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.futureready.org.nz/listing/nova-mentem-mind-health-specialists/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "",
@@ -28595,7 +28770,7 @@
     "source": "https://www.relatehb.co.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.relatehb.co.nz/",
     "availabilityNeedsManualReview": true
@@ -29447,7 +29622,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.authenticallyu.co.nz/",
     "availabilityNeedsManualReview": true
@@ -29895,10 +30070,17 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24 (street-level approximate)",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://eye-openers-psychiatry.co.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://eye-openers-psychiatry.co.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-feilding-health-care-40-2166-175-5699",
@@ -30543,7 +30725,7 @@
     "source": "https://www.platform.org.nz/members/our-members/view/mana-o-te-tangata",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.platform.org.nz/members/our-members/view/mana-o-te-tangata",
     "availabilityNeedsManualReview": true
@@ -30598,7 +30780,7 @@
     "source": "https://manawatusf.org.nz/anxiety-group",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://manawatusf.org.nz/anxiety-group",
     "availabilityNeedsManualReview": true
@@ -30868,10 +31050,17 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/palmerston-north-community-mental-health/at/palmerston-north-hospital-50-ruahine-street/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/palmerston-north-community-mental-health/at/palmerston-north-hospital-50-ruahine-street/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "663 Main Street, Palmerston North",
@@ -30934,7 +31123,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://pnmss.nz/services/counselling",
     "availabilityNeedsManualReview": true
@@ -31094,7 +31283,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.reachoutcounselling.com/",
     "availabilityNeedsManualReview": true
@@ -32273,7 +32462,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/private/psychiatry/coliber-group-psychiatry/?region=im%3A085f0496-b25b-4d5a-8ac7-81a4ca54226d",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/private/psychiatry/coliber-group-psychiatry/?region=im%3A085f0496-b25b-4d5a-8ac7-81a4ca54226d",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "national-depression-helpline",
@@ -32345,7 +32541,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "waitlist",
     "availabilitySource": "https://psychiatry.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://psychiatry.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "psychiatry-nz-han-chung-lim",
@@ -32384,7 +32587,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "waitlist",
     "availabilitySource": "https://psychiatry.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://psychiatry.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "psychiatry-nz-jimi-macmillan",
@@ -32423,7 +32633,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "waitlist",
     "availabilitySource": "https://psychiatry.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://psychiatry.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "psychiatry-nz-staverton-kautoke",
@@ -32461,7 +32678,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "waitlist",
     "availabilitySource": "https://psychiatry.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://psychiatry.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "",
@@ -32517,7 +32741,7 @@
     "source": "https://www.empathpsychology.co.nz/",
     "needScope": [],
     "availabilityStatus": "accepting",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "currently available to see new clients",
     "availabilitySource": "https://www.empathpsychology.co.nz/",
     "availabilityNeedsManualReview": false
@@ -33086,10 +33310,17 @@
     "source": "https://mindcraftpsychiatry.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://mindcraftpsychiatry.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://mindcraftpsychiatry.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "",
@@ -33156,10 +33387,17 @@
     "source": "https://msq.health/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://msq.health/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://msq.health/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "national-nzccp-find-psychologist",
@@ -33387,10 +33625,17 @@
     "source": "https://www.positivemindworks.co/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.positivemindworks.co/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.positivemindworks.co/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "national-puawaitanga",
@@ -33588,7 +33833,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/private/psychiatry/tom-oflynn-psychiatrist/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/private/psychiatry/tom-oflynn-psychiatrist/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "national-pasifika-gambling-helpline",
@@ -33724,7 +33976,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Call the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5617/dr-helen-austin",
     "verified": "2026-05",
     "sourceUpdated": "2020-04-30",
@@ -33753,7 +34005,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5617/dr-helen-austin",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5617/dr-helen-austin",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "marlborough-rachael-sim-clinical-psychology",
@@ -33830,7 +34089,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students, Intellectual disability, Military and veterans, Physical disability. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4371/dr-thomas-levien",
     "verified": "2026-05",
     "sourceUpdated": "2019-05-08",
@@ -33878,7 +34137,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4371/dr-thomas-levien",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4371/dr-thomas-levien",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-florence-medical-centre-41-3415-173-1893",
@@ -34182,7 +34448,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.haumanuhapu.nz/contact",
     "availabilityNeedsManualReview": true
@@ -34786,7 +35052,7 @@
     "availabilityNeedsManualReview": true
   },
   {
-    "address": "",
+    "address": "Unit 3, 19 Henry Street, Blenheim 7201",
     "phone": "021 062 6960",
     "text": "",
     "email": "rcrockettcounselling@gmail.com",
@@ -34798,8 +35064,8 @@
     "sourceQuality": "provider-owned page",
     "needsManualVerification": false,
     "crisisOnly": false,
-    "onlineAvailable": false,
-    "phoneSupport": true,
+    "onlineAvailable": true,
+    "phoneSupport": false,
     "inPerson": true,
     "id": "marlborough-rosemary-crockett-counselling",
     "name": "Rosemary Crockett Counselling",
@@ -34819,13 +35085,16 @@
       "anxiety",
       "cost",
       "fit",
-      "direct-contact"
+      "direct-contact",
+      "telehealth",
+      "online"
     ],
     "specialties": [
       "Counselling",
       "ACC Sensitive Claims",
       "Grief support",
-      "Child protection background"
+      "Child protection background",
+      "Online counselling by arrangement"
     ],
     "patientGroups": [
       "Adults"
@@ -34833,15 +35102,17 @@
     "ageGroups": [
       "Adults"
     ],
-    "fit": "Blenheim counsellor and ACC Sensitive Claims approved provider. Useful when trauma, sexual harm, grief, or a Marlborough local first contact is needed.",
-    "firstStep": "Text or email and ask about current availability, ACC Sensitive Claims, private fees, and whether the support fits what is happening.",
+    "fit": "Blenheim counsellor and ACC Sensitive Claims approved provider. Psychology Today lists in-person sessions in Blenheim and online sessions by arrangement; treat as remote for Golden Bay unless the user chooses telehealth.",
+    "firstStep": "Text or email and ask about current availability, online or Blenheim in-person options, ACC Sensitive Claims, private fees, and whether the support fits what is happening.",
     "source": "https://www.rosemarycrockettcounselling.com/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.rosemarycrockettcounselling.com/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -41.51603,
+    "lon": 173.9528
   },
   {
     "id": "gp-st-lukes-health-centre-41-2891-173-2723",
@@ -36106,7 +36377,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Developmental disability. Services include Professional supervision, Shared care, After-hours appointments, Experience with interpreters, Home visits. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Military and veterans, Non-English speaking, Physical disability. Works with Ages 1-17, Ages 18-60, Ages 16-24.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5542/dr-vernon-reynolds",
     "verified": "2026-05",
     "sourceUpdated": "2022-10-25",
@@ -36171,7 +36442,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5542/dr-vernon-reynolds",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5542/dr-vernon-reynolds",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "northland-heartwood-psychiatry",
@@ -36214,7 +36492,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.heartwoodpsychiatry.co.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-hikurangi-medical-centre-35-5965-174-2857",
@@ -36427,7 +36712,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.jigsawnorth.org.nz/counselling/",
     "availabilityNeedsManualReview": true
@@ -37236,7 +37521,7 @@
     "source": "https://findatherapist.nz/listing/mr-steven-smithson-mnzac",
     "needScope": [],
     "availabilityStatus": "accepting",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "accepting new clients",
     "availabilitySource": "https://findatherapist.nz/listing/mr-steven-smithson-mnzac",
     "availabilityNeedsManualReview": false
@@ -37589,10 +37874,17 @@
     "source": "https://www.healthpoint.co.nz/public/psychiatry/mental-health-addictions-adult-community/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/public/psychiatry/mental-health-addictions-adult-community/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/public/psychiatry/mental-health-addictions-adult-community/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "73 Water Street, Whangarei",
@@ -37644,7 +37936,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://mentalhealth.org.nz/groups/group/te-tai-tokerau-tangata-whai-ora-network",
     "availabilityNeedsManualReview": true
@@ -38138,7 +38430,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24 (street-level approximate)",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/yellow-brick-road-northland/at/2-rathbone-street-whangarei/",
     "availabilityNeedsManualReview": true
@@ -38330,7 +38622,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.ashburn.co.nz/outpatient-services/psychiatry/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.ashburn.co.nz/outpatient-services/psychiatry/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-aurora-health-centre-45-8966-170-4999",
@@ -38472,7 +38771,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.blueharbour.co.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.blueharbour.co.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-broadway-medical-centre-dunedin-45-8781-170-5002",
@@ -39985,8 +40291,8 @@
       "direct-contact"
     ],
     "fit": "Dunedin psychiatry practice offering assessment, treatment, and report writing for mental health difficulties. Useful when medication, diagnosis, or specialist medical review may be needed.",
-    "firstStep": "Email admin or ask your GP or therapist to refer. If you are unsure, email a short enquiry asking what referral information is needed.",
-    "source": "https://www.psychiatrydownsouth.co.nz/contact",
+    "firstStep": "Ask your GP, psychologist, psychotherapist, or another clinician to make a referral, or email to ask what referral information is needed.",
+    "source": "https://www.psychiatrydownsouth.co.nz/referrals",
     "verified": "2026-05",
     "confidence": "high",
     "lat": -45.880028,
@@ -40000,7 +40306,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.psychiatrydownsouth.co.nz/contact",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "specialist",
+    "referralSourceUrl": "https://www.psychiatrydownsouth.co.nz/referrals",
+    "referralSourceExcerpt": "Referrals page says referrals are accepted from GPs and other health-care professionals, and self-referrals usually need clinician support.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-roslyn-health-centre-45-8676-170-4889",
@@ -40443,7 +40756,7 @@
     "source": "https://rotorua.cab.org.nz/community-directory/KB00042707",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://rotorua.cab.org.nz/community-directory/KB00042707",
     "availabilityNeedsManualReview": true
@@ -40644,10 +40957,17 @@
     "source": "https://www.healthpoint.co.nz/public/psychiatry/infant-child-and-adolescent-mental-health/at/childrens-health-hub-1127-haupapa-street/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/public/psychiatry/infant-child-and-adolescent-mental-health/at/childrens-health-hub-1127-haupapa-street/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/public/psychiatry/infant-child-and-adolescent-mental-health/at/childrens-health-hub-1127-haupapa-street/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-kawerau-medical-centre-38-0861-176-7032",
@@ -40816,7 +41136,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://lakespsychology.nz/",
     "availabilityNeedsManualReview": true
@@ -41422,7 +41742,7 @@
     "source": "https://www.resnz.com/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.resnz.com/",
     "availabilityNeedsManualReview": true
@@ -41751,7 +42071,7 @@
     "source": "https://taiohiturama.org.nz/services/mental-health-and-addictions/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://taiohiturama.org.nz/services/mental-health-and-addictions/",
     "availabilityNeedsManualReview": true
@@ -41959,10 +42279,17 @@
     "source": "https://www.healthnz.govt.nz/hospitals-services/hospitals/rotorua-taupo-lakes/mental-health-addiction/adult-mhas-rotorua",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthnz.govt.nz/hospitals-services/hospitals/rotorua-taupo-lakes/mental-health-addiction/adult-mhas-rotorua",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthnz.govt.nz/hospitals-services/hospitals/rotorua-taupo-lakes/mental-health-addiction/adult-mhas-rotorua",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-te-r-nanga-o-ng-ti-pikiao-general-practice-38-1365-176-2492",
@@ -42711,10 +43038,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/community-mental-health-south-canterbury/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/community-mental-health-south-canterbury/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/community-mental-health-south-canterbury/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-dee-street-primary-care-44-3960-171-2480",
@@ -43154,10 +43488,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-of-older-people-south-canterbury/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-of-older-people-south-canterbury/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-of-older-people-south-canterbury/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "south-canterbury-mokonui-talk",
@@ -43806,10 +44147,17 @@
     "source": "https://www.healthpoint.co.nz/public/psychiatry/adult-community-mental-health-services-southern/at/southland-hospital-invercargill/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/public/psychiatry/adult-community-mental-health-services-southern/at/southland-hospital-invercargill/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/public/psychiatry/adult-community-mental-health-services-southern/at/southland-hospital-invercargill/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "southland-adventure-development",
@@ -44109,10 +44457,17 @@
     "source": "https://www.coliber.nz/contact/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.coliber.nz/contact/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.coliber.nz/contact/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-glengarry-medical-centre-46-4018-168-3855",
@@ -45781,10 +46136,17 @@
     ],
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/infant-child-and-adolescent-mental-health-2/at/gisborne-hospital/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/infant-child-and-adolescent-mental-health-2/at/gisborne-hospital/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "tairawhiti-lanae-fisk-psychology",
@@ -45927,10 +46289,17 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/older-persons-mental-health-services-tairawhiti/at/gisborne-hospital/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/older-persons-mental-health-services-tairawhiti/at/gisborne-hospital/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "tairawhiti-healthpoint-gp-directory",
@@ -46199,10 +46568,17 @@
     ],
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/adult-community-mental-health-addiction-services-1/at/79-lowe-street-gisborne/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/adult-community-mental-health-addiction-services-1/at/79-lowe-street-gisborne/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-the-doctors-te-whare-hapara-38-6558-178-0077",
@@ -46318,7 +46694,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.thetherapyspace.nz/contact",
     "availabilityNeedsManualReview": true
@@ -47208,7 +47584,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24 (street-level approximate)",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.future4u.co.nz/",
     "availabilityNeedsManualReview": true
@@ -47500,10 +47876,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-services-for-older-people-mhsop-1/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-services-for-older-people-mhsop-1/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-services-for-older-people-mhsop-1/",
+    "referralSourceExcerpt": "Public information points people to a GP or doctor referral pathway.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-moa-medical-39-1561-174-2042",
@@ -47848,10 +48231,17 @@
     "source": "https://www.spaceofmind.solutions/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.spaceofmind.solutions/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.spaceofmind.solutions/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-strandon-health-39-0499-174-0950",
@@ -48683,10 +49073,17 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.bewellpsychiatry0.co.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.bewellpsychiatry0.co.nz/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-cambridge-family-health-37-8895-175-4539",
@@ -48877,7 +49274,7 @@
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://counsellingworx.co.nz/contact",
     "availabilityNeedsManualReview": true
@@ -50100,7 +50497,7 @@
     "source": "https://www.mandylacycounselling.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.mandylacycounselling.nz/",
     "availabilityNeedsManualReview": true
@@ -50531,7 +50928,7 @@
     "phone": "021 250 3646",
     "text": "",
     "email": "qiuyuewoods@gmail.com",
-    "website": "https://tpc.org.nz/wp-content/uploads/2026/02/2026-List-of-Psychologists-1.pdf",
+    "website": "https://tpc.org.nz/",
     "hours": "Contact the provider about current availability.",
     "cost": "Private and ACC psychology assessment options are listed; ask about fees and funding before booking.",
     "tags": [
@@ -50554,20 +50951,20 @@
     ],
     "fit": "Hamilton clinical psychologist listed by The Psychology Centre's Waikato psychologist list. The listing notes English/Mandarin support, Chinese and Asian cultural understanding, CBT, ACT, Schema therapy, DBT, depression, anxiety, and trauma-related concerns.",
     "firstStep": "Phone or email and ask about current availability, language preference, fees, and whether the support can be in person or online.",
-    "source": "https://tpc.org.nz/wp-content/uploads/2026/02/2026-List-of-Psychologists-1.pdf",
+    "source": "https://tpc.org.nz/",
     "verified": "2026-05",
     "confidence": "medium",
     "lat": -37.7878809,
     "lon": 175.281788,
     "coordinateSource": "OpenStreetMap Nominatim 2026-05-23",
-    "sourceQuality": "provider-owned or NGO public page",
+    "sourceQuality": "third-party professional list",
     "lastVerified": "2026-05",
     "needsManualVerification": true,
     "needScope": [],
     "availabilityStatus": "not_published",
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
-    "availabilitySource": "https://tpc.org.nz/wp-content/uploads/2026/02/2026-List-of-Psychologists-1.pdf",
+    "availabilitySource": "https://tpc.org.nz/",
     "availabilityNeedsManualReview": true
   },
   {
@@ -51887,10 +52284,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/triage-service-waikato/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/triage-service-waikato/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/triage-service-waikato/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "waikato-youth-intact",
@@ -52799,10 +53203,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services/at/49-51-lincoln-road-masterton/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services/at/49-51-lincoln-road-masterton/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "unknown",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services/at/49-51-lincoln-road-masterton/",
+    "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
+    "referralConfidence": "low",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "Wairarapa Hospital Campus, Te Ore Ore Road, Masterton",
@@ -52860,10 +53271,17 @@
     "source": "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "wairarapa-healthpoint-gp-directory",
@@ -53497,7 +53915,7 @@
     "source": "https://www.cbtclinic.co.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.cbtclinic.co.nz/",
     "availabilityNeedsManualReview": true
@@ -53771,7 +54189,7 @@
     "source": "https://www.cpepservices.com/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.cpepservices.com/",
     "availabilityNeedsManualReview": true
@@ -53945,7 +54363,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include Civil medicolegal, Criminal medicolegal, Family court medicolegal. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3038/dr-justin-barry-walsh",
     "verified": "2026-05",
     "sourceUpdated": "2018-07-11",
@@ -53973,7 +54391,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3038/dr-justin-barry-walsh",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3038/dr-justin-barry-walsh",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-7544",
@@ -54000,7 +54425,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include Insurance opinions / reports, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Non-English speaking. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7544/dr-kang-tan",
     "verified": "2026-05",
     "sourceUpdated": "2018-06-27",
@@ -54047,7 +54472,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7544/dr-kang-tan",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7544/dr-kang-tan",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-6009",
@@ -54074,7 +54506,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Cognitive behavioural therapy, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Supportive psychotherapy. Services include ACC Assessment. Patient groups listed include Families. Works with Mother and baby, Ages 1-17, Ages 18-60, Ages 16-24.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6009/dr-rachel-kan",
     "verified": "2026-05",
     "sourceUpdated": "2023-02-20",
@@ -54114,7 +54546,15 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: Less than",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6009/dr-rachel-kan",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6009/dr-rachel-kan",
+    "referralSourceExcerpt": "Profile says people must first see their GP for referral and treatment-options discussion.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false,
+    "practiceName": "Being With"
   },
   {
     "id": "ranzcp-5481",
@@ -54144,7 +54584,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Complex trauma, Dementia related disorders. Services include ACC Treatment provider, Shared care, Home visits. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Maori, Non-English speaking, Physical disability. Works with Ages 18-60, Ages 60+.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit",
     "verified": "2026-05",
     "sourceUpdated": "2025-08-05",
@@ -54195,7 +54635,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-5889",
@@ -54224,7 +54671,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Bipolar disorder, Complex trauma, Depression, Post-traumatic stress disorder, Psychosis. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Non-English speaking, Families, Doctors psychiatrists or medical students. Works with Ages 1-17, Ages 18-60, Ages 16-24.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5889/dr-struan-robertson",
     "verified": "2026-05",
     "sourceUpdated": "2026-03-13",
@@ -54266,7 +54713,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5889/dr-struan-robertson",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5889/dr-struan-robertson",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-eastern-bays-health-centre-41-3196-174-7974",
@@ -56428,7 +56882,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/448/prof-sarah-romans",
     "verified": "2026-05",
     "sourceUpdated": "2022-03-07",
@@ -56447,7 +56901,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/448/prof-sarah-romans",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/448/prof-sarah-romans",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "ranzcp-4171",
@@ -56474,7 +56935,7 @@
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression. Services include Professional supervision, Shared care. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intersex, Military and veterans, Doctors psychiatrists or medical students. Works with Ages 18-60.",
-    "firstStep": "Email the practice asking about fit, referral requirements, fees, wait time, and the simplest booking step.",
+    "firstStep": "Book with your GP and ask for a psychiatry referral. Bring this psychiatrist's details, symptoms, medication history, previous diagnoses, and any safety concerns.",
     "source": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4171/prof-sunny-collings",
     "verified": "2026-05",
     "sourceUpdated": "2026-01-23",
@@ -56514,7 +56975,14 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "appointment wait: 1-3",
     "availabilitySource": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4171/prof-sunny-collings",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": true,
+    "referralType": "gp",
+    "referralSourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4171/prof-sunny-collings",
+    "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
+    "referralConfidence": "high",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": false
   },
   {
     "id": "gp-queen-street-medical-upper-hutt-41-1226-175-0739",
@@ -56681,7 +57149,7 @@
     "source": "https://www.psychclinic.co.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.psychclinic.co.nz/",
     "availabilityNeedsManualReview": true
@@ -57551,7 +58019,7 @@
     "source": "https://vincents.co.nz/contact%20us",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://vincents.co.nz/contact%20us",
     "availabilityNeedsManualReview": true
@@ -57714,7 +58182,7 @@
     "source": "https://www.wcpp.org.nz/contact/",
     "needScope": [],
     "availabilityStatus": "waitlist",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "very limited",
     "availabilitySource": "https://www.wcpp.org.nz/contact/",
     "availabilityNeedsManualReview": true
@@ -57814,7 +58282,7 @@
     "source": "https://www.wwhc.org.nz/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.wwhc.org.nz/",
     "availabilityNeedsManualReview": true
@@ -58091,10 +58559,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/adult-community-mental-health-services-west/at/te-nikau-grey-hospital/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/adult-community-mental-health-services-west/at/te-nikau-grey-hospital/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/adult-community-mental-health-services-west/at/te-nikau-grey-hospital/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "address": "Te Nikau Grey Hospital, 71 Water Walk Road, Greymouth",
@@ -58155,10 +58630,17 @@
     "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services-1/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services-1/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "requiresReferral": false,
+    "referralType": "self",
+    "referralSourceUrl": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services-1/",
+    "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
+    "referralConfidence": "medium",
+    "referralLastChecked": "2026-05",
+    "referralNeedsManualReview": true
   },
   {
     "id": "gp-coastal-health-ltd-42-4597-171-1988",
@@ -58389,7 +58871,7 @@
     "source": "https://pactgroup.co.nz/consumer-advisors-and-peer-support/",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://pactgroup.co.nz/consumer-advisors-and-peer-support/",
     "availabilityNeedsManualReview": true
@@ -58495,7 +58977,7 @@
     "firstStep": "Call or email only if your concern is linked to work, injury, pain, concussion, ACC, or rehabilitation. Ask whether psychology is available for that specific need and whether a referral is required.",
     "source": "https://proactivehealthcare.co.nz/clinic/proactive-greymouth/",
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://proactivehealthcare.co.nz/clinic/proactive-greymouth/",
     "availabilityNeedsManualReview": true
@@ -58788,7 +59270,7 @@
     "source": "https://westcoasthealth.nz/your-health/mental-health/brief-intervention-service",
     "needScope": [],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://westcoasthealth.nz/your-health/mental-health/brief-intervention-service",
     "availabilityNeedsManualReview": true

@@ -33,6 +33,9 @@ jobs:
       - name: Audit provider availability freshness
         run: node tools/audit-provider-availability.mjs
 
+      - name: Audit psychiatrist referral metadata
+        run: node tools/audit-psychiatrist-referrals.mjs
+
       - name: Run unit and workflow tests
         run: node --test tests/*.test.mjs
 
@@ -93,3 +96,12 @@ jobs:
           path: |
             data/provider-source-fit-audit.json
             PROVIDER_SOURCE_FIT_AUDIT.md
+
+      - name: Upload psychiatrist referral audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: psychiatrist-referral-audit
+          path: |
+            data/provider-psychiatrist-referral-audit.json
+            PSYCHIATRIST_REFERRAL_AUDIT.md

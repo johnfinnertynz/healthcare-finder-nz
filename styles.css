@@ -730,6 +730,12 @@ input[type="checkbox"] {
   color: #75665f !important;
 }
 
+.referral-note {
+  color: #44524b !important;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
 .recommendation-card .provider-type-badge {
   width: 2.15rem;
   height: 2.15rem;

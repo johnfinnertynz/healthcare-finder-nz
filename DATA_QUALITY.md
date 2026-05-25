@@ -36,6 +36,16 @@ Every provider record must include:
 - `availabilitySource`
 - `availabilityNeedsManualReview`
 
+Psychiatry records must also include:
+
+- `requiresReferral`
+- `referralType`
+- `referralSourceUrl`
+- `referralSourceExcerpt`
+- `referralConfidence`
+- `referralLastChecked`
+- `referralNeedsManualReview`
+
 Recommended fields:
 
 - `address`
@@ -83,6 +93,12 @@ Current schema aliases:
   explicit status. Do not invent this text.
 - `availabilityNeedsManualReview` is `true` when the status is uncertain,
   restrictive, stale, or based on indirect wording.
+- `referralType` must be `gp`, `self`, `specialist`, or `unknown` for
+  psychiatrist and psychiatry-service records. Use `unknown` when the source is
+  unclear; do not infer self-referral from silence.
+- `requiresReferral` means the stored source indicates referral is required or
+  usually needed. It does not mean every direct contact route is useless; it
+  means the UI should guide the user toward a GP/clinician referral first.
 
 ## Verification Rules
 
@@ -105,6 +121,13 @@ Current schema aliases:
   valid route to psychiatry or medication-specialist assessment, but are not
   private psychiatrist listings. Keep their `type` as `public-service` or
   `youth` unless the listing is a named psychiatrist or psychiatry practice.
+- Private psychiatrist listings must carry referral metadata. If a profile says
+  a GP referral is needed, the main first step should be booking with a GP and
+  bringing the psychiatrist details, not emailing the psychiatrist as the main
+  action.
+- RANZCP Your Health in Mind psychiatrist profile records are GP-referral-first
+  unless a newer source gives stronger contrary evidence. Keep the source URL
+  and a short referral excerpt on the record.
 - Use `ageGroups` where a source limits access. The website filters these
   records so child/adolescent-only and older-adult-only services are not shown
   to clearly incompatible ages.
@@ -117,6 +140,12 @@ Current schema aliases:
   unless they are clearly public professional contact details.
 - Keep MCNZ and Psychologists Board register data backend-only unless a separate
   public practice source confirms the user-facing contact.
+- When a resolved user address/suburb is available, in-person local GP,
+  counsellor, psychologist, psychiatrist, and men's-centre matches must be
+  within 30 km. Region-only matching must not make a Blenheim provider look
+  local to Golden Bay. Confirmed telehealth, national services, helplines,
+  directories, and public regional pathways may be shown separately or labelled
+  clearly.
 
 ## Support Preference Tags
 
@@ -168,6 +197,29 @@ The audit writes `data/provider-availability-audit.json` and
 `data/provider-availability-recheck-results.json` and never changes
 `providers.json` automatically.
 
+## Psychiatrist Referral Rules
+
+Psychiatry is often a referral pathway, not a simple "email this person"
+pathway. The app should reduce friction without sending users into a dead end.
+
+- `referralType: "gp"` means a GP appointment is the practical first step.
+- `referralType: "self"` needs public evidence of self-referral, online booking,
+  direct patient enquiry, or an equivalent pathway.
+- `referralType: "specialist"` means another clinician or health professional
+  referral is required or usually expected.
+- `referralType: "unknown"` stays eligible, but the UI must say referral
+  requirements are unclear and may need checking.
+- Do not mark `self` just because a phone number or email is published.
+
+Run:
+
+```sh
+node tools/audit-psychiatrist-referrals.mjs
+```
+
+The audit writes `data/provider-psychiatrist-referral-audit.json` and
+`PSYCHIATRIST_REFERRAL_AUDIT.md`.
+
 ## Update Checklist
 
 Before committing provider data changes:
@@ -175,16 +227,17 @@ Before committing provider data changes:
 1. Run `node tools/validate-provider-data.mjs`.
 2. Run `node tools/audit-provider-source-fit.mjs`.
 3. Run `node tools/audit-provider-availability.mjs`.
-4. Run `node tools/audit-provider-quality.mjs providers.json`.
-5. Run `node tools/audit-support-preferences.mjs providers.json`.
-6. Run `node tools/audit-address-coverage.mjs providers.json`.
-7. Run `node tools/audit-availability-watchlist.mjs`.
-8. Run `node tools/check-links.mjs`.
-9. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
-10. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
+4. Run `node tools/audit-psychiatrist-referrals.mjs`.
+5. Run `node tools/audit-provider-quality.mjs providers.json`.
+6. Run `node tools/audit-support-preferences.mjs providers.json`.
+7. Run `node tools/audit-address-coverage.mjs providers.json`.
+8. Run `node tools/audit-availability-watchlist.mjs`.
+9. Run `node tools/check-links.mjs`.
+10. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
+11. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
    telehealth, female provider, male provider.
-11. Check one local workflow in a large city and one in a thin-coverage region.
-12. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
+12. Check one local workflow in a large city and one in a thin-coverage region.
+13. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
     soft launch.
 
 ## Source-Fit Audit
@@ -213,8 +266,11 @@ network verification:
 CHECK_PROVIDER_SOURCES=true node tools/check-links.mjs
 ```
 
-Some official health and provider sites block automated link checks. Treat 403
-results as "manual browser review needed" rather than automatically broken.
+Some official health and provider sites block automated link checks or rate-limit
+them. Treat `401`, `403`, `429`, and Cloudflare-style `520`-`524` results as
+"manual browser review needed" rather than automatically broken. The checker
+uses a browser-like user agent by default; override `LINK_CHECK_USER_AGENT`,
+`LINK_CHECK_RETRIES`, or `LINK_CHECK_CONCURRENCY` for slower manual audits.
 
 ## Known Data Risks
 

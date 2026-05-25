@@ -112,7 +112,11 @@ Each provider should also have `confidence`, `sourceQuality`, `lastVerified`,
 `needsManualVerification`, `needScope`, `availabilityStatus`,
 `availabilityCheckedAt`, `availabilitySource`, and
 `availabilityNeedsManualReview` so launch risk, narrow-service scope, and
-availability freshness are visible.
+availability freshness are visible. Psychiatry records also carry
+`requiresReferral`, `referralType`, `referralSourceUrl`,
+`referralSourceExcerpt`, `referralConfidence`, `referralLastChecked`, and
+`referralNeedsManualReview` so GP-referral pathways are not presented as simple
+direct-contact steps.
 
 Address lookup for users is done in the browser and is only used to rank nearby
 providers. If a user chooses address lookup, the address text is sent to the
@@ -174,6 +178,7 @@ Check provider contact quality:
 npm run validate:data
 npm run audit:source-fit
 npm run audit:availability
+npm run audit:referrals
 npm run audit:quality
 node tools/audit-support-preferences.mjs
 node tools/audit-address-coverage.mjs
@@ -218,6 +223,18 @@ Availability statuses are intentionally conservative:
 - `not_accepting` and `referrals_paused` are kept out of the first three care
   cards unless there are no alternatives, and are labelled clearly.
 
+Audit psychiatrist referral pathways:
+
+```sh
+npm run audit:referrals
+```
+
+Private psychiatrist records should not be treated as simple direct-contact
+steps when the source says a referral is needed. RANZCP Your Health in Mind
+records are marked GP-referral-first. Unknown referral status stays visible, but
+the UI tells users to check with the GP/provider before investing energy in a
+direct enquiry.
+
 Geocode public provider addresses for distance ranking:
 
 ```sh
@@ -228,6 +245,10 @@ Provider importers geocode newly added or updated records automatically when a
 public physical address is present and `lat` / `lon` are missing. Add
 `--no-geocode` to an import command when running offline or when an import source
 must not be sent to OpenStreetMap Nominatim.
+When a user has entered a resolved address/suburb, normal in-person GP,
+counsellor, psychologist, psychiatrist, and men's-centre matches are capped at
+30 km. Confirmed telehealth, national services, helplines, directories, and
+public regional pathways can still appear with clear wording.
 
 Import approved counsellor, psychologist, or psychiatrist contacts from CSV:
 
@@ -302,6 +323,11 @@ CHECK_PROVIDER_LINKS=full node tools/check-links.mjs
 ```
 
 Set `PROVIDER_LINK_LIMIT=300` to widen the sample.
+Set `LINK_CHECK_USER_AGENT`, `LINK_CHECK_RETRIES`, or
+`LINK_CHECK_CONCURRENCY` when a manual audit needs a slower or site-specific
+check. The default user agent is intentionally browser-like and does not
+identify itself as a link checker, because some healthcare directories block
+that wording before returning a useful status.
 
 ## Provider Source Principles
 

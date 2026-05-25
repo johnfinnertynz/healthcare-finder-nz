@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 import { statusFromWatchlistItem, withAvailabilityDefaults } from "./lib/provider-availability.mjs";
+import { inferReferralMetadata, isPsychiatryRecord } from "./lib/provider-referrals.mjs";
 
 const [, , providersPath = "providers.json", watchlistPath = "data/monitors/provider-availability-watchlist.json"] = process.argv;
 const verifiedMonth = "2026-05";
@@ -35,7 +36,7 @@ function addWatchItem(watchlist, item) {
 }
 
 function base(record) {
-  return withAvailabilityDefaults({
+  const provider = withAvailabilityDefaults({
     address: "",
     phone: "",
     text: "",
@@ -54,6 +55,9 @@ function base(record) {
     needScope: [],
     ...record
   }, { checkedAt });
+  return isPsychiatryRecord(provider)
+    ? { ...provider, ...inferReferralMetadata(provider, { checkedAt: verifiedMonth }) }
+    : provider;
 }
 
 const liveProviders = [
@@ -331,18 +335,22 @@ const liveProviders = [
     type: "counsellor",
     region: "Nelson Marlborough Tasman",
     city: "Blenheim",
+    address: "Unit 3, 19 Henry Street, Blenheim 7201",
     phone: "021 062 6960",
     email: "rcrockettcounselling@gmail.com",
     website: "https://www.rosemarycrockettcounselling.com/",
     cost: "Private fees may apply. The provider lists ACC Sensitive Claims approval; ask about ACC, WINZ, EAP, or private fees.",
-    tags: ["counsellor", "therapy", "trauma", "sexual-harm", "acc", "sensitive-claims", "grief", "depression", "anxiety", "cost", "fit", "direct-contact"],
-    specialties: ["Counselling", "ACC Sensitive Claims", "Grief support", "Child protection background"],
+    tags: ["counsellor", "therapy", "trauma", "sexual-harm", "acc", "sensitive-claims", "grief", "depression", "anxiety", "cost", "fit", "direct-contact", "telehealth", "online"],
+    specialties: ["Counselling", "ACC Sensitive Claims", "Grief support", "Child protection background", "Online counselling by arrangement"],
     patientGroups: ["Adults"],
     ageGroups: ["Adults"],
-    fit: "Blenheim counsellor and ACC Sensitive Claims approved provider. Useful when trauma, sexual harm, grief, or a Marlborough local first contact is needed.",
-    firstStep: "Text or email and ask about current availability, ACC Sensitive Claims, private fees, and whether the support fits what is happening.",
+    fit: "Blenheim counsellor and ACC Sensitive Claims approved provider. Psychology Today lists in-person sessions in Blenheim and online sessions by arrangement; treat as remote for Golden Bay unless the user chooses telehealth.",
+    firstStep: "Text or email and ask about current availability, online or Blenheim in-person options, ACC Sensitive Claims, private fees, and whether the support fits what is happening.",
     source: "https://www.rosemarycrockettcounselling.com/",
-    phoneSupport: true
+    lat: -41.51603,
+    lon: 173.9528,
+    onlineAvailable: true,
+    phoneSupport: false
   }),
   base({
     id: "canterbury-merivale-therapy",

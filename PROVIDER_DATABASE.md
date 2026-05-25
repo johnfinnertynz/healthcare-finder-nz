@@ -52,6 +52,14 @@ published as professional contact details.
 - `availabilitySource`: URL used for the availability status
 - `availabilityNeedsManualReview`: `true` when the status is uncertain,
   restrictive, stale, or indirectly sourced
+- `requiresReferral`: for psychiatrist and psychiatry-service records, `true`
+  when the source indicates a referral is required or usually expected
+- `referralType`: one of `gp`, `self`, `specialist`, or `unknown`
+- `referralSourceUrl`: source URL used for referral pathway metadata
+- `referralSourceExcerpt`: short source-backed note about the pathway
+- `referralConfidence`: `high`, `medium`, or `low`
+- `referralLastChecked`: month or date when referral wording was checked
+- `referralNeedsManualReview`: `true` when the pathway is unclear or indirect
 
 ## Import Rule
 
@@ -64,9 +72,21 @@ pathway to psychiatry assessment or medication-specialist support, but is not a
 private named psychiatrist. Keep the visible `type` as `public-service` or
 `youth` so users see what they are contacting.
 
+Private psychiatrist and psychiatry-practice records must include referral
+metadata. If a source says GP referral is required, the visible first step should
+send the user toward a GP referral conversation rather than presenting email or
+phone contact as the main action. If referral wording is unclear, use
+`referralType: "unknown"` and keep `referralNeedsManualReview: true`.
+
 Use `ageGroups` whenever a source clearly limits access. The app filters these
 records by the user's age so, for example, child/adolescent-only psychiatry does
 not appear as a routine adult option.
+
+When a resolved user address/suburb is available, normal in-person local GP,
+counsellor, psychologist, psychiatrist, and men's-centre results are capped at
+30 km. Same-region matching must not override real distance. Confirmed
+telehealth, national services, helplines, directories, and public regional
+pathways can still be shown with clear wording.
 
 ## Availability Watchlist
 
