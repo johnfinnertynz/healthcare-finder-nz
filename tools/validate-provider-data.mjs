@@ -111,9 +111,11 @@ if (!Array.isArray(providers)) {
     if (!allowedTypes.has(provider.type)) recordIssue(errors, provider, `invalid type "${provider.type}"`);
     if (!allowedRegions.has(provider.region)) recordIssue(errors, provider, `invalid region "${provider.region}"`);
     if (!Array.isArray(provider.tags)) recordIssue(errors, provider, "tags must be an array");
-    if (provider.needScope !== undefined) {
+    if (!Object.hasOwn(provider, "needScope")) {
+      recordIssue(errors, provider, 'missing required field "needScope"');
+    } else {
       if (!Array.isArray(provider.needScope)) {
-        recordIssue(errors, provider, "needScope must be an array when supplied");
+        recordIssue(errors, provider, "needScope must be an array");
       } else {
         for (const need of provider.needScope) {
           if (!allowedNeedScope.has(need)) recordIssue(errors, provider, `invalid needScope "${need}"`);
@@ -137,8 +139,20 @@ if (!Array.isArray(providers)) {
       recordIssue(errors, provider, "directory records need a website");
     }
 
+    if ((provider.type === "directory" || provider.tags?.includes("directory")) && provider.tags?.includes("direct-contact")) {
+      recordIssue(errors, provider, "directory records must not be tagged direct-contact");
+    }
+
     if (provider.tags?.includes("crisis") && !["public-service", "helpline", "directory"].includes(provider.type)) {
       recordIssue(errors, provider, "crisis-tagged records must be public-service, helpline, or directory");
+    }
+
+    if (provider.crisisOnly === true && !provider.tags?.includes("crisis")) {
+      recordIssue(errors, provider, "crisisOnly records must include the crisis tag");
+    }
+
+    if (provider.crisisOnly === true && ["gp", "counsellor", "psychologist", "psychiatrist"].includes(provider.type)) {
+      recordIssue(errors, provider, "crisisOnly records must not be routine provider types");
     }
 
     const availabilityText = [provider.name, provider.fit, provider.firstStep, provider.hours].join(" ");

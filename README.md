@@ -74,6 +74,8 @@ styles.css             Visual design and responsive layout
 script.js              Guided flow, provider matching, and message builder
 providers.json         Local provider and directory data
 provider-sources.json  Refresh source manifest
+PROVIDER_SOURCE_FIT_AUDIT.md
+                       Latest audit of provider tags against source evidence
 data/imports/          Approved source exports, not usually committed
 data/monitors/         Watchlists for promising providers not currently available
 data/registers/        Backend-only professional register outputs
@@ -105,7 +107,8 @@ details only. Direct care records should include at least one usable contact
 method such as phone, email, text, or an official website/contact page.
 Provider coordinates can be stored as `lat` and `lon` for distance ranking.
 Each provider should also have `confidence`, `sourceQuality`, `lastVerified`,
-and `needsManualVerification` so launch risk is visible.
+`needsManualVerification`, and `needScope` so launch risk and narrow-service
+scope are visible.
 
 Address lookup for users is done in the browser and is only used to rank nearby
 providers. If a user chooses address lookup, the address text is sent to the
@@ -164,10 +167,19 @@ Check provider contact quality:
 
 ```sh
 node tools/validate-provider-data.mjs
+node tools/audit-provider-source-fit.mjs
 node tools/audit-provider-quality.mjs
 node tools/audit-support-preferences.mjs
 node tools/audit-address-coverage.mjs
 ```
+
+`tools/audit-provider-source-fit.mjs` compares each record's tags, type,
+need scope, telehealth flags, cultural-support tags, and direct-contact status
+against the public source fields stored in the record. It writes
+`data/provider-source-fit-audit.json` and `PROVIDER_SOURCE_FIT_AUDIT.md`.
+Unallowlisted high-severity findings fail CI. Temporary exceptions must be
+documented in `data/provider-source-fit-allowlist.json` with a reason,
+reviewer, review date, and expiry date.
 
 Run the automated data and simulated workflow tests:
 

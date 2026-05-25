@@ -13,7 +13,7 @@ if (!csvPath) {
   console.error("Required columns: name, type, region, city, source");
   console.error("Required contact: at least one of phone, text, email, website");
   console.error("Allowed type: counsellor, psychologist, psychiatrist");
-  console.error("Optional columns: id, address, lat, lon, cost, hours, tags, fit, firstStep, verified");
+  console.error("Optional columns: id, address, lat, lon, cost, hours, tags, needScope, fit, firstStep, verified, lastVerified, confidence, sourceQuality, needsManualVerification");
   process.exit(1);
 }
 
@@ -80,6 +80,15 @@ function slugify(value) {
     .replace(/^-+|-+$/g, "");
 }
 
+function listCell(value) {
+  return String(value || "").split(/[|;]/).map((item) => item.trim()).filter(Boolean);
+}
+
+function booleanCell(value, fallback) {
+  if (value === undefined || value === "") return fallback;
+  return /^(true|yes|1)$/i.test(String(value).trim());
+}
+
 function tagList(row) {
   const defaults = [row.type, "fit"];
   if (row.type === "psychiatrist") defaults.push("medical-specialist");
@@ -87,7 +96,7 @@ function tagList(row) {
 
   return [...new Set([
     ...defaults,
-    ...String(row.tags || "").split(/[|;]/).map((tag) => tag.trim()).filter(Boolean)
+    ...listCell(row.tags)
   ])];
 }
 
@@ -103,7 +112,7 @@ function mergeProvider(previous, incoming) {
   if (!previous) return incoming;
   const merged = { ...previous };
   for (const [key, value] of Object.entries(incoming)) {
-    const emptyArray = Array.isArray(value) && value.length === 0;
+    const emptyArray = Array.isArray(value) && value.length === 0 && key !== "needScope";
     if (value === "" || value === undefined || value === null || emptyArray) continue;
     merged[key] = value;
   }
@@ -136,10 +145,15 @@ for (const row of rows) {
     hours: row.hours || "Ask provider about current availability",
     cost: row.cost || "Ask provider about fees, WINZ, ACC, EAP, insurance, or funded options",
     tags: tagList(row),
+    needScope: listCell(row.needScope),
     fit: row.fit || `${row.name} is a ${row.type} contact with public contact details verified from the listed source.`,
     firstStep: row.firstStep || "Send a short enquiry asking about availability, fees, funding options, and whether they are a good fit for what is happening.",
     source: row.source,
-    verified: row.verified || new Date().toISOString().slice(0, 7)
+    verified: row.verified || new Date().toISOString().slice(0, 7),
+    lastVerified: row.lastVerified || row.verified || new Date().toISOString().slice(0, 7),
+    confidence: row.confidence || "medium",
+    sourceQuality: row.sourceQuality || "provider-owned or NGO public page",
+    needsManualVerification: booleanCell(row.needsManualVerification, true)
   };
 
   if (providersById.has(id)) updated += 1;

@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import test from "node:test";
+import { auditProviders } from "../tools/audit-provider-source-fit.mjs";
 
 const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
 const indexHtml = fs.readFileSync("index.html", "utf8");
@@ -132,6 +135,123 @@ function visibleMatches({ region, type = "all", preferences = [], needs = [], qu
 
 test("provider data validation script passes", () => {
   execFileSync(process.execPath, ["tools/validate-provider-data.mjs"], { stdio: "pipe" });
+});
+
+test("provider source-fit audit passes without unallowlisted high-severity findings", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "provider-source-fit-"));
+  execFileSync(process.execPath, [
+    "tools/audit-provider-source-fit.mjs",
+    "providers.json",
+    "--allowlist",
+    "data/provider-source-fit-allowlist.json",
+    "--json-out",
+    path.join(tempDir, "provider-source-fit-audit.json"),
+    "--md-out",
+    path.join(tempDir, "PROVIDER_SOURCE_FIT_AUDIT.md")
+  ], { stdio: "pipe" });
+
+  const report = JSON.parse(fs.readFileSync(path.join(tempDir, "provider-source-fit-audit.json"), "utf8"));
+  assert.equal(report.summary.highUnallowlisted, 0);
+  assert.ok(report.summary.total >= 1, "audit should keep reporting reviewable source-fit findings");
+});
+
+test("source-fit audit catches known unsafe provider patterns", () => {
+  const baseProvider = {
+    id: "sample",
+    name: "Sample Provider",
+    type: "psychologist",
+    region: "Auckland",
+    city: "Auckland",
+    address: "",
+    phone: "09 000 0000",
+    text: "",
+    email: "",
+    website: "https://example.org",
+    cost: "Ask about fees.",
+    tags: ["psychologist", "direct-contact"],
+    fit: "Public listing.",
+    firstStep: "Ask about fit.",
+    source: "https://example.org",
+    verified: "2026-05",
+    lastVerified: "2026-05",
+    confidence: "medium",
+    sourceQuality: "provider-owned page",
+    needsManualVerification: true,
+    needScope: []
+  };
+
+  const report = auditProviders([
+    {
+      ...baseProvider,
+      id: "bad-sexual-harm",
+      tags: ["psychologist", "sexual-harm", "sensitive-claims", "depression", "direct-contact"],
+      fit: "Rape and sexual abuse counselling. ACC Sensitive Claims counselling for victims and survivors of sexual harm.",
+      needScope: []
+    },
+    {
+      ...baseProvider,
+      id: "bad-rehab",
+      tags: ["psychologist", "rehabilitation", "acc", "concussion", "depression", "anxiety", "direct-contact"],
+      fit: "ACC rehabilitation, concussion, pain, and return to work assessment.",
+      needScope: []
+    },
+    {
+      ...baseProvider,
+      id: "bad-national-clinician",
+      region: "National",
+      city: "Aotearoa New Zealand",
+      tags: ["psychologist", "depression", "direct-contact"],
+      fit: "In-person psychology practice.",
+      needScope: []
+    },
+    {
+      ...baseProvider,
+      id: "bad-directory",
+      type: "directory",
+      tags: ["directory", "direct-contact"],
+      fit: "Directory of services.",
+      website: "https://example.org/directory",
+      phone: "09 111 1111",
+      email: "hello@example.org",
+      needScope: []
+    }
+  ], [], { generatedAt: "2026-05-25T00:00:00.000Z" });
+
+  const rules = report.findings.map((finding) => `${finding.providerId}:${finding.rule}:${finding.severity}`);
+  assert.ok(rules.includes("bad-sexual-harm:sexual-harm-overbroad:high"));
+  assert.ok(rules.includes("bad-rehab:narrow-rehab-overbroad-tags:high"));
+  assert.ok(rules.includes("bad-national-clinician:national-clinician-no-telehealth:high"));
+  assert.ok(rules.includes("bad-directory:directory-treated-direct:high"));
+  assert.equal(report.summary.highUnallowlisted, 4);
+});
+
+test("source-fit allowlist suppresses reviewed high-severity exceptions only", () => {
+  const report = auditProviders([
+    {
+      id: "reviewed-directory",
+      name: "Reviewed Directory",
+      type: "directory",
+      region: "National",
+      city: "Aotearoa New Zealand",
+      phone: "0800 000 000",
+      email: "",
+      website: "https://example.org/directory",
+      tags: ["directory"],
+      needScope: [],
+      source: "https://example.org/directory"
+    }
+  ], [{
+    id: "reviewed-directory",
+    rule: "directory-treated-direct",
+    reason: "Navigation phone retained but UI treats this as a directory.",
+    reviewedBy: "test",
+    reviewedDate: "2026-05-25",
+    expiryDate: "2026-08-25"
+  }], { generatedAt: "2026-05-25T00:00:00.000Z" });
+
+  assert.equal(report.summary.high, 1);
+  assert.equal(report.summary.highUnallowlisted, 0);
+  assert.equal(report.summary.allowlisted, 1);
 });
 
 test("all current region filters have useful visible direct contacts", () => {
@@ -297,7 +417,7 @@ test("provider records used for contact have safe public contact fields", () => 
 
 test("every provider has launch verification metadata", () => {
   const missing = providers
-    .filter((provider) => !provider.source || !provider.confidence || !provider.sourceQuality || !provider.lastVerified || typeof provider.needsManualVerification !== "boolean")
+    .filter((provider) => !provider.source || !provider.confidence || !provider.sourceQuality || !provider.lastVerified || typeof provider.needsManualVerification !== "boolean" || !Array.isArray(provider.needScope))
     .map((provider) => provider.id);
 
   const invalidConfidence = providers

@@ -50,6 +50,7 @@ function base(record) {
     onlineAvailable: false,
     phoneSupport: false,
     inPerson: true,
+    needScope: [],
     ...record
   };
 }

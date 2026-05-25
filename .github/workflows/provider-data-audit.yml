@@ -29,6 +29,9 @@ jobs:
       - name: Run provider data validation
         run: node tools/validate-provider-data.mjs
 
+      - name: Audit provider source fit
+        run: node tools/audit-provider-source-fit.mjs
+
       - name: Run unit and workflow tests
         run: node --test tests/*.test.mjs
 
@@ -67,3 +70,12 @@ jobs:
         with:
           name: provider-unavailable-candidates
           path: data/reports/provider-unavailable-candidates.json
+
+      - name: Upload provider source-fit audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-source-fit-audit
+          path: |
+            data/provider-source-fit-audit.json
+            PROVIDER_SOURCE_FIT_AUDIT.md

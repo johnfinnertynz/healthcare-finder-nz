@@ -218,7 +218,7 @@ function mergeProvider(previous, incoming) {
   if (!previous) return incoming;
   const merged = { ...previous };
   for (const [key, value] of Object.entries(incoming)) {
-    const emptyArray = Array.isArray(value) && value.length === 0;
+    const emptyArray = Array.isArray(value) && value.length === 0 && key !== "needScope";
     if (value === "" || value === undefined || value === null || emptyArray) continue;
     merged[key] = value;
   }
@@ -259,12 +259,17 @@ for (const record of extractDirectoryRecords(directoryHtml)) {
     hours: "Ask the psychologist about availability and referral requirements",
     cost: "Private fees vary; ask about ACC, EAP, insurance, or funded options",
     tags,
+    needScope: [],
     fit: `NZCCP clinical psychologist listing${record.specialties.length ? ` with specialties including ${record.specialties.slice(0, 5).join(", ")}` : ""}.`,
     firstStep: contact.email
       ? "Email a short enquiry asking about availability, fees, telehealth, and whether they are a good fit for what is happening."
       : "Open the profile and send a short enquiry asking about availability, fees, telehealth, and whether they are a good fit for what is happening.",
     source,
-    verified: new Date().toISOString().slice(0, 7)
+    verified: new Date().toISOString().slice(0, 7),
+    lastVerified: new Date().toISOString().slice(0, 7),
+    confidence: "medium",
+    sourceQuality: "professional register or directory",
+    needsManualVerification: true
   };
 
   if (providersById.has(id)) updated += 1;

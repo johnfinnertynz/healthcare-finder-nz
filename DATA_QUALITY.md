@@ -26,6 +26,11 @@ Every provider record must include:
 - `firstStep`
 - `source`
 - `verified`
+- `lastVerified`
+- `confidence`
+- `sourceQuality`
+- `needsManualVerification`
+- `needScope`
 
 Recommended fields:
 
@@ -37,10 +42,6 @@ Recommended fields:
 - `website`
 - `bookingUrl`
 - `hours`
-- `confidence`
-- `sourceQuality`
-- `lastVerified`
-- `needsManualVerification`
 - `eligibility`
 - `crisisOnly`
 - `onlineAvailable`
@@ -58,6 +59,10 @@ Current schema aliases:
   third-party GP listing.
 - `needsManualVerification` is `true` when a listing should be checked by a
   person before stronger claims are made.
+- `needScope` is always present. Use `[]` for broad services, or a narrow list
+  such as `["trauma"]`, `["addiction"]`, or `["work"]` when the source only
+  supports a limited pathway. This prevents sexual-harm-only, addiction-only,
+  and work/rehab-only providers from ranking for unrelated concerns.
 - `patientGroups`, `ageGroups`, `specialties`, `services`, and `languages` are
   optional structured source fields. Use them when a directory explicitly
   publishes them, especially for support-preference evidence.
@@ -75,8 +80,13 @@ Current schema aliases:
   text, email, or official website/contact page.
 - Directory records must be marked `type: "directory"` or tagged `directory`.
   They must not show "Use this contact" in the UI.
+- Directory records must not be tagged `direct-contact`. If a navigation phone
+  number is retained for human review, it must be allowlisted in the source-fit
+  audit and still treated as a directory in the UI.
 - Crisis records must be tagged `crisis` and should only appear in crisis or
   fallback contexts, not as routine first-contact recommendations.
+- Crisis-only records must be `helpline`, `public-service`, or `directory`
+  records, not routine GP, counsellor, psychologist, or psychiatrist records.
 - Use `psychiatry-service` for public specialist mental health teams that are a
   valid route to psychiatry or medication-specialist assessment, but are not
   private psychiatrist listings. Keep their `type` as `public-service` or
@@ -114,17 +124,37 @@ ethnicity, culture, gender, or affirming practice from a provider name alone.
 Before committing provider data changes:
 
 1. Run `node tools/validate-provider-data.mjs`.
-2. Run `node tools/audit-provider-quality.mjs providers.json`.
-3. Run `node tools/audit-support-preferences.mjs providers.json`.
-4. Run `node tools/audit-address-coverage.mjs providers.json`.
-5. Run `node tools/audit-availability-watchlist.mjs`.
-6. Run `node tools/check-links.mjs`.
-7. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
-8. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
+2. Run `node tools/audit-provider-source-fit.mjs`.
+3. Run `node tools/audit-provider-quality.mjs providers.json`.
+4. Run `node tools/audit-support-preferences.mjs providers.json`.
+5. Run `node tools/audit-address-coverage.mjs providers.json`.
+6. Run `node tools/audit-availability-watchlist.mjs`.
+7. Run `node tools/check-links.mjs`.
+8. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
+9. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
    telehealth, female provider, male provider.
-9. Check one local workflow in a large city and one in a thin-coverage region.
-10. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
+10. Check one local workflow in a large city and one in a thin-coverage region.
+11. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
     soft launch.
+
+## Source-Fit Audit
+
+The source-fit audit protects against a record being more confident than its
+source. It flags examples such as:
+
+- sexual-harm-only sources tagged for general depression or anxiety
+- addiction-only services ranking for unrelated low-mood support
+- ACC, concussion, pain, or return-to-work providers used as broad psychology
+- crisis pathways offered as routine first contacts
+- directories with direct-contact signals
+- national individual clinicians without telehealth evidence
+- cultural-support or telehealth tags that lack public-source evidence
+- register-only professionals without a separate public practice contact
+
+High-severity findings fail CI unless a short-lived exception exists in
+`data/provider-source-fit-allowlist.json`. Every allowlist item needs `id`,
+`rule`, `reason`, `reviewedBy`, `reviewedDate`, and `expiryDate`; use it only
+when the UI intentionally handles the risk safely.
 
 Use this stricter command when source URLs, not only user-visible websites, need
 network verification:

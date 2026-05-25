@@ -11,7 +11,7 @@ if (!csvPath) {
   console.error("Usage: node tools/import-gp-practices.mjs <gp-practices.csv> [providers.json] [--no-geocode]");
   console.error("");
   console.error("Required CSV columns: name, region, city, website");
-  console.error("Optional columns: id, address, phone, email, lat, lon, hours, cost, tags, fit, firstStep, source, verified");
+  console.error("Optional columns: id, address, phone, email, lat, lon, hours, cost, tags, fit, firstStep, source, verified, lastVerified, confidence, sourceQuality, needsManualVerification");
   process.exit(1);
 }
 
@@ -76,6 +76,15 @@ function toObjects(rows) {
   ));
 }
 
+function listCell(value) {
+  return String(value || "").split(/[|;]/).map((item) => item.trim()).filter(Boolean);
+}
+
+function booleanCell(value, fallback) {
+  if (value === undefined || value === "") return fallback;
+  return /^(true|yes|1)$/i.test(String(value).trim());
+}
+
 const requiredFields = ["name", "region", "city", "website"];
 const existing = JSON.parse(fs.readFileSync(providersPath, "utf8"));
 const csv = fs.readFileSync(csvPath, "utf8");
@@ -89,7 +98,7 @@ function mergeProvider(previous, incoming) {
   if (!previous) return incoming;
   const merged = { ...previous };
   for (const [key, value] of Object.entries(incoming)) {
-    const emptyArray = Array.isArray(value) && value.length === 0;
+    const emptyArray = Array.isArray(value) && value.length === 0 && key !== "needScope";
     if (value === "" || value === undefined || value === null || emptyArray) continue;
     merged[key] = value;
   }
@@ -126,12 +135,17 @@ for (const row of rows) {
       "anxiety",
       "work",
       "cost",
-      ...String(row.tags || "").split(/[|;]/).map((tag) => tag.trim()).filter(Boolean)
+      ...listCell(row.tags)
     ],
+    needScope: [],
     fit: row.fit || "General practice team that can help with mental health first steps, medication discussion, referrals, and access to funded primary mental health support where available.",
     firstStep: row.firstStep || "Contact the practice and ask whether they are enrolling new patients, what the first appointment costs, and whether they have a health improvement practitioner, health coach, counsellor, or social worker.",
     source: row.source || row.website,
-    verified: row.verified || new Date().toISOString().slice(0, 7)
+    verified: row.verified || new Date().toISOString().slice(0, 7),
+    lastVerified: row.lastVerified || row.verified || new Date().toISOString().slice(0, 7),
+    confidence: row.confidence || "medium",
+    sourceQuality: row.sourceQuality || "practice-owned or public GP listing",
+    needsManualVerification: booleanCell(row.needsManualVerification, true)
   };
 
   if (providersById.has(id)) updated += 1;

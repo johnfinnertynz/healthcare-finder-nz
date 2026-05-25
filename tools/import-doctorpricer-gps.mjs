@@ -244,6 +244,7 @@ function mapPractice(practice, seed, fetchedAt) {
     hours: "Ask the practice about appointment, enrolment, and after-hours options.",
     cost: priceLabel(practice.price),
     tags: [...new Set(tags)],
+    needScope: [],
     fit: "General practice team that can help with mental health first steps, medication discussion, medical certificates, referrals, and access to funded primary mental health support where available.",
     firstStep: firstStepFor(practice),
     source: DOCTORPRICER_HOME,
@@ -272,7 +273,7 @@ function mergeProvider(previous, incoming) {
       continue;
     }
 
-    const emptyArray = Array.isArray(value) && value.length === 0;
+    const emptyArray = Array.isArray(value) && value.length === 0 && key !== "needScope";
     const emptyObject = value && typeof value === "object" && !Array.isArray(value) && !Object.keys(value).length;
     if (value === "" || value === undefined || value === null || emptyArray || emptyObject) continue;
     merged[key] = value;

@@ -220,6 +220,7 @@ function toRecord(profile) {
     hours: wait.trim() || "Ask provider about current availability",
     cost: "Private specialist fees usually apply. Ask about referral needs, insurance, ACC, or any funded options.",
     tags: tagsFor(profile, address),
+    needScope: [],
     specialties: expertise,
     services,
     ageGroups: ages,
@@ -266,7 +267,7 @@ function mergeProvider(previous, incoming) {
   if (!previous) return incoming;
   const merged = { ...previous };
   for (const [key, value] of Object.entries(incoming)) {
-    const emptyArray = Array.isArray(value) && value.length === 0;
+    const emptyArray = Array.isArray(value) && value.length === 0 && key !== "needScope";
     if (value === "" || value === undefined || value === null || emptyArray) continue;
     merged[key] = value;
   }

@@ -135,6 +135,7 @@ function recordForNewPlymouth(previous = {}) {
         "acc"
       ])
     ],
+    needScope: [],
     specialties: newPlymouthSpecialties,
     patientGroups: [
       "Private clients",
@@ -185,6 +186,7 @@ function recordForCambridge(previous = {}) {
         "adolescent"
       ])
     ],
+    needScope: [],
     specialties: cambridgeSpecialties,
     patientGroups: ["Private clients", "Children", "Adolescents", "Adults", "Parents and families"],
     ageGroups: ["Children", "Adolescents", "Adults"],

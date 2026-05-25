@@ -203,6 +203,11 @@ steps.push(runStep("Audit support preference tags", [
   providersPath
 ]));
 
+steps.push(runStep("Audit provider source fit", [
+  "tools/audit-provider-source-fit.mjs",
+  providersPath
+]));
+
 steps.push(runStep("Audit address and coordinate coverage", [
   "tools/audit-address-coverage.mjs",
   providersPath

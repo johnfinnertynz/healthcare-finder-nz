@@ -176,6 +176,7 @@ for (const profileUrl of profileUrls) {
       ? `${fee}. Private fees apply; ask about ACC, EAP, insurance, WINZ, or other funding options before booking.`
       : "Private fees apply. Ask about ACC, EAP, insurance, WINZ, or other funding options before booking.",
     tags: tagsFromText(evidenceText, role),
+    needScope: [],
     specialties: areas,
     services: therapies,
     patientGroups: ageGroupsFromWorksWith(worksWith),

@@ -212,12 +212,17 @@ function resourceRecords(bundle) {
           ? "Varies by practice; enrolled patients usually pay less. Ask about Community Services Card and Very Low Cost Access fees."
           : "Ask provider about costs, funded options, WINZ, ACC, EAP, or reduced fees",
         tags: tagsFor(resource, type),
+        needScope: [],
         fit: resource.description || `${name} can be used as a first contact for support, service information, appointment options, or referral guidance.`,
         firstStep: phone
           ? "Call and ask for the simplest next step, costs, and whether this service is a good fit."
           : "Use the website or email contact to ask for the simplest next step, costs, and whether this service is a good fit.",
-        source: website || `FHIR ${resource.resourceType}/${resource.id || ""}`.trim(),
-        verified: new Date().toISOString().slice(0, 7)
+        source: website || "https://www.healthpoint.co.nz/",
+        verified: new Date().toISOString().slice(0, 7),
+        lastVerified: new Date().toISOString().slice(0, 7),
+        confidence: website ? "medium" : "low",
+        sourceQuality: "official FHIR provider export",
+        needsManualVerification: true
       };
     })
     .filter((record) => record.name && (record.phone || record.email || record.website));
@@ -235,7 +240,7 @@ function mergeProvider(previous, incoming) {
   if (!previous) return incoming;
   const merged = { ...previous };
   for (const [key, value] of Object.entries(incoming)) {
-    const emptyArray = Array.isArray(value) && value.length === 0;
+    const emptyArray = Array.isArray(value) && value.length === 0 && key !== "needScope";
     if (value === "" || value === undefined || value === null || emptyArray) continue;
     merged[key] = value;
   }
