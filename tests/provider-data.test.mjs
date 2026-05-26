@@ -6,6 +6,11 @@ import path from "node:path";
 import test from "node:test";
 import { auditAvailability } from "../tools/audit-provider-availability.mjs";
 import { auditProviders } from "../tools/audit-provider-source-fit.mjs";
+import {
+  allowedPsychiatristBaselineScope,
+  baselinePsychiatristScopeNote,
+  baselinePsychiatristScopeSource
+} from "../tools/lib/provider-scope.mjs";
 
 const providers = JSON.parse(fs.readFileSync("providers.json", "utf8"));
 const indexHtml = fs.readFileSync("index.html", "utf8");
@@ -198,6 +203,89 @@ test("provider source-fit audit passes without unallowlisted high-severity findi
   const report = JSON.parse(fs.readFileSync(path.join(tempDir, "provider-source-fit-audit.json"), "utf8"));
   assert.equal(report.summary.highUnallowlisted, 0);
   assert.ok(report.summary.total >= 1, "audit should keep reporting reviewable source-fit findings");
+});
+
+test("psychiatrist records separate baseline scope from advertised interests", () => {
+  const psychiatrists = providers.filter((provider) => provider.type === "psychiatrist");
+  assert.ok(psychiatrists.length > 0);
+
+  const invalid = psychiatrists.filter((provider) =>
+    !Array.isArray(provider.baselineScope)
+    || !provider.baselineScope.length
+    || provider.baselineScope.some((scope) => !allowedPsychiatristBaselineScope.has(scope))
+    || provider.baselineScopeSource !== baselinePsychiatristScopeSource
+    || provider.baselineScopeNote !== baselinePsychiatristScopeNote
+    || !Array.isArray(provider.advertisedSpecialties)
+    || !Array.isArray(provider.advertisedSpecialtyEvidence)
+    || !provider.specialtyTagsSource
+  ).map((provider) => provider.id);
+
+  assert.deepEqual(invalid, []);
+
+  const withoutAdvertisedInterests = psychiatrists.find((provider) => !provider.specialties?.length);
+  assert.ok(withoutAdvertisedInterests, "fixture should include at least one psychiatrist without listed interests");
+  assert.deepEqual(withoutAdvertisedInterests.advertisedSpecialties, []);
+  assert.equal(withoutAdvertisedInterests.advertisedSpecialtyEvidence.length, 0);
+});
+
+test("public app wording does not present psychiatrist baseline scope as advertised specialty", () => {
+  const script = fs.readFileSync("script.js", "utf8");
+  assert.match(script, /providerSpecialtyLabel\(provider\)/);
+  assert.match(script, /Listed interests/);
+  assert.match(script, /baseline medical-specialist scope/);
+  assert.doesNotMatch(script, /provider\.type === "psychiatrist"[\s\S]{0,140}<strong>Specialties:<\/strong>/);
+});
+
+test("source-fit audit keeps psychiatrist baseline separate from unsupported source-backed claims", () => {
+  const base = {
+    id: "fixture",
+    name: "Fixture",
+    type: "psychiatrist",
+    region: "Auckland",
+    city: "Auckland",
+    source: "https://example.org/provider",
+    website: "https://example.org/provider",
+    sourceQuality: "provider-owned page",
+    cost: "Private fees",
+    fit: "Psychiatrist profile with public contact details.",
+    firstStep: "Ask your GP about referral.",
+    tags: ["psychiatrist"],
+    needScope: [],
+    baselineScope: ["depression/mood disorders"],
+    baselineScopeSource: baselinePsychiatristScopeSource,
+    baselineScopeNote: baselinePsychiatristScopeNote,
+    advertisedSpecialties: [],
+    advertisedSpecialtyEvidence: [],
+    specialtyTagsSource: "no advertised specialties recorded",
+    phone: "09 000 0000"
+  };
+
+  const baselineOnly = auditProviders([base]).findings;
+  assert.equal(baselineOnly.some((finding) => finding.rule === "broad-tag-without-source-support"), false);
+
+  const unsupportedPsychiatristTag = auditProviders([{
+    ...base,
+    id: "unsupported-psychiatrist-tag",
+    tags: ["psychiatrist", "depression"]
+  }]).findings;
+  assert.equal(unsupportedPsychiatristTag.some((finding) => finding.rule === "broad-tag-without-source-support"), true);
+
+  const unsupportedAdvertised = auditProviders([{
+    ...base,
+    id: "unsupported-advertised",
+    advertisedSpecialties: ["Depression"],
+    advertisedSpecialtyEvidence: [{ sourceUrl: base.source, excerpt: "Manual claim", confidence: "low" }]
+  }]).findings;
+  assert.equal(unsupportedAdvertised.some((finding) => finding.rule === "advertised-specialty-without-source-support"), true);
+
+  const unsupportedPsychologistTag = auditProviders([{
+    ...base,
+    id: "unsupported-psychologist-tag",
+    type: "psychologist",
+    tags: ["psychologist", "depression"],
+    baselineScope: []
+  }]).findings;
+  assert.equal(unsupportedPsychologistTag.some((finding) => finding.rule === "broad-tag-without-source-support"), true);
 });
 
 test("provider availability audit passes without unallowlisted high-severity findings", () => {

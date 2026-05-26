@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
+import { withPsychiatristScopeMetadata } from "./lib/provider-scope.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -60,7 +61,7 @@ const needTags = [
   ["anxiety", /anxiety|panic|obsessive-compulsive|ocd/i],
   ["trauma", /trauma|post-traumatic|sexual assault|abuse|emdr/i],
   ["addiction", /addiction|gambling|alcohol|drug/i],
-  ["work", /work|stress|professional|supervision/i]
+  ["work", /work stress|workplace|employment|burnout|return to work|vocational|occupational|study|money|housing/i]
 ];
 
 function slugify(value) {
@@ -205,7 +206,7 @@ function toRecord(profile) {
   const patientGroupText = patientGroups.length ? ` Patient groups listed include ${patientGroups.slice(0, 8).join(", ")}.` : "";
   const verifiedMonth = new Date().toISOString().slice(0, 7);
 
-  return withAvailabilityDefaults({
+  return withPsychiatristScopeMetadata(withAvailabilityDefaults({
     id: `ranzcp-${slugify(profile.ranzcP_ID || profile.id || profile.name)}`,
     name: profile.name,
     type: "psychiatrist",
@@ -244,7 +245,7 @@ function toRecord(profile) {
     referralLastChecked: verifiedMonth,
     referralNeedsManualReview: false,
     sourceUpdated: profile.lastUpdatedDate ? profile.lastUpdatedDate.slice(0, 10) : ""
-  }, { checkedAt: verifiedMonth });
+  }, { checkedAt: verifiedMonth }));
 }
 
 const existing = JSON.parse(fs.readFileSync(providersPath, "utf8"));

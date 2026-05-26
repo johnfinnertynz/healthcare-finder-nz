@@ -529,6 +529,7 @@ function profileText(provider) {
     provider.firstStep,
     provider.appointmentWait,
     ...(provider.specialties || []),
+    ...(provider.advertisedSpecialties || []),
     ...(provider.services || []),
     ...(provider.ageGroups || []),
     ...(provider.patientGroups || []),
@@ -537,8 +538,32 @@ function profileText(provider) {
   ].join(" ").toLowerCase();
 }
 
-function hasSpecialtyMatch(provider, need) {
-  const text = profileText(provider);
+function advertisedSpecialtyText(provider) {
+  const listed = Array.isArray(provider.advertisedSpecialties)
+    ? provider.advertisedSpecialties
+    : Array.isArray(provider.specialties)
+      ? provider.specialties
+      : [];
+
+  const values = [
+    ...listed,
+    ...(provider.services || []),
+    ...(provider.patientGroups || [])
+  ];
+
+  if (provider.type !== "psychiatrist") {
+    values.push(provider.fit || "", provider.firstStep || "", ...(provider.tags || []));
+  } else {
+    const fit = provider.fit || "";
+    const match = fit.match(/(?:specialt(?:y|ies)|special interests?|listed interests?) (?:including|include|are)?\s+(.+?)(?:\.|$)/i);
+    if (match) values.push(match[1]);
+  }
+
+  return values.join(" ").toLowerCase();
+}
+
+function hasAdvertisedSpecialtyMatch(provider, need) {
+  const text = advertisedSpecialtyText(provider);
   const terms = {
     depression: ["depression", "low mood", "mood"],
     anxiety: ["anxiety", "panic", "overwhelm", "obsessive-compulsive", "ocd"],
@@ -548,6 +573,19 @@ function hasSpecialtyMatch(provider, need) {
   }[need] || [need];
 
   return terms.some((term) => text.includes(term));
+}
+
+function hasPsychiatristBaselineMatch(provider, need) {
+  if (provider.type !== "psychiatrist") return false;
+  const scope = (provider.baselineScope || []).join(" ").toLowerCase();
+  const terms = {
+    depression: ["depression", "mood", "bipolar", "medication", "diagnosis", "risk"],
+    anxiety: ["anxiety", "medication", "diagnosis", "risk"],
+    trauma: ["trauma", "ptsd", "medication", "diagnosis", "risk"],
+    addiction: ["addiction", "substance", "medication", "diagnosis", "risk"],
+    work: ["diagnosis", "risk"]
+  }[need] || [need];
+  return terms.some((term) => scope.includes(term));
 }
 
 function providerSourcePath(provider) {
@@ -598,6 +636,10 @@ function providerNeedScopeLabel(provider) {
 }
 
 function providerSpecialties(provider) {
+  if (Array.isArray(provider.advertisedSpecialties) && provider.advertisedSpecialties.length) {
+    return provider.advertisedSpecialties.slice(0, 6).join(", ");
+  }
+
   if (Array.isArray(provider.specialties) && provider.specialties.length) {
     return provider.specialties.slice(0, 6).join(", ");
   }
@@ -605,6 +647,8 @@ function providerSpecialties(provider) {
   const fit = provider.fit || "";
   const match = fit.match(/(?:specialt(?:y|ies)|special interests?) (?:including|include)\s+(.+?)(?:\.|$)/i);
   if (match) return match[1];
+
+  if (provider.type === "psychiatrist") return "";
 
   const specialtyTags = (provider.tags || [])
     .filter((tag) => ![
@@ -619,6 +663,16 @@ function providerSpecialties(provider) {
     .map((tag) => tag.replace(/-/g, " "));
 
   return specialtyTags.slice(0, 6).join(", ");
+}
+
+function providerSpecialtyLabel(provider) {
+  return provider.type === "psychiatrist" ? "Listed interests" : "Specialties";
+}
+
+function psychiatristBaselineNote(provider) {
+  if (provider.type !== "psychiatrist") return "";
+  if (!Array.isArray(provider.baselineScope) || !provider.baselineScope.length) return "";
+  return "As a psychiatrist, they may be able to assess and treat a broad range of mental health conditions. Listed interests are separate from this baseline medical-specialist scope.";
 }
 
 function providerPatientGroups(provider) {
@@ -710,8 +764,12 @@ function providerMatchesProfile(provider) {
   if (identity === "male" && tags.includes("male")) score += 2;
   if (identity === "female" && tags.includes("female")) score += 2;
   needs.forEach((need) => {
-    if (tags.includes(need)) score += 4;
-    if (hasSpecialtyMatch(provider, need)) score += provider.type === "psychologist" ? 6 : 3;
+    if (tags.includes(need)) score += provider.type === "psychiatrist" ? 2 : 4;
+    if (hasAdvertisedSpecialtyMatch(provider, need)) {
+      score += provider.type === "psychiatrist" ? 8 : provider.type === "psychologist" ? 6 : 3;
+    } else if (hasPsychiatristBaselineMatch(provider, need)) {
+      score += 1;
+    }
   });
   if (provider.type === "helpline" && tags.includes("addiction")) {
     if (tags.includes("alcohol") && tags.includes("drug")) score += 3;
@@ -744,7 +802,8 @@ function providerMatchesProfile(provider) {
 
 function providerSortValue(provider) {
   const needs = checkedValues("need");
-  const specialtyMatches = needs.filter((need) => hasSpecialtyMatch(provider, need)).length;
+  const advertisedMatches = needs.filter((need) => hasAdvertisedSpecialtyMatch(provider, need)).length;
+  const baselineMatches = needs.filter((need) => !hasAdvertisedSpecialtyMatch(provider, need) && hasPsychiatristBaselineMatch(provider, need)).length;
   const directContacts = [provider.email, provider.phone, provider.text].filter(Boolean).length;
   const distance = distanceToProvider(provider);
   const tags = provider.tags || [];
@@ -755,7 +814,7 @@ function providerSortValue(provider) {
     availabilityTier: providerAvailabilitySortTier(provider),
     referralTier: providerReferralSortTier(provider),
     telehealthMatch: wantsTelehealth && telehealth ? 1 : 0,
-    specialtyMatches,
+    specialtyMatches: advertisedMatches * 3 + baselineMatches,
     directContacts,
     isLocal: !wantsTelehealth && provider.region === (matchedRegion || "") ? 1 : 0,
     isTelehealth: telehealth ? 1 : 0,
@@ -971,6 +1030,8 @@ function renderProviders() {
       const directory = isDirectoryLike(provider);
       const helpline = provider.type === "helpline";
       const specialty = providerSpecialties(provider);
+      const specialtyLabel = providerSpecialtyLabel(provider);
+      const baselineNote = psychiatristBaselineNote(provider);
       const patientGroups = providerPatientGroups(provider);
       const distance = distanceToProvider(provider);
       const distanceLabel = providerDistanceLabel(provider, distance);
@@ -983,6 +1044,8 @@ function renderProviders() {
       const providerFirstStep = escapeHtml(provider.firstStep);
       const providerCost = escapeHtml(provider.cost);
       const providerSpecialty = escapeHtml(specialty);
+      const providerSpecialtyLabel = escapeHtml(specialtyLabel);
+      const providerBaselineNote = escapeHtml(baselineNote);
       const providerPatientGroup = escapeHtml(patientGroups);
       const providerDistance = escapeHtml(distanceLabel);
       const availabilityStatus = providerAvailabilityStatus(provider);
@@ -1046,7 +1109,8 @@ function renderProviders() {
           </div>
           <div class="provider-card__body">
             <p>${providerFit}</p>
-            ${specialty ? `<p class="provider-detail"><strong>Specialties:</strong> ${providerSpecialty}</p>` : ""}
+            ${specialty ? `<p class="provider-detail"><strong>${providerSpecialtyLabel}:</strong> ${providerSpecialty}</p>` : ""}
+            ${providerBaselineNote ? `<p class="provider-detail"><strong>Psychiatrist scope:</strong> ${providerBaselineNote}</p>` : ""}
             ${patientGroups ? `<p class="provider-detail"><strong>Patient groups:</strong> ${providerPatientGroup}</p>` : ""}
             <p class="provider-detail"><strong>First step:</strong> ${providerFirstStep}</p>
             ${referralNote ? `<p class="provider-detail referral-note"><strong>Referral:</strong> ${escapeHtml(referralNote)}</p>` : ""}
@@ -1598,7 +1662,10 @@ function reasonForProvider(provider) {
   const reasons = [];
   const tags = provider.tags || [];
   const specialty = providerSpecialties(provider);
-  const matchedNeeds = needs.filter((need) => hasSpecialtyMatch(provider, need));
+  const advertisedMatchedNeeds = needs.filter((need) => hasAdvertisedSpecialtyMatch(provider, need));
+  const baselineMatchedNeeds = needs.filter((need) =>
+    !hasAdvertisedSpecialtyMatch(provider, need) && hasPsychiatristBaselineMatch(provider, need)
+  );
   const distance = distanceToProvider(provider);
   const distanceLabel = providerDistanceLabel(provider, distance);
   const needScopeLabel = providerNeedScopeLabel(provider);
@@ -1639,7 +1706,7 @@ function reasonForProvider(provider) {
   if (provider.type === "counsellor" || provider.type === "psychologist") {
     reasons.push("Talking therapy is a direct fit for depression, anxiety, trauma, stress, and patterns that are hard to shift alone.");
     if (specialty) reasons.push(`Their listed focus includes ${specialty}.`);
-    if (matchedNeeds.length) reasons.push(`That directly matches ${labelledList(matchedNeeds, needLabels)} from your answers.`);
+    if (advertisedMatchedNeeds.length) reasons.push(`That directly matches ${labelledList(advertisedMatchedNeeds, needLabels)} from your answers.`);
     if (barriers.includes("cost")) reasons.push("Ask before booking about WINZ Disability Allowance, ACC, EAP, funded places, or reduced-fee sessions.");
     if (preferences.length) reasons.push("Your preferences can be named in the first message so you do not have to explain them on the spot.");
   }
@@ -1655,8 +1722,14 @@ function reasonForProvider(provider) {
     } else {
       reasons.push("Referral requirements are not clear, so check before putting energy into a direct enquiry.");
     }
-    if (specialty) reasons.push(`Their listed focus includes ${specialty}.`);
-    if (matchedNeeds.length) reasons.push(`That directly matches ${labelledList(matchedNeeds, needLabels)} from your answers.`);
+    if (provider.type === "psychiatrist") {
+      reasons.push("As a psychiatrist, they may be able to assess and treat a broad range of mental health conditions; listed interests are separate from that baseline medical-specialist scope.");
+    }
+    if (specialty) reasons.push(`Their listed interests include ${specialty}.`);
+    if (advertisedMatchedNeeds.length) reasons.push(`Those listed interests directly match ${labelledList(advertisedMatchedNeeds, needLabels)} from your answers.`);
+    if (!advertisedMatchedNeeds.length && baselineMatchedNeeds.length) {
+      reasons.push(`Your selected concern fits common psychiatric assessment or medication scope, but it is not listed as a special interest in this profile.`);
+    }
   }
 
   if (provider.type === "mens-centre" || provider.type === "helpline" || barriers.includes("privacy")) {

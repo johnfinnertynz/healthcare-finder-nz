@@ -2671,7 +2671,6 @@
       "anxiety",
       "trauma",
       "addiction",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Cognitive analytic therapy, Complex trauma, Dementia related disorders. Services include ACC Assessment, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care. Patient groups listed include Asylum seekers and refugees, Aboriginal and Torres Strait Islander, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intellectual disability, Intersex, Maori. Works with Ages 18-60, Ages 60+, Ages 16-24.",
@@ -2762,7 +2761,59 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment",
+      "substance/addiction comorbidity"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Addiction",
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Cognitive analytic therapy",
+      "Complex trauma",
+      "Dementia related disorders",
+      "Depression",
+      "Electroconvulsive therapy (ECT)",
+      "Epilepsy",
+      "Functional neurological disorder",
+      "Interpersonal therapy",
+      "Mentalisation-based therapy",
+      "Mindfulness",
+      "Motivational interviewing",
+      "Neuropsychiatry",
+      "Obsessive-compulsive disorders",
+      "Pain management",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Prolonged grief",
+      "Psychodynamic psychotherapy",
+      "Psychosis",
+      "Psychotherapy",
+      "Schizophrenia",
+      "Sexual disorders",
+      "Supportive psychotherapy"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4499/dr-campbell-emmerton",
+        "excerpt": "Special interests include Addiction, ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Cognitive analytic therapy, Complex trauma, Dementia related disorders.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-2665",
@@ -2787,7 +2838,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Shared care. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intellectual disability, Physical disability. Works with Ages 18-60, Ages 60+.",
@@ -2847,7 +2897,40 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia",
+      "Transcranial Magnetic Stimulation (TMS)"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2665/dr-ian-goodwin",
+        "excerpt": "Special interests include Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-2745",
@@ -2870,7 +2953,6 @@
       "rainbow",
       "cost",
       "depression",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Bipolar disorder, Dementia related disorders, Depression. Services include Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision, Shared care, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Gay and lesbian, Maori, Military and veterans, Non-English speaking, Physical disability. Works with Ages 18-60, Ages 60+.",
@@ -2925,7 +3007,32 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Bipolar disorder",
+      "Dementia related disorders",
+      "Depression"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2745/dr-jane-casey",
+        "excerpt": "Special interests include Bipolar disorder, Dementia related disorders, Depression.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-7046",
@@ -2952,7 +3059,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Pain management. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Family court medicolegal, Insurance opinions / reports, Experience with interpreters. Patient groups listed include Asylum seekers and refugees, Gender diverse, Maori, Military and veterans, Non-English speaking, Physical disability, Emergency services personnel. Works with Ages 18-60.",
@@ -3016,7 +3122,41 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Pain management",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7046/dr-john-joseph",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Depression, Obsessive-compulsive disorders, Pain management.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-dr-k-magan-surgery-36-9661-174-8259",
@@ -3090,7 +3230,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Treatment provider, Insurance opinions / reports, Shared care. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans, Non-English speaking, Physical disability. Works with Ages 18-60.",
@@ -3148,7 +3287,39 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4859/dr-katie-ritchie",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-7734",
@@ -3174,7 +3345,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Dementia related disorders, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Urgent assessments. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gay and lesbian, Maori, Non-English speaking. Works with Ages 18-60, Ages 60+.",
@@ -3235,7 +3405,38 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Dementia related disorders",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7734/dr-m-shanmukha-swamy-lokesh",
+        "excerpt": "Special interests include Anxiety disorders, Bipolar disorder, Dementia related disorders, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-576",
@@ -3254,7 +3455,6 @@
       "psychiatrist",
       "medical-specialist",
       "fit",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include Civil medicolegal, Professional supervision.",
@@ -3288,7 +3488,20 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "ranzcp-7045",
@@ -3351,7 +3564,20 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "gp-dr-nicholas-cooper-36-8915-174-7709",
@@ -3423,7 +3649,6 @@
       "cost",
       "depression",
       "anxiety",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Conversion disorder, Depression, Interpersonal therapy, Obsessive-compulsive disorders. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Professional supervision, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans. Works with Ages 18-60.",
@@ -3486,7 +3711,43 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Cognitive behavioural therapy",
+      "Conversion disorder",
+      "Depression",
+      "Interpersonal therapy",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Psychodynamic psychotherapy",
+      "Psychosis",
+      "Schizophrenia",
+      "Supportive psychotherapy"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4472/dr-patrick-daniels",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Conversion disorder, Depression, Interpersonal therapy, Obsessive-compulsive disorders.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-3358",
@@ -3507,7 +3768,6 @@
       "fit",
       "rainbow",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Post-traumatic stress disorder. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Military and veterans. Works with Mother and baby, Ages 18-60.",
@@ -3547,7 +3807,30 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Post-traumatic stress disorder"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3358/dr-sara-weeks",
+        "excerpt": "Special interests include Post-traumatic stress disorder.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-4807",
@@ -3573,7 +3856,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Interpersonal therapy, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychodynamic psychotherapy. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Insurance opinions / reports, Shared care. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Military and veterans. Works with Ages 18-60, Ages 60+.",
@@ -3632,7 +3914,38 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Cognitive behavioural therapy",
+      "Depression",
+      "Interpersonal therapy",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychodynamic psychotherapy",
+      "Supportive psychotherapy"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4807/dr-scott-chambers",
+        "excerpt": "Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Interpersonal therapy, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychodynamic psychotherapy.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-dr-upsdell-s-surgery-36-9725-174-8341",
@@ -18347,7 +18660,35 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Adult ADHD assessment",
+      "ADHD diagnosis",
+      "ADHD treatment",
+      "Medication management",
+      "Coaching support"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.ancora.org.nz/",
+        "excerpt": "Advertised specialties/interests recorded as: Adult ADHD assessment, ADHD diagnosis, ADHD treatment, Medication management, Coaching support.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "address": "1017 Cameron Road, Tauranga",
@@ -18421,7 +18762,38 @@
     "referralSourceExcerpt": "Public information points people to a GP or doctor referral pathway.",
     "referralConfidence": "medium",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Anxiety disorders",
+      "Mood disorders including depression and bipolar disorder",
+      "ADHD",
+      "OCD",
+      "Psychosis",
+      "PTSD",
+      "ACC mental injury assessments",
+      "Workplace stress"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.anteris.nz/service-private-psychiatry",
+        "excerpt": "Advertised specialties/interests recorded as: Anxiety disorders, Mood disorders including depression and bipolar disorder, ADHD, OCD, Psychosis, PTSD, ACC mental injury assessments, Workplace stress.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "bay-of-plenty-bay-counselling",
@@ -18707,7 +19079,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Depression, Forensic, Mindfulness, Obsessive-compulsive disorders. Services include ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports, Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students, Intellectual disability, Maori, Military and veterans, Physical disability, Emergency services personnel. Works with Ages 1-17, Ages 18-60, Ages 60+.",
@@ -18776,7 +19147,43 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Depression",
+      "Forensic",
+      "Mindfulness",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia",
+      "Sexual assault / abuse treatment"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6743/dr-caleb-armstrong",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Bipolar disorder, Brain injury, Depression, Forensic, Mindfulness, Obsessive-compulsive disorders.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-epic-health-medical-practice-37-7256-176-1334",
@@ -22771,7 +23178,37 @@
     "referralSourceExcerpt": "Christchurch PsychMed says a GP referral is required to see a psychiatrist; clinical psychologist referrals are helpful but not essential.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05-25",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "substance/addiction comorbidity"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "psychotic illness",
+      "treatment-resistant depression",
+      "bipolar disorder",
+      "anxiety",
+      "substance use problems",
+      "psychodynamic psychotherapy",
+      "EMDR for post-traumatic difficulties"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+        "excerpt": "has experience with psychotic illness, treatment-resistant depression, bipolar disorder, anxiety, substance use problems, psychodynamic psychotherapy, and EMDR for post-traumatic difficulties.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-13276",
@@ -22795,7 +23232,6 @@
       "anxiety",
       "trauma",
       "addiction",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Post-traumatic stress disorder, Psychosis. Patient groups listed include Families. Works with Ages 1-17, Ages 16-24.",
@@ -22843,7 +23279,40 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment",
+      "substance/addiction comorbidity"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Addiction",
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/13276/dr-evan-wilson",
+        "excerpt": "Special interests include Addiction, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "christchurch-psychmed-laura-hammersley",
@@ -22889,7 +23358,34 @@
     "referralSourceExcerpt": "Christchurch PsychMed says a GP referral is required to see a psychiatrist; clinical psychologist referrals are helpful but not essential.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05-25",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "psychosis",
+      "early intervention",
+      "anxiety disorders",
+      "maternal mental health",
+      "Maori mental health"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+        "excerpt": "has interests in psychosis, early intervention, anxiety disorders, maternal mental health, and Maori mental health.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "christchurch-psychmed-nicholas-pascoe",
@@ -22909,7 +23405,6 @@
       "medical-specialist",
       "telehealth",
       "adhd",
-      "depression",
       "anxiety",
       "trauma",
       "psychosis",
@@ -22938,7 +23433,35 @@
     "referralSourceExcerpt": "Christchurch PsychMed says a GP referral is required to see a psychiatrist; clinical psychologist referrals are helpful but not essential.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05-25",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "mood",
+      "anxiety disorders",
+      "complex trauma",
+      "psychosis",
+      "adult ADHD"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+        "excerpt": "works in person and via telehealth with mood and anxiety disorders, complex trauma, psychosis, and adult ADHD, seeing people from late teens to about retirement age.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-4946",
@@ -22961,7 +23484,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Electroconvulsive therapy (ECT), Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Family court medicolegal, Insurance opinions / reports. Patient groups listed include Military and veterans. Works with Ages 18-60.",
@@ -23017,7 +23539,38 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Cognitive behavioural therapy",
+      "Depression",
+      "Electroconvulsive therapy (ECT)",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4946/dr-paul-edgar",
+        "excerpt": "Special interests include Anxiety disorders, Bipolar disorder, Cognitive behavioural therapy, Depression, Electroconvulsive therapy (ECT), Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "christchurch-psychmed-samantha-chow",
@@ -23064,7 +23617,37 @@
     "referralSourceExcerpt": "Christchurch PsychMed says a GP referral is required to see a psychiatrist; clinical psychologist referrals are helpful but not essential.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05-25",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "general adult psychiatry for adults aged 18",
+      "over",
+      "with interests in transgender health",
+      "ADHD",
+      "neurodiversity",
+      "anxiety/depression",
+      "existential crises"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+        "excerpt": "specialises in general adult psychiatry for adults aged 18 and over, with interests in transgender health, ADHD, neurodiversity, anxiety/depression, and existential crises.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "christchurch-psychmed-sue-luty",
@@ -23109,7 +23692,36 @@
     "referralSourceExcerpt": "Christchurch PsychMed says a GP referral is required to see a psychiatrist; clinical psychologist referrals are helpful but not essential.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05-25",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "mood disorders",
+      "especially bipolar disorder",
+      "anxiety disorders",
+      "perinatal mental health",
+      "personality",
+      "psychotherapy",
+      "interpersonal psychotherapy"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.christchurchpsychmed.co.nz/about",
+        "excerpt": "expertise in mood disorders, especially bipolar disorder, anxiety disorders, perinatal mental health, personality, psychotherapy, and interpersonal psychotherapy.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-durham-health-43-3026-172-5917",
@@ -25684,7 +26296,36 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Bipolar disorder",
+      "Depression",
+      "Epilepsy",
+      "Functional neurological disorder",
+      "Neuropsychiatry"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5226/prof-cameron-lacey",
+        "excerpt": "Special interests include ADHD, Bipolar disorder, Depression, Epilepsy, Functional neurological disorder, Neuropsychiatry.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-promed-doctors-43-5153-172-6377",
@@ -28822,7 +29463,36 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Psychiatry",
+      "Psychology",
+      "ADHD assessment",
+      "Autism assessment",
+      "Neurodevelopmental assessment",
+      "Support for children, adolescents, young adults, and adults"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.futureready.org.nz/listing/nova-mentem-mind-health-specialists/",
+        "excerpt": "Advertised specialties/interests recorded as: Psychiatry, Psychology, ADHD assessment, Autism assessment, Neurodevelopmental assessment, Support for children, adolescents, young adults, and adults.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "address": "",
@@ -30159,8 +30829,6 @@
       "psychiatrist",
       "medical-specialist",
       "telehealth",
-      "depression",
-      "anxiety",
       "assessment",
       "medication",
       "fit",
@@ -30196,7 +30864,33 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Private psychiatry",
+      "Telepsychiatry",
+      "Assessment",
+      "Treatment planning"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://eye-openers-psychiatry.co.nz/",
+        "excerpt": "Advertised specialties/interests recorded as: Private psychiatry, Telepsychiatry, Assessment, Treatment planning.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-feilding-health-care-40-2166-175-5699",
@@ -32497,7 +33191,6 @@
       "psychiatrist",
       "medical-specialist",
       "telehealth",
-      "depression",
       "anxiety",
       "ocd",
       "adhd",
@@ -32531,7 +33224,37 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "mood",
+      "anxiety disorders",
+      "OCD",
+      "ADHD",
+      "PTSD",
+      "perinatal psychiatry",
+      "related specialist medication or diagnosis questions"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.healthpoint.co.nz/private/psychiatry/coliber-group-psychiatry/?region=im%3A085f0496-b25b-4d5a-8ac7-81a4ca54226d",
+        "excerpt": "Healthpoint lists mood and anxiety disorders, OCD, ADHD, PTSD, perinatal psychiatry, and related specialist medication or diagnosis questions.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "national-depression-helpline",
@@ -32585,8 +33308,6 @@
       "medical-specialist",
       "telehealth",
       "adhd",
-      "depression",
-      "anxiety",
       "fit",
       "direct-contact"
     ],
@@ -32610,7 +33331,21 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "psychiatry-nz-han-chung-lim",
@@ -32656,7 +33391,37 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "depression",
+      "bipolar disorder",
+      "anxiety",
+      "OCD",
+      "PTSD",
+      "psychosis"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://psychiatry.nz/",
+        "excerpt": "specialises in ADHD, depression, bipolar disorder, anxiety, OCD, PTSD, and psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "psychiatry-nz-jimi-macmillan",
@@ -32676,8 +33441,6 @@
       "medical-specialist",
       "telehealth",
       "adhd",
-      "depression",
-      "anxiety",
       "maori",
       "fit",
       "direct-contact"
@@ -32702,7 +33465,21 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "psychiatry-nz-staverton-kautoke",
@@ -32722,8 +33499,6 @@
       "medical-specialist",
       "telehealth",
       "adhd",
-      "depression",
-      "anxiety",
       "fit",
       "direct-contact"
     ],
@@ -32747,7 +33522,21 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "address": "",
@@ -33382,7 +34171,39 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Telepsychiatry",
+      "Child and adolescent psychiatry",
+      "ADHD",
+      "Autism",
+      "Anxiety and phobias",
+      "Depression",
+      "OCD",
+      "Stress management",
+      "Gender dysphoria"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://mindcraftpsychiatry.nz/",
+        "excerpt": "Advertised specialties/interests recorded as: Telepsychiatry, Child and adolescent psychiatry, ADHD, Autism, Anxiety and phobias, Depression, OCD, Stress management, Gender dysphoria.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "address": "",
@@ -33412,7 +34233,6 @@
       "medical-specialist",
       "telehealth",
       "adhd",
-      "depression",
       "anxiety",
       "bipolar",
       "schizophrenia",
@@ -33459,7 +34279,37 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD assessments and treatment",
+      "Mood and anxiety disorders",
+      "General psychiatry",
+      "Bipolar disorder",
+      "Schizophrenia",
+      "Child and adolescent psychiatry",
+      "Telehealth nationwide"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://msq.health/",
+        "excerpt": "Advertised specialties/interests recorded as: ADHD assessments and treatment, Mood and anxiety disorders, General psychiatry, Bipolar disorder, Schizophrenia, Child and adolescent psychiatry, Telehealth nationwide.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "national-nzccp-find-psychologist",
@@ -33697,7 +34547,41 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment",
+      "substance/addiction comorbidity"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Online psychiatry",
+      "Online psychology",
+      "ADHD",
+      "Anxiety",
+      "Depression",
+      "OCD",
+      "Panic",
+      "Trauma and PTSD",
+      "Alcohol and substance use",
+      "Pregnancy and postnatal issues"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.positivemindworks.co/",
+        "excerpt": "Advertised specialties/interests recorded as: Online psychiatry, Online psychology, ADHD, Anxiety, Depression, OCD, Panic, Trauma and PTSD, Alcohol and substance use, Pregnancy and postnatal issues.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "national-puawaitanga",
@@ -33902,7 +34786,37 @@
     "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
     "referralConfidence": "medium",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment",
+      "substance/addiction comorbidity"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "addiction",
+      "anxiety",
+      "depression",
+      "trauma",
+      "medication or diagnosis questions"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.healthpoint.co.nz/private/psychiatry/tom-oflynn-psychiatrist/",
+        "excerpt": "Listed interests include ADHD, addiction, anxiety, depression, trauma, and medication or diagnosis questions.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "national-pasifika-gambling-helpline",
@@ -34033,8 +34947,6 @@
       "fit",
       "telehealth",
       "cost",
-      "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Services include Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students. Works with Ages 18-60, Ages 60+.",
@@ -34074,7 +34986,20 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "marlborough-rachael-sim-clinical-psychology",
@@ -34147,7 +35072,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis. Services include ACC Assessment, ACC Treatment provider, Civil medicolegal, Criminal medicolegal, Insurance opinions / reports, Professional supervision. Patient groups listed include Doctors, psychiatrists or medical students, Intellectual disability, Military and veterans, Physical disability. Works with Ages 18-60, Ages 60+.",
@@ -34206,7 +35130,39 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4371/dr-thomas-levien",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-florence-medical-centre-41-3415-173-1893",
@@ -36536,7 +37492,41 @@
     "onlineAvailable": true,
     "phoneSupport": true,
     "inPerson": true,
-    "coordinateSource": "OpenStreetMap Nominatim 2026-05-24"
+    "coordinateSource": "OpenStreetMap Nominatim 2026-05-24",
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Depression",
+      "Anxiety disorders",
+      "ADHD",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "CBT",
+      "ACT",
+      "Eating disorders",
+      "OCD",
+      "PTSD",
+      "Psychosis"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5542/dr-vernon-reynolds",
+        "excerpt": "Advertised specialties/interests recorded as: Depression, Anxiety disorders, ADHD, Autism spectrum disorders, Bipolar disorder, CBT, ACT, Eating disorders, OCD, PTSD, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "address": "Central Whangarei city",
@@ -36631,11 +37621,8 @@
       "psychiatrist",
       "medical-specialist",
       "telehealth",
-      "depression",
-      "anxiety",
       "bipolar",
       "adhd",
-      "trauma",
       "medication",
       "diagnosis",
       "assessment",
@@ -36662,7 +37649,21 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "gp-hikurangi-medical-centre-35-5965-174-2857",
@@ -38948,9 +39949,6 @@
       "psychiatrist",
       "medical-specialist",
       "fit",
-      "depression",
-      "anxiety",
-      "trauma",
       "ptsd",
       "addiction",
       "alcohol",
@@ -38984,7 +39982,43 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment",
+      "substance/addiction comorbidity"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "comprehensive psychiatric assessments",
+      "treatment",
+      "ADHD",
+      "ASD assessments",
+      "psychotherapy",
+      "medication management",
+      "consideration of background",
+      "medical",
+      "social factors",
+      "alcohol",
+      "drugs",
+      "medication"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.ashburn.co.nz/outpatient-services/psychiatry/",
+        "excerpt": "Listed focus includes comprehensive psychiatric assessments and treatment, ADHD and ASD assessments, psychotherapy, medication management, and consideration of background, medical and social factors, alcohol and drugs, and medication.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-aurora-health-centre-45-8966-170-4999",
@@ -39103,8 +40137,6 @@
       "psychiatrist",
       "medical-specialist",
       "fit",
-      "depression",
-      "anxiety",
       "trauma",
       "psychotherapy",
       "assessment",
@@ -39133,7 +40165,20 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "gp-broadway-medical-centre-dunedin-45-8781-170-5002",
@@ -40637,8 +41682,6 @@
     "tags": [
       "psychiatrist",
       "medical-specialist",
-      "depression",
-      "anxiety",
       "medication",
       "assessment",
       "diagnosis",
@@ -40668,7 +41711,20 @@
     "referralSourceExcerpt": "Referrals page says referrals are accepted from GPs and other health-care professionals, and self-referrals usually need clinician support.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "gp-roslyn-health-centre-45-8676-170-4889",
@@ -44773,7 +45829,6 @@
       "medical-specialist",
       "telehealth",
       "online",
-      "depression",
       "anxiety",
       "ocd",
       "adhd",
@@ -44822,7 +45877,39 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Private telepsychiatry",
+      "Diagnosis",
+      "Medication and treatment planning",
+      "Adult psychiatry",
+      "Older adult psychiatry",
+      "Perinatal psychiatry",
+      "ADHD",
+      "OCD",
+      "PTSD"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.coliber.nz/contact/",
+        "excerpt": "Advertised specialties/interests recorded as: Private telepsychiatry, Diagnosis, Medication and treatment planning, Adult psychiatry, Older adult psychiatry, Perinatal psychiatry, ADHD, OCD, PTSD.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-glengarry-medical-centre-46-4018-168-3855",
@@ -48638,7 +49725,37 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Child and adolescent psychiatry",
+      "ADHD",
+      "Autism",
+      "OCD",
+      "Anxiety",
+      "Depression",
+      "Telehealth assessment and support"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.spaceofmind.solutions/",
+        "excerpt": "Advertised specialties/interests recorded as: Child and adolescent psychiatry, ADHD, Autism, OCD, Anxiety, Depression, Telehealth assessment and support.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-strandon-health-39-0499-174-0950",
@@ -49480,7 +50597,42 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Adult and adolescent psychiatry",
+      "Depression",
+      "Bipolar disorder",
+      "Anxiety disorders",
+      "PTSD",
+      "OCD",
+      "Adult ADHD",
+      "Women’s mental health",
+      "CBT",
+      "ACT",
+      "IPT",
+      "DBT"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.bewellpsychiatry0.co.nz/",
+        "excerpt": "Advertised specialties/interests recorded as: Adult and adolescent psychiatry, Depression, Bipolar disorder, Anxiety disorders, PTSD, OCD, Adult ADHD, Women’s mental health, CBT, ACT, IPT, DBT.",
+        "capturedAt": "2026-05",
+        "confidence": "high",
+        "needsManualReview": false
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-cambridge-family-health-37-8895-175-4539",
@@ -54795,7 +55947,20 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "ranzcp-7544",
@@ -54818,7 +55983,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis. Services include Insurance opinions / reports, Urgent assessments. Patient groups listed include Doctors, psychiatrists or medical students, Non-English speaking. Works with Ages 18-60, Ages 60+.",
@@ -54876,7 +56040,40 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Personality disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia",
+      "Supportive psychotherapy"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7544/dr-kang-tan",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression, Obsessive-compulsive disorders, Personality disorders, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-6009",
@@ -54899,7 +56096,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Cognitive behavioural therapy, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Supportive psychotherapy. Services include ACC Assessment. Patient groups listed include Families. Works with Mother and baby, Ages 1-17, Ages 18-60, Ages 16-24.",
@@ -54951,7 +56147,37 @@
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
     "referralNeedsManualReview": false,
-    "practiceName": "Being With"
+    "practiceName": "Being With",
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Cognitive behavioural therapy",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Supportive psychotherapy"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6009/dr-rachel-kan",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Cognitive behavioural therapy, Depression, Obsessive-compulsive disorders, Post-traumatic stress disorder, Supportive psychotherapy.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-5481",
@@ -54977,7 +56203,6 @@
       "depression",
       "anxiety",
       "trauma",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Complex trauma, Dementia related disorders. Services include ACC Treatment provider, Shared care, Home visits. Patient groups listed include Asylum seekers and refugees, Doctors, psychiatrists or medical students, Gender diverse, Maori, Non-English speaking, Physical disability. Works with Ages 18-60, Ages 60+.",
@@ -55039,7 +56264,43 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Acceptance and commitment therapy",
+      "ADHD",
+      "Anxiety disorders",
+      "Autism spectrum disorders",
+      "Bipolar disorder",
+      "Brain injury",
+      "Complex trauma",
+      "Dementia related disorders",
+      "Depression",
+      "Obsessive-compulsive disorders",
+      "Post-traumatic stress disorder",
+      "Psychosis",
+      "Schizophrenia"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit",
+        "excerpt": "Special interests include Acceptance and commitment therapy, ADHD, Anxiety disorders, Autism spectrum disorders, Bipolar disorder, Brain injury, Complex trauma, Dementia related disorders.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "ranzcp-5889",
@@ -55064,7 +56325,6 @@
       "depression",
       "trauma",
       "addiction",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include Addiction, ADHD, Bipolar disorder, Complex trauma, Depression, Post-traumatic stress disorder, Psychosis. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Maori, Non-English speaking, Families, Doctors psychiatrists or medical students. Works with Ages 1-17, Ages 18-60, Ages 16-24.",
@@ -55117,7 +56377,38 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment",
+      "substance/addiction comorbidity"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "Addiction",
+      "ADHD",
+      "Bipolar disorder",
+      "Complex trauma",
+      "Depression",
+      "Post-traumatic stress disorder",
+      "Psychosis"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5889/dr-struan-robertson",
+        "excerpt": "Special interests include Addiction, ADHD, Bipolar disorder, Complex trauma, Depression, Post-traumatic stress disorder, Psychosis.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-eastern-bays-health-centre-41-3196-174-7974",
@@ -57305,7 +58596,20 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [],
+    "advertisedSpecialtyEvidence": [],
+    "specialtyTagsSource": "no advertised specialties recorded"
   },
   {
     "id": "ranzcp-4171",
@@ -57328,7 +58632,6 @@
       "rainbow",
       "depression",
       "anxiety",
-      "work",
       "direct-contact"
     ],
     "fit": "RANZCP Your Health in Mind psychiatrist listing. Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression. Services include Professional supervision, Shared care. Patient groups listed include Doctors, psychiatrists or medical students, Gender diverse, Gay and lesbian, Intersex, Military and veterans, Doctors psychiatrists or medical students. Works with Ages 18-60.",
@@ -57379,7 +58682,34 @@
     "referralSourceExcerpt": "Your Health in Mind profile says people must first see their GP for a referral.",
     "referralConfidence": "high",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": false
+    "referralNeedsManualReview": false,
+    "baselineScope": [
+      "depression/mood disorders",
+      "anxiety disorders",
+      "bipolar disorder",
+      "psychosis/schizophrenia",
+      "trauma/PTSD",
+      "medication review/diagnosis/risk assessment",
+      "ADHD/neurodevelopmental assessment"
+    ],
+    "baselineScopeSource": "https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/",
+    "baselineScopeNote": "Baseline routing aid only: psychiatrists are medical specialists trained in psychiatry who may assess diagnosis, medication, risk, and common psychiatric presentations. Public listed interests remain in advertisedSpecialties.",
+    "advertisedSpecialties": [
+      "ADHD",
+      "Anxiety disorders",
+      "Bipolar disorder",
+      "Depression"
+    ],
+    "advertisedSpecialtyEvidence": [
+      {
+        "sourceUrl": "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4171/prof-sunny-collings",
+        "excerpt": "Special interests include ADHD, Anxiety disorders, Bipolar disorder, Depression.",
+        "capturedAt": "2026-05",
+        "confidence": "medium",
+        "needsManualReview": true
+      }
+    ],
+    "specialtyTagsSource": "source-backed advertised specialties/interests"
   },
   {
     "id": "gp-queen-street-medical-upper-hutt-41-1226-175-0739",

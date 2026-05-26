@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
+import { withPsychiatristScopeMetadata } from "./lib/provider-scope.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -130,7 +131,7 @@ for (const row of rows) {
   }
 
   const id = row.id || `${slugify(row.region)}-${slugify(row.type)}-${slugify(row.name)}`;
-  const record = withAvailabilityDefaults({
+  const record = withPsychiatristScopeMetadata(withAvailabilityDefaults({
     id,
     name: row.name,
     type: row.type,
@@ -160,7 +161,7 @@ for (const row of rows) {
     availabilityEvidence: row.availabilityEvidence || "",
     availabilitySource: row.availabilitySource || "",
     availabilityNeedsManualReview: booleanCell(row.availabilityNeedsManualReview, undefined)
-  });
+  }));
 
   if (providersById.has(id)) updated += 1;
   else added += 1;

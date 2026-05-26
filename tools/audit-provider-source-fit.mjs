@@ -63,7 +63,7 @@ function hasAnyTag(provider, values) {
   return values.some((tag) => hasTag(provider, tag));
 }
 
-function sourceText(provider, { includeTags = false } = {}) {
+function sourceText(provider, { includeTags = false, includeAdvertisedSpecialties = true } = {}) {
   return [
     provider.name,
     provider.clinicianName,
@@ -79,12 +79,24 @@ function sourceText(provider, { includeTags = false } = {}) {
     provider.firstStep,
     provider.hours,
     ...(provider.specialties || []),
+    ...(includeAdvertisedSpecialties ? (provider.advertisedSpecialties || []) : []),
     ...(provider.patientGroups || []),
     ...(provider.ageGroups || []),
     ...(provider.services || []),
     ...(provider.languages || []),
     ...(includeTags ? tags(provider) : [])
   ].join(" ").toLowerCase();
+}
+
+function specialtySupportedBySource(specialty, text) {
+  const value = normaliseText(specialty).toLowerCase();
+  if (!value) return true;
+  if (text.includes(value)) return true;
+
+  const meaningfulWords = value
+    .split(/[^a-z0-9]+/i)
+    .filter((word) => word.length >= 4 && !["disorder", "disorders", "support", "therapy", "assessment"].includes(word));
+  return meaningfulWords.length > 0 && meaningfulWords.some((word) => text.includes(word));
 }
 
 function isDirectoryLike(provider) {
@@ -325,6 +337,23 @@ function evaluateProvider(provider) {
   }
 
   if (["counsellor", "psychologist", "psychiatrist"].includes(provider.type)) {
+    const sourceBackedText = sourceText(provider, {
+      includeTags: false,
+      includeAdvertisedSpecialties: false
+    });
+    const unsupportedAdvertised = (provider.advertisedSpecialties || [])
+      .filter((specialty) => !specialtySupportedBySource(specialty, sourceBackedText));
+    if (unsupportedAdvertised.length) {
+      addFinding(
+        findings,
+        provider,
+        "advertised-specialty-without-source-support",
+        "medium",
+        `Advertised specialties are present without clear source support: ${unsupportedAdvertised.slice(0, 5).join(", ")}.`,
+        "Keep baselineScope separate from advertisedSpecialties, or add provider/profile source evidence for these advertised interests."
+      );
+    }
+
     for (const tag of broadTags) {
       if (!broadNeedTerms[tag]?.test(text)) {
         addFinding(

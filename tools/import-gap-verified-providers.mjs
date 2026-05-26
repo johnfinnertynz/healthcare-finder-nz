@@ -2,6 +2,7 @@ import fs from "node:fs";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 import { statusFromWatchlistItem, withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 import { inferReferralMetadata, isPsychiatryRecord } from "./lib/provider-referrals.mjs";
+import { withPsychiatristScopeMetadata } from "./lib/provider-scope.mjs";
 
 const [, , providersPath = "providers.json", watchlistPath = "data/monitors/provider-availability-watchlist.json"] = process.argv;
 const verifiedMonth = "2026-05";
@@ -56,7 +57,7 @@ function base(record) {
     ...record
   }, { checkedAt });
   return isPsychiatryRecord(provider)
-    ? { ...provider, ...inferReferralMetadata(provider, { checkedAt: verifiedMonth }) }
+    ? withPsychiatristScopeMetadata({ ...provider, ...inferReferralMetadata(provider, { checkedAt: verifiedMonth }) })
     : provider;
 }
 

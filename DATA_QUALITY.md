@@ -38,6 +38,12 @@ Every provider record must include:
 
 Psychiatry records must also include:
 
+- `baselineScope`
+- `baselineScopeSource`
+- `baselineScopeNote`
+- `advertisedSpecialties`
+- `advertisedSpecialtyEvidence`
+- `specialtyTagsSource`
 - `requiresReferral`
 - `referralType`
 - `referralSourceUrl`
@@ -99,6 +105,18 @@ Current schema aliases:
 - `requiresReferral` means the stored source indicates referral is required or
   usually needed. It does not mean every direct contact route is useless; it
   means the UI should guide the user toward a GP/clinician referral first.
+- `baselineScope` is only for named psychiatrist records. It is a conservative
+  routing aid based on the Medical Council of New Zealand psychiatry vocational
+  scope, which describes psychiatry as assessment, diagnosis, and treatment of
+  psychological, emotional, or cognitive problems. It must not be displayed as
+  an advertised specialty.
+- `advertisedSpecialties` contains profile/source-backed interests or
+  specialties only. These may appear as "listed interests" in the UI and can
+  receive a stronger ranking boost than `baselineScope`.
+- `advertisedSpecialtyEvidence` stores the short source evidence for the
+  advertised interests. Do not copy broad baseline capability into this field.
+- `specialtyTagsSource` explains whether broad tags came from listed
+  interests, source-backed service text, or another reviewed source.
 
 ## Verification Rules
 
@@ -121,6 +139,21 @@ Current schema aliases:
   valid route to psychiatry or medication-specialist assessment, but are not
   private psychiatrist listings. Keep their `type` as `public-service` or
   `youth` unless the listing is a named psychiatrist or psychiatry practice.
+- Psychiatrists are treated differently from psychologists and counsellors
+  because they are medical specialists within a vocational scope of psychiatry.
+  A psychiatrist record may carry baseline capability metadata for common
+  psychiatric presentations such as mood disorders, anxiety disorders, bipolar
+  disorder, psychosis, trauma/PTSD, and diagnosis/medication/risk assessment.
+  This is for routing only. It is not a claim that the profile advertises those
+  conditions as special interests.
+- ADHD/neurodevelopmental assessment and substance/addiction comorbidity may be
+  added to psychiatrist `baselineScope` when the profile or tags give a specific
+  reason to treat that as relevant. Prefer explicit advertised specialties when
+  available.
+- Psychologist and counsellor records do not get baseline condition scope.
+  Depression, anxiety, trauma, addiction, work stress, and cultural/support tags
+  still need source evidence through `specialties`, `services`, `fit`,
+  `patientGroups`, or reviewed tags.
 - Private psychiatrist listings must carry referral metadata. If a profile says
   a GP referral is needed, the main first step should be booking with a GP and
   bringing the psychiatrist details, not emailing the psychiatrist as the main
@@ -128,6 +161,9 @@ Current schema aliases:
 - RANZCP Your Health in Mind psychiatrist profile records are GP-referral-first
   unless a newer source gives stronger contrary evidence. Keep the source URL
   and a short referral excerpt on the record.
+- The approved `baselineScopeSource` is the Medical Council psychiatry
+  vocational scope page:
+  `https://www.mcnz.org.nz/registration/scopes-of-practice/vocational-and-provisional-vocational/types-of-vocational-scope/psychiatry/`.
 - Use `ageGroups` where a source limits access. The website filters these
   records so child/adolescent-only and older-adult-only services are not shown
   to clearly incompatible ages.

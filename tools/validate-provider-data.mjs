@@ -13,6 +13,11 @@ import {
   normaliseReferralType,
   referralEvidenceText
 } from "./lib/provider-referrals.mjs";
+import {
+  allowedPsychiatristBaselineScope,
+  baselinePsychiatristScopeNote,
+  baselinePsychiatristScopeSource
+} from "./lib/provider-scope.mjs";
 
 const [, , providersPath = "providers.json"] = process.argv;
 const providers = JSON.parse(fs.readFileSync(providersPath, "utf8"));
@@ -75,6 +80,14 @@ const allowedConfidence = new Set(["high", "medium", "low"]);
 const allowedNeedScope = new Set(["depression", "anxiety", "trauma", "addiction", "work"]);
 const broadNeedTags = new Set(["depression", "anxiety", "work", "stress", "relationships", "grief", "addiction"]);
 const coreMentalHealthTags = new Set(["depression", "anxiety", "trauma", "addiction", "relationships", "grief"]);
+const psychiatristBaselineCore = [
+  "depression/mood disorders",
+  "anxiety disorders",
+  "bipolar disorder",
+  "psychosis/schizophrenia",
+  "trauma/PTSD",
+  "medication review/diagnosis/risk assessment"
+];
 
 const unavailablePattern = /\b(not taking new (clients|patients)|not accepting (new )?(clients|patients|referrals)|books are closed|closed to new (clients|patients)|unable to accept new (clients|patients|referrals))\b/i;
 const errors = [];
@@ -151,6 +164,11 @@ if (!Array.isArray(providers)) {
     if (monthAge(provider.lastVerified) > 6) recordIssue(errors, provider, `lastVerified month is missing or older than 6 months (${provider.lastVerified || "missing"})`);
     if (provider.confidence && !allowedConfidence.has(provider.confidence)) recordIssue(errors, provider, `invalid confidence "${provider.confidence}"`);
     if (typeof provider.needsManualVerification !== "boolean") recordIssue(errors, provider, "needsManualVerification must be true or false");
+    if (Object.hasOwn(provider, "advertisedSpecialties") && !Array.isArray(provider.advertisedSpecialties)) recordIssue(errors, provider, "advertisedSpecialties must be an array when present");
+    if (Object.hasOwn(provider, "advertisedSpecialtyEvidence") && !Array.isArray(provider.advertisedSpecialtyEvidence)) recordIssue(errors, provider, "advertisedSpecialtyEvidence must be an array when present");
+    if (provider.type !== "psychiatrist" && Array.isArray(provider.baselineScope) && provider.baselineScope.length) {
+      recordIssue(errors, provider, "baselineScope is only allowed for named psychiatrist records");
+    }
     if (!availabilityStatuses.has(provider.availabilityStatus)) recordIssue(errors, provider, `invalid availabilityStatus "${provider.availabilityStatus}"`);
     if (!isMonthOrDate(provider.availabilityCheckedAt)) recordIssue(errors, provider, "availabilityCheckedAt must be YYYY-MM or YYYY-MM-DD");
     if (provider.availabilitySource && !isUrl(provider.availabilitySource)) recordIssue(errors, provider, "availabilitySource must be an http(s) URL");
@@ -170,6 +188,31 @@ if (!Array.isArray(providers)) {
       if (/\bmust\s+first\s+see\s+(?:your\s+)?gp\b|\bgp\s+referral\s+(?:is\s+)?(?:required|needed)\b/i.test(referralText) && provider.referralType === "self") {
         recordIssue(errors, provider, "referral evidence mentions GP referral but record is self-referral");
       }
+    }
+
+    if (provider.type === "psychiatrist") {
+      if (!Array.isArray(provider.baselineScope) || !provider.baselineScope.length) {
+        recordIssue(errors, provider, "psychiatrist records need baselineScope metadata");
+      } else {
+        for (const scope of provider.baselineScope) {
+          if (!allowedPsychiatristBaselineScope.has(scope)) recordIssue(errors, provider, `invalid psychiatrist baselineScope "${scope}"`);
+        }
+        for (const coreScope of psychiatristBaselineCore) {
+          if (!provider.baselineScope.includes(coreScope)) recordIssue(errors, provider, `psychiatrist baselineScope missing core item "${coreScope}"`);
+        }
+      }
+      if (provider.baselineScopeSource !== baselinePsychiatristScopeSource) recordIssue(errors, provider, "psychiatrist baselineScopeSource must be the approved psychiatry scope source");
+      if (provider.baselineScopeNote !== baselinePsychiatristScopeNote) recordIssue(errors, provider, "psychiatrist baselineScopeNote must use the standard non-specialty disclaimer");
+      if (!Array.isArray(provider.advertisedSpecialties)) recordIssue(errors, provider, "psychiatrist records need advertisedSpecialties array");
+      if (!Array.isArray(provider.advertisedSpecialtyEvidence)) {
+        recordIssue(errors, provider, "psychiatrist records need advertisedSpecialtyEvidence array");
+      } else if (provider.advertisedSpecialties?.length && !provider.advertisedSpecialtyEvidence.length) {
+        recordIssue(errors, provider, "advertisedSpecialties require source evidence");
+      }
+      if (provider.advertisedSpecialtyEvidence?.some((item) => item && item.sourceUrl && !isUrl(item.sourceUrl))) {
+        recordIssue(errors, provider, "advertisedSpecialtyEvidence sourceUrl must be an http(s) URL when present");
+      }
+      if (!hasValue(provider.specialtyTagsSource)) recordIssue(errors, provider, "psychiatrist records need specialtyTagsSource");
     }
 
     const detectedAvailability = detectAvailabilityFromText(availabilityEvidenceText(provider));
