@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
+import { confidenceByField, evidenceItem, sourceEvidenceShape } from "./lib/provider-evidence-scorer.mjs";
 
 const [, , providersPath = "providers.json"] = process.argv;
 
@@ -157,6 +158,34 @@ for (const profileUrl of profileUrls) {
   const evidenceText = `${role} ${areas.join(" ")} ${therapies.join(" ")} ${worksWith} ${registration} ${membership}`;
   const id = `national-mindwell-${slugId(profileUrl)}`;
   const previous = byId.get(id) || {};
+  const capturedAt = `${verifiedMonth}-01T00:00:00.000Z`;
+  const evidence = [];
+  const addEvidence = (field, value, excerpt, confidence = "high") => {
+    if (!value) return;
+    evidence.push(evidenceItem({
+      field,
+      value,
+      sourceUrl: profileUrl,
+      sourceType: "provider_owned",
+      excerpt,
+      capturedAt,
+      confidence,
+      extractor: "import-mindwell-psychologists",
+      needsManualReview: false
+    }));
+  };
+  addEvidence("clinicianName", name, `Mindwell profile name: ${name}`);
+  addEvidence("practiceName", "Mindwell Online Psychology", "Mindwell provider-owned psychology practice profile.");
+  addEvidence("email", email, `Mindwell contact email: ${email}`);
+  addEvidence("bookingUrl", bookingUrl, "Mindwell homepage includes a Book a Session button.");
+  addEvidence("website", profileUrl, "Mindwell public clinician profile.");
+  addEvidence("type", "psychologist", `Role listed as ${role}.`);
+  addEvidence("availabilityStatus", availability ? "accepting" : "not_published", availability ? `Mindwell homepage lists online booking availability as ${availability}.` : "", availability ? "medium" : "low");
+  addEvidence("cost", fee, fee ? `Mindwell session fee: ${fee}.` : "");
+  addEvidence("tags", "telehealth", "Mindwell Online Psychology profiles are online across New Zealand.");
+  for (const area of areas) addEvidence("advertisedSpecialties", area, `Area of expertise/interest listed: ${area}.`);
+  for (const therapy of therapies) addEvidence("services", therapy, `Therapy offered: ${therapy}.`);
+  for (const group of ageGroupsFromWorksWith(worksWith)) addEvidence("ageGroups", group, `Works with ${worksWith || group}.`);
   const record = withAvailabilityDefaults({
     ...previous,
     id,
@@ -198,7 +227,9 @@ for (const profileUrl of profileUrls) {
     registration,
     membership,
     qualification,
-    experience
+    experience,
+    sourceEvidence: sourceEvidenceShape(evidence),
+    confidenceByField: confidenceByField(evidence)
   }, { checkedAt: verifiedMonth });
 
   if (byId.has(id)) {

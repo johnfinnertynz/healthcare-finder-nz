@@ -1,0 +1,242 @@
+import crypto from "node:crypto";
+
+export const sourceTrust = {
+  provider_owned: 0.95,
+  clinic_owned: 0.9,
+  healthpoint: 0.88,
+  official_register: 0.85,
+  professional_directory: 0.78,
+  ngo_directory: 0.72,
+  linkedIn_public: 0.45,
+  search_result: 0.25,
+  third_party_directory: 0.5,
+  unknown: 0.25
+};
+
+export const confidenceRank = { high: 3, medium: 2, low: 1, none: 0 };
+
+export function compact(value, max = 360) {
+  return String(value || "").replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+export function normaliseComparable(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+export function slugify(value) {
+  return normaliseComparable(value).replace(/\s+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+export function unique(values) {
+  return [...new Set(values.filter((value) => value !== undefined && value !== null && String(value).trim() !== ""))];
+}
+
+export function sourceDomain(value) {
+  try {
+    return new URL(value).hostname.replace(/^www\./, "").toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+export function emailDomain(value) {
+  return String(value || "").split("@")[1]?.toLowerCase() || "";
+}
+
+export function hashText(value) {
+  return crypto.createHash("sha256").update(String(value || "")).digest("hex");
+}
+
+export function sourceTypeFromUrl(url = "") {
+  const host = sourceDomain(url);
+  if (!host) return "unknown";
+  if (/healthpoint\.co\.nz$/i.test(host)) return "healthpoint";
+  if (/yourhealthinmind\.org$/i.test(host) || /ranzcp\.org$/i.test(host) || /mcnz\.org\.nz$/i.test(host) || /psychologistsboard\.org\.nz$/i.test(host)) return "official_register";
+  if (/nzccp\.co\.nz$/i.test(host) || /psychologytoday\.com$/i.test(host) || /talkingworks\.co\.nz$/i.test(host)) return "professional_directory";
+  if (/linkedin\.com$/i.test(host)) return "linkedIn_public";
+  if (/google\.com$|bing\.com$/i.test(host)) return "search_result";
+  if (/mentalhealth\.org\.nz$|health\.nz$|healthnz\.govt\.nz$/i.test(host)) return "ngo_directory";
+  return "provider_owned";
+}
+
+export function evidenceItem({
+  field,
+  value,
+  sourceUrl,
+  sourceType,
+  excerpt,
+  capturedAt,
+  confidence = "low",
+  extractor = "manual",
+  needsManualReview = true
+}) {
+  return {
+    field,
+    value: value ?? "",
+    sourceUrl: sourceUrl || "",
+    sourceType: sourceType || sourceTypeFromUrl(sourceUrl),
+    excerpt: compact(excerpt, 700),
+    capturedAt: capturedAt || new Date().toISOString(),
+    confidence,
+    extractor,
+    needsManualReview: needsManualReview !== false
+  };
+}
+
+export function confidenceFromTrust(score) {
+  if (score >= 0.82) return "high";
+  if (score >= 0.55) return "medium";
+  return "low";
+}
+
+export function scoreEvidence(item = {}) {
+  const base = sourceTrust[item.sourceType] ?? sourceTrust.unknown;
+  const hasExcerpt = item.excerpt ? 0.1 : -0.1;
+  const manualPenalty = item.needsManualReview ? -0.05 : 0;
+  const fieldPenalty = /availabilityStatus|referralType|tags|specialties|advertisedSpecialties/i.test(item.field || "") ? -0.08 : 0;
+  const linkedInPenalty = item.sourceType === "linkedIn_public" && /availability|specialt|tags|referral/i.test(item.field || "") ? -0.3 : 0;
+  const searchPenalty = item.sourceType === "search_result" ? -0.25 : 0;
+  return Math.max(0, Math.min(1, base + hasExcerpt + manualPenalty + fieldPenalty + linkedInPenalty + searchPenalty));
+}
+
+export function confidenceByField(claims = []) {
+  const grouped = new Map();
+  for (const claim of claims) {
+    if (!claim.field) continue;
+    const bucket = grouped.get(claim.field) || [];
+    bucket.push(claim);
+    grouped.set(claim.field, bucket);
+  }
+
+  const output = {};
+  for (const [field, items] of grouped.entries()) {
+    const values = unique(items.map((item) => String(item.value || "").trim()).filter(Boolean));
+    const sources = unique(items.map((item) => item.sourceUrl).filter(Boolean));
+    const bestScore = Math.max(...items.map(scoreEvidence));
+    const corroborationBoost = values.length === 1 && sources.length > 1 ? 0.12 : 0;
+    const conflictPenalty = values.length > 1 ? 0.25 : 0;
+    const score = Math.max(0, Math.min(1, bestScore + corroborationBoost - conflictPenalty));
+    output[field] = {
+      confidence: confidenceFromTrust(score),
+      score: Number(score.toFixed(2)),
+      values,
+      sources,
+      conflicts: values.length > 1 ? values : []
+    };
+  }
+  return output;
+}
+
+export function sourceEvidenceShape(claims = []) {
+  const evidence = {
+    contact: [],
+    address: [],
+    availability: [],
+    referral: [],
+    scope: [],
+    tags: {},
+    telehealth: [],
+    cultural: [],
+    cost: [],
+    identity: []
+  };
+
+  for (const claim of claims) {
+    if (["phone", "text", "email", "website", "bookingUrl"].includes(claim.field)) evidence.contact.push(claim);
+    else if (["address", "city", "region", "lat", "lon"].includes(claim.field)) evidence.address.push(claim);
+    else if (/availability/i.test(claim.field)) evidence.availability.push(claim);
+    else if (/referral/i.test(claim.field)) evidence.referral.push(claim);
+    else if (["tags"].includes(claim.field)) {
+      const key = String(claim.value || "unknown");
+      evidence.tags[key] = evidence.tags[key] || [];
+      evidence.tags[key].push(claim);
+      if (["maori", "pasifika", "asian", "rainbow"].includes(key)) evidence.cultural.push(claim);
+      if (["telehealth", "online"].includes(key)) evidence.telehealth.push(claim);
+    } else if (["cost", "funding"].includes(claim.field)) evidence.cost.push(claim);
+    else if (["clinicianName", "practiceName", "name", "type"].includes(claim.field)) evidence.identity.push(claim);
+    else evidence.scope.push(claim);
+  }
+
+  return evidence;
+}
+
+export function identitySignalsFromClaims(claims = []) {
+  const valuesFor = (field) => unique(claims.filter((claim) => claim.field === field).map((claim) => claim.value));
+  return {
+    clinicianNames: valuesFor("clinicianName"),
+    practiceNames: valuesFor("practiceName"),
+    names: valuesFor("name"),
+    phones: valuesFor("phone"),
+    emails: valuesFor("email"),
+    websites: valuesFor("website").map(sourceDomain).filter(Boolean),
+    addresses: valuesFor("address"),
+    cities: valuesFor("city"),
+    regions: valuesFor("region")
+  };
+}
+
+export function identityKeyFromSignals(signals = {}) {
+  const email = signals.emails?.[0];
+  if (email) return `email:${email.toLowerCase()}`;
+  const phone = signals.phones?.[0];
+  if (phone) return `phone:${normaliseComparable(phone)}`;
+  const domain = signals.websites?.[0];
+  const clinician = signals.clinicianNames?.[0];
+  if (clinician && domain) return `clinician-domain:${slugify(clinician)}:${domain}`;
+  const practice = signals.practiceNames?.[0] || signals.names?.[0];
+  if (practice && domain) return `practice-domain:${slugify(practice)}:${domain}`;
+  if (clinician && practice) return `clinician-practice:${slugify(clinician)}:${slugify(practice)}`;
+  const city = signals.cities?.[0] || signals.regions?.[0] || "unknown";
+  if (clinician) return `clinician-city:${slugify(clinician)}:${slugify(city)}`;
+  if (practice) return `practice-city:${slugify(practice)}:${slugify(city)}`;
+  return `candidate:${hashText(JSON.stringify(signals)).slice(0, 16)}`;
+}
+
+export function likelySameProvider(existing = {}, signals = {}) {
+  const existingDomain = sourceDomain(existing.website || existing.source || "");
+  const signalDomains = new Set(signals.websites || []);
+  const existingEmailDomain = emailDomain(existing.email);
+  const signalEmailDomains = new Set((signals.emails || []).map(emailDomain).filter(Boolean));
+  const existingPhone = normaliseComparable(existing.phone || "");
+  const existingName = normaliseComparable(existing.name || "");
+  const existingClinician = normaliseComparable(existing.clinicianName || "");
+  const signalNames = [
+    ...(signals.names || []),
+    ...(signals.clinicianNames || []),
+    ...(signals.practiceNames || [])
+  ].map(normaliseComparable);
+
+  if (existing.phone && signalNames.length && (signals.phones || []).some((phone) => normaliseComparable(phone) === existingPhone)) return true;
+  if (existing.email && (signals.emails || []).some((email) => email.toLowerCase() === existing.email.toLowerCase())) return true;
+  if (existingDomain && signalDomains.has(existingDomain)) {
+    if (!existingClinician || signalNames.includes(existingClinician) || signalNames.includes(existingName)) return true;
+  }
+  if (existingEmailDomain && signalEmailDomains.has(existingEmailDomain) && signalNames.some((name) => name && (name === existingName || name === existingClinician))) return true;
+  return false;
+}
+
+export function detectConflicts(confidence = {}) {
+  return Object.entries(confidence)
+    .filter(([, value]) => Array.isArray(value.conflicts) && value.conflicts.length > 1)
+    .map(([field, value]) => ({ field, values: value.conflicts }));
+}
+
+export function sourceTypeLabel(type) {
+  return {
+    provider_owned: "provider-owned page",
+    clinic_owned: "clinic-owned page",
+    healthpoint: "Healthpoint",
+    official_register: "official register",
+    professional_directory: "professional directory",
+    ngo_directory: "NGO/health directory",
+    linkedIn_public: "public LinkedIn signal",
+    search_result: "search result snippet",
+    third_party_directory: "third-party directory",
+    unknown: "unknown source"
+  }[type] || type || "unknown source";
+}

@@ -19,7 +19,11 @@
     "export:review": "node tools/export-provider-review-queue.mjs",
     "apply:review": "node tools/apply-provider-review-decisions.mjs",
     "discover:providers": "node tools/build-provider-discovery-queue.mjs",
-    "check:links": "node tools/check-links.mjs"
+    "check:links": "node tools/check-links.mjs",
+    "discover:seeds": "node tools/build-provider-discovery-seeds.mjs",
+    "discover:enrich": "node tools/enrich-provider-candidates.mjs",
+    "discover:suggest": "node tools/build-provider-suggestions.mjs",
+    "discover:report": "node tools/enrich-provider-candidates.mjs --no-network --limit 50 && node tools/build-provider-suggestions.mjs"
   },
   "engines": {
     "node": ">=22"

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
 import { withPsychiatristScopeMetadata } from "./lib/provider-scope.mjs";
+import { confidenceByField, evidenceItem, sourceEvidenceShape } from "./lib/provider-evidence-scorer.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -205,6 +206,33 @@ function toRecord(profile) {
   const ageText = ages.length ? ` Works with ${ages.join(", ")}.` : "";
   const patientGroupText = patientGroups.length ? ` Patient groups listed include ${patientGroups.slice(0, 8).join(", ")}.` : "";
   const verifiedMonth = new Date().toISOString().slice(0, 7);
+  const capturedAt = `${verifiedMonth}-01T00:00:00.000Z`;
+  const evidence = [];
+  const addEvidence = (field, value, excerpt, confidence = "medium") => {
+    if (!value) return;
+    evidence.push(evidenceItem({
+      field,
+      value,
+      sourceUrl: profileUrl,
+      sourceType: "official_register",
+      excerpt,
+      capturedAt,
+      confidence,
+      extractor: "import-ranzcp-psychiatrists",
+      needsManualReview: field !== "referralType"
+    }));
+  };
+  addEvidence("name", profile.name, `RANZCP profile name: ${profile.name}`, "high");
+  addEvidence("address", addressText(address), `RANZCP profile address: ${addressText(address)}`);
+  addEvidence("phone", address.phone, `RANZCP profile phone: ${address.phone}`);
+  addEvidence("email", address.email, `RANZCP profile email: ${address.email}`);
+  addEvidence("website", profileUrl, "Your Health in Mind public psychiatrist profile.", "high");
+  addEvidence("type", "psychiatrist", "Your Health in Mind is a public RANZCP psychiatrist directory.", "high");
+  addEvidence("referralType", "gp", "Your Health in Mind profile says people must first see their GP for a referral.", "high");
+  for (const item of expertise) addEvidence("advertisedSpecialties", item, `Special interests include ${item}.`);
+  for (const item of services) addEvidence("services", item, `Services include ${item}.`);
+  for (const item of ages) addEvidence("ageGroups", item, `Works with ${item}.`);
+  for (const item of patientGroups) addEvidence("patientGroups", item, `Patient groups listed include ${item}.`);
 
   return withPsychiatristScopeMetadata(withAvailabilityDefaults({
     id: `ranzcp-${slugify(profile.ranzcP_ID || profile.id || profile.name)}`,
@@ -244,7 +272,9 @@ function toRecord(profile) {
     referralConfidence: "high",
     referralLastChecked: verifiedMonth,
     referralNeedsManualReview: false,
-    sourceUpdated: profile.lastUpdatedDate ? profile.lastUpdatedDate.slice(0, 10) : ""
+    sourceUpdated: profile.lastUpdatedDate ? profile.lastUpdatedDate.slice(0, 10) : "",
+    sourceEvidence: sourceEvidenceShape(evidence),
+    confidenceByField: confidenceByField(evidence)
   }, { checkedAt: verifiedMonth }));
 }
 

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
+import { confidenceByField, evidenceItem, sourceEvidenceShape } from "./lib/provider-evidence-scorer.mjs";
 
 const DOCTORPRICER_API = "https://doctorpricer.co.nz/api/practices";
 const DOCTORPRICER_HOME = "https://doctorpricer.co.nz/";
@@ -215,6 +216,9 @@ function mapPractice(practice, seed, fetchedAt) {
   const region = nearest.region;
   const city = cityFromAddress(practice.address, nearest.city, region);
   const name = normaliseWhitespace(practice.name);
+  const address = normaliseWhitespace(practice.address);
+  const phone = normaliseWhitespace(practice.phone);
+  const website = publicUrl(practice.url);
   const tags = [
     "gp",
     "primary-care",
@@ -227,6 +231,15 @@ function mapPractice(practice, seed, fetchedAt) {
     practice.active ? "enrolling" : "not-enrolling",
     ...culturalTags(practice)
   ];
+  const capturedAt = `${fetchedAt}-01T00:00:00.000Z`;
+  const evidence = [
+    evidenceItem({ field: "name", value: name, sourceUrl: DOCTORPRICER_HOME, sourceType: "third_party_directory", excerpt: `DoctorPricer practice name: ${name}.`, capturedAt, confidence: "medium", extractor: IMPORT_SOURCE, needsManualReview: true }),
+    evidenceItem({ field: "type", value: "gp", sourceUrl: DOCTORPRICER_HOME, sourceType: "third_party_directory", excerpt: "DoctorPricer public practice listing used for GP discovery and fees.", capturedAt, confidence: "medium", extractor: IMPORT_SOURCE, needsManualReview: true }),
+    evidenceItem({ field: "address", value: address, sourceUrl: DOCTORPRICER_HOME, sourceType: "third_party_directory", excerpt: `DoctorPricer practice address: ${address}.`, capturedAt, confidence: "medium", extractor: IMPORT_SOURCE, needsManualReview: true }),
+    evidenceItem({ field: "phone", value: phone, sourceUrl: DOCTORPRICER_HOME, sourceType: "third_party_directory", excerpt: `DoctorPricer practice phone: ${phone}.`, capturedAt, confidence: "medium", extractor: IMPORT_SOURCE, needsManualReview: true }),
+    evidenceItem({ field: "website", value: website, sourceUrl: DOCTORPRICER_HOME, sourceType: "third_party_directory", excerpt: `DoctorPricer linked website: ${website}.`, capturedAt, confidence: "medium", extractor: IMPORT_SOURCE, needsManualReview: true }),
+    evidenceItem({ field: "cost", value: priceLabel(practice.price), sourceUrl: DOCTORPRICER_HOME, sourceType: "third_party_directory", excerpt: `DoctorPricer adult fee/enrolment data: ${priceLabel(practice.price)}.`, capturedAt, confidence: "medium", extractor: IMPORT_SOURCE, needsManualReview: true })
+  ].filter((item) => item.value);
 
   return withAvailabilityDefaults({
     id: `gp-${slugify(practice.id || `${name}-${practice.address}`)}`,
@@ -234,11 +247,11 @@ function mapPractice(practice, seed, fetchedAt) {
     type: "gp",
     region,
     city,
-    address: normaliseWhitespace(practice.address),
-    phone: normaliseWhitespace(practice.phone),
+    address,
+    phone,
     text: "",
     email: "",
-    website: publicUrl(practice.url),
+    website,
     lat,
     lon,
     ...(lat && lon ? { coordinateSource: `DoctorPricer public API ${fetchedAt}` } : {}),
@@ -260,7 +273,9 @@ function mapPractice(practice, seed, fetchedAt) {
       pho: normaliseWhitespace(practice.pho),
       enrolling: Boolean(practice.active),
       adultFee: Number.isFinite(Number(practice.price)) ? Number(practice.price) : ""
-    }
+    },
+    sourceEvidence: sourceEvidenceShape(evidence),
+    confidenceByField: confidenceByField(evidence)
   }, { checkedAt: fetchedAt });
 }
 

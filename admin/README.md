@@ -31,6 +31,27 @@ For the step-by-step human review process, start with `../AUDITOR_README.md`.
    npm test
    ```
 
+## Discovery Suggestions
+
+Provider discovery outputs also feed this review workflow:
+
+```bash
+npm run discover:seeds
+node tools/enrich-provider-candidates.mjs --no-network --limit 20
+npm run discover:suggest
+npm run export:review
+```
+
+Discovery suggestions are not live data. They are candidate records or patches
+with source links, extracted excerpts, confidence values, conflicts, and review
+reasons. Review them like any other queue item. Open the source in a new tab,
+confirm contact details and ranking-sensitive claims, adjust fields if needed,
+then export a decision for the controlled apply script.
+
+Search-result snippets and public LinkedIn signals are discovery/corroboration
+only. Do not approve specialties, availability, cultural tags, telehealth, or
+psychiatry self-referral from those sources alone.
+
 ## Decisions
 
 - `approve`: confirm current data. This can only clear manual review flags when source evidence/review notes exist.

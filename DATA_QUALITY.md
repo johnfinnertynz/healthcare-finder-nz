@@ -313,6 +313,67 @@ used for an exceptional local maintenance task.
 Every applied decision appends to `data/provider-review-log.jsonl`. The log is
 the audit trail and should not be rewritten during normal review work.
 
+## Discovery And Snowball Enrichment
+
+The discovery pipeline is for finding and corroborating public provider data,
+not publishing it automatically. It starts with `providers.json`, audit gaps,
+review queue items, thin-region search queues, and optional manual seeds:
+
+```sh
+npm run discover:seeds
+npm run discover:enrich
+npm run discover:suggest
+npm run export:review
+```
+
+`tools/enrich-provider-candidates.mjs` works in bounded rounds. Round 1 searches
+from seed details such as city, provider type, clinician name, practice name,
+address, and known source URLs. Later rounds use found clinician/practice names,
+clinic domains, phone numbers, email domains, addresses, Healthpoint/NZCCP/
+RANZCP/Psychology Today titles, and public LinkedIn role signals to generate
+more precise follow-up searches. The default maximum is three rounds.
+
+Search engines must be accessed through official APIs (`GOOGLE_API_KEY` plus
+`GOOGLE_CSE_ID`, or `BING_WEB_SEARCH_KEY`). If keys are missing, or `--no-network`
+is used, the tooling writes reviewable search queues and seed-derived candidate
+records; it must not scrape blocked SERP HTML.
+
+The evidence graph keeps probable provider identities separate. It can match on
+clinician name, practice name, domain, phone, email, address, city/region, and
+known directory URLs. It should not merge two clinicians just because they work
+at the same clinic, and it should not turn a directory/register page into a
+direct provider without a separate public practice/contact source.
+
+Source trust levels:
+
+- `provider_owned` / `clinic_owned`: high for contact, service wording,
+  explicit availability, and telehealth wording.
+- `healthpoint` / `official_register`: high for contact and classification,
+  but still check referral and availability wording carefully.
+- `professional_directory`: medium/high depending on the field and whether a
+  provider-owned source corroborates it.
+- `linkedIn_public`: low/medium for role, clinic, city, or website discovery
+  only. Do not use it alone for specialties, availability, referral pathways, or
+  support-preference tags.
+- `search_result`: low confidence, discovery only.
+- `third_party_directory`: medium/low and generally needs corroboration.
+
+`tools/build-provider-suggestions.mjs` turns evidence graph nodes into suggested
+actions: add a provider, update an existing provider, mark duplicate, move to
+watchlist, needs manual research, or reject as not relevant. Suggestions feed
+the auditor queue and keep `reviewGateRequired: true`.
+
+Must be reviewed before live use:
+
+- `accepting` availability
+- psychiatrist `self` referral
+- cultural/safety tags
+- telehealth/online flags
+- broad need tags or advertised specialties
+- sexual-harm or sensitive-claims scope
+- candidates based only on LinkedIn, search snippets, or generic directories
+- conflicting addresses, phone numbers, websites, or clinician/practice identity
+
 ## Structured Evidence Model
 
 Review queue items can include structured source evidence:
@@ -338,9 +399,11 @@ Each evidence item supports:
 - `field`
 - `value`
 - `sourceUrl`
+- `sourceType`
 - `excerpt`
 - `capturedAt`
 - `confidence`
+- `extractor`
 - `needsManualReview`
 
 Do not fake excerpts. If an importer cannot capture a source excerpt for a

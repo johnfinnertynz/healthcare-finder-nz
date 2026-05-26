@@ -353,6 +353,72 @@ check. The default user agent is intentionally browser-like and does not
 identify itself as a link checker, because some healthcare directories block
 that wording before returning a useful status.
 
+## Provider Discovery And Enrichment
+
+Discovery tooling is deliberately separate from the live finder. It can find,
+enrich, and suggest provider records, but weak or risky data still goes through
+the auditor queue before it can affect public recommendations.
+
+Run the repeatable discovery flow:
+
+```sh
+npm run discover:seeds
+node tools/enrich-provider-candidates.mjs --no-network --limit 20
+npm run discover:suggest
+npm run export:review
+```
+
+`discover:seeds` combines existing provider records, audit findings, review
+queue items, thin-region discovery queues, and optional manual seeds into
+`data/discovery/provider-discovery-seeds.json`.
+
+`discover:enrich` supports iterative "snowball" enrichment. Round 1 builds
+searches from city/type/provider names. Later rounds use discovered clinician
+names, practice names, public clinic websites, addresses, phone numbers, email
+domains, Healthpoint/NZCCP/RANZCP/Psychology Today titles, and public LinkedIn
+role signals to generate follow-up searches. Search engines are used only via
+official Google Custom Search or Bing Web Search APIs when keys are configured:
+
+```sh
+GOOGLE_API_KEY=... GOOGLE_CSE_ID=... npm run discover:enrich -- --use-google-api
+BING_WEB_SEARCH_KEY=... npm run discover:enrich -- --use-bing-api
+```
+
+Without API keys, or with `--no-network`, the tool writes queues and candidate
+evidence from existing seeds instead of scraping search result HTML. It does not
+bypass blocked sites, login-only pages, CAPTCHA pages, LinkedIn restrictions, or
+source-site embedding restrictions.
+
+Outputs:
+
+- `data/discovery/provider-candidates.json`
+- `data/discovery/provider-evidence-graph.json`
+- `data/discovery/provider-discovery-report.md`
+- `PROVIDER_DISCOVERY_REPORT.md`
+- `data/discovery/provider-suggestions.json`
+- `data/discovery/provider-suggestions.csv`
+- `PROVIDER_DISCOVERY_SUGGESTIONS.md`
+
+LinkedIn is treated as corroboration only. A public LinkedIn snippet may help
+identify a clinician's current role, clinic name, city, or clinic website to
+search next. It must not be the sole source for specialty, availability,
+referral pathway, cultural support, or public contact claims.
+
+Provider-owned or clinic-owned pages, Healthpoint, official registers,
+professional directories, PHO/NGO pages, and public clinic websites carry more
+weight. Every extracted claim keeps `sourceUrl`, `sourceType`, `excerpt`,
+`confidence`, `capturedAt`, and `needsManualReview`.
+
+Suggestions are review-gated:
+
+- search-result snippets alone cannot create live providers
+- LinkedIn-only candidates stay manual research
+- conflicting addresses or contact values stay manual research
+- `accepting` availability requires explicit source wording
+- psychiatrist `self` referral requires explicit source wording
+- cultural, telehealth, and broad need/specialty tags require evidence or
+  reviewer approval
+
 ## Provider Review Workflow
 
 Provider data changes should go through a review queue rather than direct edits
@@ -370,8 +436,8 @@ This writes:
 
 The export merges `providers.json`, source-fit findings, availability findings,
 psychiatrist referral findings, address/geocode checks, the availability
-watchlist, and optional identity/link/discovery reports. By default it is a
-focused queue and does not include every low-risk GP record. Use
+watchlist, optional identity/link reports, and discovery suggestions. By default
+it is a focused queue and does not include every low-risk GP record. Use
 `node tools/export-provider-review-queue.mjs --include-all` for a full dump.
 
 Open the local prototype at `admin/index.html` after serving the repo locally.

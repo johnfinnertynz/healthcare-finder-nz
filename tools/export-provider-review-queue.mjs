@@ -12,6 +12,7 @@ const DEFAULTS = {
   watchlist: "data/monitors/provider-availability-watchlist.json",
   linkResults: "data/reports/link-check-results.json",
   discoveryQueue: "data/discovery/provider-search-queue.json",
+  providerSuggestions: "data/discovery/provider-suggestions.json",
   jsonOut: "data/provider-review-queue.json",
   csvOut: "data/provider-review-queue.csv",
   mdOut: "PROVIDER_REVIEW_QUEUE.md"
@@ -667,6 +668,119 @@ function watchlistReviewItems(watchlist, providersById, includeAll) {
   }).filter(Boolean);
 }
 
+function priorityForDiscoverySuggestion(suggestion) {
+  let score = 1_200;
+  if (suggestion.action === "add_new_provider") score += 1_500;
+  if (suggestion.action === "update_existing_provider") score += 1_300;
+  if (suggestion.action === "move_to_watchlist") score += 1_100;
+  if (suggestion.type === "psychiatrist") score += 900;
+  if (suggestion.type === "psychologist") score += 700;
+  if (suggestion.type === "counsellor") score += 550;
+  if (suggestion.conflicts?.length) score += 1_000;
+  if (suggestion.confidence === "high") score += 250;
+  if (suggestion.confidence === "low") score += 350;
+  score += Math.min(Math.round((suggestion.corroborationScore || 0) * 400), 400);
+  return score;
+}
+
+function discoverySuggestionItems(providerSuggestions, includeAll) {
+  const suggestions = asArray(providerSuggestions.suggestions);
+  if (!suggestions.length) return [];
+  return suggestions
+    .filter((suggestion) => includeAll || suggestion.action !== "needs_manual_research" || suggestion.conflicts?.length || suggestion.type === "psychiatrist")
+    .map((suggestion) => {
+      const record = suggestion.suggestedProviderRecord || {};
+      const score = priorityForDiscoverySuggestion(suggestion);
+      const auditSeverity = suggestion.conflicts?.length ? "high" : suggestion.action === "needs_manual_research" ? "medium" : "low";
+      const sourceUrls = unique([
+        ...(suggestion.sourceUrlsUsed || []),
+        record.website,
+        record.source,
+        record.bookingUrl
+      ]);
+      const sourceEvidence = suggestion.sourceEvidence || record.sourceEvidence || {};
+      const summaryPieces = [];
+      if (suggestion.sourceSummary) summaryPieces.push(`Sources: ${suggestion.sourceSummary}`);
+      if (record.availabilityEvidence) summaryPieces.push(`Availability: ${compact(record.availabilityEvidence, 180)}`);
+      const sourceClaim = Object.values(sourceEvidence)
+        .flatMap((value) => Array.isArray(value) ? value : typeof value === "object" && value !== null ? Object.values(value).flat() : [])
+        .find((claim) => claim?.excerpt);
+      if (sourceClaim?.excerpt) summaryPieces.push(`Evidence: ${compact(sourceClaim.excerpt, 220)}`);
+
+      return {
+        reviewId: `discovery:${suggestion.suggestionId || suggestion.candidateId}`,
+        providerId: suggestion.existingProviderId || record.id || suggestion.candidateId || "",
+        name: record.name || suggestion.name || "",
+        clinicianName: record.clinicianName || "",
+        practiceName: record.practiceName || "",
+        type: record.type || suggestion.type || "",
+        region: record.region || suggestion.region || "",
+        city: record.city || suggestion.city || "",
+        address: record.address || "",
+        lat: record.lat ?? "",
+        lon: record.lon ?? "",
+        phone: record.phone || "",
+        text: record.text || "",
+        email: record.email || "",
+        website: record.website || "",
+        bookingUrl: record.bookingUrl || "",
+        source: record.source || sourceUrls[0] || "",
+        sourceQuality: record.sourceQuality || suggestion.sourceSummary || "",
+        confidence: suggestion.confidence || record.confidence || "low",
+        needsManualVerification: true,
+        verified: record.verified || "",
+        lastVerified: record.lastVerified || "",
+        availabilityStatus: record.availabilityStatus || "",
+        availabilityCheckedAt: record.availabilityCheckedAt || "",
+        availabilityEvidence: record.availabilityEvidence || "",
+        availabilitySource: record.availabilitySource || "",
+        availabilityNeedsManualReview: true,
+        requiresReferral: record.requiresReferral,
+        referralType: record.referralType || "",
+        referralSourceUrl: record.referralSourceUrl || "",
+        referralSourceExcerpt: record.referralSourceExcerpt || "",
+        referralConfidence: record.referralConfidence || "",
+        referralLastChecked: record.referralLastChecked || "",
+        referralNeedsManualReview: record.type === "psychiatrist" ? true : record.referralNeedsManualReview,
+        tags: asArray(record.tags),
+        needScope: asArray(record.needScope),
+        baselineScope: asArray(record.baselineScope),
+        baselineScopeSource: record.baselineScopeSource || "",
+        baselineScopeNote: record.baselineScopeNote || "",
+        advertisedSpecialties: asArray(record.advertisedSpecialties),
+        advertisedSpecialtyEvidence: asArray(record.advertisedSpecialtyEvidence),
+        specialtyTagsSource: record.specialtyTagsSource || "",
+        specialties: asArray(record.specialties),
+        services: asArray(record.services),
+        patientGroups: asArray(record.patientGroups),
+        ageGroups: asArray(record.ageGroups),
+        onlineAvailable: record.onlineAvailable,
+        phoneSupport: record.phoneSupport,
+        inPerson: record.inPerson,
+        crisisOnly: record.crisisOnly,
+        auditSeverity,
+        auditRules: unique(["discovery-suggestion", suggestion.action, ...(suggestion.conflicts || []).map((conflict) => `conflict-${conflict.field}`)]),
+        auditIssues: suggestion.reviewReasons || [],
+        suggestedFixes: ["Review source evidence, then approve/adjust/reject through the controlled review decision workflow."],
+        reviewPriority: reviewPriorityFromScore(score, auditSeverity),
+        priorityScore: score,
+        reviewReasons: unique(["provider discovery suggestion", ...(suggestion.reviewReasons || [])]),
+        sourceUrls,
+        sourceEvidence,
+        sourceEvidenceSummary: summaryPieces.join(" | "),
+        publicCardPreviewText: publicCardPreviewText(record),
+        currentProvider: null,
+        discoverySuggestion: suggestion,
+        auditFindings: [],
+        reviewDecision: "",
+        correctedFields: suggestion.suggestedChanges || {},
+        reviewer: "",
+        reviewedDate: "",
+        reviewNotes: ""
+      };
+    });
+}
+
 function applyFilters(items, config) {
   let filtered = items;
   if (config.region) filtered = filtered.filter((item) => item.region === config.region);
@@ -819,6 +933,7 @@ export function buildProviderReviewQueue(config = {}) {
   const watchlist = readJsonIfExists(mergedConfig.watchlist, { items: [] });
   const linkResults = readJsonIfExists(mergedConfig.linkResults, { results: [] });
   const discoveryQueue = readJsonIfExists(mergedConfig.discoveryQueue, null);
+  const providerSuggestions = readJsonIfExists(mergedConfig.providerSuggestions, { suggestions: [] });
   const identityScan = readJsonIfExists(mergedConfig.identityScan, { records: [] });
   const scanByProviderId = new Map(asArray(identityScan.records).map((record) => [record.providerId, { ...record, generatedAt: identityScan.generatedAt }]));
   const auditMap = buildAuditMap({
@@ -833,7 +948,8 @@ export function buildProviderReviewQueue(config = {}) {
     .map((provider) => itemFromProvider(provider, auditMap.get(provider.id) || [], scanByProviderId.get(provider.id), mergedConfig.includeAll))
     .filter(Boolean);
   const watchlistItems = watchlistReviewItems(watchlist, providersById, mergedConfig.includeAll);
-  const items = applyFilters([...providerItems, ...watchlistItems], mergedConfig);
+  const discoverySuggestionReviewItems = discoverySuggestionItems(providerSuggestions, mergedConfig.includeAll);
+  const items = applyFilters([...providerItems, ...watchlistItems, ...discoverySuggestionReviewItems], mergedConfig);
   const generatedAt = new Date().toISOString();
   return {
     version: 1,
@@ -854,7 +970,8 @@ export function buildProviderReviewQueue(config = {}) {
       referralFindings: asArray(referrals.findings).length,
       watchlistItems: asArray(Array.isArray(watchlist) ? watchlist : watchlist.items).length,
       identityScanRecords: asArray(identityScan.records).length,
-      discoveryCandidates: discoveryQueue?.candidates?.length || discoveryQueue?.queue?.length || 0
+      discoveryCandidates: discoveryQueue?.candidates?.length || discoveryQueue?.queue?.length || 0,
+      providerSuggestions: asArray(providerSuggestions.suggestions).length
     },
     summary: {
       total: items.length,

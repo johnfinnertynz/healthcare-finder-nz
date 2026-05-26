@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { geocodeProviderRecords } from "./lib/provider-geocoder.mjs";
 import { withAvailabilityDefaults } from "./lib/provider-availability.mjs";
+import { confidenceByField, evidenceItem, sourceEvidenceShape } from "./lib/provider-evidence-scorer.mjs";
 
 const args = process.argv.slice(2);
 const noGeocode = args.includes("--no-geocode");
@@ -244,6 +245,30 @@ for (const record of extractDirectoryRecords(directoryHtml)) {
   const city = record.city || "Aotearoa New Zealand";
   const source = record.href;
   const verifiedMonth = new Date().toISOString().slice(0, 7);
+  const capturedAt = `${verifiedMonth}-01T00:00:00.000Z`;
+  const evidence = [];
+  const addEvidence = (field, value, excerpt, confidence = "medium") => {
+    if (!value) return;
+    evidence.push(evidenceItem({
+      field,
+      value,
+      sourceUrl: source,
+      sourceType: "professional_directory",
+      excerpt,
+      capturedAt,
+      confidence,
+      extractor: "import-nzccp-directory",
+      needsManualReview: true
+    }));
+  };
+  addEvidence("name", record.name, `NZCCP directory listing name: ${record.name}.`);
+  addEvidence("type", "psychologist", "NZCCP public directory listing for clinical psychologists.");
+  addEvidence("city", city, `NZCCP listing city/location: ${city}.`);
+  addEvidence("email", contact.email, `NZCCP/profile contact email: ${contact.email}.`);
+  addEvidence("phone", contact.phone, `NZCCP/profile contact phone: ${contact.phone}.`);
+  addEvidence("website", contact.website || source, "NZCCP profile or linked website.");
+  for (const specialty of record.specialties) addEvidence("advertisedSpecialties", specialty, `NZCCP listed specialty: ${specialty}.`);
+  for (const treatment of record.treatments) addEvidence("services", treatment, `NZCCP listed treatment: ${treatment}.`);
 
   const provider = withAvailabilityDefaults({
     id,
@@ -269,7 +294,9 @@ for (const record of extractDirectoryRecords(directoryHtml)) {
     lastVerified: verifiedMonth,
     confidence: "medium",
     sourceQuality: "professional register or directory",
-    needsManualVerification: true
+    needsManualVerification: true,
+    sourceEvidence: sourceEvidenceShape(evidence),
+    confidenceByField: confidenceByField(evidence)
   }, { checkedAt: verifiedMonth });
 
   if (providersById.has(id)) updated += 1;
