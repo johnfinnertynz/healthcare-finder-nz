@@ -4,6 +4,10 @@ A low-barrier mental health care finder for people in Aotearoa New Zealand.
 
 Live site: [johnfinnertynz.github.io/healthcare-finder-nz](https://johnfinnertynz.github.io/healthcare-finder-nz/)
 
+Project case study: [Care Finder Aotearoa Case Study](https://www.johnfinnerty.co.nz/projects/care-finder-aotearoa.html)
+
+John Finnerty profile hub: [finnerty.me](https://finnerty.me/)
+
 ## Soft Launch Status
 
 Care Finder Aotearoa is in limited public soft launch / pilot status. Provider
