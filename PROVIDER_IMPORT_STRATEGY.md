@@ -24,7 +24,7 @@ raw source or approved export
 | --- | --- | --- |
 | 1 | Provider-owned pages, clinic-owned pages, Health NZ, official organisation pages, approved Healthpoint/HPI/FHIR exports, directly verified public contact details | Strong evidence for low-risk contact and location claims; high-risk claims still need explicit wording |
 | 2 | Professional directories, NZCCP, RANZCP, TalkingWorks, Mindwell, NGO/PHO pages | Useful for discovery and corroboration; specialty, availability, and referral claims need excerpts |
-| 3 | Search snippets, public LinkedIn snippets, mirrors, old cached pages | Discovery only; never enough to publish a live provider claim alone |
+| 3 | Google Places business listings, search snippets, public LinkedIn snippets, mirrors, old cached pages | Discovery/corroboration only; never enough to publish a live clinical, availability, referral, telehealth, cost, cultural-support, or specialty claim alone |
 
 ## Field Policy
 
@@ -74,6 +74,9 @@ mark the claim as review-needed. It must not fake evidence text.
 - `npm run discover:enrich` builds candidates and snowball searches without
   scraping blocked search-result pages.
 - `npm run discover:suggest` creates review-gated candidate additions/patches.
+- `npm run discover:places` creates review-gated Google Places business
+  candidates from regional priority gaps. It reads the API key only from an
+  environment variable or local file and does not store it in outputs.
 - `npm run evidence:graph` creates claim-level evidence from current providers.
 - `npm run export:claims` creates the compressed claim review queue.
 - `npm run export:gp-corroboration` creates a dedicated queue for weak

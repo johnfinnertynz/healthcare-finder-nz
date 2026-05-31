@@ -190,6 +190,28 @@ source tasks, source-fit findings, availability/referral/watchlist signals, and
 address or coordinate gaps into region-by-region actions. The report is
 triage-only and never updates live provider data.
 
+Discover likely provider/business candidates from Google Places:
+
+```sh
+npm run discover:places -- --no-network
+```
+
+With an approved local API key, run a small bounded batch:
+
+```sh
+npm run discover:places -- --api-key-file "path/to/google-places-api-key.txt" --region Northland --type psychologist --limit-queries 2 --max-results-per-query 5
+```
+
+This writes `data/discovery/google-places-provider-candidates.json`,
+`data/discovery/google-places-provider-candidates.csv`, and
+`GOOGLE_PLACES_PROVIDER_CANDIDATES.md`. The API key is read locally and is not
+stored in outputs. Google Places is used only as discovery/corroboration: it can
+suggest likely practices, phone numbers, websites, and addresses, but it is not
+enough by itself to publish clinical scope, availability, referral pathway,
+telehealth, cost, or cultural/support-preference claims. Candidates feed the
+auditor queue and still require stronger source evidence before live data
+changes.
+
 Import backend-only doctor register data after approved MCNZ access:
 
 ```sh
@@ -422,6 +444,14 @@ evidence from existing seeds instead of scraping search result HTML. It does not
 bypass blocked sites, login-only pages, CAPTCHA pages, LinkedIn restrictions, or
 source-site embedding restrictions.
 
+`discover:places` is a separate Google Places discovery aid. It reads regional
+priority gaps, uses the official Places Text Search API when a local key is
+provided, dedupes likely businesses against existing providers, and writes
+review-gated candidates. Places results are useful for finding possible clinic
+names, phone numbers, websites, addresses, and coordinates; they are not enough
+to publish clinical scope, availability, referral, cost, telehealth, or
+support-preference claims.
+
 Outputs:
 
 - `data/discovery/provider-candidates.json`
@@ -431,6 +461,9 @@ Outputs:
 - `data/discovery/provider-suggestions.json`
 - `data/discovery/provider-suggestions.csv`
 - `PROVIDER_DISCOVERY_SUGGESTIONS.md`
+- `data/discovery/google-places-provider-candidates.json`
+- `data/discovery/google-places-provider-candidates.csv`
+- `GOOGLE_PLACES_PROVIDER_CANDIDATES.md`
 
 LinkedIn is treated as corroboration only. A public LinkedIn snippet may help
 identify a clinician's current role, clinic name, city, or clinic website to

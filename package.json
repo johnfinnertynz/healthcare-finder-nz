@@ -34,6 +34,7 @@
     "discover:seeds": "node tools/build-provider-discovery-seeds.mjs",
     "discover:enrich": "node tools/enrich-provider-candidates.mjs",
     "discover:suggest": "node tools/build-provider-suggestions.mjs",
+    "discover:places": "node tools/discover-google-places-providers.mjs",
     "discover:report": "node tools/enrich-provider-candidates.mjs --no-network --limit 50 && node tools/build-provider-suggestions.mjs",
     "check:links": "node tools/check-links.mjs"
   },

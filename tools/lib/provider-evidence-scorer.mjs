@@ -7,6 +7,7 @@ export const sourceTrust = {
   official_register: 0.85,
   professional_directory: 0.78,
   ngo_directory: 0.72,
+  google_places: 0.55,
   linkedIn_public: 0.45,
   search_result: 0.25,
   third_party_directory: 0.5,
@@ -101,8 +102,9 @@ export function scoreEvidence(item = {}) {
   const manualPenalty = item.needsManualReview ? -0.05 : 0;
   const fieldPenalty = /availabilityStatus|referralType|tags|specialties|advertisedSpecialties/i.test(item.field || "") ? -0.08 : 0;
   const linkedInPenalty = item.sourceType === "linkedIn_public" && /availability|specialt|tags|referral/i.test(item.field || "") ? -0.3 : 0;
+  const placesClinicalPenalty = item.sourceType === "google_places" && /type|availability|specialt|tags|referral|needScope|services|patientGroups|ageGroups|cost|telehealth/i.test(item.field || "") ? -0.25 : 0;
   const searchPenalty = item.sourceType === "search_result" ? -0.25 : 0;
-  return Math.max(0, Math.min(1, base + hasExcerpt + manualPenalty + fieldPenalty + linkedInPenalty + searchPenalty));
+  return Math.max(0, Math.min(1, base + hasExcerpt + manualPenalty + fieldPenalty + linkedInPenalty + placesClinicalPenalty + searchPenalty));
 }
 
 export function confidenceByField(claims = []) {
@@ -235,6 +237,7 @@ export function sourceTypeLabel(type) {
     official_register: "official register",
     professional_directory: "professional directory",
     ngo_directory: "NGO/health directory",
+    google_places: "Google Places business listing",
     linkedIn_public: "public LinkedIn signal",
     search_result: "search result snippet",
     third_party_directory: "third-party directory",

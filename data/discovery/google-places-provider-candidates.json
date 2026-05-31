@@ -1,0 +1,2827 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-31T22:14:12.381Z",
+  "mode": "official-google-places-api",
+  "safety": {
+    "officialApiOnly": true,
+    "noSearchHtmlScraping": true,
+    "noApiKeyInOutput": true,
+    "noLiveProviderMutation": true,
+    "reviewGateRequired": true,
+    "noClinicalClaimsFromPlacesAlone": true
+  },
+  "inputs": {
+    "providers": 1214,
+    "regionalReport": "data/regional-data-quality-report.json",
+    "apiKeyPresent": true,
+    "apiKeySource": "file",
+    "region": "Northland",
+    "type": "psychologist",
+    "maxResultsPerQuery": 3
+  },
+  "stats": {
+    "queriesPlanned": 1,
+    "queriesRun": 1,
+    "placesReturned": 3,
+    "candidates": 3
+  },
+  "searchPlan": [
+    {
+      "queryId": "places:northland:psychologist:clinical-psychologist",
+      "region": "Northland",
+      "city": "Whangarei",
+      "type": "psychologist",
+      "textQuery": "clinical psychologist Whangarei Northland New Zealand",
+      "center": {
+        "latitude": -35.7251,
+        "longitude": 174.3237
+      },
+      "radiusMeters": 25000,
+      "priorityScore": 1240,
+      "regionPriorityLevel": "high",
+      "reason": "missing signals: local psychiatrist or psychiatry pathway | 16 GP corroboration tasks | Google Places discovery/corroboration only"
+    }
+  ],
+  "errors": [],
+  "candidates": [
+    {
+      "candidateId": "google-place-chijtfo5x-1-c20r4obigwvmofg",
+      "action": "research_new_provider",
+      "queryId": "places:northland:psychologist:clinical-psychologist",
+      "query": "clinical psychologist Whangarei Northland New Zealand",
+      "type": "psychologist",
+      "region": "Northland",
+      "city": "Whangarei",
+      "name": "Elke Radewald Psychology services",
+      "address": "28 Rathbone Street, CBD, Whangārei 0110",
+      "lat": -35.723889,
+      "lon": 174.3219143,
+      "phone": "027 371 9720",
+      "website": "",
+      "googlePlaceId": "ChIJTfO5x_1-C20R4OBIgwVmoFg",
+      "googleMapsUri": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "businessStatus": "OPERATIONAL",
+      "placeTypes": [
+        "medical_clinic",
+        "health",
+        "point_of_interest",
+        "service",
+        "establishment"
+      ],
+      "existingProviderMatches": [],
+      "possibleProviderIds": [],
+      "duplicateSignals": [],
+      "confidence": "medium",
+      "confidenceByField": {
+        "name": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Elke Radewald Psychology services"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "practiceName": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Elke Radewald Psychology services"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "type": {
+          "confidence": "low",
+          "score": 0.35,
+          "values": [
+            "psychologist"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "region": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Northland"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "city": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Whangarei"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "address": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "28 Rathbone Street, CBD, Whangārei 0110"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "lat": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "-35.723889"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "lon": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "174.3219143"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "phone": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "027 371 9720"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "source": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "businessStatus": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "OPERATIONAL"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "placeType": {
+          "confidence": "low",
+          "score": 0.1,
+          "values": [
+            "medical_clinic",
+            "health",
+            "point_of_interest",
+            "service",
+            "establishment"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": [
+            "medical_clinic",
+            "health",
+            "point_of_interest",
+            "service",
+            "establishment"
+          ]
+        }
+      },
+      "sourceEvidence": {
+        "contact": [
+          {
+            "field": "phone",
+            "value": "027 371 9720",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places phone: 027 371 9720",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "address": [
+          {
+            "field": "region",
+            "value": "Northland",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places region: Northland",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "city",
+            "value": "Whangarei",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places city: Whangarei",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "address",
+            "value": "28 Rathbone Street, CBD, Whangārei 0110",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places address: 28 Rathbone Street, CBD, Whangārei 0110",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "lat",
+            "value": -35.723889,
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places lat: -35.723889",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "lon",
+            "value": 174.3219143,
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places lon: 174.3219143",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "availability": [],
+        "referral": [],
+        "scope": [
+          {
+            "field": "source",
+            "value": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places source: https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "businessStatus",
+            "value": "OPERATIONAL",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places businessStatus: OPERATIONAL",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "medical_clinic",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: medical_clinic",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "health",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: health",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "point_of_interest",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: point_of_interest",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "service",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: service",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "establishment",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: establishment",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "tags": {},
+        "telehealth": [],
+        "cultural": [],
+        "cost": [],
+        "identity": [
+          {
+            "field": "name",
+            "value": "Elke Radewald Psychology services",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places name: Elke Radewald Psychology services",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "practiceName",
+            "value": "Elke Radewald Psychology services",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places practiceName: Elke Radewald Psychology services",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "type",
+            "value": "psychologist",
+            "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+            "capturedAt": "2026-05-31T22:14:12.380Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ]
+      },
+      "suggestedProviderRecord": {
+        "id": "candidate-elke-radewald-psychology-services",
+        "name": "Elke Radewald Psychology services",
+        "clinicianName": "",
+        "practiceName": "Elke Radewald Psychology services",
+        "type": "psychologist",
+        "region": "Northland",
+        "city": "Whangarei",
+        "address": "28 Rathbone Street, CBD, Whangārei 0110",
+        "lat": -35.723889,
+        "lon": 174.3219143,
+        "coordinateSource": "google_places",
+        "coordinatePrecision": "business listing",
+        "coordinateConfidence": "medium",
+        "geocodeNeedsManualReview": true,
+        "phone": "027 371 9720",
+        "email": "",
+        "website": "",
+        "source": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+        "sourceQuality": "Google Places public business listing; discovery/corroboration only",
+        "confidence": "medium",
+        "needsManualVerification": true,
+        "verified": "",
+        "lastVerified": "",
+        "availabilityStatus": "not_published",
+        "availabilityCheckedAt": "",
+        "availabilityEvidence": "",
+        "availabilitySource": "",
+        "availabilityNeedsManualReview": true,
+        "referralType": "",
+        "referralNeedsManualReview": false,
+        "tags": [],
+        "needScope": [],
+        "specialties": [],
+        "advertisedSpecialties": [],
+        "services": [],
+        "patientGroups": [],
+        "ageGroups": [],
+        "onlineAvailable": false,
+        "phoneSupport": true,
+        "inPerson": true,
+        "crisisOnly": false,
+        "sourceEvidence": {
+          "contact": [
+            {
+              "field": "phone",
+              "value": "027 371 9720",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places phone: 027 371 9720",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "address": [
+            {
+              "field": "region",
+              "value": "Northland",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places region: Northland",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "city",
+              "value": "Whangarei",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places city: Whangarei",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "address",
+              "value": "28 Rathbone Street, CBD, Whangārei 0110",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places address: 28 Rathbone Street, CBD, Whangārei 0110",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "lat",
+              "value": -35.723889,
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places lat: -35.723889",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "lon",
+              "value": 174.3219143,
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places lon: 174.3219143",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "availability": [],
+          "referral": [],
+          "scope": [
+            {
+              "field": "source",
+              "value": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places source: https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "businessStatus",
+              "value": "OPERATIONAL",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places businessStatus: OPERATIONAL",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "medical_clinic",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: medical_clinic",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "health",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: health",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "point_of_interest",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: point_of_interest",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "service",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: service",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "establishment",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: establishment",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "tags": {},
+          "telehealth": [],
+          "cultural": [],
+          "cost": [],
+          "identity": [
+            {
+              "field": "name",
+              "value": "Elke Radewald Psychology services",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places name: Elke Radewald Psychology services",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "practiceName",
+              "value": "Elke Radewald Psychology services",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places practiceName: Elke Radewald Psychology services",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "type",
+              "value": "psychologist",
+              "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+              "capturedAt": "2026-05-31T22:14:12.380Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ]
+        },
+        "confidenceByField": {
+          "name": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Elke Radewald Psychology services"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "practiceName": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Elke Radewald Psychology services"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "type": {
+            "confidence": "low",
+            "score": 0.35,
+            "values": [
+              "psychologist"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "region": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Northland"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "city": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Whangarei"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "address": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "28 Rathbone Street, CBD, Whangārei 0110"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "lat": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "-35.723889"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "lon": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "174.3219143"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "phone": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "027 371 9720"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "source": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "businessStatus": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "OPERATIONAL"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "placeType": {
+            "confidence": "low",
+            "score": 0.1,
+            "values": [
+              "medical_clinic",
+              "health",
+              "point_of_interest",
+              "service",
+              "establishment"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": [
+              "medical_clinic",
+              "health",
+              "point_of_interest",
+              "service",
+              "establishment"
+            ]
+          }
+        }
+      },
+      "sourceUrlsUsed": [
+        "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+      ],
+      "reviewReasons": [
+        "Google Places is a discovery/corroboration source, not enough by itself for live recommendations.",
+        "Confirm provider type, services, availability, cost, referral pathway, and support-preference tags from stronger public sources.",
+        "missing signals: local psychiatrist or psychiatry pathway | 16 GP corroboration tasks | Google Places discovery/corroboration only",
+        "new candidate needs corroboration"
+      ],
+      "reviewGateRequired": true,
+      "liveMutationAllowed": false,
+      "claims": [
+        {
+          "field": "name",
+          "value": "Elke Radewald Psychology services",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places name: Elke Radewald Psychology services",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "practiceName",
+          "value": "Elke Radewald Psychology services",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places practiceName: Elke Radewald Psychology services",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "type",
+          "value": "psychologist",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "region",
+          "value": "Northland",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places region: Northland",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "city",
+          "value": "Whangarei",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places city: Whangarei",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "address",
+          "value": "28 Rathbone Street, CBD, Whangārei 0110",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places address: 28 Rathbone Street, CBD, Whangārei 0110",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "lat",
+          "value": -35.723889,
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places lat: -35.723889",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "lon",
+          "value": 174.3219143,
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places lon: 174.3219143",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "phone",
+          "value": "027 371 9720",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places phone: 027 371 9720",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "source",
+          "value": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places source: https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "businessStatus",
+          "value": "OPERATIONAL",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places businessStatus: OPERATIONAL",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "medical_clinic",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: medical_clinic",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "health",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: health",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "point_of_interest",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: point_of_interest",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "service",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: service",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "establishment",
+          "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: establishment",
+          "capturedAt": "2026-05-31T22:14:12.380Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        }
+      ]
+    },
+    {
+      "candidateId": "google-place-chijdtha5pv8u40rpmdatxxh-0",
+      "action": "research_new_provider",
+      "queryId": "places:northland:psychologist:clinical-psychologist",
+      "query": "clinical psychologist Whangarei Northland New Zealand",
+      "type": "psychologist",
+      "region": "Northland",
+      "city": "Whangarei",
+      "name": "Rosemary Clempson Carnell Therapist",
+      "address": "Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+      "lat": -35.723741000000004,
+      "lon": 174.3215334,
+      "phone": "",
+      "website": "",
+      "googlePlaceId": "ChIJDThA5pV8u40RPmdATXXh_-0",
+      "googleMapsUri": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "businessStatus": "OPERATIONAL",
+      "placeTypes": [
+        "medical_clinic",
+        "health",
+        "point_of_interest",
+        "establishment"
+      ],
+      "existingProviderMatches": [],
+      "possibleProviderIds": [],
+      "duplicateSignals": [],
+      "confidence": "low",
+      "confidenceByField": {
+        "name": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Rosemary Clempson Carnell Therapist"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "practiceName": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Rosemary Clempson Carnell Therapist"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "type": {
+          "confidence": "low",
+          "score": 0.35,
+          "values": [
+            "psychologist"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "region": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Northland"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "city": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Whangarei"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "address": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "lat": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "-35.723741000000004"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "lon": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "174.3215334"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "source": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "businessStatus": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "OPERATIONAL"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "placeType": {
+          "confidence": "low",
+          "score": 0.1,
+          "values": [
+            "medical_clinic",
+            "health",
+            "point_of_interest",
+            "establishment"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": [
+            "medical_clinic",
+            "health",
+            "point_of_interest",
+            "establishment"
+          ]
+        }
+      },
+      "sourceEvidence": {
+        "contact": [],
+        "address": [
+          {
+            "field": "region",
+            "value": "Northland",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places region: Northland",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "city",
+            "value": "Whangarei",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places city: Whangarei",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "address",
+            "value": "Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places address: Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "lat",
+            "value": -35.723741000000004,
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places lat: -35.723741000000004",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "lon",
+            "value": 174.3215334,
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places lon: 174.3215334",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "availability": [],
+        "referral": [],
+        "scope": [
+          {
+            "field": "source",
+            "value": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places source: https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "businessStatus",
+            "value": "OPERATIONAL",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places businessStatus: OPERATIONAL",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "medical_clinic",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: medical_clinic",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "health",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: health",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "point_of_interest",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: point_of_interest",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "establishment",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: establishment",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "tags": {},
+        "telehealth": [],
+        "cultural": [],
+        "cost": [],
+        "identity": [
+          {
+            "field": "name",
+            "value": "Rosemary Clempson Carnell Therapist",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places name: Rosemary Clempson Carnell Therapist",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "practiceName",
+            "value": "Rosemary Clempson Carnell Therapist",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places practiceName: Rosemary Clempson Carnell Therapist",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "type",
+            "value": "psychologist",
+            "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+            "capturedAt": "2026-05-31T22:14:12.361Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ]
+      },
+      "suggestedProviderRecord": {
+        "id": "candidate-rosemary-clempson-carnell-therapist",
+        "name": "Rosemary Clempson Carnell Therapist",
+        "clinicianName": "",
+        "practiceName": "Rosemary Clempson Carnell Therapist",
+        "type": "psychologist",
+        "region": "Northland",
+        "city": "Whangarei",
+        "address": "Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+        "lat": -35.723741000000004,
+        "lon": 174.3215334,
+        "coordinateSource": "google_places",
+        "coordinatePrecision": "business listing",
+        "coordinateConfidence": "medium",
+        "geocodeNeedsManualReview": true,
+        "phone": "",
+        "email": "",
+        "website": "",
+        "source": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+        "sourceQuality": "Google Places public business listing; discovery/corroboration only",
+        "confidence": "low",
+        "needsManualVerification": true,
+        "verified": "",
+        "lastVerified": "",
+        "availabilityStatus": "not_published",
+        "availabilityCheckedAt": "",
+        "availabilityEvidence": "",
+        "availabilitySource": "",
+        "availabilityNeedsManualReview": true,
+        "referralType": "",
+        "referralNeedsManualReview": false,
+        "tags": [],
+        "needScope": [],
+        "specialties": [],
+        "advertisedSpecialties": [],
+        "services": [],
+        "patientGroups": [],
+        "ageGroups": [],
+        "onlineAvailable": false,
+        "phoneSupport": false,
+        "inPerson": true,
+        "crisisOnly": false,
+        "sourceEvidence": {
+          "contact": [],
+          "address": [
+            {
+              "field": "region",
+              "value": "Northland",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places region: Northland",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "city",
+              "value": "Whangarei",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places city: Whangarei",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "address",
+              "value": "Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places address: Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "lat",
+              "value": -35.723741000000004,
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places lat: -35.723741000000004",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "lon",
+              "value": 174.3215334,
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places lon: 174.3215334",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "availability": [],
+          "referral": [],
+          "scope": [
+            {
+              "field": "source",
+              "value": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places source: https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "businessStatus",
+              "value": "OPERATIONAL",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places businessStatus: OPERATIONAL",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "medical_clinic",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: medical_clinic",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "health",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: health",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "point_of_interest",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: point_of_interest",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "establishment",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: establishment",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "tags": {},
+          "telehealth": [],
+          "cultural": [],
+          "cost": [],
+          "identity": [
+            {
+              "field": "name",
+              "value": "Rosemary Clempson Carnell Therapist",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places name: Rosemary Clempson Carnell Therapist",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "practiceName",
+              "value": "Rosemary Clempson Carnell Therapist",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places practiceName: Rosemary Clempson Carnell Therapist",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "type",
+              "value": "psychologist",
+              "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+              "capturedAt": "2026-05-31T22:14:12.361Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ]
+        },
+        "confidenceByField": {
+          "name": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Rosemary Clempson Carnell Therapist"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "practiceName": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Rosemary Clempson Carnell Therapist"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "type": {
+            "confidence": "low",
+            "score": 0.35,
+            "values": [
+              "psychologist"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "region": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Northland"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "city": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Whangarei"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "address": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "lat": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "-35.723741000000004"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "lon": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "174.3215334"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "source": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "businessStatus": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "OPERATIONAL"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "placeType": {
+            "confidence": "low",
+            "score": 0.1,
+            "values": [
+              "medical_clinic",
+              "health",
+              "point_of_interest",
+              "establishment"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": [
+              "medical_clinic",
+              "health",
+              "point_of_interest",
+              "establishment"
+            ]
+          }
+        }
+      },
+      "sourceUrlsUsed": [
+        "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+      ],
+      "reviewReasons": [
+        "Google Places is a discovery/corroboration source, not enough by itself for live recommendations.",
+        "Confirm provider type, services, availability, cost, referral pathway, and support-preference tags from stronger public sources.",
+        "missing signals: local psychiatrist or psychiatry pathway | 16 GP corroboration tasks | Google Places discovery/corroboration only",
+        "new candidate needs corroboration"
+      ],
+      "reviewGateRequired": true,
+      "liveMutationAllowed": false,
+      "claims": [
+        {
+          "field": "name",
+          "value": "Rosemary Clempson Carnell Therapist",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places name: Rosemary Clempson Carnell Therapist",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "practiceName",
+          "value": "Rosemary Clempson Carnell Therapist",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places practiceName: Rosemary Clempson Carnell Therapist",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "type",
+          "value": "psychologist",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "region",
+          "value": "Northland",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places region: Northland",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "city",
+          "value": "Whangarei",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places city: Whangarei",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "address",
+          "value": "Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places address: Wellness Centre Level 1/25 Rathbone Street, Whangārei 0110",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "lat",
+          "value": -35.723741000000004,
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places lat: -35.723741000000004",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "lon",
+          "value": 174.3215334,
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places lon: 174.3215334",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "source",
+          "value": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places source: https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "businessStatus",
+          "value": "OPERATIONAL",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places businessStatus: OPERATIONAL",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "medical_clinic",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: medical_clinic",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "health",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: health",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "point_of_interest",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: point_of_interest",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "establishment",
+          "sourceUrl": "https://maps.google.com/?cid=17149673799973627710&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: establishment",
+          "capturedAt": "2026-05-31T22:14:12.361Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        }
+      ]
+    },
+    {
+      "candidateId": "google-place-chij4aukrdt-c20rovig7habbsm",
+      "action": "corroborate_existing_provider",
+      "queryId": "places:northland:psychologist:clinical-psychologist",
+      "query": "clinical psychologist Whangarei Northland New Zealand",
+      "type": "psychologist",
+      "region": "Northland",
+      "city": "Whangarei",
+      "name": "Dr. Maria Rotella",
+      "address": "69 Bank Street, CBD, Whangārei 0110",
+      "lat": -35.7239319,
+      "lon": 174.319515,
+      "phone": "022 627 0324",
+      "website": "https://drmariarotella.co.nz/",
+      "googlePlaceId": "ChIJ4aUKrdt-C20ROvIg7habbsM",
+      "googleMapsUri": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+      "businessStatus": "OPERATIONAL",
+      "placeTypes": [
+        "medical_clinic",
+        "health",
+        "point_of_interest",
+        "service",
+        "establishment"
+      ],
+      "existingProviderMatches": [
+        {
+          "providerId": "northland-maria-rotella-clinical-psychologist",
+          "name": "Dr Maria Rotella",
+          "type": "psychologist",
+          "region": "Northland",
+          "city": "Whangarei",
+          "signals": [
+            "phone",
+            "website-domain",
+            "name"
+          ]
+        }
+      ],
+      "possibleProviderIds": [
+        "northland-maria-rotella-clinical-psychologist"
+      ],
+      "duplicateSignals": [
+        "phone",
+        "website-domain",
+        "name"
+      ],
+      "confidence": "medium",
+      "confidenceByField": {
+        "name": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Dr. Maria Rotella"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "practiceName": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Dr. Maria Rotella"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "type": {
+          "confidence": "low",
+          "score": 0.35,
+          "values": [
+            "psychologist"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "region": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Northland"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "city": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "Whangarei"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "address": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "69 Bank Street, CBD, Whangārei 0110"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "lat": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "-35.7239319"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "lon": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "174.319515"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "phone": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "022 627 0324"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "website": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "https://drmariarotella.co.nz/"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "source": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "businessStatus": {
+          "confidence": "medium",
+          "score": 0.6,
+          "values": [
+            "OPERATIONAL"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": []
+        },
+        "placeType": {
+          "confidence": "low",
+          "score": 0.1,
+          "values": [
+            "medical_clinic",
+            "health",
+            "point_of_interest",
+            "service",
+            "establishment"
+          ],
+          "sources": [
+            "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+          ],
+          "conflicts": [
+            "medical_clinic",
+            "health",
+            "point_of_interest",
+            "service",
+            "establishment"
+          ]
+        }
+      },
+      "sourceEvidence": {
+        "contact": [
+          {
+            "field": "phone",
+            "value": "022 627 0324",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places phone: 022 627 0324",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "website",
+            "value": "https://drmariarotella.co.nz/",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places website: https://drmariarotella.co.nz/",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "address": [
+          {
+            "field": "region",
+            "value": "Northland",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places region: Northland",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "city",
+            "value": "Whangarei",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places city: Whangarei",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "address",
+            "value": "69 Bank Street, CBD, Whangārei 0110",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places address: 69 Bank Street, CBD, Whangārei 0110",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "lat",
+            "value": -35.7239319,
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places lat: -35.7239319",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "lon",
+            "value": 174.319515,
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places lon: 174.319515",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "availability": [],
+        "referral": [],
+        "scope": [
+          {
+            "field": "source",
+            "value": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places source: https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "businessStatus",
+            "value": "OPERATIONAL",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places businessStatus: OPERATIONAL",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "medical_clinic",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: medical_clinic",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "health",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: health",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "point_of_interest",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: point_of_interest",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "service",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: service",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "placeType",
+            "value": "establishment",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places placeType: establishment",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ],
+        "tags": {},
+        "telehealth": [],
+        "cultural": [],
+        "cost": [],
+        "identity": [
+          {
+            "field": "name",
+            "value": "Dr. Maria Rotella",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places name: Dr. Maria Rotella",
+            "capturedAt": "2026-05-31T22:14:12.340Z",
+            "confidence": "medium",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "practiceName",
+            "value": "Dr. Maria Rotella",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Google Places practiceName: Dr. Maria Rotella",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          },
+          {
+            "field": "type",
+            "value": "psychologist",
+            "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+            "sourceType": "google_places",
+            "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+            "capturedAt": "2026-05-31T22:14:12.341Z",
+            "confidence": "low",
+            "extractor": "google-places-discovery",
+            "needsManualReview": true
+          }
+        ]
+      },
+      "suggestedProviderRecord": {
+        "id": "candidate-dr-maria-rotella",
+        "name": "Dr. Maria Rotella",
+        "clinicianName": "",
+        "practiceName": "Dr. Maria Rotella",
+        "type": "psychologist",
+        "region": "Northland",
+        "city": "Whangarei",
+        "address": "69 Bank Street, CBD, Whangārei 0110",
+        "lat": -35.7239319,
+        "lon": 174.319515,
+        "coordinateSource": "google_places",
+        "coordinatePrecision": "business listing",
+        "coordinateConfidence": "medium",
+        "geocodeNeedsManualReview": true,
+        "phone": "022 627 0324",
+        "email": "",
+        "website": "https://drmariarotella.co.nz/",
+        "source": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+        "sourceQuality": "Google Places public business listing; discovery/corroboration only",
+        "confidence": "medium",
+        "needsManualVerification": true,
+        "verified": "",
+        "lastVerified": "",
+        "availabilityStatus": "not_published",
+        "availabilityCheckedAt": "",
+        "availabilityEvidence": "",
+        "availabilitySource": "",
+        "availabilityNeedsManualReview": true,
+        "referralType": "",
+        "referralNeedsManualReview": false,
+        "tags": [],
+        "needScope": [],
+        "specialties": [],
+        "advertisedSpecialties": [],
+        "services": [],
+        "patientGroups": [],
+        "ageGroups": [],
+        "onlineAvailable": false,
+        "phoneSupport": true,
+        "inPerson": true,
+        "crisisOnly": false,
+        "sourceEvidence": {
+          "contact": [
+            {
+              "field": "phone",
+              "value": "022 627 0324",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places phone: 022 627 0324",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "website",
+              "value": "https://drmariarotella.co.nz/",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places website: https://drmariarotella.co.nz/",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "address": [
+            {
+              "field": "region",
+              "value": "Northland",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places region: Northland",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "city",
+              "value": "Whangarei",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places city: Whangarei",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "address",
+              "value": "69 Bank Street, CBD, Whangārei 0110",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places address: 69 Bank Street, CBD, Whangārei 0110",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "lat",
+              "value": -35.7239319,
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places lat: -35.7239319",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "lon",
+              "value": 174.319515,
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places lon: 174.319515",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "availability": [],
+          "referral": [],
+          "scope": [
+            {
+              "field": "source",
+              "value": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places source: https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "businessStatus",
+              "value": "OPERATIONAL",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places businessStatus: OPERATIONAL",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "medical_clinic",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: medical_clinic",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "health",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: health",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "point_of_interest",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: point_of_interest",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "service",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: service",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "placeType",
+              "value": "establishment",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places placeType: establishment",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ],
+          "tags": {},
+          "telehealth": [],
+          "cultural": [],
+          "cost": [],
+          "identity": [
+            {
+              "field": "name",
+              "value": "Dr. Maria Rotella",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places name: Dr. Maria Rotella",
+              "capturedAt": "2026-05-31T22:14:12.340Z",
+              "confidence": "medium",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "practiceName",
+              "value": "Dr. Maria Rotella",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Google Places practiceName: Dr. Maria Rotella",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            },
+            {
+              "field": "type",
+              "value": "psychologist",
+              "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+              "sourceType": "google_places",
+              "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+              "capturedAt": "2026-05-31T22:14:12.341Z",
+              "confidence": "low",
+              "extractor": "google-places-discovery",
+              "needsManualReview": true
+            }
+          ]
+        },
+        "confidenceByField": {
+          "name": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Dr. Maria Rotella"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "practiceName": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Dr. Maria Rotella"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "type": {
+            "confidence": "low",
+            "score": 0.35,
+            "values": [
+              "psychologist"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "region": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Northland"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "city": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "Whangarei"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "address": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "69 Bank Street, CBD, Whangārei 0110"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "lat": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "-35.7239319"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "lon": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "174.319515"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "phone": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "022 627 0324"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "website": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "https://drmariarotella.co.nz/"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "source": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "businessStatus": {
+            "confidence": "medium",
+            "score": 0.6,
+            "values": [
+              "OPERATIONAL"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": []
+          },
+          "placeType": {
+            "confidence": "low",
+            "score": 0.1,
+            "values": [
+              "medical_clinic",
+              "health",
+              "point_of_interest",
+              "service",
+              "establishment"
+            ],
+            "sources": [
+              "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+            ],
+            "conflicts": [
+              "medical_clinic",
+              "health",
+              "point_of_interest",
+              "service",
+              "establishment"
+            ]
+          }
+        }
+      },
+      "sourceUrlsUsed": [
+        "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+        "https://drmariarotella.co.nz/"
+      ],
+      "reviewReasons": [
+        "Google Places is a discovery/corroboration source, not enough by itself for live recommendations.",
+        "Confirm provider type, services, availability, cost, referral pathway, and support-preference tags from stronger public sources.",
+        "missing signals: local psychiatrist or psychiatry pathway | 16 GP corroboration tasks | Google Places discovery/corroboration only",
+        "possible existing provider match: northland-maria-rotella-clinical-psychologist"
+      ],
+      "reviewGateRequired": true,
+      "liveMutationAllowed": false,
+      "claims": [
+        {
+          "field": "name",
+          "value": "Dr. Maria Rotella",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places name: Dr. Maria Rotella",
+          "capturedAt": "2026-05-31T22:14:12.340Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "practiceName",
+          "value": "Dr. Maria Rotella",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places practiceName: Dr. Maria Rotella",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "type",
+          "value": "psychologist",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Search query type was psychologist; reviewer must confirm provider type from a stronger source.",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "region",
+          "value": "Northland",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places region: Northland",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "city",
+          "value": "Whangarei",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places city: Whangarei",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "address",
+          "value": "69 Bank Street, CBD, Whangārei 0110",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places address: 69 Bank Street, CBD, Whangārei 0110",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "lat",
+          "value": -35.7239319,
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places lat: -35.7239319",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "lon",
+          "value": 174.319515,
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places lon: 174.319515",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "phone",
+          "value": "022 627 0324",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places phone: 022 627 0324",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "website",
+          "value": "https://drmariarotella.co.nz/",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places website: https://drmariarotella.co.nz/",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "medium",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "source",
+          "value": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places source: https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "businessStatus",
+          "value": "OPERATIONAL",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places businessStatus: OPERATIONAL",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "medical_clinic",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: medical_clinic",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "health",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: health",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "point_of_interest",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: point_of_interest",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "service",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: service",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        },
+        {
+          "field": "placeType",
+          "value": "establishment",
+          "sourceUrl": "https://maps.google.com/?cid=14082363607620842042&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+          "sourceType": "google_places",
+          "excerpt": "Google Places placeType: establishment",
+          "capturedAt": "2026-05-31T22:14:12.341Z",
+          "confidence": "low",
+          "extractor": "google-places-discovery",
+          "needsManualReview": true
+        }
+      ]
+    }
+  ]
+}

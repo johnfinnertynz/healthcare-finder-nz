@@ -355,6 +355,19 @@ Search engines must be accessed through official APIs (`GOOGLE_API_KEY` plus
 is used, the tooling writes reviewable search queues and seed-derived candidate
 records; it must not scrape blocked SERP HTML.
 
+Google Places discovery uses its own bounded review-gated export:
+
+```sh
+npm run discover:places -- --no-network
+npm run discover:places -- --api-key-file "path/to/google-places-api-key.txt" --region Northland --type psychologist --limit-queries 2
+```
+
+The key must remain local or in a secret manager. Do not commit it, paste it into
+reports, or expose it in browser code. Places results may corroborate public
+business identity, phone, website, address, and coordinates. They must not be
+used alone for condition scope, advertised specialties, availability, referral,
+cost, telehealth, cultural/safety tags, or direct clinical suitability.
+
 The evidence graph keeps probable provider identities separate. It can match on
 clinician name, practice name, domain, phone, email, address, city/region, and
 known directory URLs. It should not merge two clinicians just because they work
@@ -369,6 +382,8 @@ Source trust levels:
   but still check referral and availability wording carefully.
 - `professional_directory`: medium/high depending on the field and whether a
   provider-owned source corroborates it.
+- `google_places`: medium/low for public business identity, phone, website,
+  address, and coordinates. Discovery/corroboration only.
 - `linkedIn_public`: low/medium for role, clinic, city, or website discovery
   only. Do not use it alone for specialties, availability, referral pathways, or
   support-preference tags.

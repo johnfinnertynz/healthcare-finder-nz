@@ -7,6 +7,7 @@ import { auditProviders } from "../tools/audit-provider-source-fit.mjs";
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
 import { buildProviderSuggestions } from "../tools/build-provider-suggestions.mjs";
 import { buildRoundOneQueries, buildSnowballQueries, enrichProviderCandidates } from "../tools/enrich-provider-candidates.mjs";
+import { buildGooglePlacesCandidatesFromResults, buildGooglePlacesDiscoveryPlan, candidateFromGooglePlace } from "../tools/discover-google-places-providers.mjs";
 import { extractProviderEvidence } from "../tools/lib/provider-evidence-extractor.mjs";
 import { fetchPublicSource } from "../tools/lib/source-fetcher.mjs";
 import { withPsychiatristScopeMetadata } from "../tools/lib/provider-scope.mjs";
@@ -375,4 +376,147 @@ test("fetcher records blocked or skipped pages without guessing", async () => {
   assert.equal(result.ok, false);
   assert.equal(result.skipped, true);
   assert.match(result.reason || result.error, /search-result|Search result pages/);
+});
+
+test("Google Places discovery plan uses high-priority regions without mutating live providers", () => {
+  const dir = tempDir();
+  const reportPath = path.join(dir, "regional.json");
+  writeJson(reportPath, {
+    regions: [
+      {
+        region: "Northland",
+        priorityLevel: "high",
+        priorityScore: 140,
+        coverage: { gp: 2, counsellor: 1, psychologist: 1, talkingTherapy: 2, psychiatrist: 0, missingSignals: ["local psychiatrist or psychiatry pathway"] },
+        qualitySignals: { gpCorroborationTasks: 3 }
+      },
+      {
+        region: "Auckland",
+        priorityLevel: "high",
+        priorityScore: 171,
+        coverage: { gp: 30, counsellor: 5, psychologist: 5, talkingTherapy: 10, psychiatrist: 2, missingSignals: [] },
+        qualitySignals: { gpCorroborationTasks: 1 }
+      }
+    ]
+  });
+  const plan = buildGooglePlacesDiscoveryPlan({
+    regionalReport: reportPath,
+    limitRegions: 1,
+    limitQueries: 20,
+    noNetwork: true
+  });
+  assert(plan.length > 0);
+  assert(plan.every((item) => item.region === "Auckland"));
+  assert(plan.some((item) => item.type === "gp"));
+  assert(plan.every((item) => item.textQuery.includes("New Zealand")));
+});
+
+test("Google Places result creates a review-gated candidate with no unsupported service claims", () => {
+  const candidate = candidateFromGooglePlace({
+    id: "places/example",
+    displayName: { text: "Harbour Psychology" },
+    formattedAddress: "10 Bank Street, Whangarei 0110, New Zealand",
+    location: { latitude: -35.72, longitude: 174.32 },
+    nationalPhoneNumber: "09 123 4567",
+    websiteUri: "https://harbourpsych.nz",
+    businessStatus: "OPERATIONAL",
+    googleMapsUri: "https://maps.google.com/?cid=123",
+    types: ["health", "point_of_interest"]
+  }, {
+    queryId: "places:northland:psychologist",
+    textQuery: "psychologist Whangarei Northland New Zealand",
+    region: "Northland",
+    city: "Whangarei",
+    type: "psychologist",
+    reason: "thin local psychology coverage"
+  }, []);
+  assert.equal(candidate.reviewGateRequired, true);
+  assert.equal(candidate.liveMutationAllowed, false);
+  assert.equal(candidate.suggestedProviderRecord.availabilityStatus, "not_published");
+  assert.deepEqual(candidate.suggestedProviderRecord.tags, []);
+  assert.deepEqual(candidate.suggestedProviderRecord.advertisedSpecialties, []);
+  assert(candidate.sourceEvidence.contact.some((item) => item.field === "phone"));
+});
+
+test("Google Places candidate matching flags possible existing providers by website or phone", () => {
+  const candidates = buildGooglePlacesCandidatesFromResults([{
+    queryItem: {
+      queryId: "places:otago:psychologist",
+      textQuery: "psychologist Dunedin Otago New Zealand",
+      region: "Otago",
+      city: "Dunedin",
+      type: "psychologist"
+    },
+    places: [{
+      id: "places/existing",
+      displayName: { text: "Existing Psychology" },
+      formattedAddress: "20 George Street, Dunedin 9016, New Zealand",
+      nationalPhoneNumber: "03 555 1111",
+      websiteUri: "https://existingpsych.nz",
+      googleMapsUri: "https://maps.google.com/?cid=456",
+      types: ["health"]
+    }]
+  }], [{
+    id: "existing-provider",
+    name: "Existing Psychology",
+    type: "psychologist",
+    phone: "03 555 1111",
+    website: "https://existingpsych.nz",
+    address: "20 George Street, Dunedin"
+  }]);
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].action, "corroborate_existing_provider");
+  assert.deepEqual(candidates[0].possibleProviderIds, ["existing-provider"]);
+  assert(candidates[0].duplicateSignals.includes("phone"));
+});
+
+test("Google Places candidates feed the auditor review queue without becoming live providers", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const placesPath = path.join(dir, "places.json");
+  const emptyAuditPath = path.join(dir, "empty-audit.json");
+  writeJson(providersPath, []);
+  writeJson(emptyAuditPath, { findings: [], items: [] });
+  writeJson(placesPath, {
+    version: 1,
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    safety: { noLiveProviderMutation: true, reviewGateRequired: true },
+    candidates: [
+      candidateFromGooglePlace({
+        id: "places/queue",
+        displayName: { text: "Queue Psychology" },
+        formattedAddress: "1 Bank Street, Whangarei 0110, New Zealand",
+        nationalPhoneNumber: "09 765 4321",
+        websiteUri: "https://queuepsych.nz",
+        googleMapsUri: "https://maps.google.com/?cid=789",
+        types: ["health"]
+      }, {
+        queryId: "places:northland:psychologist",
+        textQuery: "psychologist Whangarei Northland New Zealand",
+        region: "Northland",
+        city: "Whangarei",
+        type: "psychologist"
+      }, [])
+    ]
+  });
+  const queue = buildProviderReviewQueue({
+    providers: providersPath,
+    sourceFitAudit: emptyAuditPath,
+    availabilityAudit: emptyAuditPath,
+    referralAudit: emptyAuditPath,
+    watchlist: emptyAuditPath,
+    linkResults: path.join(dir, "missing-link-report.json"),
+    identityScan: path.join(dir, "missing-identity-scan.json"),
+    discoveryQueue: path.join(dir, "missing-discovery.json"),
+    providerSuggestions: path.join(dir, "missing-suggestions.json"),
+    googlePlacesCandidates: placesPath,
+    skipAuditRun: true
+  });
+  const item = queue.items.find((entry) => entry.reviewId.startsWith("places:"));
+  assert.ok(item);
+  assert.equal(item.name, "Queue Psychology");
+  assert.equal(item.auditRules.includes("google-places-candidate"), true);
+  assert.match(item.sourceQuality, /Google Places/);
+  assert.equal(item.currentProvider, null);
+  assert.equal(queue.inputs.googlePlacesCandidates, 1);
 });

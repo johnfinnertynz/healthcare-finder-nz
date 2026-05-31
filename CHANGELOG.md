@@ -25,6 +25,9 @@
 - Added a regional data-quality priority report that rolls provider coverage,
   weak GP source tasks, source-fit findings, availability/referral/watchlist
   signals, and address/coordinate gaps into reviewer-friendly regional actions.
+- Added a Google Places discovery candidate exporter and auditor queue source.
+  It uses the official Places API when a local key is supplied, stores no key
+  material, and keeps all candidates review-gated.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

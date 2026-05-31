@@ -13,6 +13,7 @@ const DEFAULTS = {
   linkResults: "data/reports/link-check-results.json",
   discoveryQueue: "data/discovery/provider-search-queue.json",
   providerSuggestions: "data/discovery/provider-suggestions.json",
+  googlePlacesCandidates: "data/discovery/google-places-provider-candidates.json",
   jsonOut: "data/provider-review-queue.json",
   csvOut: "data/provider-review-queue.csv",
   mdOut: "PROVIDER_REVIEW_QUEUE.md"
@@ -781,6 +782,119 @@ function discoverySuggestionItems(providerSuggestions, includeAll) {
     });
 }
 
+function priorityForGooglePlacesCandidate(candidate) {
+  let score = 1_100;
+  if (candidate.action === "research_new_provider") score += 1_000;
+  if (candidate.action === "corroborate_existing_provider") score += 850;
+  if (candidate.type === "psychiatrist") score += 900;
+  if (candidate.type === "psychologist") score += 700;
+  if (candidate.type === "counsellor") score += 550;
+  if (candidate.type === "gp") score += 300;
+  if (candidate.phone || candidate.website) score += 350;
+  if (candidate.possibleProviderIds?.length) score += 250;
+  if (candidate.confidence === "low") score += 150;
+  return score;
+}
+
+function googlePlacesCandidateItems(placesPayload, includeAll) {
+  const candidates = asArray(placesPayload.candidates);
+  if (!candidates.length) return [];
+  return candidates
+    .filter((candidate) => includeAll || candidate.action !== "corroborate_existing_provider" || candidate.type === "psychiatrist" || candidate.possibleProviderIds?.length)
+    .map((candidate) => {
+      const record = candidate.suggestedProviderRecord || {};
+      const score = priorityForGooglePlacesCandidate(candidate);
+      const sourceUrls = unique([
+        ...(candidate.sourceUrlsUsed || []),
+        candidate.googleMapsUri,
+        candidate.website,
+        record.website,
+        record.source
+      ]);
+      const sourceEvidence = candidate.sourceEvidence || record.sourceEvidence || {};
+      const sourceClaim = Object.values(sourceEvidence)
+        .flatMap((value) => Array.isArray(value) ? value : typeof value === "object" && value !== null ? Object.values(value).flat() : [])
+        .find((claim) => claim?.excerpt);
+      const summaryPieces = [
+        "Sources: Google Places business listing",
+        sourceClaim?.excerpt ? `Evidence: ${compact(sourceClaim.excerpt, 220)}` : "",
+        candidate.businessStatus ? `Business status: ${candidate.businessStatus}` : ""
+      ].filter(Boolean);
+
+      return {
+        reviewId: `places:${candidate.candidateId}`,
+        providerId: candidate.possibleProviderIds?.[0] || record.id || candidate.candidateId || "",
+        name: record.name || candidate.name || "",
+        clinicianName: record.clinicianName || "",
+        practiceName: record.practiceName || candidate.name || "",
+        type: record.type || candidate.type || "",
+        region: record.region || candidate.region || "",
+        city: record.city || candidate.city || "",
+        address: record.address || candidate.address || "",
+        lat: record.lat ?? candidate.lat ?? "",
+        lon: record.lon ?? candidate.lon ?? "",
+        phone: record.phone || candidate.phone || "",
+        text: record.text || "",
+        email: record.email || "",
+        website: record.website || candidate.website || "",
+        bookingUrl: record.bookingUrl || "",
+        source: record.source || candidate.googleMapsUri || candidate.website || "",
+        sourceQuality: record.sourceQuality || "Google Places public business listing; discovery/corroboration only",
+        confidence: candidate.confidence || record.confidence || "low",
+        needsManualVerification: true,
+        verified: "",
+        lastVerified: "",
+        availabilityStatus: record.availabilityStatus || "not_published",
+        availabilityCheckedAt: "",
+        availabilityEvidence: "",
+        availabilitySource: "",
+        availabilityNeedsManualReview: true,
+        requiresReferral: record.requiresReferral,
+        referralType: record.referralType || "",
+        referralSourceUrl: "",
+        referralSourceExcerpt: "",
+        referralConfidence: "",
+        referralLastChecked: "",
+        referralNeedsManualReview: record.type === "psychiatrist" || candidate.type === "psychiatrist" ? true : record.referralNeedsManualReview,
+        tags: asArray(record.tags),
+        needScope: asArray(record.needScope),
+        baselineScope: asArray(record.baselineScope),
+        baselineScopeSource: record.baselineScopeSource || "",
+        baselineScopeNote: record.baselineScopeNote || "",
+        advertisedSpecialties: asArray(record.advertisedSpecialties),
+        advertisedSpecialtyEvidence: asArray(record.advertisedSpecialtyEvidence),
+        specialtyTagsSource: record.specialtyTagsSource || "",
+        specialties: asArray(record.specialties),
+        services: asArray(record.services),
+        patientGroups: asArray(record.patientGroups),
+        ageGroups: asArray(record.ageGroups),
+        onlineAvailable: record.onlineAvailable,
+        phoneSupport: record.phoneSupport,
+        inPerson: record.inPerson,
+        crisisOnly: record.crisisOnly,
+        auditSeverity: candidate.action === "research_new_provider" ? "medium" : "low",
+        auditRules: unique(["google-places-candidate", candidate.action]),
+        auditIssues: candidate.reviewReasons || [],
+        suggestedFixes: ["Use this as a discovery lead only. Open the provider website or stronger public source, capture excerpts, then approve/adjust/reject through review decisions."],
+        reviewPriority: reviewPriorityFromScore(score, candidate.action === "research_new_provider" ? "medium" : "low"),
+        priorityScore: score,
+        reviewReasons: unique(["Google Places discovery candidate", ...(candidate.reviewReasons || [])]),
+        sourceUrls,
+        sourceEvidence,
+        sourceEvidenceSummary: summaryPieces.join(" | "),
+        publicCardPreviewText: publicCardPreviewText(record),
+        currentProvider: null,
+        googlePlacesCandidate: candidate,
+        auditFindings: [],
+        reviewDecision: "",
+        correctedFields: record,
+        reviewer: "",
+        reviewedDate: "",
+        reviewNotes: ""
+      };
+    });
+}
+
 function applyFilters(items, config) {
   let filtered = items;
   if (config.region) filtered = filtered.filter((item) => item.region === config.region);
@@ -934,6 +1048,7 @@ export function buildProviderReviewQueue(config = {}) {
   const linkResults = readJsonIfExists(mergedConfig.linkResults, { results: [] });
   const discoveryQueue = readJsonIfExists(mergedConfig.discoveryQueue, null);
   const providerSuggestions = readJsonIfExists(mergedConfig.providerSuggestions, { suggestions: [] });
+  const googlePlacesCandidates = readJsonIfExists(mergedConfig.googlePlacesCandidates, { candidates: [] });
   const identityScan = readJsonIfExists(mergedConfig.identityScan, { records: [] });
   const scanByProviderId = new Map(asArray(identityScan.records).map((record) => [record.providerId, { ...record, generatedAt: identityScan.generatedAt }]));
   const auditMap = buildAuditMap({
@@ -949,7 +1064,8 @@ export function buildProviderReviewQueue(config = {}) {
     .filter(Boolean);
   const watchlistItems = watchlistReviewItems(watchlist, providersById, mergedConfig.includeAll);
   const discoverySuggestionReviewItems = discoverySuggestionItems(providerSuggestions, mergedConfig.includeAll);
-  const items = applyFilters([...providerItems, ...watchlistItems, ...discoverySuggestionReviewItems], mergedConfig);
+  const googlePlacesReviewItems = googlePlacesCandidateItems(googlePlacesCandidates, mergedConfig.includeAll);
+  const items = applyFilters([...providerItems, ...watchlistItems, ...discoverySuggestionReviewItems, ...googlePlacesReviewItems], mergedConfig);
   const generatedAt = new Date().toISOString();
   return {
     version: 1,
@@ -971,7 +1087,8 @@ export function buildProviderReviewQueue(config = {}) {
       watchlistItems: asArray(Array.isArray(watchlist) ? watchlist : watchlist.items).length,
       identityScanRecords: asArray(identityScan.records).length,
       discoveryCandidates: discoveryQueue?.candidates?.length || discoveryQueue?.queue?.length || 0,
-      providerSuggestions: asArray(providerSuggestions.suggestions).length
+      providerSuggestions: asArray(providerSuggestions.suggestions).length,
+      googlePlacesCandidates: asArray(googlePlacesCandidates.candidates).length
     },
     summary: {
       total: items.length,

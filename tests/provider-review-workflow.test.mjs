@@ -84,6 +84,7 @@ function buildQueueFixture(providers, reports = {}) {
     linkResults: path.join(dir, "missing-link-report.json"),
     identityScan: path.join(dir, "missing-identity-scan.json"),
     discoveryQueue: path.join(dir, "missing-discovery.json"),
+    googlePlacesCandidates: path.join(dir, "missing-google-places.json"),
     skipAuditRun: true
   });
 }
@@ -421,6 +422,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(html, /Ongoing monitor queue/);
   assert.match(html, /Claim review queue/);
   assert.match(html, /GP source corroboration/);
+  assert.match(html, /Google Places candidates/);
   assert.match(html, /Auto-resolution proposals/);
   assert.match(html, /Regional priorities/);
   assert.match(html, /Review category/);
@@ -443,6 +445,9 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /item\(s\) that already had decisions/);
   assert.match(js, /provider-monitor-queue\.json/);
   assert.match(js, /regional-data-quality-report\.json/);
+  assert.match(js, /google-places-provider-candidates\.json/);
+  assert.match(js, /googlePlacesCandidateToItem/);
+  assert.match(js, /noClinicalClaimsFromPlacesAlone/);
   assert.match(js, /regionalPriorityToItem/);
   assert.match(js, /planningOnly/);
   assert.match(js, /do not export provider decisions/i);

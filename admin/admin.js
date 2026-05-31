@@ -14,6 +14,11 @@ const QUEUE_SOURCES = {
     help: "GP source corroboration: focused checks for DoctorPricer/third-party GP records that need stronger practice-owned, Healthpoint, PHO, HPI, or official source evidence.",
     itemName: "GP source task(s)"
   },
+  places: {
+    url: "../data/discovery/google-places-provider-candidates.json",
+    help: "Google Places candidates: official API discovery leads only. Use them to find likely providers, then corroborate with provider-owned, Healthpoint, register, or professional-directory evidence before changing live data.",
+    itemName: "Google Places candidate(s)"
+  },
   auto: {
     url: "../data/provider-auto-resolution-proposals.json",
     help: "Auto-resolution proposals: advisory-only groups for de-prioritising safe low-risk checks and keeping risky batches review-gated.",
@@ -65,6 +70,7 @@ const SOURCE_QUALITY_OPTIONS = [
   "official government or health agency",
   "professional register or directory",
   "third-party public GP listing",
+  "Google Places public business listing; discovery/corroboration only",
   "watchlist candidate",
   "unknown"
 ];
@@ -704,8 +710,98 @@ function gpTaskToItem(task, index) {
   };
 }
 
+function googlePlacesCandidateToItem(candidate, index) {
+  const record = candidate.suggestedProviderRecord || {};
+  const sourceUrls = unique([
+    ...asArray(candidate.sourceUrlsUsed),
+    candidate.googleMapsUri,
+    candidate.website,
+    record.source,
+    record.website
+  ]);
+  const priority = candidate.type === "psychiatrist"
+    ? "high"
+    : candidate.action === "research_new_provider" ? "medium" : "low";
+  const evidence = candidate.sourceEvidence || record.sourceEvidence || {};
+
+  return {
+    ...candidate,
+    reviewId: `places:${candidate.candidateId || index + 1}`,
+    providerId: candidate.possibleProviderIds?.[0] || record.id || candidate.candidateId || "",
+    name: record.name || candidate.name || "",
+    clinicianName: record.clinicianName || "",
+    practiceName: record.practiceName || candidate.name || "",
+    type: record.type || candidate.type || "",
+    region: record.region || candidate.region || "",
+    city: record.city || candidate.city || "",
+    address: record.address || candidate.address || "",
+    lat: record.lat ?? candidate.lat ?? "",
+    lon: record.lon ?? candidate.lon ?? "",
+    phone: record.phone || candidate.phone || "",
+    text: record.text || "",
+    email: record.email || "",
+    website: record.website || candidate.website || "",
+    bookingUrl: record.bookingUrl || "",
+    source: record.source || candidate.googleMapsUri || candidate.website || "",
+    sourceQuality: record.sourceQuality || "Google Places public business listing; discovery/corroboration only",
+    confidence: candidate.confidence || record.confidence || "low",
+    needsManualVerification: true,
+    availabilityStatus: record.availabilityStatus || "not_published",
+    availabilityNeedsManualReview: true,
+    referralType: record.referralType || "",
+    referralNeedsManualReview: (record.type || candidate.type) === "psychiatrist",
+    tags: asArray(record.tags),
+    needScope: asArray(record.needScope),
+    services: asArray(record.services),
+    patientGroups: asArray(record.patientGroups),
+    ageGroups: asArray(record.ageGroups),
+    onlineAvailable: record.onlineAvailable,
+    phoneSupport: record.phoneSupport,
+    inPerson: record.inPerson,
+    crisisOnly: record.crisisOnly,
+    reviewCategory: "Google Places discovery",
+    reviewPriority: priority,
+    auditSeverity: priority,
+    batchKey: candidate.region ? `places:${candidate.region}` : "places",
+    auditRules: unique(["google-places-candidate", candidate.action]),
+    auditFindings: [{
+      rule: "google-places-candidate",
+      severity: priority,
+      issue: "Google Places can identify likely businesses and public contact signals, but it does not prove clinical services, scope, availability, referral pathway, cost, or support-preference suitability.",
+      suggestedFix: "Open the candidate website or another strong source, capture short excerpts, and keep risky claims review-gated."
+    }],
+    reviewReasons: unique([
+      ...asArray(candidate.reviewReasons),
+      "Do not infer accepting clients, telehealth, cultural tags, advertised specialties, or psychiatrist self-referral from this listing alone."
+    ]),
+    sourceEvidence: evidence,
+    sourceUrls,
+    claimId: candidate.candidateId,
+    claimField: "googlePlacesDiscovery",
+    claimValue: candidate.query || "",
+    claimDecision: "review",
+    claimRiskLevel: priority,
+    requiredHumanAction: "Corroborate the likely provider with a stronger public source before approving or adjusting live data.",
+    publicCardPreviewText: [
+      record.name || candidate.name,
+      `${record.region || candidate.region || ""}${record.city || candidate.city ? ` / ${record.city || candidate.city}` : ""}`,
+      record.address || candidate.address,
+      record.phone || candidate.phone ? `Phone: ${record.phone || candidate.phone}` : "Phone not supplied by Places",
+      record.website || candidate.website ? `Website: ${record.website || candidate.website}` : "Website not supplied by Places",
+      `Google business status: ${candidate.businessStatus || "not supplied"}`,
+      "Review gate: confirm provider type, contact, scope, availability, and referral/cost details from stronger sources."
+    ].filter(Boolean).join("\n"),
+    currentProvider: null,
+    googlePlacesCandidate: candidate,
+    correctedFields: record
+  };
+}
+
 function queueItemsFromPayload(queue) {
   if (Array.isArray(queue.items)) return queue.items;
+  if (Array.isArray(queue.candidates) && queue.safety?.noClinicalClaimsFromPlacesAlone) {
+    return queue.candidates.map((candidate, index) => googlePlacesCandidateToItem(candidate, index));
+  }
   if (Array.isArray(queue.regions) && queue.safety?.noLiveProviderMutation) {
     return queue.regions.map((region, index) => regionalPriorityToItem(region, index));
   }

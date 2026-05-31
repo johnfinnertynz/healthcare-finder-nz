@@ -71,6 +71,8 @@ Use the **Queue** selector to choose:
 - **Claim review queue** for one-field-at-a-time checks grouped by batch key.
 - **GP source corroboration** for weak third-party GP records that need stronger
   practice-owned, Healthpoint, PHO, HPI/FHIR, or official source evidence.
+- **Google Places candidates** for likely clinic/business leads discovered via
+  the official Google Places API. Treat them as leads only until corroborated.
 - **Auto-resolution proposals** for grouped low-risk de-prioritisation and
   high-risk manual batch planning.
 - **Ongoing monitor queue** for automated availability/recheck findings.
@@ -89,6 +91,13 @@ Do not use DoctorPricer, search snippets, LinkedIn/social-only pages, blocked
 pages, or name-based inference as approval evidence. Do not infer accepting
 patients, enrolment, mental-health specialties, cultural support, language
 support, or funding eligibility from this queue.
+
+In the Google Places candidates queue, each item is a likely business lead from
+the official Places API. It may help you find a public phone, website, address,
+or Maps listing, but it is not enough to approve clinical services, accepted
+conditions, availability, referral pathway, telehealth, cost, or cultural/safety
+tags. Open the website or another stronger source, capture a short excerpt, and
+then adjust or leave the item as needing more information.
 
 Open `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` before a long review session. It
 separates low-risk claim noise that can be de-prioritized from high-risk batches

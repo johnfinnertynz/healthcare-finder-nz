@@ -82,6 +82,29 @@ and source-quality fields, but it must not be used to infer availability,
 enrolment, mental-health specialty, cultural support, language support, or
 funding eligibility.
 
+## Google Places Candidates
+
+Run the Google Places exporter when the regional report shows thin local
+coverage and you need likely clinic/business leads:
+
+```bash
+npm run discover:places -- --no-network
+npm run discover:places -- --api-key-file "path/to/google-places-api-key.txt" --region Northland --type psychologist --limit-queries 2 --max-results-per-query 5
+```
+
+This writes:
+
+- `data/discovery/google-places-provider-candidates.json`
+- `data/discovery/google-places-provider-candidates.csv`
+- `GOOGLE_PLACES_PROVIDER_CANDIDATES.md`
+
+Choose **Google Places candidates** from the queue selector. Each item is a
+lead, not an approved provider. Use the Maps link and website to find stronger
+evidence such as the provider/practice website, Healthpoint, an official
+register, or a professional directory. Do not approve clinical scope,
+availability, cost, referral pathway, telehealth, or cultural/support tags from
+Google Places alone.
+
 ## Regional Priorities
 
 Run the regional report when deciding where the next review session should
@@ -104,7 +127,8 @@ gaps, recommended actions, and sample records to inspect.
 Use this view to decide which region and queue to work next. It disables
 provider-decision export because a regional priority is not itself a provider
 record. After choosing an action, switch to **Manual review queue**, **Claim
-review queue**, **GP source corroboration**, or **Ongoing monitor queue** and
+review queue**, **GP source corroboration**, **Google Places candidates**, or
+**Ongoing monitor queue** and
 filter by the same region or provider ID before saving review decisions.
 
 ## Claim Review Queue
