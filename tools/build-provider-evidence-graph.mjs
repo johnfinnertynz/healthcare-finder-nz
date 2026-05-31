@@ -93,6 +93,13 @@ const TAG_RULE_VALUES = {
 };
 
 const BROAD_NEED_TAGS = new Set(["depression", "anxiety", "trauma", "addiction", "work"]);
+const BROAD_CLAIM_PATTERNS = {
+  depression: /\b(depression|depressive|low mood|mood disorder|mood disorders|mood)\b/i,
+  anxiety: /\b(anxiety|panic|overwhelm|ocd|obsessive-compulsive|worry)\b/i,
+  trauma: /\b(trauma|ptsd|post-traumatic|sexual harm|sexual abuse|sensitive claims|emdr)\b/i,
+  addiction: /\b(addiction|alcohol|drug|gambling|aod|substance)\b/i,
+  work: /\b(work|workplace|employment|study|money|housing|burnout|return to work|vocational)\b/i
+};
 
 function parseArgs(argv = process.argv.slice(2)) {
   const config = { ...DEFAULTS };
@@ -215,6 +222,11 @@ function patientGroupRuleAppliesToValue(finding, value) {
 function ruleAppliesToClaimValue(field, value, finding) {
   if (field === "tags") return tagRuleAppliesToValue(finding, value);
   if (field === "patientGroups") return patientGroupRuleAppliesToValue(finding, value);
+  if (finding.rule === "broad-tag-without-source-support" && ["fit", "specialties", "needScope"].includes(field)) {
+    const namedTag = broadTagFromFinding(finding);
+    if (!namedTag) return false;
+    return Boolean(BROAD_CLAIM_PATTERNS[namedTag]?.test(String(value || "")));
+  }
   return true;
 }
 

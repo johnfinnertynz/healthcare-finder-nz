@@ -1,13 +1,13 @@
 # Provider Claim Review Queue
 
-Generated: 2026-05-31T20:10:42.768Z
+Generated: 2026-05-31T20:17:30.116Z
 
 This queue is generated from field-level provider claims. It compresses recurring work into batches so reviewers do not have to inspect hundreds of near-identical issues one by one.
 
 ## Summary
 
-- Review items: 815
-- Batch groups: 55
+- Review items: 638
+- Batch groups: 53
 - Auto-accepted low-risk claims in graph: 1449
 - Review-gated claims in graph: 31099
 
@@ -17,8 +17,6 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | ---: | ---: | --- | --- | --- | --- | --- |
 | 152 | 56 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 126 | 126 | GP source corroboration | sourceQuality | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
-| 117 | 19 | sensitive tag or scope evidence | specialties | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 56 | 56 | sensitive tag or scope evidence | fit | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 32 | 32 | sensitive tag or scope evidence | tags | review | third_party_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 24 | 24 | availability review | availabilityEvidence | review | official_register | Review representative items first, then apply safe decisions individually. |
 | 24 | 24 | availability review | availabilityStatus | review | official_register | Review representative items first, then apply safe decisions individually. |
@@ -41,20 +39,22 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | 5 | 5 | availability review | availabilityStatus | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 5 | 1 | directory/direct-contact confusion | tags | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 5 | 1 | directory/direct-contact confusion | tags | review | healthpoint | Review representative items first, then apply safe decisions individually. |
-| 4 | 4 | sensitive tag or scope evidence | fit | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 3 | 3 | location or distance evidence | website | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 3 | 3 | location or distance evidence | sourceQuality | review | professional_directory | Review representative items first, then apply safe decisions individually. |
-| 3 | 3 | sensitive tag or scope evidence | fit | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
 | 3 | 3 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 3 | 3 | sensitive tag or scope evidence | tags | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | referral pathway review | requiresReferral | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | referral pathway review | referralType | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | referral pathway review | referralSourceExcerpt | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
+| 2 | 2 | sensitive tag or scope evidence | fit | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive tag or scope evidence | phoneSupport | review | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive tag or scope evidence | onlineAvailable | review | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive/scope evidence | website | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | sensitive/scope evidence | sourceQuality | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 1 | 1 | availability review | availabilityEvidence | review | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | availability review | availabilityStatus | review | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | directory/direct-contact confusion | phone | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | directory/direct-contact confusion | firstStep | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 
 ## Top Claim Items
 

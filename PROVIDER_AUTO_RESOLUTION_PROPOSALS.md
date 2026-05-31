@@ -1,17 +1,17 @@
 # Provider Auto-Resolution Proposals
 
-Generated: 2026-05-31T20:10:43.343Z
+Generated: 2026-05-31T20:17:30.744Z
 
 These proposals are a safety layer for reducing review noise. They do not mutate `providers.json` and they do not approve high-risk healthcare claims.
 
 ## Summary
 
 - Provider-level review items: 513
-- Claim-level review items: 815
-- Claim batch groups: 55
+- Claim-level review items: 638
+- Claim batch groups: 53
 - Low-risk claims that can be de-prioritized from manual claim review: 1449
 - Auto-deprioritize proposal groups: 31
-- Manual batch proposal groups: 55
+- Manual batch proposal groups: 53
 
 ## Safe Auto-Deprioritization
 
@@ -55,8 +55,6 @@ These proposals are a safety layer for reducing review noise. They do not mutate
 | ---: | ---: | --- | --- | --- | --- | --- |
 | 152 | 56 | sensitive tag or scope evidence | tags | high | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 126 | 126 | GP source corroboration | sourceQuality | medium | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
-| 117 | 19 | sensitive tag or scope evidence | specialties | high | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 56 | 56 | sensitive tag or scope evidence | fit | medium | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 32 | 32 | sensitive tag or scope evidence | tags | high | third_party_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 24 | 24 | availability review | availabilityEvidence | high | official_register | Review representative items first, then apply safe decisions individually. |
 | 24 | 24 | availability review | availabilityStatus | high | official_register | Review representative items first, then apply safe decisions individually. |
@@ -79,29 +77,31 @@ These proposals are a safety layer for reducing review noise. They do not mutate
 | 5 | 5 | availability review | availabilityStatus | high | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 5 | 1 | directory/direct-contact confusion | tags | high | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 5 | 1 | directory/direct-contact confusion | tags | high | healthpoint | Review representative items first, then apply safe decisions individually. |
-| 4 | 4 | sensitive tag or scope evidence | fit | medium | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 3 | 3 | location or distance evidence | website | low | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 3 | 3 | location or distance evidence | sourceQuality | medium | professional_directory | Review representative items first, then apply safe decisions individually. |
-| 3 | 3 | sensitive tag or scope evidence | fit | medium | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
 | 3 | 3 | sensitive tag or scope evidence | tags | high | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 3 | 3 | sensitive tag or scope evidence | tags | high | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | referral pathway review | requiresReferral | high | ngo_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | referral pathway review | referralType | high | ngo_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | referral pathway review | referralSourceExcerpt | medium | ngo_directory | Review representative items first, then apply safe decisions individually. |
+| 2 | 2 | sensitive tag or scope evidence | fit | medium | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive tag or scope evidence | phoneSupport | medium | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive tag or scope evidence | onlineAvailable | high | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive/scope evidence | website | low | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | sensitive/scope evidence | sourceQuality | medium | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 1 | 1 | availability review | availabilityEvidence | high | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | availability review | availabilityStatus | high | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | directory/direct-contact confusion | phone | low | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | directory/direct-contact confusion | firstStep | medium | provider_owned | Review representative items first, then apply safe decisions individually. |
 
 ## Automation Blocks
 
 | Rule | Count | Why blocked |
 | --- | ---: | --- |
-| high-risk-claims-review-gated | 540 | High-risk claims can affect suitability, clinical scope, referral, availability, culture, crisis, or telehealth matching. |
+| high-risk-claims-review-gated | 423 | High-risk claims can affect suitability, clinical scope, referral, availability, culture, crisis, or telehealth matching. |
 | availability-not-auto-upgraded | 60 | Availability can change quickly. Accepting status needs explicit current wording and reviewer approval. |
 | psychiatry-referral-not-inferred | 111 | Psychiatrist self-referral cannot be inferred from contact details or silence. |
-| sensitive-tags-need-evidence | 491 | Maori, Pasifika, Asian, Rainbow, trauma, addiction, sexual-harm, youth, men, and broad need tags need source evidence or explicit approval. |
+| sensitive-tags-need-evidence | 314 | Maori, Pasifika, Asian, Rainbow, trauma, addiction, sexual-harm, youth, men, and broad need tags need source evidence or explicit approval. |
 | conflicts-not-overwritten | 1667 | Conflicting and shared-practice records are advisory review groups; they are not automatic merges. |
 
 ## Policy

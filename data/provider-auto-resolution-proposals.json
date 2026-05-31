@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-31T20:10:43.343Z",
+  "generatedAt": "2026-05-31T20:17:30.744Z",
   "safety": {
     "advisoryOnly": true,
     "noLiveProviderMutation": true,
@@ -12,14 +12,14 @@
   "inputs": {
     "claims": 32548,
     "providerReviewItems": 513,
-    "claimReviewItems": 815,
-    "claimBatches": 55,
+    "claimReviewItems": 638,
+    "claimBatches": 53,
     "conflictGroups": 1667
   },
   "summary": {
     "autoDeprioritizeClaims": 1449,
     "autoDeprioritizeGroups": 31,
-    "manualBatchGroups": 55,
+    "manualBatchGroups": 53,
     "blockedAutomationRules": 5,
     "byAutoField": {
       "name": 236,
@@ -36,7 +36,7 @@
     "byManualCategory": {
       "referral pathway review": 111,
       "availability review": 60,
-      "sensitive tag or scope evidence": 487,
+      "sensitive tag or scope evidence": 310,
       "directory/direct-contact confusion": 17,
       "location or distance evidence": 8,
       "needs quick human check": 2,
@@ -2170,489 +2170,6 @@
           ],
           "sourceUrls": [
             "https://doctorpricer.co.nz/"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-specialties-provider-owned-broad-tag-without-s",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "specialties",
-      "sourceType": "provider_owned",
-      "sourceOwnerType": "",
-      "count": 117,
-      "affectedProviders": 19,
-      "duplicateClaimRows": 98,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "wellington-cpep-services",
-          "name": "Coastal Personal Empowerment & Psychological Services",
-          "region": "Wellington",
-          "city": "Wellington, Paraparaumu, Palmerston North, and online",
-          "claimCount": 15,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Clinical psychology",
-            "Depression",
-            "Anxiety",
-            "ASD",
-            "ADHD",
-            "OCD",
-            "Phobias",
-            "Grief"
-          ],
-          "sourceUrls": [
-            "https://www.cpepservices.com/"
-          ]
-        },
-        {
-          "providerId": "taranaki-talkingpoint-new-plymouth",
-          "name": "TalkingPoint New Plymouth",
-          "region": "Taranaki",
-          "city": "New Plymouth",
-          "claimCount": 15,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Stress",
-            "OCD treatment",
-            "Neuropsychology",
-            "Health psychology",
-            "Anger management",
-            "Self esteem counselling",
-            "Anxiety",
-            "Personal development psychology"
-          ],
-          "sourceUrls": [
-            "https://www.talkingpoint.co.nz/new-plymouth/"
-          ]
-        },
-        {
-          "providerId": "wellington-cbt-clinic",
-          "name": "CBT Clinic",
-          "region": "Wellington",
-          "city": "Wellington CBD",
-          "claimCount": 8,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "CBT",
-            "Depression",
-            "Anxiety",
-            "Anger",
-            "Sleep problems",
-            "Adjustment to life changes",
-            "Alcohol and drug use",
-            "Bipolar disorder"
-          ],
-          "sourceUrls": [
-            "https://www.cbtclinic.co.nz/"
-          ]
-        },
-        {
-          "providerId": "auckland-auckland-mental-wellness-centre",
-          "name": "Auckland Mental Wellness Centre",
-          "region": "Auckland",
-          "city": "Remuera",
-          "claimCount": 7,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Diagnostic assessment",
-            "Clinical neuropsychology",
-            "Specialist psychotherapy",
-            "ADHD and autism assessments",
-            "EMDR",
-            "CBT",
-            "ACT"
-          ],
-          "sourceUrls": [
-            "https://aucklandmentalwellness.com/"
-          ]
-        },
-        {
-          "providerId": "manawatu-authentically-u",
-          "name": "Authentically U",
-          "region": "Manawatu-Whanganui",
-          "city": "Palmerston North",
-          "claimCount": 6,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Talk therapy",
-            "Stress",
-            "Anxiety",
-            "Sleep problems",
-            "Grief and loss",
-            "Wellbeing"
-          ],
-          "sourceUrls": [
-            "https://www.authenticallyu.co.nz/"
-          ]
-        },
-        {
-          "providerId": "nelson-marlborough-haumanu-hapu",
-          "name": "Haumanu Hapu",
-          "region": "Nelson Marlborough Tasman",
-          "city": "Richmond, Motueka, and Blenheim",
-          "claimCount": 6,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Counselling",
-            "Psychological assessment",
-            "Trauma support",
-            "Mental health nursing",
-            "Speech and language therapy",
-            "Nutrition support"
-          ],
-          "sourceUrls": [
-            "https://www.haumanuhapu.nz/contact"
-          ]
-        },
-        {
-          "providerId": "manawatu-reach-out-counselling",
-          "name": "Reachout Counselling",
-          "region": "Manawatu-Whanganui",
-          "city": "Palmerston North",
-          "claimCount": 6,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Individual counselling",
-            "Couples counselling",
-            "Group support",
-            "CBT",
-            "ACT",
-            "Person-centred counselling"
-          ],
-          "sourceUrls": [
-            "https://www.reachoutcounselling.com/"
-          ]
-        },
-        {
-          "providerId": "taupo-resilience-counselling",
-          "name": "Resilience Counselling Taupo",
-          "region": "Rotorua and Taupo",
-          "city": "Taupo",
-          "claimCount": 6,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Stress",
-            "Anxiety",
-            "Counselling",
-            "Coaching",
-            "Workplace support",
-            "Online sessions"
-          ],
-          "sourceUrls": [
-            "https://www.resnz.com/"
-          ]
-        },
-        {
-          "providerId": "taranaki-future-4u-counselling",
-          "name": "Future 4U Counselling",
-          "region": "Taranaki",
-          "city": "New Plymouth",
-          "claimCount": 5,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "General counselling",
-            "Alcohol and drug counselling",
-            "Lifestyle change",
-            "Partner support",
-            "Online or Zoom support"
-          ],
-          "sourceUrls": [
-            "https://www.future4u.co.nz/"
-          ]
-        },
-        {
-          "providerId": "waikato-mandy-lacy-counselling",
-          "name": "Mandy Lacy Counselling",
-          "region": "Waikato",
-          "city": "Cambridge and online",
-          "claimCount": 5,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Women feeling overwhelmed or stuck",
-            "Life changes",
-            "Work pressure",
-            "Identity shifts",
-            "Online counselling"
-          ],
-          "sourceUrls": [
-            "https://www.mandylacycounselling.nz/"
-          ]
-        },
-        {
-          "providerId": "manawatu-pnmss-counselling",
-          "name": "Palmerston North Methodist Social Services Counselling",
-          "region": "Manawatu-Whanganui",
-          "city": "Palmerston North",
-          "claimCount": 5,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Counselling for individuals",
-            "Counselling for couples",
-            "Counselling for families",
-            "Children aged over 8",
-            "Parenting and family support"
-          ],
-          "sourceUrls": [
-            "https://pnmss.nz/services/counselling"
-          ]
-        },
-        {
-          "providerId": "marlborough-rosemary-crockett-counselling",
-          "name": "Rosemary Crockett Counselling",
-          "region": "Nelson Marlborough Tasman",
-          "city": "Blenheim",
-          "claimCount": 5,
-          "claimFields": [
-            "specialties"
-          ],
-          "claimValues": [
-            "Counselling",
-            "ACC Sensitive Claims",
-            "Grief support",
-            "Child protection background",
-            "Online counselling by arrangement"
-          ],
-          "sourceUrls": [
-            "https://www.rosemarycrockettcounselling.com/"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-provider-owned-broad-tag-without-source-",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "medium",
-      "field": "fit",
-      "sourceType": "provider_owned",
-      "sourceOwnerType": "",
-      "count": 56,
-      "affectedProviders": 56,
-      "duplicateClaimRows": 0,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "south-canterbury-a-time-to-talk",
-          "name": "A Time to Talk",
-          "region": "South Canterbury",
-          "city": "Timaru",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Timaru counselling contact for people who want a local conversation with a named counsellor."
-          ],
-          "sourceUrls": [
-            "https://atimetotalk.com/"
-          ]
-        },
-        {
-          "providerId": "nzccp-alex-richards",
-          "name": "Alex Richards",
-          "region": "Canterbury",
-          "city": "Christchurch",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Manawa Psychology clinical psychologist in Woolston, Christchurch. Alex lists experience with anxiety, mood, trauma, substance-related issues, anger, neurodiversity, rangatahi and whanau specialist mental health, adults in community mental health, CBT, DBT, ACT, mindfulness, and bicultural models of wellbeing."
-          ],
-          "sourceUrls": [
-            "https://www.manawapsychology.co.nz/ko-wai-m%C4%81ua"
-          ]
-        },
-        {
-          "providerId": "christchurch-psychmed-amanda-baird",
-          "name": "Amanda Baird",
-          "region": "Canterbury",
-          "city": "Christchurch",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Christchurch PsychMed clinical psychologist. Amanda Baird works with depression, anxiety, relationship difficulties, stress management, eating disorders, psychosis, and personality traits, using CBT, Metacognitive Therapy, DBT, and ACT."
-          ],
-          "sourceUrls": [
-            "https://www.christchurchpsychmed.co.nz/about"
-          ]
-        },
-        {
-          "providerId": "southland-annelize-prinsloo-south-coast",
-          "name": "Annelize Prinsloo - South Coast Psychology",
-          "region": "Southland",
-          "city": "Invercargill and wider Southland",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Southland clinical psychologist profile through South Coast Psychology. Useful where ACC-sensitive-claims, trauma, or local psychology support is preferred."
-          ],
-          "sourceUrls": [
-            "https://southcoastpsychology.co.nz/provider/annelize-prinsloo/"
-          ]
-        },
-        {
-          "providerId": "national-asian-family-services",
-          "name": "Asian Family Services",
-          "region": "National",
-          "city": "Auckland, Wellington, Christchurch and telehealth",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Culturally tailored mental health, addiction, gambling harm, parenting, and relationship support for Asian communities in NZ."
-          ],
-          "sourceUrls": [
-            "https://www.asianfamilyservices.nz/"
-          ]
-        },
-        {
-          "providerId": "tairawhiti-atawhai-counselling",
-          "name": "Atawhai Counselling and Supervision",
-          "region": "Tairawhiti",
-          "city": "Gisborne",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Gisborne counselling and supervision contact listed in local kaupapa Maori mental health results. Useful when whānau-centred or culturally informed counselling would help."
-          ],
-          "sourceUrls": [
-            "https://www.atawhai.org.nz/contact/"
-          ]
-        },
-        {
-          "providerId": "auckland-auckland-mental-wellness-centre",
-          "name": "Auckland Mental Wellness Centre",
-          "region": "Auckland",
-          "city": "Remuera",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Auckland psychology practice listing assessment, neuropsychology, and specialist psychotherapy, including support for children, adolescents, and adults."
-          ],
-          "sourceUrls": [
-            "https://aucklandmentalwellness.com/"
-          ]
-        },
-        {
-          "providerId": "manawatu-authentically-u",
-          "name": "Authentically U",
-          "region": "Manawatu-Whanganui",
-          "city": "Palmerston North",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Palmerston North talk therapy service for stress, anxiety, sleep, grief, and wellbeing, with a free short consultation listed."
-          ],
-          "sourceUrls": [
-            "https://www.authenticallyu.co.nz/"
-          ]
-        },
-        {
-          "providerId": "bay-of-plenty-bay-counselling",
-          "name": "Bay Counselling and Therapy Service",
-          "region": "Bay of Plenty",
-          "city": "Tauranga",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Tauranga counselling and therapy service for individuals, couples, and families. A useful lower-pressure talking support option."
-          ],
-          "sourceUrls": [
-            "https://baycounselling.co.nz/contact/"
-          ]
-        },
-        {
-          "providerId": "hawkes-bay-bay-psychology",
-          "name": "Bay Psychology",
-          "region": "Hawke's Bay",
-          "city": "Napier, Taradale, Hastings and Havelock North",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Hawke's Bay psychology practice with specialists around Napier, Taradale, Hastings, and Havelock North. Listed services include individual therapy, specialist assessments, EMDR, ACC, and online support."
-          ],
-          "sourceUrls": [
-            "https://baypsychology.co.nz/contact-us/"
-          ]
-        },
-        {
-          "providerId": "south-canterbury-black-dog-therapy",
-          "name": "Black Dog Therapy",
-          "region": "South Canterbury",
-          "city": "Timaru",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Timaru counselling and psychotherapy option with a direct phone and email contact."
-          ],
-          "sourceUrls": [
-            "https://www.blackdogtherapy.co.nz/contacts.html"
-          ]
-        },
-        {
-          "providerId": "wellington-cbt-clinic",
-          "name": "CBT Clinic",
-          "region": "Wellington",
-          "city": "Wellington CBD",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Wellington CBD group of registered clinical psychologists focused on CBT for adult mental health problems, with direct enquiry email and no GP referral required according to the site."
-          ],
-          "sourceUrls": [
-            "https://www.cbtclinic.co.nz/"
           ]
         }
       ]
@@ -6240,88 +5757,6 @@
       ]
     },
     {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-professional-directory-broad-tag-without",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "medium",
-      "field": "fit",
-      "sourceType": "professional_directory",
-      "sourceOwnerType": "",
-      "count": 4,
-      "affectedProviders": 4,
-      "duplicateClaimRows": 0,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "nzccp-allanah-casey",
-          "name": "Allanah Casey",
-          "region": "Bay of Plenty",
-          "city": "Tauranga",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "NZCCP clinical psychologist listing."
-          ],
-          "sourceUrls": [
-            "https://www.nzccp.co.nz/team/allanah-casey"
-          ]
-        },
-        {
-          "providerId": "dunedin-bernadette-berry-delta-psychology",
-          "name": "Bernadette Berry, Delta Psychology",
-          "region": "Otago",
-          "city": "Dunedin",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "NZCCP clinical psychologist listing with specialties including ACC, Asperger's syndrome, Attention deficit hyperactivity (ADHD), Sexual abuse, Professional supervision, Post traumatic stress disorder, Trauma, and adjustment to chronic illness."
-          ],
-          "sourceUrls": [
-            "https://www.nzccp.co.nz/team/bernadette-berry"
-          ]
-        },
-        {
-          "providerId": "marlborough-rachael-sim-clinical-psychology",
-          "name": "Dr Rachael Sim Clinical Psychology",
-          "region": "Nelson Marlborough Tasman",
-          "city": "Blenheim",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Blenheim clinical psychologist listed by NZCCP. The listing notes work with adolescents and adults, mood and anxiety disorders, stress, trauma, OCD, grief, EMDR, CBT, ACT, Schema Therapy, and DBT skills."
-          ],
-          "sourceUrls": [
-            "https://www.nzccp.co.nz/team/rachael-sim"
-          ]
-        },
-        {
-          "providerId": "taranaki-jeremy-clark-psychology",
-          "name": "Jeremy Clark Psychology",
-          "region": "Taranaki",
-          "city": "New Plymouth",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "New Plymouth clinical psychologist listed by NZCCP. The listing notes work across the lifespan and significant experience with young people, especially young men."
-          ],
-          "sourceUrls": [
-            "https://www.nzccp.co.nz/team/jeremy-clark"
-          ]
-        }
-      ]
-    },
-    {
       "proposalId": "manual-batch:location-or-distance-evidence-review-low-website-professional-directory-register-only-publ",
       "action": "batch_manual_review",
       "reviewCategory": "location or distance evidence",
@@ -6449,74 +5884,6 @@
           ],
           "sourceUrls": [
             "https://www.nzccp.co.nz/team/alexandra-hayns"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-healthpoint-broad-tag-without-source-sup",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "medium",
-      "field": "fit",
-      "sourceType": "healthpoint",
-      "sourceOwnerType": "",
-      "count": 3,
-      "affectedProviders": 3,
-      "duplicateClaimRows": 0,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "southland-loss-and-grief-centre",
-          "name": "Loss and Grief Centre Southland",
-          "region": "Southland",
-          "city": "Invercargill",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Invercargill counselling and support contact for grief, loss, and the emotional strain that can come with major life changes."
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/loss-and-grief-centre/at/17-the-crescent-invercargill/",
-            "https://www.lossandgriefcentre.com/"
-          ]
-        },
-        {
-          "providerId": "wellington-taeaomanino-trust",
-          "name": "Taeaomanino Trust",
-          "region": "Wellington",
-          "city": "Porirua",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Pacific social service and health provider in Porirua offering counselling, alcohol and drug support, family support, and child/adolescent mental health services."
-          ],
-          "sourceUrls": [
-            "https://healthpoint.co.nz/community-health-and-social-services/community-health/taeaomanino-trust/"
-          ]
-        },
-        {
-          "providerId": "west-coast-health-primary-counselling",
-          "name": "West Coast Health - Primary Health Counselling Programme",
-          "region": "West Coast",
-          "city": "Greymouth and wider West Coast",
-          "claimCount": 1,
-          "claimFields": [
-            "fit"
-          ],
-          "claimValues": [
-            "Free primary health brief intervention counselling for mild to moderate mental health concerns on the West Coast. Adults can ask through their doctor or nurse; youth can self-refer or be referred by a GP, school, whanau member, or other support person."
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/west-coast-health-primary-health-counselling/at/west-coast-health-office-163-mackay-street/",
-            "https://westcoasthealth.nz/"
           ]
         }
       ]
@@ -6800,6 +6167,56 @@
           ],
           "sourceUrls": [
             "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams"
+          ]
+        }
+      ]
+    },
+    {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-provider-owned-broad-tag-without-source-",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "medium",
+      "field": "fit",
+      "sourceType": "provider_owned",
+      "sourceOwnerType": "",
+      "count": 2,
+      "affectedProviders": 2,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "nzccp-alex-richards",
+          "name": "Alex Richards",
+          "region": "Canterbury",
+          "city": "Christchurch",
+          "claimCount": 1,
+          "claimFields": [
+            "fit"
+          ],
+          "claimValues": [
+            "Manawa Psychology clinical psychologist in Woolston, Christchurch. Alex lists experience with anxiety, mood, trauma, substance-related issues, anger, neurodiversity, rangatahi and whanau specialist mental health, adults in community mental health, CBT, DBT, ACT, mindfulness, and bicultural models of wellbeing."
+          ],
+          "sourceUrls": [
+            "https://www.manawapsychology.co.nz/ko-wai-m%C4%81ua"
+          ]
+        },
+        {
+          "providerId": "christchurch-psychmed-steve-humm",
+          "name": "Steve Humm",
+          "region": "Canterbury",
+          "city": "Christchurch",
+          "claimCount": 1,
+          "claimFields": [
+            "fit"
+          ],
+          "claimValues": [
+            "Christchurch PsychMed clinical psychologist. Steve Humm works predominantly from an ACT framework and specialises in mood, anxiety, PTSD, life changes, grief and loss, stress, and burnout."
+          ],
+          "sourceUrls": [
+            "https://www.christchurchpsychmed.co.nz/about"
           ]
         }
       ]
@@ -7525,6 +6942,40 @@
       ]
     },
     {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-professional-directory-broad-tag-without",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "medium",
+      "field": "fit",
+      "sourceType": "professional_directory",
+      "sourceOwnerType": "",
+      "count": 1,
+      "affectedProviders": 1,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "marlborough-rachael-sim-clinical-psychology",
+          "name": "Dr Rachael Sim Clinical Psychology",
+          "region": "Nelson Marlborough Tasman",
+          "city": "Blenheim",
+          "claimCount": 1,
+          "claimFields": [
+            "fit"
+          ],
+          "claimValues": [
+            "Blenheim clinical psychologist listed by NZCCP. The listing notes work with adolescents and adults, mood and anxiety disorders, stress, trauma, OCD, grief, EMDR, CBT, ACT, Schema Therapy, and DBT skills."
+          ],
+          "sourceUrls": [
+            "https://www.nzccp.co.nz/team/rachael-sim"
+          ]
+        }
+      ]
+    },
+    {
       "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-professional-directory-weak-rainbow-evide",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
@@ -7562,7 +7013,7 @@
   "blockedAutomationRules": [
     {
       "rule": "high-risk-claims-review-gated",
-      "count": 540,
+      "count": 423,
       "reason": "High-risk claims can affect suitability, clinical scope, referral, availability, culture, crisis, or telehealth matching."
     },
     {
@@ -7577,7 +7028,7 @@
     },
     {
       "rule": "sensitive-tags-need-evidence",
-      "count": 491,
+      "count": 314,
       "reason": "Maori, Pasifika, Asian, Rainbow, trauma, addiction, sexual-harm, youth, men, and broad need tags need source evidence or explicit approval."
     },
     {

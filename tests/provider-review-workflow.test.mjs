@@ -627,6 +627,52 @@ test("weak GP source audit creates one source-corroboration task per provider", 
   assert.equal(gpItems.some((item) => item.claimField === "phone"), false);
 });
 
+test("broad tag findings only attach to matching fit and specialty text", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const providers = [
+    baseProvider({
+      id: "targeted-broad-text",
+      name: "Targeted Broad Text",
+      tags: ["psychologist", "depression"],
+      specialties: ["Diagnostic assessment", "Mood and anxiety therapy", "Professional supervision"],
+      fit: "Local psychology profile for mood support and diagnostic assessment."
+    })
+  ];
+  writeJson(providersPath, providers);
+  writeJson(sourceFitPath, {
+    findings: [
+      {
+        providerId: "targeted-broad-text",
+        rule: "broad-tag-without-source-support",
+        severity: "medium",
+        issue: "Broad tag \"depression\" is present but source fields do not clearly support it.",
+        suggestedFix: "Remove depression or add evidence."
+      }
+    ]
+  });
+  writeJson(emptyPath, { findings: [], items: [] });
+  const graph = buildProviderEvidenceGraph({
+    providers: providersPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath
+  });
+  const graphPath = path.join(dir, "graph.json");
+  writeJson(graphPath, graph);
+  const queue = buildProviderClaimReviewQueue({ graph: graphPath, providers: providersPath });
+  const broadItems = queue.items.filter((item) => item.auditRules.includes("broad-tag-without-source-support"));
+
+  assert.ok(broadItems.some((item) => item.claimField === "tags" && item.claimValue === "depression"));
+  assert.ok(broadItems.some((item) => item.claimField === "fit"));
+  assert.ok(broadItems.some((item) => item.claimField === "specialties" && item.claimValue === "Mood and anxiety therapy"));
+  assert.equal(broadItems.some((item) => item.claimField === "specialties" && item.claimValue === "Diagnostic assessment"), false);
+  assert.equal(broadItems.some((item) => item.claimField === "specialties" && item.claimValue === "Professional supervision"), false);
+});
+
 test("claim batch draft helper creates review-gated adjustment decisions only after human confirmation", () => {
   const dir = tempDir();
   const providersPath = path.join(dir, "providers.json");

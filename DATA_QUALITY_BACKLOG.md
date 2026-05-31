@@ -48,6 +48,10 @@ manual review burden.
   claims review-gated.
 - Collapsed weak GP source corroboration into one source-check task per affected
   practice, reducing the focused claim-review queue again from 941 items to 815.
+- Targeted broad-tag findings in public text fields so `fit`, `specialties`,
+  and `needScope` are queued only when that specific text repeats the
+  unsupported need claim. This reduced the focused claim-review queue from 815
+  items to 638.
 
 ## Next Backlog Items
 

@@ -10,6 +10,9 @@
 - Collapsed weak GP source corroboration from duplicate phone/sourceQuality rows
   into one source-check task per affected GP, reducing the focused claim queue
   again to 815 items.
+- Targeted broad-tag findings in public text fields so unrelated `fit` and
+  `specialties` values are no longer queued, reducing the focused claim queue
+  again to 638 items.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, and referral reports.
 
@@ -17,7 +20,7 @@ Safety notes:
 
 - This change does not mutate live provider data.
 - Unsupported broad/sensitive tags are still queued for human review when the
-  specific claim value is affected.
+  specific claim value or public text is affected.
 - The next data-quality target is actual GP source corroboration or source
   excerpt capture for high-risk review claims.
 
