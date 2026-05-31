@@ -423,6 +423,8 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(html, /Auto-resolution proposals/);
   assert.match(html, /Review category/);
   assert.match(html, /Any batch/);
+  assert.match(html, /Filtered batch/);
+  assert.match(html, /Save needs_more_info for filtered/);
   assert.match(js, /provider-claim-review-queue\.json/);
   assert.match(js, /gp-source-corroboration-queue\.json/);
   assert.match(js, /gpTaskToItem/);
@@ -434,6 +436,9 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /Claim field/);
   assert.match(js, /categoryFilter/);
   assert.match(js, /batchFilter/);
+  assert.match(js, /filteredBatchDecisionFor/);
+  assert.match(js, /Narrow the queue first and keep the filtered set to 100 items or fewer/);
+  assert.match(js, /item\(s\) that already had decisions/);
   assert.match(js, /provider-monitor-queue\.json/);
   assert.match(html, /Same practice \/ related records/);
   assert.match(html, /New clinician from this practice/);

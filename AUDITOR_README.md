@@ -116,6 +116,12 @@ The draft helper only writes `data/provider-claim-batch-decision-draft.json` and
 the draft, then apply it through the normal controlled review script and run the
 validation suite.
 
+The auditor console has a smaller **Filtered batch** helper for conservative
+triage. Narrow the queue first, then use it only when the whole filtered set
+needs more information. It saves `needs_more_info` for unsaved filtered items,
+does not overwrite existing item decisions, and refuses unfiltered or very large
+sets. It is not a bulk approve or bulk adjust tool.
+
 ## Review One Provider
 
 For each item:

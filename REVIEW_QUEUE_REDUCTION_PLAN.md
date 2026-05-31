@@ -61,6 +61,10 @@ This cycle added a separate claim review queue:
   Each task is normalized into the same review-item shape as the manual,
   claim, proposal, and monitor queues, with task-specific instructions for
   acceptable evidence and discovery-only sources.
+- The auditor console now has a conservative filtered-batch helper. It records
+  `needs_more_info` for unsaved items in narrowed filtered sets, preserves
+  existing decisions, and keeps all live data changes behind exported decisions
+  plus the controlled apply workflow.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -121,3 +125,5 @@ Auto-accept is allowed only when all are true:
 9. Use the auditor console's **GP source corroboration** queue source to review
    weak GP records and capture stronger website/contact evidence before any
    live provider update.
+10. Use the **Filtered batch** helper only for conservative `needs_more_info`
+    triage, then export decisions and run the controlled apply/validation path.

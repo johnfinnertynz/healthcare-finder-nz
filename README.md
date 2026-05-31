@@ -501,6 +501,12 @@ against practice-owned, Healthpoint, PHO, HPI/FHIR, or official sources. It is a
 review surface only and must not be used to infer availability, enrolment,
 specialty, cultural support, or funding eligibility.
 
+For triage, the console has a conservative filtered-batch helper. After a queue
+is narrowed by batch, rule, category, search, region, type, severity,
+availability, or referral status, it can save `needs_more_info` decisions for
+unsaved filtered items only. It does not overwrite existing decisions and it is
+not a bulk approve or bulk adjust path.
+
 `draft:claim-batch` is a draft helper for a reviewed batch. It reads the claim
 queue and writes `data/provider-claim-batch-decision-draft.json` plus
 `PROVIDER_CLAIM_BATCH_DECISION_DRAFT.md`. It never edits `providers.json`.

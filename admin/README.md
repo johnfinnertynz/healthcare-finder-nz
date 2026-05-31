@@ -115,6 +115,13 @@ Use claim batches to plan work:
 - referral: keep psychiatry GP-first unless self-referral is explicit
 - location: add coordinates only from public professional addresses
 
+The console also includes a conservative **Filtered batch** helper. First narrow
+the queue by batch, rule, category, search, region, type, severity, availability,
+or referral status. For filtered sets of 100 items or fewer, the helper can save
+`needs_more_info` decisions for unsaved items only. It does not overwrite
+existing item decisions and it cannot apply `adjust`, `approve`, `reject`,
+`duplicate`, or watchlist decisions in bulk.
+
 The claim queue is advisory. It does not apply batch decisions to
 `providers.json`; exported decisions still need the controlled apply script and
 the normal validation suite.

@@ -113,6 +113,25 @@
           </label>
         </section>
 
+        <section class="panel-block batch-draft" aria-label="Filtered batch decision draft">
+          <h2>Filtered batch</h2>
+          <p id="batchSummary" class="muted">Narrow the queue by batch, rule, category, search, or region before saving a batch decision.</p>
+          <label>
+            Batch reviewer
+            <input id="batchReviewer" autocomplete="name">
+          </label>
+          <label>
+            Batch source excerpt, optional
+            <textarea id="batchSourceExcerpt" rows="3" placeholder="Short excerpt only if the same source note applies to this filtered set."></textarea>
+          </label>
+          <label>
+            Batch review note
+            <textarea id="batchReviewNotes" rows="3" placeholder="Why this filtered set needs more information."></textarea>
+          </label>
+          <button id="saveFilteredNeedsMoreInfo" type="button" class="secondary">Save needs_more_info for filtered</button>
+          <p id="batchDecisionStatus" class="muted" role="status"></p>
+        </section>
+
         <ol id="queueList" class="queue-list"></ol>
       </aside>
 

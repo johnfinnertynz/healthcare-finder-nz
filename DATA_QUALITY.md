@@ -477,6 +477,12 @@ confidence, and verification metadata, but they must not be used to infer
 availability, enrolment, mental-health specialty, cultural/language support, or
 funding eligibility.
 
+The console's filtered-batch helper is limited to `needs_more_info` decisions
+for already-filtered sets. It is intended to record that a batch still needs
+source research, not to approve or adjust provider data. Existing item decisions
+are preserved and the exported decision JSON must still go through the controlled
+apply, validation, audit, and test workflow.
+
 `npm run draft:claim-batch -- --batch-key "<batch key>"` can prepare a
 review-decision draft from one claim batch. This helper is intentionally narrow:
 it does not write live provider data, it defaults to `needs_more_info`, and

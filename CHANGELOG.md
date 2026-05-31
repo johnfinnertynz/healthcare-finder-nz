@@ -19,6 +19,9 @@
 - Added GP source corroboration as a first-class auditor console queue with
   task-specific evidence rules, suggested searches, and normal review-decision
   export.
+- Added a conservative filtered-batch helper in the auditor console for saving
+  `needs_more_info` decisions on narrowed sets without overwriting individual
+  decisions or approving provider data in bulk.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, and referral reports.
 

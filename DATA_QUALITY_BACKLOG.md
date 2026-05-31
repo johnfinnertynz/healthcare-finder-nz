@@ -59,12 +59,15 @@ manual review burden.
 - Added the GP source corroboration queue to the auditor console so reviewers
   can switch to it, see suggested searches and evidence rules, and export normal
   review decisions without touching live provider data from the browser.
+- Added a conservative filtered-batch helper to the auditor console. It can save
+  `needs_more_info` decisions for narrowed sets of unsaved items, but it cannot
+  bulk approve, bulk adjust, overwrite existing decisions, or mutate live data.
 
 ## Next Backlog Items
 
-1. Add admin UI affordances for invoking/exporting reviewed claim-batch drafts
-   after manual evidence checks.
-2. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
+1. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
+2. Add reviewed batch-adjust UI only after the first human review session proves
+   the conservative `needs_more_info` batch helper is understandable.
 3. Work through the auditor console's **GP source corroboration** queue,
    starting with Auckland and Northland, and corroborate weak GP source records
    against practice-owned, PHO, Healthpoint, HPI/FHIR, or other official source

@@ -173,6 +173,20 @@ progress {
   gap: 10px;
 }
 
+.batch-draft {
+  display: grid;
+  gap: 10px;
+}
+
+.batch-draft textarea {
+  min-height: 74px;
+}
+
+.batch-draft button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 label {
   display: grid;
   gap: 5px;

@@ -199,6 +199,12 @@ const els = {
   decisionStatus: document.querySelector("#decisionStatus"),
   exportDecisions: document.querySelector("#exportDecisions"),
   clearDecision: document.querySelector("#clearDecision"),
+  batchSummary: document.querySelector("#batchSummary"),
+  batchReviewer: document.querySelector("#batchReviewer"),
+  batchSourceExcerpt: document.querySelector("#batchSourceExcerpt"),
+  batchReviewNotes: document.querySelector("#batchReviewNotes"),
+  saveFilteredNeedsMoreInfo: document.querySelector("#saveFilteredNeedsMoreInfo"),
+  batchDecisionStatus: document.querySelector("#batchDecisionStatus"),
   filters: {
     search: document.querySelector("#search"),
     priority: document.querySelector("#priorityFilter"),
@@ -646,12 +652,64 @@ function filterItems() {
   renderQueue();
 }
 
+function batchNarrowingFilters() {
+  return [
+    ["search", els.filters.search.value.trim()],
+    ["batch", els.filters.batch.value],
+    ["category", els.filters.category.value],
+    ["rule", els.filters.rule.value],
+    ["region", els.filters.region.value],
+    ["type", els.filters.type.value],
+    ["severity", els.filters.severity.value],
+    ["availability", els.filters.availability.value],
+    ["referral", els.filters.referral.value]
+  ].filter(([, value]) => Boolean(value));
+}
+
+function batchContextLabel() {
+  const filters = batchNarrowingFilters();
+  if (!filters.length) return "unfiltered queue";
+  return filters.map(([label, value]) => `${label}: ${value}`).join(", ");
+}
+
+function canDraftFilteredBatch() {
+  return state.filtered.length > 0
+    && state.filtered.length <= 100
+    && batchNarrowingFilters().length > 0;
+}
+
+function renderBatchTools() {
+  if (!els.batchSummary || !els.saveFilteredNeedsMoreInfo) return;
+  const existing = state.filtered.filter((item) => state.decisions[item.reviewId]).length;
+  const unsaved = state.filtered.length - existing;
+  const context = batchContextLabel();
+  const contextKey = `${context}|${state.filtered.length}|${existing}`;
+  els.batchSummary.textContent = state.filtered.length
+    ? `${state.filtered.length} item(s) match ${context}. ${unsaved} do not yet have local decisions.`
+    : `No items match ${context}.`;
+  els.saveFilteredNeedsMoreInfo.disabled = !canDraftFilteredBatch();
+  if (els.batchDecisionStatus.dataset.contextKey !== contextKey) {
+    els.batchDecisionStatus.textContent = "";
+    els.batchDecisionStatus.dataset.contextKey = contextKey;
+  }
+  if (!batchNarrowingFilters().length) {
+    els.batchDecisionStatus.textContent = "Choose a narrowing filter before using the batch decision helper.";
+  } else if (state.filtered.length > 100) {
+    els.batchDecisionStatus.textContent = "Filtered set is larger than 100 items. Narrow it further before saving batch decisions.";
+  } else if (!state.filtered.length) {
+    els.batchDecisionStatus.textContent = "No filtered items to save.";
+  } else if (!els.batchDecisionStatus.textContent) {
+    els.batchDecisionStatus.textContent = "Ready to save conservative needs_more_info decisions for unsaved filtered items.";
+  }
+}
+
 function currentQueueSource() {
   return QUEUE_SOURCES[els.queueSource?.value] || QUEUE_SOURCES.review;
 }
 
 function renderQueue() {
   updateProgress();
+  renderBatchTools();
   const source = currentQueueSource();
   els.queueSummary.textContent = `${state.filtered.length} shown from ${state.items.length} ${source.itemName || "review item(s)"}.`;
   els.queueList.replaceChildren();
@@ -1492,6 +1550,51 @@ els.clearDecision.addEventListener("click", () => {
   const item = state.items.find((entry) => entry.reviewId === state.selectedId);
   if (item) renderDecision(item);
   filterItems();
+});
+
+function filteredBatchDecisionFor(item, reviewer, sourceExcerpt, reviewNotes) {
+  return {
+    reviewId: item.reviewId,
+    providerId: item.providerId,
+    action: "needs_more_info",
+    reviewer,
+    reviewedDate: today(),
+    sourceUrl: item.sourceUrls?.[0] || item.source || item.website || "",
+    sourceExcerpt,
+    keptProviderId: "",
+    auditRulesResolved: [],
+    correctedFields: {},
+    reviewNotes: `Filtered batch (${batchContextLabel()}): ${reviewNotes}`
+  };
+}
+
+els.saveFilteredNeedsMoreInfo?.addEventListener("click", () => {
+  try {
+    if (!canDraftFilteredBatch()) {
+      throw new Error("Narrow the queue first and keep the filtered set to 100 items or fewer.");
+    }
+    const reviewer = els.batchReviewer.value.trim();
+    const sourceExcerpt = els.batchSourceExcerpt.value.trim();
+    const reviewNotes = els.batchReviewNotes.value.trim();
+    if (!reviewer) throw new Error("Add a reviewer name.");
+    if (!reviewNotes) throw new Error("Add a short batch review note.");
+
+    let saved = 0;
+    let skipped = 0;
+    for (const item of state.filtered) {
+      if (state.decisions[item.reviewId]) {
+        skipped += 1;
+        continue;
+      }
+      state.decisions[item.reviewId] = filteredBatchDecisionFor(item, reviewer, sourceExcerpt, reviewNotes);
+      saved += 1;
+    }
+    saveDecisions();
+    filterItems();
+    els.batchDecisionStatus.textContent = `Saved ${saved} needs_more_info decision(s); skipped ${skipped} item(s) that already had decisions. Export decisions JSON when ready.`;
+  } catch (error) {
+    els.batchDecisionStatus.textContent = `Batch decision not saved: ${error.message}`;
+  }
 });
 
 els.copyPracticeTemplate?.addEventListener("click", async () => {
