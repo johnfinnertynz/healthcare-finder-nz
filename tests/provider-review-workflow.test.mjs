@@ -8,6 +8,7 @@ import { buildProviderEvidenceGraph } from "../tools/build-provider-evidence-gra
 import { buildClaimBatchDecisionDraft } from "../tools/draft-claim-batch-review-decisions.mjs";
 import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
+import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
 import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
 import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
@@ -625,6 +626,69 @@ test("weak GP source audit creates one source-corroboration task per provider", 
   assert.equal(gpItems[0].providerId, "weak-gp-source");
   assert.equal(gpItems[0].claimField, "sourceQuality");
   assert.equal(gpItems.some((item) => item.claimField === "phone"), false);
+});
+
+test("GP source corroboration queue isolates weak GP records without live mutation", () => {
+  const providers = [
+    baseProvider({
+      id: "weak-gp-corroboration",
+      name: "Weak GP Corroboration",
+      type: "gp",
+      region: "Northland",
+      city: "Whangarei",
+      address: "1 Sample Road, Whangarei",
+      phone: "09 123 4567",
+      website: "",
+      source: "https://doctorpricer.co.nz/",
+      sourceQuality: "third-party public GP listing",
+      importSource: "doctorpricer",
+      tags: ["gp", "primary-care"]
+    }),
+    baseProvider({
+      id: "strong-gp-corroboration",
+      name: "Strong GP Corroboration",
+      type: "gp",
+      region: "Northland",
+      city: "Whangarei",
+      website: "https://examplemedical.nz",
+      source: "https://examplemedical.nz",
+      sourceQuality: "practice-owned public page",
+      tags: ["gp", "primary-care"]
+    }),
+    baseProvider({
+      id: "weak-non-gp",
+      name: "Weak Non-GP",
+      type: "psychologist",
+      website: "",
+      source: "https://doctorpricer.co.nz/",
+      sourceQuality: "third-party public listing"
+    })
+  ];
+  const original = JSON.stringify(providers);
+  const queue = buildGpSourceCorroborationQueue({
+    providers,
+    sourceFitAudit: {
+      findings: [{
+        providerId: "weak-gp-corroboration",
+        rule: "weak-gp-source",
+        severity: "low",
+        issue: "GP record uses a third-party or generic source and is missing either phone or website."
+      }]
+    }
+  });
+
+  assert.equal(queue.summary.totalTasks, 1);
+  assert.equal(queue.summary.missingWebsite, 1);
+  assert.equal(queue.summary.missingPhone, 0);
+  assert.equal(queue.summary.noLiveProviderMutation, true);
+  assert.equal(queue.safety.reviewGateRequired, true);
+  assert.equal(queue.tasks[0].providerId, "weak-gp-corroboration");
+  assert.deepEqual(queue.tasks[0].missingFields, ["website"]);
+  assert.equal(queue.tasks[0].decisionGuidance.liveMutationAllowed, false);
+  assert.ok(queue.tasks[0].allowedEvidenceSources.some((source) => /Healthpoint/.test(source)));
+  assert.ok(queue.tasks[0].disallowedEvidenceSources.some((source) => /search-result snippet/i.test(source)));
+  assert.ok(queue.tasks[0].suggestedSearches.some((query) => query.includes("site:healthpoint.co.nz")));
+  assert.equal(JSON.stringify(providers), original);
 });
 
 test("broad tag findings only attach to matching fit and specialty text", () => {

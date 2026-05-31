@@ -52,14 +52,19 @@ manual review burden.
   and `needScope` are queued only when that specific text repeats the
   unsupported need claim. This reduced the focused claim-review queue from 815
   items to 638.
+- Added a dedicated GP source corroboration queue with 126 review-gated tasks
+  for DoctorPricer/third-party GP records missing practice websites. The queue
+  separates acceptable evidence sources from discovery-only sources and does
+  not mutate live provider data.
 
 ## Next Backlog Items
 
 1. Add admin UI affordances for invoking/exporting reviewed claim-batch drafts
    after manual evidence checks.
 2. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
-3. Corroborate weak GP source records against practice-owned, PHO, Healthpoint,
-   HPI/FHIR, or other official source data.
+3. Work through `GP_SOURCE_CORROBORATION_QUEUE.md`, starting with Auckland and
+   Northland, and corroborate weak GP source records against practice-owned,
+   PHO, Healthpoint, HPI/FHIR, or other official source data.
 4. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 5. Start manual review with the largest unsupported tag batches.

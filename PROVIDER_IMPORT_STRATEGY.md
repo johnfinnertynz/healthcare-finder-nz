@@ -76,6 +76,9 @@ mark the claim as review-needed. It must not fake evidence text.
 - `npm run discover:suggest` creates review-gated candidate additions/patches.
 - `npm run evidence:graph` creates claim-level evidence from current providers.
 - `npm run export:claims` creates the compressed claim review queue.
+- `npm run export:gp-corroboration` creates a dedicated queue for weak
+  DoctorPricer/third-party GP records that need practice-owned, Healthpoint,
+  HPI/FHIR, PHO, or official corroboration.
 - `npm run export:review` creates the provider-level review queue.
 - `npm run apply:review` applies only reviewed decisions through the controlled
   script.

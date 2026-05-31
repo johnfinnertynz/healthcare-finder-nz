@@ -6,6 +6,7 @@ Updated: 2026-06-01
 
 - Provider-level focused review queue: 513 items.
 - Focused claim-level review queue: 638 items in 53 batches.
+- Dedicated GP source corroboration queue: 126 tasks.
 - Source-fit findings: 361.
 - Availability findings: 3.
 - Provider validation warnings: 0.
@@ -51,6 +52,11 @@ This cycle added a separate claim review queue:
 - Reviewed claim batches can now produce draft decision JSON through
   `npm run draft:claim-batch`; this is still draft-only and must go through the
   controlled apply, validation, audit, and test path.
+- Weak GP source records also have a dedicated queue via
+  `npm run export:gp-corroboration`. It currently contains 126 practices, all
+  missing a practice website while retaining a third-party/DoctorPricer source.
+  The queue gives reviewers suggested searches and explicit evidence rules
+  without mutating live data.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -96,7 +102,8 @@ Auto-accept is allowed only when all are true:
 
 1. Use `npm run export:claims` and open the claim queue in the auditor.
 2. Review the largest unsupported tag batches and remove unsupported tags first.
-3. Corroborate weak GP records by practice-owned or official sources.
+3. Run `npm run export:gp-corroboration` and corroborate weak GP records by
+   practice-owned or official sources.
 4. Add source excerpts to importers so future claims can move out of manual
    review faster.
 5. Add a reviewed batch-decision generator once the first human claim review

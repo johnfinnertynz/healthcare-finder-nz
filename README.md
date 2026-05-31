@@ -164,6 +164,20 @@ phone, website, address, and coordinates where available. Healthpoint-approved
 FHIR or HPI access should still be treated as the preferred official long-term
 source when it becomes available.
 
+Export a focused queue for GP records that still depend on third-party or
+DoctorPricer discovery and need stronger practice-owned or official
+corroboration:
+
+```sh
+npm run export:gp-corroboration
+```
+
+This writes `data/gp-source-corroboration-queue.json`,
+`data/gp-source-corroboration-queue.csv`, and
+`GP_SOURCE_CORROBORATION_QUEUE.md`. The queue is review-only: it suggests
+practice/Healthpoint/PHO/HPI/FHIR checks, rejects search snippets or
+DoctorPricer alone as evidence, and does not update `providers.json`.
+
 Import backend-only doctor register data after approved MCNZ access:
 
 ```sh
@@ -442,6 +456,7 @@ npm run evidence:graph
 npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
+npm run export:gp-corroboration
 npm run export:auto-resolution
 npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
 ```
@@ -454,10 +469,13 @@ This writes:
 - `data/provider-conflicts.json`
 - `data/provider-claim-review-queue.json`
 - `data/provider-claim-review-queue.csv`
+- `data/gp-source-corroboration-queue.json`
+- `data/gp-source-corroboration-queue.csv`
 - `data/provider-auto-resolution-proposals.json`
 - `data/provider-auto-resolution-proposals.csv`
 - `PROVIDER_EVIDENCE_GRAPH.md`
 - `PROVIDER_CLAIM_REVIEW_QUEUE.md`
+- `GP_SOURCE_CORROBORATION_QUEUE.md`
 - `PROVIDER_CONFLICTS.md`
 - `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md`
 
