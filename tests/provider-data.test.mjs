@@ -909,9 +909,14 @@ test("privacy, disclaimer, correction, and crisis links are visible from the hom
   assert.match(indexHtml, /Provider database last updated/i);
 });
 
-test("public pages include the Shielded Site widget assets", () => {
+test("public pages include the Shielded Site widget assets without third-party script execution", () => {
   const shieldedScript = fs.readFileSync("assets/shielded-site.js", "utf8");
-  assert.match(shieldedScript, /https:\/\/staticcdn\.co\.nz\/embed\/embed\.js/, "Shielded Site initializer should load the official embed script");
+  assert.doesNotMatch(shieldedScript, /staticcdn\.co\.nz/, "Shielded Site helper must not execute third-party CDN scripts");
+  assert.doesNotMatch(shieldedScript, /createElement\(["']script["']\)/, "Shielded Site helper must not append remote script elements");
+  assert.doesNotMatch(shieldedScript, /ds07o6pcmkorn/, "Shielded Site helper must not instantiate remote embed code in the app context");
+  assert.match(shieldedScript, /https:\/\/shielded\.co\.nz\//, "Shielded Site helper should open the external Shielded Site in a new tab");
+  assert.match(shieldedScript, /rel = "noopener noreferrer"/, "External Shielded Site link should be isolated from the app window");
+  assert.match(shieldedScript, /referrerPolicy = "no-referrer"/, "External Shielded Site link should not receive the app URL as a referrer");
   assert.match(shieldedScript, /https:\/\/shielded\.co\.nz\/img\/custom-logo\.png/, "Shielded Site initializer should use the official button logo");
 
   for (const pagePath of publicHtmlPages) {
