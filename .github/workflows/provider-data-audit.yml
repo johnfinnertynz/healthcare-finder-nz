@@ -9,9 +9,6 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    env:
-      HEALTHPOINT_API_URL: ${{ secrets.HEALTHPOINT_API_URL }}
-      HEALTHPOINT_API_TOKEN: ${{ secrets.HEALTHPOINT_API_TOKEN }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -41,6 +38,9 @@ jobs:
 
       - name: Refresh approved provider data
         if: github.event_name != 'pull_request'
+        env:
+          HEALTHPOINT_API_URL: ${{ secrets.HEALTHPOINT_API_URL }}
+          HEALTHPOINT_API_TOKEN: ${{ secrets.HEALTHPOINT_API_TOKEN }}
         run: node tools/refresh-provider-database.mjs
 
       - name: Discover unavailable provider candidates
