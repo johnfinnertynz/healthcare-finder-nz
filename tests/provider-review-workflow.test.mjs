@@ -279,6 +279,37 @@ test("adjust applies only allowed corrected fields and rejects unsafe fields", (
   assert.match(result.errors[0].error, /Unsafe correctedFields/);
 });
 
+test("adjust cannot add advertised specialties without matching source evidence", () => {
+  const provider = baseProvider({
+    id: "advertised-specialty-safety",
+    type: "psychiatrist",
+    tags: ["psychiatrist"],
+    advertisedSpecialties: [],
+    advertisedSpecialtyEvidence: []
+  });
+  const result = applyReviewDecisions({
+    providers: [provider],
+    decisions: {
+      decisions: [
+        {
+          providerId: "advertised-specialty-safety",
+          action: "adjust",
+          correctedFields: {
+            advertisedSpecialties: ["Depression"],
+            advertisedSpecialtyEvidence: [{ sourceUrl: "https://example.org/source", excerpt: "Manual claim", confidence: "low" }]
+          },
+          sourceExcerpt: "Manual claim",
+          reviewer: "tester",
+          reviewedDate: "2026-05-26"
+        }
+      ]
+    }
+  });
+
+  assert.equal(result.applied.length, 0);
+  assert.match(result.errors[0].error, /advertised specialties without matching source evidence/i);
+});
+
 test("reject removes provider safely and writes log event", () => {
   const provider = baseProvider({ id: "reject-me" });
   const result = applyReviewDecisions({

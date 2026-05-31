@@ -276,7 +276,17 @@ test("source-fit audit keeps psychiatrist baseline separate from unsupported sou
     advertisedSpecialties: ["Depression"],
     advertisedSpecialtyEvidence: [{ sourceUrl: base.source, excerpt: "Manual claim", confidence: "low" }]
   }]).findings;
-  assert.equal(unsupportedAdvertised.some((finding) => finding.rule === "advertised-specialty-without-source-support"), true);
+  assert.equal(unsupportedAdvertised.some((finding) => finding.rule === "advertised-specialty-without-source-support" && finding.severity === "high"), true);
+
+  const unsupportedAdvertisedAndTag = auditProviders([{
+    ...base,
+    id: "unsupported-advertised-and-tag",
+    tags: ["psychiatrist", "depression"],
+    advertisedSpecialties: ["Depression"],
+    advertisedSpecialtyEvidence: [{ sourceUrl: base.source, excerpt: "Manual claim", confidence: "low" }]
+  }]).findings;
+  assert.equal(unsupportedAdvertisedAndTag.some((finding) => finding.rule === "advertised-specialty-without-source-support" && finding.severity === "high"), true);
+  assert.equal(unsupportedAdvertisedAndTag.some((finding) => finding.rule === "broad-tag-without-source-support"), true);
 
   const unsupportedPsychologistTag = auditProviders([{
     ...base,
@@ -286,6 +296,54 @@ test("source-fit audit keeps psychiatrist baseline separate from unsupported sou
     baselineScope: []
   }]).findings;
   assert.equal(unsupportedPsychologistTag.some((finding) => finding.rule === "broad-tag-without-source-support"), true);
+});
+
+test("provider data validation rejects unsupported psychiatrist advertised specialties", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "provider-validation-"));
+  const provider = {
+    id: "unsupported-advertised-validation",
+    name: "Unsupported Advertised Validation",
+    type: "psychiatrist",
+    region: "Auckland",
+    city: "Auckland",
+    source: "https://example.org/provider",
+    website: "https://example.org/provider",
+    sourceQuality: "provider-owned page",
+    cost: "Private fees",
+    fit: "Psychiatrist profile with public contact details.",
+    firstStep: "Ask your GP about referral.",
+    tags: ["psychiatrist", "depression"],
+    needScope: [],
+    verified: "2026-05",
+    lastVerified: "2026-05",
+    confidence: "medium",
+    needsManualVerification: true,
+    availabilityStatus: "unknown",
+    availabilityCheckedAt: "2026-05",
+    availabilitySource: "https://example.org/provider",
+    availabilityNeedsManualReview: true,
+    requiresReferral: true,
+    referralType: "gp",
+    referralSourceUrl: "https://example.org/provider",
+    referralSourceExcerpt: "GP referral is required.",
+    referralConfidence: "high",
+    referralLastChecked: "2026-05",
+    referralNeedsManualReview: false,
+    baselineScope: Array.from(allowedPsychiatristBaselineScope),
+    baselineScopeSource: baselinePsychiatristScopeSource,
+    baselineScopeNote: baselinePsychiatristScopeNote,
+    advertisedSpecialties: ["Depression"],
+    advertisedSpecialtyEvidence: [{ sourceUrl: "https://example.org/provider", excerpt: "Manual claim", confidence: "low" }],
+    specialtyTagsSource: "source-backed advertised specialties/interests",
+    phone: "09 000 0000"
+  };
+  const providersPath = path.join(tempDir, "providers.json");
+  fs.writeFileSync(providersPath, `${JSON.stringify([provider], null, 2)}\n`);
+
+  assert.throws(
+    () => execFileSync(process.execPath, ["tools/validate-provider-data.mjs", providersPath], { stdio: "pipe" }),
+    (error) => /advertisedSpecialties must be supported by source text/.test(`${error.stdout || ""}\n${error.stderr || ""}`)
+  );
 });
 
 test("provider availability audit passes without unallowlisted high-severity findings", () => {

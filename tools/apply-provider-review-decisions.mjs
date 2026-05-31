@@ -135,6 +135,8 @@ function decisionEvidenceText(decision, provider, nextProvider = provider) {
     decision.sourceEvidenceSummary,
     decision.correctedFields?.availabilityEvidence,
     decision.correctedFields?.referralSourceExcerpt,
+    ...(decision.correctedFields?.advertisedSpecialtyEvidence || []).flatMap((item) => [item?.sourceUrl, item?.excerpt]),
+    ...(nextProvider?.advertisedSpecialtyEvidence || []).flatMap((item) => [item?.sourceUrl, item?.excerpt]),
     nextProvider?.availabilityEvidence,
     nextProvider?.referralSourceExcerpt,
     provider?.availabilityEvidence,
@@ -237,6 +239,13 @@ function validateSafety(provider, nextProvider, decision) {
   const addedBroadTags = addedTags.filter((tag) => BROAD_TAGS.has(tag));
   if (addedBroadTags.length && !approvals.has("broad-tags") && !addedBroadTags.every((tag) => approvals.has(`tag:${tag}`)) && !evidenceText) {
     throw new Error(`${providerLabel(provider)} cannot add broad need tags without source evidence or explicit reviewer approval.`);
+  }
+
+  const addedAdvertisedSpecialties = changedArrayValues(provider.advertisedSpecialties, nextProvider.advertisedSpecialties);
+  if (addedAdvertisedSpecialties.length
+    && !approvals.has("advertised-specialties")
+    && !addedAdvertisedSpecialties.every((specialty) => evidenceText.toLowerCase().includes(String(specialty).toLowerCase()))) {
+    throw new Error(`${providerLabel(provider)} cannot add advertised specialties without matching source evidence or explicit advertised-specialties approval.`);
   }
 
   if ((provider.type === "directory" || provider.tags?.includes("directory")) && nextProvider.type !== "directory" && !hasDirectPracticeContact(nextProvider)) {
