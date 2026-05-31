@@ -73,6 +73,9 @@ manual review burden.
 - Ran a bounded Northland psychiatry Places discovery batch. It added review
   leads, including a Northland Psychiatry source, while keeping query-type
   conflicts and non-specialist-looking matches gated for audit.
+- Hardened source-page extraction after the Northland batch exposed two noisy
+  patterns: announcement headings being treated as service names, and adjacent
+  team-list names being merged into one clinician.
 
 ## Next Backlog Items
 
@@ -88,9 +91,11 @@ manual review burden.
 5. Start manual review with the largest unsupported tag batches.
 6. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
-7. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
+7. Keep adding extractor regression tests whenever generated discovery reports
+   show obviously misleading provider names, clinician names, or closure text.
+8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-8. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
+9. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.

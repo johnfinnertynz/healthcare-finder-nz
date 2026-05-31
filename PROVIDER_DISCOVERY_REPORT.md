@@ -1,6 +1,6 @@
 # Provider Discovery Report
 
-Generated: 2026-05-31T22:43:14.434Z
+Generated: 2026-05-31T22:56:02.703Z
 
 This report is produced by the evidence discovery pipeline. It proposes reviewable candidates only; it does not publish weak data into live recommendations.
 
@@ -129,8 +129,8 @@ This report is produced by the evidence discovery pipeline. It proposes reviewab
 
 | Candidate | Type | Region / city | Contact evidence | Review reasons |
 | --- | --- | --- | --- | --- |
-| Whangarei Care Centre | psychiatrist | Northland / Whangarei | phone, email, website | conflicting name, practiceName, address, type values; extracted from seed source provider_owned |
-| Dr Sarah Castle Edoardo Giorgi | psychiatrist | Northland / Whangarei | phone, email, website | conflicting name, practiceName, tags values; extracted from seed source provider_owned |
+| Whangarei Care Centre | psychiatrist | Northland / Whangarei | phone, email, website | conflicting address, type values; extracted from seed source provider_owned |
+| Dr Sarah Castle | psychiatrist | Northland / Whangarei | phone, email, website | conflicting tags values; extracted from seed source provider_owned |
 | candidate:dec8f3f12127927b |  |  /  | none | conflicting source values; no direct public contact found; seed source login-or-captcha-required |
 | Lynn Price | psychologist | Northland / Whangarei | phone, website | existing provider enrichment; source-fit: medium weak-telehealth-evidence - Telehealth or online availability is set but source fields do not clearly support remote care.; review queue high: medium: weak-telehealth-evidence; availability needs manual review |
 | Hagan Provan | psychologist | Northland / Whangarei | website | existing provider enrichment; review queue critical: provider discovery suggestion; conflicting source values; no direct public contact found; seed source too-large; conflicting fields: source; review queue medium: availability needs manual review |

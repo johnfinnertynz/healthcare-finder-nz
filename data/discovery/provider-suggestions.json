@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-31T22:43:23.124Z",
+  "generatedAt": "2026-05-31T22:56:10.871Z",
   "safety": {
     "reviewGateRequired": true,
     "noDirectProvidersJsonMutation": true,
@@ -39,7 +39,7 @@
       "possibleProviderIds": [
         "candidate-kinder-minds"
       ],
-      "name": "Dr Sarah Castle Edoardo Giorgi",
+      "name": "Dr Sarah Castle",
       "type": "psychiatrist",
       "region": "Northland",
       "city": "Whangarei",
@@ -47,20 +47,6 @@
       "confidence": "high",
       "corroborationScore": 1,
       "conflicts": [
-        {
-          "field": "name",
-          "values": [
-            "Kinder Minds",
-            "Sarah Castle"
-          ]
-        },
-        {
-          "field": "practiceName",
-          "values": [
-            "Kinder Minds",
-            "Sarah Castle"
-          ]
-        },
         {
           "field": "tags",
           "values": [
@@ -71,10 +57,10 @@
         }
       ],
       "suggestedProviderRecord": {
-        "id": "candidate-dr-sarah-castle-edoardo-giorgi",
-        "name": "Sarah Castle",
-        "clinicianName": "Dr Sarah Castle Edoardo Giorgi",
-        "practiceName": "Sarah Castle",
+        "id": "candidate-dr-sarah-castle",
+        "name": "Kinder Minds",
+        "clinicianName": "Dr Sarah Castle",
+        "practiceName": "Kinder Minds",
         "type": "psychiatrist",
         "region": "Northland",
         "city": "Whangarei",
@@ -128,7 +114,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 022 360 5027",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -139,7 +125,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://kinderminds.nz/",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -150,7 +136,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "ere to help young minds heal. Our Services Contact Us Please feel free to contact us with your enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Compreh",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -161,7 +147,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "s heal. Our Services Contact Us Please feel free to contact us with your enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessme",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -172,7 +158,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Booking or appointment link found on source page.",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -185,7 +171,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 127A Lower Dent Street, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -196,7 +182,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -207,7 +193,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -218,7 +204,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Region from discovery context: Northland.",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -229,7 +215,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "City from discovery context: Whangarei.",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -244,7 +230,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://kinderminds.nz/",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -255,7 +241,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "tand each young person’s unique experiences and challenges. She has special interests in the diagnosis of Autism and ADHD, as well as additional training in treatment of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for childre",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -270,7 +256,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "ent of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for children and adolescents in New Zealand. --> About Kinder Minds Meet Neve Kinder Minds is proud to be an ACC Contracted Provider We are able to offer CPSA psychiatric ser",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -284,7 +270,7 @@
                 "sourceUrl": "https://kinderminds.nz/",
                 "sourceType": "provider_owned",
                 "excerpt": "tand each young person’s unique experiences and challenges. She has special interests in the diagnosis of Autism and ADHD, as well as additional training in treatment of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for childre",
-                "capturedAt": "2026-05-31T22:43:12.057Z",
+                "capturedAt": "2026-05-31T22:55:59.748Z",
                 "confidence": "medium",
                 "extractor": "provider-evidence-extractor",
                 "needsManualReview": true
@@ -297,7 +283,7 @@
                 "sourceUrl": "https://kinderminds.nz/",
                 "sourceType": "provider_owned",
                 "excerpt": "s is the most effective way to achive the best possible outcomes for the young minds we serve. As Kinder Minds grows so too will our team to accommodate the needs of the whanau that come to us for help. If you are a professional who is interested in joining please get in touch with us. Kinder Minds Growth Contact Us Sarah Castle Dr. Sarah",
-                "capturedAt": "2026-05-31T22:43:12.057Z",
+                "capturedAt": "2026-05-31T22:55:59.748Z",
                 "confidence": "medium",
                 "extractor": "provider-evidence-extractor",
                 "needsManualReview": true
@@ -310,7 +296,7 @@
                 "sourceUrl": "https://kinderminds.nz/",
                 "sourceType": "provider_owned",
                 "excerpt": "our enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessment Comprehensive assessment of ASD for all ages (young people and adu",
-                "capturedAt": "2026-05-31T22:43:12.057Z",
+                "capturedAt": "2026-05-31T22:55:59.748Z",
                 "confidence": "medium",
                 "extractor": "provider-evidence-extractor",
                 "needsManualReview": true
@@ -324,7 +310,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "our enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessment Comprehensive assessment of ASD for all ages (young people and adu",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -337,7 +323,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "s is the most effective way to achive the best possible outcomes for the young minds we serve. As Kinder Minds grows so too will our team to accommodate the needs of the whanau that come to us for help. If you are a professional who is interested in joining please get in touch with us. Kinder Minds Growth Contact Us Sarah Castle Dr. Sarah",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -350,7 +336,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "mple to the complex, our service provides a safe haven where Young People feel understood, respected and supported. Our care is professional, deeply empathic and personalised. Whether it’s navigating the intricacies of ADHD, ASD or overcoming the effects of trauma, we are here to help young minds heal. Our Services Contact Us Please feel",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -363,7 +349,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Kinder Minds",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -374,7 +360,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Kinder Minds",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -385,40 +371,40 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
             },
             {
               "field": "name",
-              "value": "Sarah Castle",
+              "value": "Kinder Minds",
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Kinder Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Cast",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             },
             {
               "field": "clinicianName",
-              "value": "Dr Sarah Castle Edoardo Giorgi",
+              "value": "Dr Sarah Castle",
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "tients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Castle Edoardo Giorgi Neve Kezia Schroyen Contact Referals --> Sarah Castle Consultant Child and Adolescent Psychiatrist MBBS MRCPsych BSc Kinder Minds is the vi",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             },
             {
               "field": "practiceName",
-              "value": "Sarah Castle",
+              "value": "Kinder Minds",
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Kinder Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Cast",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -429,7 +415,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "er Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Castle E",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -438,34 +424,26 @@
         },
         "confidenceByField": {
           "name": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Kinder Minds",
-              "Sarah Castle"
+              "Kinder Minds"
             ],
             "sources": [
               "https://kinderminds.nz/"
             ],
-            "conflicts": [
-              "Kinder Minds",
-              "Sarah Castle"
-            ]
+            "conflicts": []
           },
           "practiceName": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Kinder Minds",
-              "Sarah Castle"
+              "Kinder Minds"
             ],
             "sources": [
               "https://kinderminds.nz/"
             ],
-            "conflicts": [
-              "Kinder Minds",
-              "Sarah Castle"
-            ]
+            "conflicts": []
           },
           "address": {
             "confidence": "medium",
@@ -548,7 +526,7 @@
             "confidence": "high",
             "score": 1,
             "values": [
-              "Dr Sarah Castle Edoardo Giorgi"
+              "Dr Sarah Castle"
             ],
             "sources": [
               "https://kinderminds.nz/"
@@ -631,10 +609,10 @@
       },
       "suggestedPatchForExistingProvider": {},
       "suggestedChanges": {
-        "id": "candidate-dr-sarah-castle-edoardo-giorgi",
-        "name": "Sarah Castle",
-        "clinicianName": "Dr Sarah Castle Edoardo Giorgi",
-        "practiceName": "Sarah Castle",
+        "id": "candidate-dr-sarah-castle",
+        "name": "Kinder Minds",
+        "clinicianName": "Dr Sarah Castle",
+        "practiceName": "Kinder Minds",
         "type": "psychiatrist",
         "region": "Northland",
         "city": "Whangarei",
@@ -688,7 +666,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 022 360 5027",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -699,7 +677,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://kinderminds.nz/",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -710,7 +688,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "ere to help young minds heal. Our Services Contact Us Please feel free to contact us with your enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Compreh",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -721,7 +699,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "s heal. Our Services Contact Us Please feel free to contact us with your enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessme",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -732,7 +710,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Booking or appointment link found on source page.",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -745,7 +723,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 127A Lower Dent Street, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -756,7 +734,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -767,7 +745,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -778,7 +756,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Region from discovery context: Northland.",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -789,7 +767,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "City from discovery context: Whangarei.",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -804,7 +782,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://kinderminds.nz/",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -815,7 +793,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "tand each young person’s unique experiences and challenges. She has special interests in the diagnosis of Autism and ADHD, as well as additional training in treatment of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for childre",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -830,7 +808,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "ent of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for children and adolescents in New Zealand. --> About Kinder Minds Meet Neve Kinder Minds is proud to be an ACC Contracted Provider We are able to offer CPSA psychiatric ser",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -844,7 +822,7 @@
                 "sourceUrl": "https://kinderminds.nz/",
                 "sourceType": "provider_owned",
                 "excerpt": "tand each young person’s unique experiences and challenges. She has special interests in the diagnosis of Autism and ADHD, as well as additional training in treatment of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for childre",
-                "capturedAt": "2026-05-31T22:43:12.057Z",
+                "capturedAt": "2026-05-31T22:55:59.748Z",
                 "confidence": "medium",
                 "extractor": "provider-evidence-extractor",
                 "needsManualReview": true
@@ -857,7 +835,7 @@
                 "sourceUrl": "https://kinderminds.nz/",
                 "sourceType": "provider_owned",
                 "excerpt": "s is the most effective way to achive the best possible outcomes for the young minds we serve. As Kinder Minds grows so too will our team to accommodate the needs of the whanau that come to us for help. If you are a professional who is interested in joining please get in touch with us. Kinder Minds Growth Contact Us Sarah Castle Dr. Sarah",
-                "capturedAt": "2026-05-31T22:43:12.057Z",
+                "capturedAt": "2026-05-31T22:55:59.748Z",
                 "confidence": "medium",
                 "extractor": "provider-evidence-extractor",
                 "needsManualReview": true
@@ -870,7 +848,7 @@
                 "sourceUrl": "https://kinderminds.nz/",
                 "sourceType": "provider_owned",
                 "excerpt": "our enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessment Comprehensive assessment of ASD for all ages (young people and adu",
-                "capturedAt": "2026-05-31T22:43:12.057Z",
+                "capturedAt": "2026-05-31T22:55:59.748Z",
                 "confidence": "medium",
                 "extractor": "provider-evidence-extractor",
                 "needsManualReview": true
@@ -884,7 +862,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "our enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessment Comprehensive assessment of ASD for all ages (young people and adu",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -897,7 +875,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "s is the most effective way to achive the best possible outcomes for the young minds we serve. As Kinder Minds grows so too will our team to accommodate the needs of the whanau that come to us for help. If you are a professional who is interested in joining please get in touch with us. Kinder Minds Growth Contact Us Sarah Castle Dr. Sarah",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -910,7 +888,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "mple to the complex, our service provides a safe haven where Young People feel understood, respected and supported. Our care is professional, deeply empathic and personalised. Whether it’s navigating the intricacies of ADHD, ASD or overcoming the effects of trauma, we are here to help young minds heal. Our Services Contact Us Please feel",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -923,7 +901,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Kinder Minds",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -934,7 +912,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Kinder Minds",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -945,40 +923,40 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.623Z",
+              "capturedAt": "2026-05-31T22:55:59.112Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
             },
             {
               "field": "name",
-              "value": "Sarah Castle",
+              "value": "Kinder Minds",
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Kinder Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Cast",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             },
             {
               "field": "clinicianName",
-              "value": "Dr Sarah Castle Edoardo Giorgi",
+              "value": "Dr Sarah Castle",
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "tients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Castle Edoardo Giorgi Neve Kezia Schroyen Contact Referals --> Sarah Castle Consultant Child and Adolescent Psychiatrist MBBS MRCPsych BSc Kinder Minds is the vi",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             },
             {
               "field": "practiceName",
-              "value": "Sarah Castle",
+              "value": "Kinder Minds",
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Kinder Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Cast",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -989,7 +967,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "er Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Castle E",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -998,34 +976,26 @@
         },
         "confidenceByField": {
           "name": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Kinder Minds",
-              "Sarah Castle"
+              "Kinder Minds"
             ],
             "sources": [
               "https://kinderminds.nz/"
             ],
-            "conflicts": [
-              "Kinder Minds",
-              "Sarah Castle"
-            ]
+            "conflicts": []
           },
           "practiceName": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Kinder Minds",
-              "Sarah Castle"
+              "Kinder Minds"
             ],
             "sources": [
               "https://kinderminds.nz/"
             ],
-            "conflicts": [
-              "Kinder Minds",
-              "Sarah Castle"
-            ]
+            "conflicts": []
           },
           "address": {
             "confidence": "medium",
@@ -1108,7 +1078,7 @@
             "confidence": "high",
             "score": 1,
             "values": [
-              "Dr Sarah Castle Edoardo Giorgi"
+              "Dr Sarah Castle"
             ],
             "sources": [
               "https://kinderminds.nz/"
@@ -1197,7 +1167,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 022 360 5027",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1208,7 +1178,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://kinderminds.nz/",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1219,7 +1189,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "ere to help young minds heal. Our Services Contact Us Please feel free to contact us with your enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Compreh",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "high",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1230,7 +1200,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "s heal. Our Services Contact Us Please feel free to contact us with your enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessme",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "high",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1241,7 +1211,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Booking or appointment link found on source page.",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1254,7 +1224,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 127A Lower Dent Street, Whangārei 0110",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1265,7 +1235,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1276,7 +1246,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1287,7 +1257,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Region from discovery context: Northland.",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "low",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1298,7 +1268,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "City from discovery context: Whangarei.",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "low",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1313,7 +1283,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://kinderminds.nz/",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1324,7 +1294,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "tand each young person’s unique experiences and challenges. She has special interests in the diagnosis of Autism and ADHD, as well as additional training in treatment of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for childre",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1339,7 +1309,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "ent of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for children and adolescents in New Zealand. --> About Kinder Minds Meet Neve Kinder Minds is proud to be an ACC Contracted Provider We are able to offer CPSA psychiatric ser",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1353,7 +1323,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "tand each young person’s unique experiences and challenges. She has special interests in the diagnosis of Autism and ADHD, as well as additional training in treatment of Trauma in Young People. Neve is our therapy dog , click to meet her. Her passion for mental health care is matched by her dedication to offer outstanding care for childre",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1366,7 +1336,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "s is the most effective way to achive the best possible outcomes for the young minds we serve. As Kinder Minds grows so too will our team to accommodate the needs of the whanau that come to us for help. If you are a professional who is interested in joining please get in touch with us. Kinder Minds Growth Contact Us Sarah Castle Dr. Sarah",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1379,7 +1349,7 @@
               "sourceUrl": "https://kinderminds.nz/",
               "sourceType": "provider_owned",
               "excerpt": "our enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessment Comprehensive assessment of ASD for all ages (young people and adu",
-              "capturedAt": "2026-05-31T22:43:12.057Z",
+              "capturedAt": "2026-05-31T22:55:59.748Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1393,7 +1363,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "our enquiries and referrals: : 127A Dent Street, Whangarei 0110, New Zealand : info@kinderminds.nz : 022 360 5027 What We Offer Many of our services can be available via telehealth, please contact us to discuss your individual circumstances. Comprehensive Autism Assessment Comprehensive assessment of ASD for all ages (young people and adu",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1406,7 +1376,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "s is the most effective way to achive the best possible outcomes for the young minds we serve. As Kinder Minds grows so too will our team to accommodate the needs of the whanau that come to us for help. If you are a professional who is interested in joining please get in touch with us. Kinder Minds Growth Contact Us Sarah Castle Dr. Sarah",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1419,7 +1389,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "mple to the complex, our service provides a safe haven where Young People feel understood, respected and supported. Our care is professional, deeply empathic and personalised. Whether it’s navigating the intricacies of ADHD, ASD or overcoming the effects of trauma, we are here to help young minds heal. Our Services Contact Us Please feel",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1432,7 +1402,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Kinder Minds",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1443,7 +1413,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Kinder Minds",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -1454,40 +1424,40 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: psychiatrist",
-            "capturedAt": "2026-05-31T22:43:11.623Z",
+            "capturedAt": "2026-05-31T22:55:59.112Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
           },
           {
             "field": "name",
-            "value": "Sarah Castle",
+            "value": "Kinder Minds",
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Kinder Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Cast",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
           },
           {
             "field": "clinicianName",
-            "value": "Dr Sarah Castle Edoardo Giorgi",
+            "value": "Dr Sarah Castle",
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "tients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Castle Edoardo Giorgi Neve Kezia Schroyen Contact Referals --> Sarah Castle Consultant Child and Adolescent Psychiatrist MBBS MRCPsych BSc Kinder Minds is the vi",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "low",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
           },
           {
             "field": "practiceName",
-            "value": "Sarah Castle",
+            "value": "Kinder Minds",
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Kinder Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Cast",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1498,7 +1468,7 @@
             "sourceUrl": "https://kinderminds.nz/",
             "sourceType": "provider_owned",
             "excerpt": "er Minds Sarah Castle Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services ) --> Home Services What We Offer Our Approach Info for Patients What is a Psychiatrist? First Steps Preparing Your Child Confidentiality --> About Our Mission Who We Are Growing Kinder Minds Meet the Team The Kinder Minds Team Dr Sarah Castle E",
-            "capturedAt": "2026-05-31T22:43:12.057Z",
+            "capturedAt": "2026-05-31T22:55:59.748Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -1507,34 +1477,26 @@
       },
       "confidenceByField": {
         "name": {
-          "confidence": "medium",
-          "score": 0.75,
+          "confidence": "high",
+          "score": 1,
           "values": [
-            "Kinder Minds",
-            "Sarah Castle"
+            "Kinder Minds"
           ],
           "sources": [
             "https://kinderminds.nz/"
           ],
-          "conflicts": [
-            "Kinder Minds",
-            "Sarah Castle"
-          ]
+          "conflicts": []
         },
         "practiceName": {
-          "confidence": "medium",
-          "score": 0.75,
+          "confidence": "high",
+          "score": 1,
           "values": [
-            "Kinder Minds",
-            "Sarah Castle"
+            "Kinder Minds"
           ],
           "sources": [
             "https://kinderminds.nz/"
           ],
-          "conflicts": [
-            "Kinder Minds",
-            "Sarah Castle"
-          ]
+          "conflicts": []
         },
         "address": {
           "confidence": "medium",
@@ -1617,7 +1579,7 @@
           "confidence": "high",
           "score": 1,
           "values": [
-            "Dr Sarah Castle Edoardo Giorgi"
+            "Dr Sarah Castle"
           ],
           "sources": [
             "https://kinderminds.nz/"
@@ -1698,9 +1660,9 @@
         }
       },
       "reviewReasons": [
-        "conflicting name, practiceName, tags values",
+        "conflicting tags values",
         "extracted from seed source provider_owned",
-        "conflicting fields: name, practiceName, tags"
+        "conflicting fields: tags"
       ],
       "sourceUrlsUsed": [
         "https://kinderminds.nz/"
@@ -1716,7 +1678,7 @@
       "possibleProviderIds": [
         "candidate-whangarei-care-centre"
       ],
-      "name": "Whangarei CARE will be closing its doors shortly",
+      "name": "Whangarei Care Centre",
       "type": "counsellor",
       "region": "Northland",
       "city": "Whangarei",
@@ -1724,20 +1686,6 @@
       "confidence": "high",
       "corroborationScore": 1,
       "conflicts": [
-        {
-          "field": "name",
-          "values": [
-            "Whangarei Care Centre",
-            "Whangarei CARE will be closing its doors shortly"
-          ]
-        },
-        {
-          "field": "practiceName",
-          "values": [
-            "Whangarei Care Centre",
-            "Whangarei CARE will be closing its doors shortly"
-          ]
-        },
         {
           "field": "address",
           "values": [
@@ -1754,10 +1702,10 @@
         }
       ],
       "suggestedProviderRecord": {
-        "id": "candidate-whangarei-care-will-be-closing-its-doors-shortly",
-        "name": "Whangarei CARE will be closing its doors shortly",
+        "id": "candidate-whangarei-care-centre",
+        "name": "Whangarei Care Centre",
         "clinicianName": "",
-        "practiceName": "Whangarei CARE will be closing its doors shortly",
+        "practiceName": "Whangarei Care Centre",
         "type": "counsellor",
         "region": "Northland",
         "city": "Whangarei",
@@ -1773,9 +1721,9 @@
         "needsManualVerification": true,
         "verified": "",
         "lastVerified": "",
-        "availabilityStatus": "not_published",
-        "availabilityEvidence": "",
-        "availabilitySource": "",
+        "availabilityStatus": "not_accepting",
+        "availabilityEvidence": "closing its doors shortly",
+        "availabilitySource": "https://whgcare.org.nz/",
         "availabilityNeedsManualReview": true,
         "onlineAvailable": false,
         "phoneSupport": false,
@@ -1801,7 +1749,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 09 437 6397",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1812,7 +1760,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: http://www.whgcare.org.nz/",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1823,7 +1771,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Pencils Storytelling Senior Sounds Senior Tech Stencils & Pencils Storytelling Senior Sounds Senior Tech Contact Phone: 09 437 6397 Office Hours: 9am-5pm Mon-Fri Email: whgcare@whgcare.org.nz Facebook Address: 1 Mill Road, Regent, Whangarei (Corner Mill Road and Deveron St) © 2026 Whangarei Care Centre. All Rights Reserved | Website by M",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1834,7 +1782,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1845,7 +1793,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Booking or appointment link found on source page.",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1858,7 +1806,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 1 Mill Road, Regent, Whangārei 0112",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1869,7 +1817,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1880,7 +1828,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1891,7 +1839,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Region from discovery context: Northland.",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1902,7 +1850,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "City from discovery context: Whangarei.",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1913,13 +1861,25 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "r Tech Stencils & Pencils Storytelling Senior Sounds Senior Tech Contact Phone: 09 437 6397 Office Hours: 9am-5pm Mon-Fri Email: whgcare@whgcare.org.nz Facebook Address: 1 Mill Road, Regent, Whangarei (Corner Mill Road and Deveron St) © 2026 Whangarei Care Centre. All Rights Reserved | Website by Monster Creative",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             }
           ],
-          "availability": [],
+          "availability": [
+            {
+              "field": "availabilityStatus",
+              "value": "not_accepting",
+              "sourceUrl": "https://whgcare.org.nz/",
+              "sourceType": "provider_owned",
+              "excerpt": "closing its doors shortly",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
+              "confidence": "medium",
+              "extractor": "provider-evidence-extractor",
+              "needsManualReview": true
+            }
+          ],
           "referral": [],
           "scope": [
             {
@@ -1928,7 +1888,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: http://www.whgcare.org.nz/",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1941,7 +1901,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1957,7 +1917,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "land Community, Whangarei CARE will close on Friday 29 May 2026, due to an increasingly difficult funding environment for smaller, non-profit organisations. Thank you so much for being a part of our journey. Inclusive Community Care Trusted assistance and advice, when you need it Whangarei Care Centre – Te Whare Oranga offers a range of f",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -1970,7 +1930,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei Care Centre",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1981,7 +1941,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei Care Centre",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -1992,29 +1952,29 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
             },
             {
               "field": "name",
-              "value": "Whangarei CARE will be closing its doors shortly",
+              "value": "Whangarei Care Centre",
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             },
             {
               "field": "practiceName",
-              "value": "Whangarei CARE will be closing its doors shortly",
+              "value": "Whangarei Care Centre",
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2025,7 +1985,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2034,36 +1994,28 @@
         },
         "confidenceByField": {
           "name": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
+              "Whangarei Care Centre"
             ],
             "sources": [
               "http://www.whgcare.org.nz/",
               "https://whgcare.org.nz/"
             ],
-            "conflicts": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
-            ]
+            "conflicts": []
           },
           "practiceName": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
+              "Whangarei Care Centre"
             ],
             "sources": [
               "http://www.whgcare.org.nz/",
               "https://whgcare.org.nz/"
             ],
-            "conflicts": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
-            ]
+            "conflicts": []
           },
           "address": {
             "confidence": "medium",
@@ -2171,6 +2123,17 @@
             "score": 1,
             "values": [
               "https://www.facebook.com/WhangareiCareCentre/"
+            ],
+            "sources": [
+              "https://whgcare.org.nz/"
+            ],
+            "conflicts": []
+          },
+          "availabilityStatus": {
+            "confidence": "high",
+            "score": 0.92,
+            "values": [
+              "not_accepting"
             ],
             "sources": [
               "https://whgcare.org.nz/"
@@ -2203,10 +2166,10 @@
       },
       "suggestedPatchForExistingProvider": {},
       "suggestedChanges": {
-        "id": "candidate-whangarei-care-will-be-closing-its-doors-shortly",
-        "name": "Whangarei CARE will be closing its doors shortly",
+        "id": "candidate-whangarei-care-centre",
+        "name": "Whangarei Care Centre",
         "clinicianName": "",
-        "practiceName": "Whangarei CARE will be closing its doors shortly",
+        "practiceName": "Whangarei Care Centre",
         "type": "counsellor",
         "region": "Northland",
         "city": "Whangarei",
@@ -2222,9 +2185,9 @@
         "needsManualVerification": true,
         "verified": "",
         "lastVerified": "",
-        "availabilityStatus": "not_published",
-        "availabilityEvidence": "",
-        "availabilitySource": "",
+        "availabilityStatus": "not_accepting",
+        "availabilityEvidence": "closing its doors shortly",
+        "availabilitySource": "https://whgcare.org.nz/",
         "availabilityNeedsManualReview": true,
         "onlineAvailable": false,
         "phoneSupport": false,
@@ -2250,7 +2213,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 09 437 6397",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2261,7 +2224,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: http://www.whgcare.org.nz/",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2272,7 +2235,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Pencils Storytelling Senior Sounds Senior Tech Stencils & Pencils Storytelling Senior Sounds Senior Tech Contact Phone: 09 437 6397 Office Hours: 9am-5pm Mon-Fri Email: whgcare@whgcare.org.nz Facebook Address: 1 Mill Road, Regent, Whangarei (Corner Mill Road and Deveron St) © 2026 Whangarei Care Centre. All Rights Reserved | Website by M",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2283,7 +2246,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "high",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2294,7 +2257,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Booking or appointment link found on source page.",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2307,7 +2270,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 1 Mill Road, Regent, Whangārei 0112",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2318,7 +2281,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2329,7 +2292,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2340,7 +2303,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Region from discovery context: Northland.",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2351,7 +2314,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "City from discovery context: Whangarei.",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "low",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2362,13 +2325,25 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "r Tech Stencils & Pencils Storytelling Senior Sounds Senior Tech Contact Phone: 09 437 6397 Office Hours: 9am-5pm Mon-Fri Email: whgcare@whgcare.org.nz Facebook Address: 1 Mill Road, Regent, Whangarei (Corner Mill Road and Deveron St) © 2026 Whangarei Care Centre. All Rights Reserved | Website by Monster Creative",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             }
           ],
-          "availability": [],
+          "availability": [
+            {
+              "field": "availabilityStatus",
+              "value": "not_accepting",
+              "sourceUrl": "https://whgcare.org.nz/",
+              "sourceType": "provider_owned",
+              "excerpt": "closing its doors shortly",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
+              "confidence": "medium",
+              "extractor": "provider-evidence-extractor",
+              "needsManualReview": true
+            }
+          ],
           "referral": [],
           "scope": [
             {
@@ -2377,7 +2352,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: http://www.whgcare.org.nz/",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2390,7 +2365,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2406,7 +2381,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "land Community, Whangarei CARE will close on Friday 29 May 2026, due to an increasingly difficult funding environment for smaller, non-profit organisations. Thank you so much for being a part of our journey. Inclusive Community Care Trusted assistance and advice, when you need it Whangarei Care Centre – Te Whare Oranga offers a range of f",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2419,7 +2394,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei Care Centre",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2430,7 +2405,7 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei Care Centre",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -2441,29 +2416,29 @@
               "sourceUrl": "http://www.whgcare.org.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.609Z",
+              "capturedAt": "2026-05-31T22:55:59.094Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
             },
             {
               "field": "name",
-              "value": "Whangarei CARE will be closing its doors shortly",
+              "value": "Whangarei Care Centre",
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
             },
             {
               "field": "practiceName",
-              "value": "Whangarei CARE will be closing its doors shortly",
+              "value": "Whangarei Care Centre",
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2474,7 +2449,7 @@
               "sourceUrl": "https://whgcare.org.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-              "capturedAt": "2026-05-31T22:43:11.674Z",
+              "capturedAt": "2026-05-31T22:55:59.180Z",
               "confidence": "medium",
               "extractor": "provider-evidence-extractor",
               "needsManualReview": true
@@ -2483,36 +2458,28 @@
         },
         "confidenceByField": {
           "name": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
+              "Whangarei Care Centre"
             ],
             "sources": [
               "http://www.whgcare.org.nz/",
               "https://whgcare.org.nz/"
             ],
-            "conflicts": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
-            ]
+            "conflicts": []
           },
           "practiceName": {
-            "confidence": "medium",
-            "score": 0.75,
+            "confidence": "high",
+            "score": 1,
             "values": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
+              "Whangarei Care Centre"
             ],
             "sources": [
               "http://www.whgcare.org.nz/",
               "https://whgcare.org.nz/"
             ],
-            "conflicts": [
-              "Whangarei Care Centre",
-              "Whangarei CARE will be closing its doors shortly"
-            ]
+            "conflicts": []
           },
           "address": {
             "confidence": "medium",
@@ -2620,6 +2587,17 @@
             "score": 1,
             "values": [
               "https://www.facebook.com/WhangareiCareCentre/"
+            ],
+            "sources": [
+              "https://whgcare.org.nz/"
+            ],
+            "conflicts": []
+          },
+          "availabilityStatus": {
+            "confidence": "high",
+            "score": 0.92,
+            "values": [
+              "not_accepting"
             ],
             "sources": [
               "https://whgcare.org.nz/"
@@ -2658,7 +2636,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 09 437 6397",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2669,7 +2647,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: http://www.whgcare.org.nz/",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2680,7 +2658,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Pencils Storytelling Senior Sounds Senior Tech Stencils & Pencils Storytelling Senior Sounds Senior Tech Contact Phone: 09 437 6397 Office Hours: 9am-5pm Mon-Fri Email: whgcare@whgcare.org.nz Facebook Address: 1 Mill Road, Regent, Whangarei (Corner Mill Road and Deveron St) © 2026 Whangarei Care Centre. All Rights Reserved | Website by M",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "high",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2691,7 +2669,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "high",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2702,7 +2680,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Booking or appointment link found on source page.",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2715,7 +2693,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 1 Mill Road, Regent, Whangārei 0112",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2726,7 +2704,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2737,7 +2715,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2748,7 +2726,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Region from discovery context: Northland.",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "low",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2759,7 +2737,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "City from discovery context: Whangarei.",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "low",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2770,13 +2748,25 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "r Tech Stencils & Pencils Storytelling Senior Sounds Senior Tech Contact Phone: 09 437 6397 Office Hours: 9am-5pm Mon-Fri Email: whgcare@whgcare.org.nz Facebook Address: 1 Mill Road, Regent, Whangarei (Corner Mill Road and Deveron St) © 2026 Whangarei Care Centre. All Rights Reserved | Website by Monster Creative",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
           }
         ],
-        "availability": [],
+        "availability": [
+          {
+            "field": "availabilityStatus",
+            "value": "not_accepting",
+            "sourceUrl": "https://whgcare.org.nz/",
+            "sourceType": "provider_owned",
+            "excerpt": "closing its doors shortly",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
+            "confidence": "medium",
+            "extractor": "provider-evidence-extractor",
+            "needsManualReview": true
+          }
+        ],
         "referral": [],
         "scope": [
           {
@@ -2785,7 +2775,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: http://www.whgcare.org.nz/",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2798,7 +2788,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2814,7 +2804,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "land Community, Whangarei CARE will close on Friday 29 May 2026, due to an increasingly difficult funding environment for smaller, non-profit organisations. Thank you so much for being a part of our journey. Inclusive Community Care Trusted assistance and advice, when you need it Whangarei Care Centre – Te Whare Oranga offers a range of f",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2827,7 +2817,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei Care Centre",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2838,7 +2828,7 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei Care Centre",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -2849,29 +2839,29 @@
             "sourceUrl": "http://www.whgcare.org.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: psychiatrist",
-            "capturedAt": "2026-05-31T22:43:11.609Z",
+            "capturedAt": "2026-05-31T22:55:59.094Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
           },
           {
             "field": "name",
-            "value": "Whangarei CARE will be closing its doors shortly",
+            "value": "Whangarei Care Centre",
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
           },
           {
             "field": "practiceName",
-            "value": "Whangarei CARE will be closing its doors shortly",
+            "value": "Whangarei Care Centre",
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2882,7 +2872,7 @@
             "sourceUrl": "https://whgcare.org.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Whangarei Care Centre Whangarei CARE will be closing its doors shortly Home - Whangarei Care Centre Skip to content 09 437 6397 Services Counselling Budgeting Advice Seniors Community Work Clinical Supervision Courses & Workshops Stencils & Pencils Storytelling Senior Sounds Senior Tech About us Donate/Membership Contact Services Counsell",
-            "capturedAt": "2026-05-31T22:43:11.674Z",
+            "capturedAt": "2026-05-31T22:55:59.180Z",
             "confidence": "medium",
             "extractor": "provider-evidence-extractor",
             "needsManualReview": true
@@ -2891,36 +2881,28 @@
       },
       "confidenceByField": {
         "name": {
-          "confidence": "medium",
-          "score": 0.75,
+          "confidence": "high",
+          "score": 1,
           "values": [
-            "Whangarei Care Centre",
-            "Whangarei CARE will be closing its doors shortly"
+            "Whangarei Care Centre"
           ],
           "sources": [
             "http://www.whgcare.org.nz/",
             "https://whgcare.org.nz/"
           ],
-          "conflicts": [
-            "Whangarei Care Centre",
-            "Whangarei CARE will be closing its doors shortly"
-          ]
+          "conflicts": []
         },
         "practiceName": {
-          "confidence": "medium",
-          "score": 0.75,
+          "confidence": "high",
+          "score": 1,
           "values": [
-            "Whangarei Care Centre",
-            "Whangarei CARE will be closing its doors shortly"
+            "Whangarei Care Centre"
           ],
           "sources": [
             "http://www.whgcare.org.nz/",
             "https://whgcare.org.nz/"
           ],
-          "conflicts": [
-            "Whangarei Care Centre",
-            "Whangarei CARE will be closing its doors shortly"
-          ]
+          "conflicts": []
         },
         "address": {
           "confidence": "medium",
@@ -3034,6 +3016,17 @@
           ],
           "conflicts": []
         },
+        "availabilityStatus": {
+          "confidence": "high",
+          "score": 0.92,
+          "values": [
+            "not_accepting"
+          ],
+          "sources": [
+            "https://whgcare.org.nz/"
+          ],
+          "conflicts": []
+        },
         "ageGroups": {
           "confidence": "high",
           "score": 1,
@@ -3058,9 +3051,9 @@
         }
       },
       "reviewReasons": [
-        "conflicting name, practiceName, address, type values",
+        "conflicting address, type values",
         "extracted from seed source provider_owned",
-        "conflicting fields: name, practiceName, address, type"
+        "conflicting fields: address, type"
       ],
       "sourceUrlsUsed": [
         "http://www.whgcare.org.nz/",
@@ -3146,7 +3139,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "provider_owned",
               "excerpt": "too-large",
-              "capturedAt": "2026-05-31T22:43:12.536Z",
+              "capturedAt": "2026-05-31T22:56:00.234Z",
               "confidence": "low",
               "extractor": "seed-source-fetcher",
               "needsManualReview": true
@@ -3157,7 +3150,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "login-or-captcha-required",
-              "capturedAt": "2026-05-31T22:43:13.266Z",
+              "capturedAt": "2026-05-31T22:56:01.213Z",
               "confidence": "low",
               "extractor": "seed-source-fetcher",
               "needsManualReview": true
@@ -3168,7 +3161,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "login-or-captcha-required",
-              "capturedAt": "2026-05-31T22:43:13.369Z",
+              "capturedAt": "2026-05-31T22:56:01.327Z",
               "confidence": "low",
               "extractor": "seed-source-fetcher",
               "needsManualReview": true
@@ -3179,7 +3172,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "login-or-captcha-required",
-              "capturedAt": "2026-05-31T22:43:14.247Z",
+              "capturedAt": "2026-05-31T22:56:02.513Z",
               "confidence": "low",
               "extractor": "seed-source-fetcher",
               "needsManualReview": true
@@ -3230,7 +3223,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "provider_owned",
             "excerpt": "too-large",
-            "capturedAt": "2026-05-31T22:43:12.536Z",
+            "capturedAt": "2026-05-31T22:56:00.234Z",
             "confidence": "low",
             "extractor": "seed-source-fetcher",
             "needsManualReview": true
@@ -3241,7 +3234,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "login-or-captcha-required",
-            "capturedAt": "2026-05-31T22:43:13.266Z",
+            "capturedAt": "2026-05-31T22:56:01.213Z",
             "confidence": "low",
             "extractor": "seed-source-fetcher",
             "needsManualReview": true
@@ -3252,7 +3245,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "login-or-captcha-required",
-            "capturedAt": "2026-05-31T22:43:13.369Z",
+            "capturedAt": "2026-05-31T22:56:01.327Z",
             "confidence": "low",
             "extractor": "seed-source-fetcher",
             "needsManualReview": true
@@ -3263,7 +3256,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "login-or-captcha-required",
-            "capturedAt": "2026-05-31T22:43:14.247Z",
+            "capturedAt": "2026-05-31T22:56:02.513Z",
             "confidence": "low",
             "extractor": "seed-source-fetcher",
             "needsManualReview": true
@@ -3374,7 +3367,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: 0800 237 233",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3385,7 +3378,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://indigohouse.co.nz/who-we-are/",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3398,7 +3391,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3409,7 +3402,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3420,7 +3413,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Northland",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3435,7 +3428,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://indigohouse.co.nz/who-we-are/",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3452,7 +3445,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Lynn Price",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3463,7 +3456,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Lynn Price",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3474,7 +3467,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Indigo House",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3485,7 +3478,7 @@
               "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: psychologist",
-              "capturedAt": "2026-05-31T22:43:11.661Z",
+              "capturedAt": "2026-05-31T22:55:59.162Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3615,7 +3608,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: 0800 237 233",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3626,7 +3619,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://indigohouse.co.nz/who-we-are/",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3639,7 +3632,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3650,7 +3643,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3661,7 +3654,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Northland",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3676,7 +3669,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://indigohouse.co.nz/who-we-are/",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3693,7 +3686,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Lynn Price",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3704,7 +3697,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Lynn Price",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3715,7 +3708,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Indigo House",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3726,7 +3719,7 @@
             "sourceUrl": "https://indigohouse.co.nz/who-we-are/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: psychologist",
-            "capturedAt": "2026-05-31T22:43:11.661Z",
+            "capturedAt": "2026-05-31T22:55:59.162Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -3914,7 +3907,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://hppsychologyservices.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3927,7 +3920,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Central Whangarei city",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3938,7 +3931,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3949,7 +3942,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Northland",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3964,7 +3957,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://hppsychologyservices.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3981,7 +3974,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Hagan Provan",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -3992,7 +3985,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Hagan Provan",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4003,7 +3996,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: HP Psychology Services",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4014,7 +4007,7 @@
               "sourceUrl": "https://hppsychologyservices.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: psychologist",
-              "capturedAt": "2026-05-31T22:43:11.649Z",
+              "capturedAt": "2026-05-31T22:55:59.148Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4133,7 +4126,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://hppsychologyservices.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4146,7 +4139,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Central Whangarei city",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4157,7 +4150,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4168,7 +4161,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Northland",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4183,7 +4176,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://hppsychologyservices.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4200,7 +4193,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Hagan Provan",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4211,7 +4204,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Hagan Provan",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4222,7 +4215,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: HP Psychology Services",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4233,7 +4226,7 @@
             "sourceUrl": "https://hppsychologyservices.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: psychologist",
-            "capturedAt": "2026-05-31T22:43:11.649Z",
+            "capturedAt": "2026-05-31T22:55:59.148Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4410,7 +4403,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: 09 438 8852",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4421,7 +4414,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: contact@jigsawnorth.org.nz",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4432,7 +4425,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://www.jigsawnorth.org.nz/counselling/",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4445,7 +4438,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: 25 Otaika Road, Woodhill, Whangarei 0110",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4456,7 +4449,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4467,7 +4460,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Northland",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4482,7 +4475,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://www.jigsawnorth.org.nz/counselling/",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4499,7 +4492,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Jigsaw North Manaaki Whanau Counselling",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4510,7 +4503,7 @@
               "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: counsellor",
-              "capturedAt": "2026-05-31T22:43:11.668Z",
+              "capturedAt": "2026-05-31T22:55:59.171Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4629,7 +4622,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: 09 438 8852",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4640,7 +4633,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: contact@jigsawnorth.org.nz",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4651,7 +4644,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://www.jigsawnorth.org.nz/counselling/",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4664,7 +4657,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: 25 Otaika Road, Woodhill, Whangarei 0110",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4675,7 +4668,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4686,7 +4679,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Northland",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4701,7 +4694,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://www.jigsawnorth.org.nz/counselling/",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4718,7 +4711,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Jigsaw North Manaaki Whanau Counselling",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4729,7 +4722,7 @@
             "sourceUrl": "https://www.jigsawnorth.org.nz/counselling/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: counsellor",
-            "capturedAt": "2026-05-31T22:43:11.668Z",
+            "capturedAt": "2026-05-31T22:55:59.171Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -4906,7 +4899,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 0800 327 669",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4917,7 +4910,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.eapservices.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4930,7 +4923,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Unit 6/32/48 Reyburn Street, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4941,7 +4934,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4952,7 +4945,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4967,7 +4960,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.eapservices.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4984,7 +4977,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: EAP Services Limited (Northland)",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -4995,7 +4988,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: EAP Services Limited (Northland)",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5006,7 +4999,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5160,7 +5153,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 0800 327 669",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5171,7 +5164,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.eapservices.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5184,7 +5177,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Unit 6/32/48 Reyburn Street, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5195,7 +5188,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5206,7 +5199,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5221,7 +5214,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.eapservices.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5238,7 +5231,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: EAP Services Limited (Northland)",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5249,7 +5242,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: EAP Services Limited (Northland)",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5260,7 +5253,7 @@
               "sourceUrl": "https://www.eapservices.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.633Z",
+              "capturedAt": "2026-05-31T22:55:59.127Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5377,7 +5370,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 0800 327 669",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5388,7 +5381,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://www.eapservices.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5401,7 +5394,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Unit 6/32/48 Reyburn Street, Whangārei 0110",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5412,7 +5405,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5423,7 +5416,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5438,7 +5431,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://www.eapservices.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5455,7 +5448,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: EAP Services Limited (Northland)",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5466,7 +5459,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: EAP Services Limited (Northland)",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5477,7 +5470,7 @@
             "sourceUrl": "https://www.eapservices.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: psychiatrist",
-            "capturedAt": "2026-05-31T22:43:11.633Z",
+            "capturedAt": "2026-05-31T22:55:59.127Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5655,7 +5648,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: 022 590 2079",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5666,7 +5659,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: heartwood.psychiatry@gmail.com",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5677,7 +5670,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://www.heartwoodpsychiatry.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5690,7 +5683,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Northland and telehealth",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5701,7 +5694,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Northland",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5716,7 +5709,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: https://www.heartwoodpsychiatry.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5733,7 +5726,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: Heartwood Psychiatry",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5744,7 +5737,7 @@
               "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
               "sourceType": "provider_owned",
               "excerpt": "Seed value from providers.json: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.655Z",
+              "capturedAt": "2026-05-31T22:55:59.155Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -5852,7 +5845,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: 022 590 2079",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5863,7 +5856,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: heartwood.psychiatry@gmail.com",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5874,7 +5867,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://www.heartwoodpsychiatry.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5887,7 +5880,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Northland and telehealth",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5898,7 +5891,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Northland",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5913,7 +5906,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: https://www.heartwoodpsychiatry.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5930,7 +5923,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: Heartwood Psychiatry",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -5941,7 +5934,7 @@
             "sourceUrl": "https://www.heartwoodpsychiatry.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Seed value from providers.json: psychiatrist",
-            "capturedAt": "2026-05-31T22:43:11.655Z",
+            "capturedAt": "2026-05-31T22:55:59.155Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6107,7 +6100,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 09 553 3255",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6118,7 +6111,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.northlandpsychiatry.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6131,7 +6124,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 41 Whau Valley Road, Whau Valley, Whangārei 0112",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6142,7 +6135,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6153,7 +6146,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6168,7 +6161,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.northlandpsychiatry.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6185,7 +6178,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland Psychiatry",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6196,7 +6189,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland Psychiatry",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6207,7 +6200,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6361,7 +6354,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 09 553 3255",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6372,7 +6365,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.northlandpsychiatry.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6385,7 +6378,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 41 Whau Valley Road, Whau Valley, Whangārei 0112",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6396,7 +6389,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6407,7 +6400,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6422,7 +6415,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.northlandpsychiatry.co.nz/",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6439,7 +6432,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland Psychiatry",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6450,7 +6443,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland Psychiatry",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6461,7 +6454,7 @@
               "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.639Z",
+              "capturedAt": "2026-05-31T22:55:59.135Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6578,7 +6571,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 09 553 3255",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6589,7 +6582,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://www.northlandpsychiatry.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6602,7 +6595,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 41 Whau Valley Road, Whau Valley, Whangārei 0112",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6613,7 +6606,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6624,7 +6617,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6639,7 +6632,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://www.northlandpsychiatry.co.nz/",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6656,7 +6649,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland Psychiatry",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6667,7 +6660,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland Psychiatry",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6678,7 +6671,7 @@
             "sourceUrl": "https://www.northlandpsychiatry.co.nz/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: psychiatrist",
-            "capturedAt": "2026-05-31T22:43:11.639Z",
+            "capturedAt": "2026-05-31T22:55:59.135Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -6856,7 +6849,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 027 371 9720",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6869,7 +6862,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 28 Rathbone Street, CBD, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6880,7 +6873,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6891,7 +6884,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6906,7 +6899,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6923,7 +6916,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Elke Radewald Psychology services",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6934,7 +6927,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Elke Radewald Psychology services",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -6945,7 +6938,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychologist",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7088,7 +7081,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 027 371 9720",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7101,7 +7094,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 28 Rathbone Street, CBD, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7112,7 +7105,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7123,7 +7116,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7138,7 +7131,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7155,7 +7148,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Elke Radewald Psychology services",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7166,7 +7159,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Elke Radewald Psychology services",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7177,7 +7170,7 @@
               "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychologist",
-              "capturedAt": "2026-05-31T22:43:11.644Z",
+              "capturedAt": "2026-05-31T22:55:59.141Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7283,7 +7276,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 027 371 9720",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7296,7 +7289,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 28 Rathbone Street, CBD, Whangārei 0110",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7307,7 +7300,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7318,7 +7311,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7333,7 +7326,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7350,7 +7343,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Elke Radewald Psychology services",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7361,7 +7354,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Elke Radewald Psychology services",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7372,7 +7365,7 @@
             "sourceUrl": "https://maps.google.com/?cid=6386216445474824416&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: psychologist",
-            "capturedAt": "2026-05-31T22:43:11.644Z",
+            "capturedAt": "2026-05-31T22:55:59.141Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7539,7 +7532,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.jcounselling.com/",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7552,7 +7545,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 10/212 Riverside Drive, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7563,7 +7556,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7574,7 +7567,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7589,7 +7582,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.jcounselling.com/",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7606,7 +7599,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: J Counselling",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7617,7 +7610,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: J Counselling",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7628,7 +7621,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7771,7 +7764,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.jcounselling.com/",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7784,7 +7777,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: 10/212 Riverside Drive, Whangārei 0110",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7795,7 +7788,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Whangarei",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7806,7 +7799,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: Northland",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7821,7 +7814,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: https://www.jcounselling.com/",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7838,7 +7831,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: J Counselling",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7849,7 +7842,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: J Counselling",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7860,7 +7853,7 @@
               "sourceUrl": "https://www.jcounselling.com/",
               "sourceType": "google_places",
               "excerpt": "Seed value from google places candidate export: psychiatrist",
-              "capturedAt": "2026-05-31T22:43:11.629Z",
+              "capturedAt": "2026-05-31T22:55:59.121Z",
               "confidence": "low",
               "extractor": "provider-discovery-seed",
               "needsManualReview": true
@@ -7966,7 +7959,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://www.jcounselling.com/",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7979,7 +7972,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: 10/212 Riverside Drive, Whangārei 0110",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -7990,7 +7983,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Whangarei",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -8001,7 +7994,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: Northland",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -8016,7 +8009,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: https://www.jcounselling.com/",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -8033,7 +8026,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: J Counselling",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -8044,7 +8037,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: J Counselling",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true
@@ -8055,7 +8048,7 @@
             "sourceUrl": "https://www.jcounselling.com/",
             "sourceType": "google_places",
             "excerpt": "Seed value from google places candidate export: psychiatrist",
-            "capturedAt": "2026-05-31T22:43:11.629Z",
+            "capturedAt": "2026-05-31T22:55:59.121Z",
             "confidence": "low",
             "extractor": "provider-discovery-seed",
             "needsManualReview": true

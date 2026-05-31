@@ -85,17 +85,55 @@ function h1FromHtml(html) {
   return stripHtml(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] || "");
 }
 
+function isAnnouncementHeading(value = "") {
+  return /\b(closing|closed|closure|shutting|doors shortly|temporarily unavailable|not taking|waitlist|waiting list|paused|announcement|update|news)\b/i.test(value);
+}
+
+function titleCandidates(value = "") {
+  const title = String(value || "").trim();
+  if (!title) return [];
+  const parts = title
+    .split(/\s[-|]\s|\s+[–—]\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return unique([
+    ...parts,
+    ...parts.slice().reverse(),
+    title
+  ]);
+}
+
+function usefulPageLabel({ title = "", h1 = "", url = "" } = {}) {
+  const host = sourceDomain(url);
+  const candidates = [
+    h1,
+    ...titleCandidates(title)
+  ]
+    .map((candidate) => candidate.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .filter((candidate) => !isAnnouncementHeading(candidate))
+    .filter((candidate) => !/^home$|^about$|^contact$|^services$|^welcome$/i.test(candidate));
+  const withCareWords = candidates.find((candidate) => /\b(psychology|psychiatry|counselling|counseling|therapy|medical centre|health|clinic|wellbeing|wellness|care|minds)\b/i.test(candidate));
+  if (withCareWords) return withCareWords;
+  if (candidates[0]) return candidates[0];
+  return host ? host.replace(/\.(co|org|health|net|com)\.nz$|\.co\.nz$|\.org\.nz$|\.nz$/i, "").replace(/[-.]/g, " ") : "";
+}
+
 function possibleClinicianName(text) {
   const match = text.match(/\b(Dr|Mr|Mrs|Ms|Mx)\s+[A-Z][A-Za-z'\-]+(?:\s+[A-Z][A-Za-z'\-]+){1,3}\b/);
-  if (match) return match[0].trim();
+  if (match) {
+    const parts = match[0].trim().split(/\s+/);
+    if (parts.length > 3) return parts.slice(0, 3).join(" ");
+    return match[0].trim();
+  }
   const roleBlock = text.match(/\b([A-Z][A-Za-z'\-]+(?:\s+[A-Z][A-Za-z'\-]+){1,3})\s+(?:is|,)\s+(?:a|an)\s+(?:clinical psychologist|psychologist|psychiatrist|counsellor|psychotherapist|therapist)\b/);
   return roleBlock?.[1]?.trim() || "";
 }
 
 function possiblePracticeName({ title, h1, text, url }) {
   const host = sourceDomain(url);
-  const titleCandidate = (h1 || title || "").replace(/\s*[-|].*$/, "").trim();
-  if (titleCandidate && !/^home$|^about$|^contact$/i.test(titleCandidate)) return titleCandidate;
+  const titleCandidate = usefulPageLabel({ title, h1, url });
+  if (titleCandidate) return titleCandidate;
   const clinicMatch = text.match(/\b([A-Z][A-Za-z'&\- ]{2,80}(?:Psychology|Psychiatry|Counselling|Counseling|Therapy|Medical Centre|Health|Clinic|Wellbeing|Wellness))\b/);
   if (clinicMatch) return clinicMatch[1].trim();
   return host ? host.replace(/\.(co|org|health|net|com)\.nz$|\.co\.nz$|\.org\.nz$|\.nz$/i, "").replace(/[-.]/g, " ") : "";
@@ -125,12 +163,13 @@ export function extractProviderEvidence({ html = "", text = "", url = "", source
   const resolvedSourceType = sourceType || sourceTypeFromUrl(url);
   const pageTitle = title || titleFromHtml(html);
   const h1 = h1FromHtml(html);
+  const pageLabel = usefulPageLabel({ title: pageTitle, h1, url });
   const bodyText = stripHtml(text || html || `${pageTitle} ${snippet}`);
   const combined = [pageTitle, h1, snippet, bodyText].filter(Boolean).join(" ");
   const context = { sourceUrl, sourceType: resolvedSourceType, capturedAt, text: combined };
   const claims = [];
 
-  claims.push(claim("name", h1 || pageTitle, context, { confidence: resolvedSourceType === "search_result" ? "low" : "medium" }));
+  claims.push(claim("name", pageLabel || h1 || pageTitle, context, { confidence: resolvedSourceType === "search_result" ? "low" : "medium" }));
   claims.push(claim("clinicianName", possibleClinicianName(combined), context, { confidence: resolvedSourceType === "linkedIn_public" ? "medium" : "low" }));
   claims.push(claim("practiceName", possiblePracticeName({ title: pageTitle, h1, text: combined, url }), context, { confidence: "medium" }));
   claims.push(claim("region", region, context, { confidence: "low", excerpt: `Region from discovery context: ${region}.` }));

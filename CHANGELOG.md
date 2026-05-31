@@ -33,6 +33,9 @@
 - Added incremental `--merge-existing` support for Places discovery and ran a
   bounded Northland psychiatry batch, producing 8 review-gated Places candidates
   and 11 discovery suggestions without live provider mutation.
+- Hardened provider source-page extraction so closure/announcement headings do
+  not become provider names and flattened team lists do not merge adjacent
+  clinician names.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

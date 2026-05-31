@@ -448,6 +448,12 @@ Each evidence item supports:
 Do not fake excerpts. If an importer cannot capture a source excerpt for a
 claim, mark the relevant evidence item as `needsManualReview: true`.
 
+Source-page extractors should treat identity fields conservatively. Do not use a
+closure notice, waitlist notice, news heading, or other announcement as the
+provider name. When a team page flattens several names together, keep a
+title-prefixed clinician match narrow and leave the rest for manual review
+instead of merging multiple clinicians into one record.
+
 ## Claim-Level Evidence Graph
 
 Provider rows are now also exported as field-level claims:

@@ -1,6 +1,6 @@
 # Provider Discovery Suggestions
 
-Generated: 2026-05-31T22:43:23.124Z
+Generated: 2026-05-31T22:56:10.871Z
 
 Suggestions are review-gated. They must be inspected in the auditor console and applied with controlled review decisions before public recommendations change.
 
@@ -16,8 +16,8 @@ Suggestions are review-gated. They must be inspected in the auditor console and 
 
 | Action | Provider | Type | Region / city | Confidence | Reasons |
 | --- | --- | --- | --- | --- | --- |
-| needs_manual_research | Dr Sarah Castle Edoardo Giorgi | psychiatrist | Northland / Whangarei | high | conflicting name, practiceName, tags values; extracted from seed source provider_owned; conflicting fields: name, practiceName, tags |
-| needs_manual_research | Whangarei CARE will be closing its doors shortly | counsellor | Northland / Whangarei | high | conflicting name, practiceName, address, type values; extracted from seed source provider_owned; conflicting fields: name, practiceName, address, type |
+| needs_manual_research | Dr Sarah Castle | psychiatrist | Northland / Whangarei | high | conflicting tags values; extracted from seed source provider_owned; conflicting fields: tags |
+| needs_manual_research | Whangarei Care Centre | counsellor | Northland / Whangarei | high | conflicting address, type values; extracted from seed source provider_owned; conflicting fields: address, type |
 | needs_manual_research | candidate:dec8f3f12127927b |  |  /  | medium | conflicting source values; no direct public contact found; seed source login-or-captcha-required; conflicting fields: source |
 | needs_manual_research | Lynn Price | psychologist | Northland / Whangarei | high | existing provider enrichment; source-fit: medium weak-telehealth-evidence - Telehealth or online availability is set but source fields do not clearly support remote care.; review queue high: medium: weak-telehealth-evidence; availability needs manual review |
 | needs_manual_research | Hagan Provan | psychologist | Northland / Whangarei | high | existing provider enrichment; review queue critical: provider discovery suggestion; conflicting source values; no direct public contact found; seed source too-large; conflicting fields: source; review queue medium: availability needs manual review |

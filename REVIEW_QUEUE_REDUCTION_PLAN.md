@@ -77,6 +77,9 @@ This cycle added a separate claim review queue:
 - A bounded Northland psychiatry Places run produced 8 review-gated business
   candidates and 11 discovery suggestions. Some are likely non-psychiatry
   services found by the query and must be confirmed or rejected by the auditor.
+- Source-page extraction now avoids using closure/announcement headings as
+  provider names and truncates title-prefixed clinician matches before they
+  swallow adjacent team-list names.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by

@@ -681,6 +681,57 @@ test("Google Places seed values alone stay manual research until stronger source
   assert.match(suggestions.suggestions[0].sourceSummary, /Google Places/);
 });
 
+test("provider extraction avoids announcement headings as provider names", () => {
+  const claims = extractProviderEvidence({
+    url: "http://www.whgcare.org.nz/",
+    sourceType: "provider_owned",
+    html: `
+      <html>
+        <head><title>Home - Whangarei Care Centre</title></head>
+        <body>
+          <h1>Whangarei CARE will be closing its doors shortly</h1>
+          <p>Services Counselling Budgeting Advice Seniors Community Work.</p>
+          <p>Phone 09 437 6397.</p>
+        </body>
+      </html>
+    `,
+    region: "Northland",
+    city: "Whangarei",
+    type: "counsellor"
+  });
+  const names = claims.filter((claimItem) => claimItem.field === "name").map((claimItem) => claimItem.value);
+  const practiceNames = claims.filter((claimItem) => claimItem.field === "practiceName").map((claimItem) => claimItem.value);
+  assert(names.includes("Whangarei Care Centre"));
+  assert(practiceNames.includes("Whangarei Care Centre"));
+  assert(!names.some((name) => /closing its doors/i.test(name)));
+  assert(claims.some((claimItem) => claimItem.field === "availabilityStatus" && claimItem.value === "not_accepting"));
+});
+
+test("provider extraction does not merge adjacent clinician names from team lists", () => {
+  const claims = extractProviderEvidence({
+    url: "https://kinderminds.nz/",
+    sourceType: "provider_owned",
+    html: `
+      <html>
+        <head><title>Kinder Minds | Child and Adolescent Psychiatric and Therapeutic Services</title></head>
+        <body>
+          <h1>Sarah Castle</h1>
+          <nav>About Our Mission Who We Are Growing Kinder Minds Meet the Team</nav>
+          <section>The Kinder Minds Team Dr Sarah Castle Edoardo Giorgi Neve Kezia Schroyen</section>
+          <p>Many of our services can be available via telehealth.</p>
+        </body>
+      </html>
+    `,
+    region: "Northland",
+    city: "Whangarei",
+    type: "psychiatrist"
+  });
+  assert(claims.some((claimItem) => claimItem.field === "name" && claimItem.value === "Kinder Minds"));
+  assert(claims.some((claimItem) => claimItem.field === "practiceName" && claimItem.value === "Kinder Minds"));
+  assert(claims.some((claimItem) => claimItem.field === "clinicianName" && claimItem.value === "Dr Sarah Castle"));
+  assert(!claims.some((claimItem) => claimItem.field === "clinicianName" && /Edoardo/.test(claimItem.value)));
+});
+
 test("Google Places candidates feed the auditor review queue without becoming live providers", () => {
   const dir = tempDir();
   const providersPath = path.join(dir, "providers.json");
