@@ -517,6 +517,106 @@ test("Google Places GP queue candidates keep target provider linkage review-gate
   assert.deepEqual(candidate.suggestedProviderRecord.tags, []);
 });
 
+test("Google Places GP queue does not link uncorroborated target results", () => {
+  const candidate = candidateFromGooglePlace({
+    id: "places/wrong-result",
+    displayName: { text: "Distant Urgent Care" },
+    formattedAddress: "1 Constellation Drive, Auckland 0632, New Zealand",
+    location: { latitude: -36.7492, longitude: 174.7285 },
+    nationalPhoneNumber: "09 999 0000",
+    websiteUri: "https://distanturgentcare.nz",
+    googleMapsUri: "https://maps.google.com/?cid=998",
+    types: ["doctor", "health"]
+  }, {
+    queryId: "places-gp-corroborate:gp-nightcaps",
+    textQuery: "Nightcaps Medical Centre Nightcaps 03 111 2222 GP medical centre New Zealand",
+    region: "Southland",
+    city: "Nightcaps",
+    type: "gp",
+    center: { latitude: -45.9704, longitude: 168.0314 },
+    radiusMeters: 8000,
+    targetProviderId: "gp-nightcaps",
+    reason: "GP source corroboration task"
+  }, [{
+    id: "gp-nightcaps",
+    name: "Nightcaps Medical Centre",
+    type: "gp",
+    region: "Southland",
+    city: "Nightcaps",
+    phone: "03 111 2222"
+  }]);
+  assert.equal(candidate.action, "research_new_provider");
+  assert.deepEqual(candidate.possibleProviderIds, []);
+  assert.match(candidate.discardReason, /uncorroborated exact GP Places result/);
+});
+
+test("Google Places GP queue filters uncorroborated exact-query results", () => {
+  const candidates = buildGooglePlacesCandidatesFromResults([{
+    queryItem: {
+      queryId: "places-gp-corroborate:gp-nightcaps",
+      textQuery: "Nightcaps Medical Centre Nightcaps 03 111 2222 GP medical centre New Zealand",
+      region: "Southland",
+      city: "Nightcaps",
+      type: "gp",
+      center: { latitude: -45.9704, longitude: 168.0314 },
+      radiusMeters: 8000,
+      targetProviderId: "gp-nightcaps",
+      reason: "GP source corroboration task"
+    },
+    places: [{
+      id: "places/wrong-result",
+      displayName: { text: "Distant Urgent Care" },
+      formattedAddress: "1 Constellation Drive, Auckland 0632, New Zealand",
+      location: { latitude: -36.7492, longitude: 174.7285 },
+      nationalPhoneNumber: "09 999 0000",
+      websiteUri: "https://distanturgentcare.nz",
+      googleMapsUri: "https://maps.google.com/?cid=998",
+      types: ["doctor", "health"]
+    }]
+  }], [{
+    id: "gp-nightcaps",
+    name: "Nightcaps Medical Centre",
+    type: "gp",
+    region: "Southland",
+    city: "Nightcaps",
+    phone: "03 111 2222"
+  }]);
+  assert.deepEqual(candidates, []);
+});
+
+test("Google Places merge drops stale exact GP candidates matched to a different provider", () => {
+  const stale = candidateFromGooglePlace({
+    id: "places/tend-constellation",
+    displayName: { text: "Tend Constellation Drive Urgent Care Medical Centre" },
+    formattedAddress: "1 Constellation Drive, Auckland 0632, New Zealand",
+    location: { latitude: -36.7492, longitude: 174.7285 },
+    nationalPhoneNumber: "09 999 0000",
+    websiteUri: "https://tend.nz",
+    googleMapsUri: "https://maps.google.com/?cid=997",
+    types: ["doctor", "health"]
+  }, {
+    queryId: "places:auckland:gp",
+    textQuery: "GP Auckland New Zealand",
+    region: "Auckland",
+    city: "Auckland",
+    type: "gp"
+  }, [{
+    id: "gp-tend-constellation",
+    name: "Tend Constellation Drive Urgent Care Medical Centre",
+    type: "gp",
+    region: "Auckland",
+    city: "North Shore",
+    phone: "09 999 0000",
+    website: "https://tend.nz"
+  }]);
+  stale.queryId = "places-gp-corroborate:gp-nightcaps";
+  stale.region = "Southland";
+  stale.city = "Nightcaps";
+  stale.reviewReasons.push("target GP source-corroboration provider: gp-nightcaps");
+  const merged = mergeGooglePlacesCandidates([stale], []);
+  assert.deepEqual(merged, []);
+});
+
 test("Google Places matching does not use shared directory domains as broad identity matches", () => {
   const candidate = candidateFromGooglePlace({
     id: "places/healthpoint-target",
@@ -664,6 +764,37 @@ test("Google Places incremental runs can merge existing candidates without repla
   assert.equal(merged.length, 2);
   assert(merged.some((candidate) => candidate.name === "Existing Psychology"));
   assert(merged.some((candidate) => candidate.name === "North Psychiatry"));
+});
+
+test("Google Places merge deduplicates repeated claims and provider matches", () => {
+  const candidate = candidateFromGooglePlace({
+    id: "places/repeated",
+    displayName: { text: "Repeat Medical Centre" },
+    formattedAddress: "1 Repeat Street, Auckland 1010, New Zealand",
+    nationalPhoneNumber: "09 555 0000",
+    websiteUri: "https://repeatmedical.nz",
+    googleMapsUri: "https://maps.google.com/?cid=333",
+    types: ["doctor", "health"]
+  }, {
+    queryId: "places-gp-corroborate:gp-repeat",
+    textQuery: "Repeat Medical Centre Auckland 09 555 0000 GP medical centre New Zealand",
+    region: "Auckland",
+    city: "Auckland",
+    type: "gp",
+    targetProviderId: "gp-repeat",
+    reason: "GP source corroboration task"
+  }, [{
+    id: "gp-repeat",
+    name: "Repeat Medical Centre",
+    type: "gp",
+    region: "Auckland",
+    city: "Auckland",
+    phone: "09 555 0000"
+  }]);
+  const [merged] = mergeGooglePlacesCandidates([candidate], [candidate, candidate]);
+  assert.equal(merged.existingProviderMatches.length, 1);
+  const claimKeys = new Set(merged.claims.map((claim) => `${claim.field}|${claim.value}|${claim.sourceUrl}`));
+  assert.equal(merged.claims.length, claimKeys.size);
 });
 
 test("Google Places merge flags conflicting query types instead of silently relabelling", () => {
@@ -1000,5 +1131,8 @@ test("Google Places candidates feed the auditor review queue without becoming li
   assert.equal(item.auditRules.includes("google-places-candidate"), true);
   assert.match(item.sourceQuality, /Google Places/);
   assert.equal(item.currentProvider, null);
+  assert.equal(item.googlePlacesCandidate.claims, undefined);
+  assert.equal(item.googlePlacesCandidate.suggestedProviderRecord, undefined);
+  assert(item.sourceEvidence.contact.some((evidence) => evidence.field === "phone"));
   assert.equal(queue.inputs.googlePlacesCandidates, 1);
 });

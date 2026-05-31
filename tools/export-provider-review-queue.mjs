@@ -771,7 +771,7 @@ function discoverySuggestionItems(providerSuggestions, includeAll) {
         sourceEvidenceSummary: summaryPieces.join(" | "),
         publicCardPreviewText: publicCardPreviewText(record),
         currentProvider: null,
-        discoverySuggestion: suggestion,
+        discoverySuggestion: compactDiscoverySuggestion(suggestion),
         auditFindings: [],
         reviewDecision: "",
         correctedFields: suggestion.suggestedChanges || {},
@@ -794,6 +794,56 @@ function priorityForGooglePlacesCandidate(candidate) {
   if (candidate.possibleProviderIds?.length) score += 250;
   if (candidate.confidence === "low") score += 150;
   return score;
+}
+
+function compactDiscoverySuggestion(suggestion = {}) {
+  return {
+    suggestionId: suggestion.suggestionId || "",
+    candidateId: suggestion.candidateId || "",
+    action: suggestion.action || "",
+    existingProviderId: suggestion.existingProviderId || "",
+    possibleProviderIds: asArray(suggestion.possibleProviderIds),
+    name: suggestion.name || "",
+    type: suggestion.type || "",
+    region: suggestion.region || "",
+    city: suggestion.city || "",
+    sourceSummary: suggestion.sourceSummary || "",
+    confidence: suggestion.confidence || "",
+    corroborationScore: suggestion.corroborationScore || 0,
+    conflicts: asArray(suggestion.conflicts),
+    suggestedChanges: suggestion.suggestedChanges || {},
+    sourceUrlsUsed: asArray(suggestion.sourceUrlsUsed),
+    reviewReasons: asArray(suggestion.reviewReasons)
+  };
+}
+
+function compactGooglePlacesCandidate(candidate = {}) {
+  return {
+    candidateId: candidate.candidateId || "",
+    action: candidate.action || "",
+    queryId: candidate.queryId || "",
+    query: candidate.query || "",
+    type: candidate.type || "",
+    region: candidate.region || "",
+    city: candidate.city || "",
+    name: candidate.name || "",
+    address: candidate.address || "",
+    lat: candidate.lat ?? "",
+    lon: candidate.lon ?? "",
+    distanceFromQueryKm: candidate.distanceFromQueryKm ?? "",
+    phone: candidate.phone || "",
+    website: candidate.website || "",
+    googlePlaceId: candidate.googlePlaceId || "",
+    googleMapsUri: candidate.googleMapsUri || "",
+    businessStatus: candidate.businessStatus || "",
+    possibleProviderIds: asArray(candidate.possibleProviderIds),
+    duplicateSignals: asArray(candidate.duplicateSignals),
+    confidence: candidate.confidence || "",
+    sourceUrlsUsed: asArray(candidate.sourceUrlsUsed),
+    reviewReasons: asArray(candidate.reviewReasons),
+    reviewGateRequired: candidate.reviewGateRequired !== false,
+    liveMutationAllowed: Boolean(candidate.liveMutationAllowed)
+  };
 }
 
 function googlePlacesCandidateItems(placesPayload, includeAll) {
@@ -884,7 +934,7 @@ function googlePlacesCandidateItems(placesPayload, includeAll) {
         sourceEvidenceSummary: summaryPieces.join(" | "),
         publicCardPreviewText: publicCardPreviewText(record),
         currentProvider: null,
-        googlePlacesCandidate: candidate,
+        googlePlacesCandidate: compactGooglePlacesCandidate(candidate),
         auditFindings: [],
         reviewDecision: "",
         correctedFields: record,

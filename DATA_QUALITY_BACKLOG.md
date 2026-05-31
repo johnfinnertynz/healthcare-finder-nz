@@ -79,16 +79,26 @@ manual review burden.
 - Added exact-practice Google Places lookups for GP source-corroboration tasks.
   A bounded Northland batch produced GP candidates linked back to queued
   provider IDs while suppressing broad matches on shared directory domains.
+- Ran the exact-practice Google Places helper across all 126 GP
+  source-corroboration tasks. The cleaned export now has 132 review-gated
+  Places candidates, 100 with a candidate website, and 124 tied to a queued GP
+  provider ID. A capped source-fetch pass produced 99 GP discovery suggestions,
+  including 2 update-existing-provider suggestions that still require auditor
+  approval.
+- Hardened exact GP Places matching after the full run exposed false positives:
+  target providers are linked only when the Places result corroborates the
+  queued practice by name, phone, or address, and stale results that match a
+  different provider are filtered from regenerated reports.
 
 ## Next Backlog Items
 
 1. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
 2. Add reviewed batch-adjust UI only after the first human review session proves
    the conservative `needs_more_info` batch helper is understandable.
-3. Work through the auditor console's **GP source corroboration** queue,
-   starting with Auckland and Northland, and corroborate weak GP source records
-   against practice-owned, PHO, Healthpoint, HPI/FHIR, or other official source
-   data.
+3. Work through the auditor console's **GP source corroboration** and
+   **discovery suggestions** queues, starting with the two high-confidence
+   update-existing GP suggestions and then Auckland/Northland practice-owned
+   website matches.
 4. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 5. Start manual review with the largest unsupported tag batches.

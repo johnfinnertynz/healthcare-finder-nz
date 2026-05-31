@@ -386,6 +386,12 @@ provider IDs. They are not enough by themselves to change live GP records; a
 reviewer still needs stronger practice-owned, Healthpoint, PHO/HPI/FHIR, or
 official evidence.
 
+Exact GP queue results must corroborate the queued target before they are kept
+as a target match. A result needs a real name, phone, or address signal for the
+queued provider; proximity or the fact that the result came from the target
+query is not enough. If a stale merged result only matches a different provider,
+the Places export drops it rather than showing it as GP corroboration.
+
 The evidence graph keeps probable provider identities separate. It can match on
 clinician name, practice name, domain, phone, email, address, city/region, and
 known directory URLs. It should not merge two clinicians just because they work

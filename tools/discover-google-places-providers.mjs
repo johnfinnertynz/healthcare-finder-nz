@@ -3,6 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import {
   confidenceByField,
+  confidenceRank,
   evidenceItem,
   hashText,
   likelySameProvider,
@@ -149,6 +150,54 @@ function addressToken(value) {
 
 function isSharedDirectoryDomain(domain = "") {
   return /(^|\.)healthpoint\.co\.nz$|(^|\.)google\.com$|(^|\.)maps\.google\.com$|(^|\.)doctorpricer\.co\.nz$|(^|\.)psychologytoday\.com$|(^|\.)nzccp\.co\.nz$/i.test(domain);
+}
+
+function distanceKm(aLat, aLon, bLat, bLon) {
+  const values = [aLat, aLon, bLat, bLon].map(Number);
+  if (values.some((value) => !Number.isFinite(value))) return "";
+  const [lat1, lon1, lat2, lon2] = values.map((value) => value * Math.PI / 180);
+  const deltaLat = lat2 - lat1;
+  const deltaLon = lon2 - lon1;
+  const h = Math.sin(deltaLat / 2) ** 2
+    + Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) ** 2;
+  return Number((6_371 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h))).toFixed(1));
+}
+
+function meaningfulNameTokens(value = "") {
+  const generic = new Set(["medical", "centre", "center", "clinic", "doctor", "doctors", "gp", "surgery", "health", "healthcare", "family", "limited", "ltd", "practice"]);
+  return normaliseComparable(value)
+    .split(" ")
+    .filter((token) => token.length > 2 && !generic.has(token));
+}
+
+function namesCorroborate(placeName = "", providerName = "") {
+  const place = normaliseComparable(placeName);
+  const provider = normaliseComparable(providerName);
+  if (!place || !provider) return false;
+  if (place === provider || place.includes(provider) || provider.includes(place)) return true;
+  const placeTokens = meaningfulNameTokens(placeName);
+  const providerTokens = meaningfulNameTokens(providerName);
+  if (!placeTokens.length || !providerTokens.length) return false;
+  const overlap = providerTokens.filter((token) => placeTokens.includes(token)).length;
+  return overlap >= Math.max(2, Math.ceil(providerTokens.length * 0.75));
+}
+
+function targetProviderSignals(place = {}, targetProvider = {}, queryItem = {}) {
+  const phone = place.nationalPhoneNumber || place.internationalPhoneNumber || "";
+  const name = place.displayName?.text || "";
+  const address = place.formattedAddress || "";
+  const distance = distanceKm(
+    queryItem.center?.latitude,
+    queryItem.center?.longitude,
+    place.location?.latitude,
+    place.location?.longitude
+  );
+  return unique([
+    namesCorroborate(name, targetProvider.name || targetProvider.practiceName) ? "name" : "",
+    phone && targetProvider.phone && normalisePhone(phone) === normalisePhone(targetProvider.phone) ? "phone" : "",
+    address && targetProvider.address && addressToken(address) === addressToken(targetProvider.address) ? "address" : "",
+    distance !== "" && distance <= 1 ? "near-target-location" : ""
+  ]);
 }
 
 function readApiKey(config) {
@@ -367,6 +416,55 @@ function claim(field, value, place, queryItem, confidence = "low", excerpt = "")
   });
 }
 
+function claimKey(claimItem = {}) {
+  return [
+    claimItem.field || "",
+    Array.isArray(claimItem.value) ? JSON.stringify(claimItem.value) : String(claimItem.value ?? ""),
+    claimItem.sourceUrl || "",
+    claimItem.sourceType || "",
+    claimItem.extractor || ""
+  ].join("|");
+}
+
+function dedupeClaims(claims = []) {
+  const byKey = new Map();
+  for (const claimItem of claims) {
+    if (!claimItem) continue;
+    const key = claimKey(claimItem);
+    const existing = byKey.get(key);
+    if (!existing) {
+      byKey.set(key, claimItem);
+      continue;
+    }
+    byKey.set(key, {
+      ...existing,
+      ...claimItem,
+      capturedAt: existing.capturedAt || claimItem.capturedAt,
+      excerpt: existing.excerpt || claimItem.excerpt,
+      confidence: confidenceRank[claimItem.confidence] > confidenceRank[existing.confidence] ? claimItem.confidence : existing.confidence
+    });
+  }
+  return [...byKey.values()];
+}
+
+function dedupeExistingProviderMatches(matches = []) {
+  const byProviderId = new Map();
+  for (const match of matches) {
+    if (!match?.providerId) continue;
+    const existing = byProviderId.get(match.providerId);
+    if (!existing) {
+      byProviderId.set(match.providerId, { ...match, signals: unique(match.signals || []) });
+      continue;
+    }
+    byProviderId.set(match.providerId, {
+      ...existing,
+      ...match,
+      signals: unique([...(existing.signals || []), ...(match.signals || [])])
+    });
+  }
+  return [...byProviderId.values()];
+}
+
 export function candidateFromGooglePlace(place = {}, queryItem = {}, providers = []) {
   const name = place.displayName?.text || "";
   const phone = place.nationalPhoneNumber || place.internationalPhoneNumber || "";
@@ -374,23 +472,26 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
   const address = place.formattedAddress || "";
   const lat = place.location?.latitude;
   const lon = place.location?.longitude;
+  const distanceFromQueryKm = distanceKm(queryItem.center?.latitude, queryItem.center?.longitude, lat, lon);
   const existingMatches = matchExistingProviders(place, providers);
+  let discardReason = "";
   if (queryItem.targetProviderId && !existingMatches.some((match) => match.providerId === queryItem.targetProviderId)) {
     const targetProvider = providers.find((provider) => provider.id === queryItem.targetProviderId);
     if (targetProvider) {
-      existingMatches.unshift({
-        providerId: targetProvider.id,
-        name: targetProvider.name || "",
-        type: targetProvider.type || "",
-        region: targetProvider.region || "",
-        city: targetProvider.city || "",
-        signals: unique([
-          "gp-corroboration-target",
-          name && normaliseComparable(name) === normaliseComparable(targetProvider.name) ? "name" : "",
-          phone && targetProvider.phone && normalisePhone(phone) === normalisePhone(targetProvider.phone) ? "phone" : "",
-          address && targetProvider.address && addressToken(address) === addressToken(targetProvider.address) ? "address" : ""
-        ])
-      });
+      const signals = targetProviderSignals(place, targetProvider, queryItem);
+      const hasIdentitySignal = signals.some((signal) => ["name", "phone", "address"].includes(signal));
+      if (hasIdentitySignal) {
+        existingMatches.unshift({
+          providerId: targetProvider.id,
+          name: targetProvider.name || "",
+          type: targetProvider.type || "",
+          region: targetProvider.region || "",
+          city: targetProvider.city || "",
+          signals: unique(["gp-corroboration-target", ...signals])
+        });
+      } else {
+        discardReason = "uncorroborated exact GP Places result: no target name, phone, or address match";
+      }
     }
   }
   const sourceUrl = place.googleMapsUri || website || "";
@@ -473,6 +574,7 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
     address,
     lat: lat ?? "",
     lon: lon ?? "",
+    distanceFromQueryKm,
     phone,
     website,
     googlePlaceId: place.id || "",
@@ -492,10 +594,13 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
       "Confirm provider type, services, availability, cost, referral pathway, and support-preference tags from stronger public sources.",
       queryItem.reason || "",
       queryItem.targetProviderId ? `target GP source-corroboration provider: ${queryItem.targetProviderId}` : "",
+      distanceFromQueryKm !== "" ? `Google Places result is ${distanceFromQueryKm} km from the query centre.` : "",
+      discardReason,
       existingMatches.length ? `possible existing provider match: ${existingMatches.map((match) => match.providerId).join(", ")}` : "new candidate needs corroboration"
     ].filter(Boolean)),
     reviewGateRequired: true,
     liveMutationAllowed: false,
+    discardReason,
     claims
   };
 }
@@ -506,6 +611,7 @@ export function buildGooglePlacesCandidatesFromResults(resultsByQuery = [], prov
     const queryItem = item.queryItem || {};
     for (const place of item.places || []) {
       const candidate = candidateFromGooglePlace(place, queryItem, providers);
+      if (candidate.discardReason) continue;
       const key = place.id || candidate.candidateId;
       const existing = byPlace.get(key);
       if (!existing) {
@@ -518,17 +624,20 @@ export function buildGooglePlacesCandidatesFromResults(resultsByQuery = [], prov
         sourceUrlsUsed: unique([...existing.sourceUrlsUsed, ...candidate.sourceUrlsUsed]),
         reviewReasons: unique([...existing.reviewReasons, ...candidate.reviewReasons]),
         possibleProviderIds: unique([...existing.possibleProviderIds, ...candidate.possibleProviderIds]),
-        existingProviderMatches: [...existing.existingProviderMatches, ...candidate.existingProviderMatches],
-        claims: [...existing.claims, ...candidate.claims]
+        existingProviderMatches: dedupeExistingProviderMatches([...existing.existingProviderMatches, ...candidate.existingProviderMatches]),
+        claims: dedupeClaims([...existing.claims, ...candidate.claims])
       });
     }
   }
-  return [...byPlace.values()].sort((a, b) =>
-    (b.action === "research_new_provider") - (a.action === "research_new_provider")
-    || (TYPE_PRIORITY[b.type] || 0) - (TYPE_PRIORITY[a.type] || 0)
-    || a.region.localeCompare(b.region)
-    || a.name.localeCompare(b.name)
-  );
+  return [...byPlace.values()]
+    .map(normaliseGooglePlacesCandidateTypeConflict)
+    .filter((candidate) => !candidate.discardReason)
+    .sort((a, b) =>
+      (b.action === "research_new_provider") - (a.action === "research_new_provider")
+      || (TYPE_PRIORITY[b.type] || 0) - (TYPE_PRIORITY[a.type] || 0)
+      || a.region.localeCompare(b.region)
+      || a.name.localeCompare(b.name)
+    );
 }
 
 export function mergeGooglePlacesCandidates(existingCandidates = [], newCandidates = []) {
@@ -551,13 +660,14 @@ export function mergeGooglePlacesCandidates(existingCandidates = [], newCandidat
       sourceUrlsUsed: unique([...(existing.sourceUrlsUsed || []), ...(candidate.sourceUrlsUsed || [])]),
       reviewReasons: unique([...(existing.reviewReasons || []), ...(candidate.reviewReasons || [])]),
       possibleProviderIds: unique([...(existing.possibleProviderIds || []), ...(candidate.possibleProviderIds || [])]),
-      existingProviderMatches: [...(existing.existingProviderMatches || []), ...(candidate.existingProviderMatches || [])],
+      existingProviderMatches: dedupeExistingProviderMatches([...(existing.existingProviderMatches || []), ...(candidate.existingProviderMatches || [])]),
       duplicateSignals: unique([...(existing.duplicateSignals || []), ...(candidate.duplicateSignals || [])]),
-      claims: [...(existing.claims || []), ...(candidate.claims || [])]
+      claims: dedupeClaims([...(existing.claims || []), ...(candidate.claims || [])])
     });
   }
   return [...byId.values()]
     .map(normaliseGooglePlacesCandidateTypeConflict)
+    .filter((candidate) => !candidate.discardReason)
     .sort((a, b) =>
       (b.action === "research_new_provider") - (a.action === "research_new_provider")
       || (TYPE_PRIORITY[b.type] || 0) - (TYPE_PRIORITY[a.type] || 0)
@@ -566,27 +676,48 @@ export function mergeGooglePlacesCandidates(existingCandidates = [], newCandidat
     );
 }
 
+function hasStrongProviderMatchSignals(signals = []) {
+  return signals.some((signal) => ["name", "phone", "address", "website-domain", "identity-signal"].includes(signal));
+}
+
 function normaliseGooglePlacesCandidateMatches(candidate = {}) {
   const candidateDomain = sourceDomain(candidate.website || candidate.suggestedProviderRecord?.website || candidate.source || "");
   const sharedDirectoryCandidate = isSharedDirectoryDomain(candidateDomain);
   const existingProviderMatches = (candidate.existingProviderMatches || [])
     .filter((match) => {
       const signals = match.signals || [];
+      if (signals.includes("gp-corroboration-target") && !hasStrongProviderMatchSignals(signals)) return false;
       if (!sharedDirectoryCandidate) return true;
       return signals.some((signal) => signal !== "website-domain");
     });
   const possibleProviderIds = unique(existingProviderMatches.map((match) => match.providerId));
   const duplicateSignals = unique(existingProviderMatches.flatMap((match) => match.signals || []));
+  const exactGpTargetQuery = /^places-gp-corroborate:/i.test(candidate.queryId || "")
+    || (candidate.reviewReasons || []).some((reason) => /target GP source-corroboration provider:/i.test(reason));
+  const targetProviderIds = unique((candidate.reviewReasons || [])
+    .flatMap((reason) => [...String(reason).matchAll(/target GP source-corroboration provider:\s*([^;|,\s]+)/gi)].map((match) => match[1])));
+  const targetMatched = targetProviderIds.length
+    ? targetProviderIds.some((providerId) => possibleProviderIds.includes(providerId))
+    : false;
+  const discardReason = exactGpTargetQuery && targetProviderIds.length && possibleProviderIds.length && !targetMatched
+    ? "uncorroborated exact GP Places result: matched a different provider, not the queued target"
+    : exactGpTargetQuery && !possibleProviderIds.length
+      ? "uncorroborated exact GP Places result: no target name, phone, or address match"
+      : candidate.discardReason || "";
   const reviewReasons = unique([
     ...(candidate.reviewReasons || []).filter((reason) => !/^possible existing provider match:/i.test(reason)),
+    discardReason,
     possibleProviderIds.length ? `possible existing provider match: ${possibleProviderIds.join(", ")}` : ""
   ]);
   return {
     ...candidate,
+    action: possibleProviderIds.length ? "corroborate_existing_provider" : "research_new_provider",
     existingProviderMatches,
     possibleProviderIds,
     duplicateSignals,
-    reviewReasons
+    discardReason,
+    reviewReasons,
+    claims: dedupeClaims(candidate.claims || [])
   };
 }
 

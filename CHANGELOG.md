@@ -39,6 +39,12 @@
 - Added exact-practice Google Places lookup support for the GP source
   corroboration queue, including target provider IDs and safeguards against
   broad matches on shared directory domains such as Healthpoint.
+- Ran the exact GP source-corroboration queue across all 126 queued GP tasks,
+  producing a cleaned review-gated Places export with 132 candidates and 100
+  candidate websites before source enrichment.
+- Hardened exact GP Places matching so target provider links require a real
+  name, phone, or address signal, and stale exact-query results that match a
+  different provider are filtered during merge.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

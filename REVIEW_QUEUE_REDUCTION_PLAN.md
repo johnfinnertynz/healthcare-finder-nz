@@ -4,7 +4,9 @@ Updated: 2026-06-01
 
 ## Baseline
 
-- Provider-level focused review queue: 525 items.
+- Provider-level focused review queue: 675 items after the full GP Places
+  corroboration pass. The increase is intentional: new candidates are
+  review-gated and are not live provider data.
 - Focused claim-level review queue: 638 items in 53 batches.
 - Dedicated GP source corroboration queue: 126 tasks.
 - Source-fit findings: 361.
@@ -83,6 +85,16 @@ This cycle added a separate claim review queue:
 - The Places discovery tool can now run exact GP source-corroboration lookups
   from `data/gp-source-corroboration-queue.json`, carry target provider IDs into
   review, and avoid broad identity matches from shared directory domains.
+- The exact GP Places helper has now been run across all 126 GP
+  source-corroboration tasks. The current cleaned Places export contains 132
+  review-gated candidates, including 100 with candidate websites and 124 tied
+  back to queued GP provider IDs. A capped GP seed-source fetch then produced
+  99 discovery suggestions, 2 of which are update-existing-provider suggestions
+  that still require auditor approval.
+- Exact GP Places matching now rejects uncorroborated target results. A Places
+  result must match the queued target by name, phone, or address; old/stale
+  exact-query results that only matched a different provider are dropped during
+  merge instead of being shown as provider corroboration.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
