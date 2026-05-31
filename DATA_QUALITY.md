@@ -470,6 +470,13 @@ safe low-risk checks and to plan manual batches. Do not use it to mark
 availability, referral pathway, cultural/safety tags, telehealth, cost,
 specialty, or provider type as approved without reviewed source evidence.
 
+The auditor console can also load the dedicated GP source corroboration queue.
+Those rows are one-practice source checks for weak third-party GP records. They
+may support corrections to website, phone, address, coordinates, source quality,
+confidence, and verification metadata, but they must not be used to infer
+availability, enrolment, mental-health specialty, cultural/language support, or
+funding eligibility.
+
 `npm run draft:claim-batch -- --batch-key "<batch key>"` can prepare a
 review-decision draft from one claim batch. This helper is intentionally narrow:
 it does not write live provider data, it defaults to `needs_more_info`, and

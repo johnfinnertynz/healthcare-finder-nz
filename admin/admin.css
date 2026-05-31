@@ -512,6 +512,29 @@ textarea {
   background: #fff;
 }
 
+.suggested-searches {
+  flex-basis: 100%;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  background: var(--surface-soft);
+}
+
+.suggested-searches summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.suggested-searches ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.suggested-searches code {
+  white-space: normal;
+  word-break: break-word;
+}
+
 .source-preview {
   width: 100%;
   min-height: 260px;

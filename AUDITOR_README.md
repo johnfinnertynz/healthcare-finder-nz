@@ -45,6 +45,7 @@ npm run evidence:graph
 npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
+npm run export:gp-corroboration
 npm run export:auto-resolution
 ```
 
@@ -67,6 +68,8 @@ Use the **Queue** selector to choose:
 
 - **Manual review queue** for provider-level decisions.
 - **Claim review queue** for one-field-at-a-time checks grouped by batch key.
+- **GP source corroboration** for weak third-party GP records that need stronger
+  practice-owned, Healthpoint, PHO, HPI/FHIR, or official source evidence.
 - **Auto-resolution proposals** for grouped low-risk de-prioritisation and
   high-risk manual batch planning.
 - **Ongoing monitor queue** for automated availability/recheck findings.
@@ -76,6 +79,14 @@ score, batch key, source type, and required human action. Use it to work through
 large repeated issues such as unsupported broad tags, weak GP source
 corroboration, availability evidence, referral pathway wording, and coordinate
 gaps.
+
+In the GP source corroboration queue, each item is one GP practice source check.
+Use the suggested searches to find a stronger source, then capture the URL,
+source type, short excerpt, captured date, and any contact/address conflict.
+Do not use DoctorPricer, search snippets, LinkedIn/social-only pages, blocked
+pages, or name-based inference as approval evidence. Do not infer accepting
+patients, enrolment, mental-health specialties, cultural support, language
+support, or funding eligibility from this queue.
 
 Open `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` before a long review session. It
 separates low-risk claim noise that can be de-prioritized from high-risk batches

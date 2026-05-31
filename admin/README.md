@@ -51,6 +51,37 @@ queue to the ongoing monitor queue. Monitor items are still human review tasks:
 do not change live provider data until a reviewer confirms the evidence and
 exports/applies a decision.
 
+## GP Source Corroboration Queue
+
+Run the GP source queue when DoctorPricer or other third-party GP records need
+stronger source evidence:
+
+```bash
+npm run export:gp-corroboration
+```
+
+This writes:
+
+- `data/gp-source-corroboration-queue.json`
+- `data/gp-source-corroboration-queue.csv`
+- `GP_SOURCE_CORROBORATION_QUEUE.md`
+
+Choose **GP source corroboration** from the queue selector. Each item is a
+review task for one GP practice, not permission to change live data. The detail
+view shows the current stored phone/address/website, suggested searches, and the
+evidence policy for the task.
+
+Acceptable evidence is a practice-owned page, Healthpoint listing/export, PHO,
+Health NZ, HPI/FHIR, official clinic network page, or provider-owned booking or
+enrolment page. Do not approve a GP contact record from a search-result snippet,
+DoctorPricer alone, LinkedIn/social-only pages, blocked/private pages, or
+name-based inference.
+
+Keep this queue narrow. It can support corrections to public contact/location
+and source-quality fields, but it must not be used to infer availability,
+enrolment, mental-health specialty, cultural support, language support, or
+funding eligibility.
+
 ## Claim Review Queue
 
 Run the claim-level evidence exports when the provider review queue feels too

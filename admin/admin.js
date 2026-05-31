@@ -9,6 +9,11 @@ const QUEUE_SOURCES = {
     help: "Claim review queue: field-level evidence tasks grouped into batches so repeated source/risk issues can be reviewed faster.",
     itemName: "claim review item(s)"
   },
+  gp: {
+    url: "../data/gp-source-corroboration-queue.json",
+    help: "GP source corroboration: focused checks for DoctorPricer/third-party GP records that need stronger practice-owned, Healthpoint, PHO, HPI, or official source evidence.",
+    itemName: "GP source task(s)"
+  },
   auto: {
     url: "../data/provider-auto-resolution-proposals.json",
     help: "Auto-resolution proposals: advisory-only groups for de-prioritising safe low-risk checks and keeping risky batches review-gated.",
@@ -416,8 +421,159 @@ function proposalToItem(proposal, index, kind) {
   };
 }
 
+function taskSeverity(priority) {
+  if (priority === "high") return "high";
+  if (priority === "low") return "low";
+  return "medium";
+}
+
+function taskSourceEvidence(task) {
+  const sourceUrl = asArray(task.sourceUrls)[0] || task.source || task.website || "";
+  const contact = [
+    {
+      field: "phone",
+      value: task.phone || "",
+      sourceUrl,
+      excerpt: task.phone
+        ? `Current GP record stores phone ${task.phone}. Confirm this against a practice-owned, Healthpoint, PHO, HPI/FHIR, or official source.`
+        : "Phone is missing. Do not guess it from search snippets.",
+      confidence: task.phone ? task.confidence || "medium" : "low",
+      needsManualReview: true
+    },
+    {
+      field: "website",
+      value: task.website || "",
+      sourceUrl: task.website || sourceUrl,
+      excerpt: task.website
+        ? `Current GP record stores website ${task.website}. Confirm this is the current practice site.`
+        : "Website is missing. Find a practice-owned, Healthpoint, PHO, HPI/FHIR, or official source before adding one.",
+      confidence: task.website ? task.confidence || "medium" : "low",
+      needsManualReview: true
+    }
+  ];
+
+  const address = [
+    {
+      field: "address",
+      value: task.address || "",
+      sourceUrl,
+      excerpt: task.address
+        ? `Current GP record stores address ${task.address}. Confirm it matches a stronger public source.`
+        : "Address is missing.",
+      confidence: task.confidence || "medium",
+      needsManualReview: true
+    },
+    {
+      field: "lat",
+      value: task.lat ?? "",
+      sourceUrl,
+      excerpt: "Coordinates should only be kept when they match the verified professional address.",
+      confidence: task.coordinateConfidence || task.confidence || "medium",
+      needsManualReview: Boolean(task.address)
+    },
+    {
+      field: "lon",
+      value: task.lon ?? "",
+      sourceUrl,
+      excerpt: "Coordinates should only be kept when they match the verified professional address.",
+      confidence: task.coordinateConfidence || task.confidence || "medium",
+      needsManualReview: Boolean(task.address)
+    }
+  ];
+
+  return {
+    contact,
+    address,
+    sourceQuality: [{
+      field: "sourceQuality",
+      value: task.sourceQuality || "",
+      sourceUrl,
+      excerpt: task.reviewReason || "GP record needs stronger corroboration before source quality is treated as reliable.",
+      confidence: task.confidence || "medium",
+      needsManualReview: true
+    }],
+    gpCorroboration: [
+      ...asArray(task.allowedEvidenceSources).map((value) => ({
+        field: "allowedEvidenceSources",
+        value,
+        sourceUrl: "",
+        excerpt: `Acceptable evidence: ${value}`,
+        confidence: "policy",
+        needsManualReview: false
+      })),
+      ...asArray(task.disallowedEvidenceSources).map((value) => ({
+        field: "disallowedEvidenceSources",
+        value,
+        sourceUrl: "",
+        excerpt: `Do not use as evidence: ${value}`,
+        confidence: "policy",
+        needsManualReview: false
+      }))
+    ]
+  };
+}
+
+function gpTaskToItem(task, index) {
+  const priority = task.priority || task.reviewPriority || "medium";
+  const missing = asArray(task.missingFields);
+  const sourceUrls = unique([
+    ...asArray(task.sourceUrls),
+    task.source,
+    task.website,
+    task.bookingUrl
+  ]);
+  const auditRules = unique([
+    ...asArray(task.auditRules),
+    "weak-gp-source"
+  ]);
+  const auditIssues = asArray(task.auditIssues);
+
+  return {
+    ...task,
+    reviewId: task.reviewId || task.taskId || `gp-corroboration-${index + 1}`,
+    reviewCategory: "GP source corroboration",
+    reviewPriority: priority,
+    auditSeverity: taskSeverity(priority),
+    batchKey: task.region ? `gp-source:${task.region}` : "gp-source",
+    auditRules,
+    auditFindings: auditRules.map((rule, ruleIndex) => ({
+      rule,
+      severity: taskSeverity(priority),
+      issue: auditIssues[ruleIndex] || task.reviewReason || "GP record needs stronger source corroboration.",
+      suggestedFix: "Find a practice-owned, Healthpoint, PHO, HPI/FHIR, or official source before changing website, phone, address, coordinates, source quality, confidence, or verification metadata."
+    })),
+    reviewReasons: unique([
+      task.reviewReason,
+      missing.length ? `Missing field(s): ${missing.join(", ")}.` : "",
+      "DoctorPricer and search snippets are discovery-only; they are not enough to approve current GP contact details.",
+      "Do not infer availability, enrolment, mental-health specialties, cultural support, language support, or funding eligibility from this task."
+    ]),
+    sourceEvidence: task.sourceEvidence || taskSourceEvidence(task),
+    sourceUrls,
+    claimId: task.taskId,
+    claimField: "sourceQuality",
+    claimValue: task.sourceQuality || task.importSource || "third-party GP source",
+    claimDecision: "review",
+    claimRiskLevel: priority,
+    claimReason: task.reviewReason,
+    requiredHumanAction: "Capture a stronger public source URL and short excerpt, then adjust safe fields or leave the record needing more information.",
+    publicCardPreviewText: task.publicCardPreviewText || [
+      task.name,
+      `${task.region || ""}${task.city ? ` / ${task.city}` : ""}`,
+      task.address,
+      task.phone ? `Phone: ${task.phone}` : "Phone missing",
+      task.website ? `Website: ${task.website}` : "Website missing",
+      `Current source: ${task.sourceQuality || task.source || "unknown"}`
+    ].filter(Boolean).join("\n"),
+    currentProvider: task
+  };
+}
+
 function queueItemsFromPayload(queue) {
   if (Array.isArray(queue.items)) return queue.items;
+  if (Array.isArray(queue.tasks) && queue.summary?.reviewGateRequired) {
+    return queue.tasks.map((task, index) => gpTaskToItem(task, index));
+  }
   if (Array.isArray(queue.autoDeprioritizeProposals) || Array.isArray(queue.manualBatchProposals)) {
     return [
       ...asArray(queue.autoDeprioritizeProposals).map((proposal, index) => proposalToItem(proposal, index, "auto")),
@@ -590,6 +746,9 @@ function renderChecklist(item) {
   const checks = unique([
     item.claimId ? `Resolve claim "${item.claimField}" (${item.claimRiskLevel} risk): ${item.requiredHumanAction || item.claimReason}` : "",
     item.claimDecision === "auto_accept" ? "This is an advisory low-risk auto-accept claim; still use reviewed decisions before live data changes." : "",
+    item.reviewCategory === "GP source corroboration" ? "Find one stronger public source: practice-owned page, Healthpoint listing/export, PHO/Health NZ/HPI/FHIR data, official clinic network page, or provider-owned booking/enrolment page." : "",
+    item.reviewCategory === "GP source corroboration" ? "Capture source URL, source type, short excerpt, captured date, and any phone/address/website conflict." : "",
+    item.reviewCategory === "GP source corroboration" ? "Do not use search-result snippets, DoctorPricer alone, LinkedIn/social-only pages, blocked pages, or name-based inference as evidence." : "",
     ...(item.reviewReasons || []),
     ...(item.auditFindings || []).map((finding) => finding.issue || finding.rule),
     item.availabilityNeedsManualReview ? "Confirm availability status and do not mark accepting without explicit evidence." : "",
@@ -989,6 +1148,24 @@ function renderSources(item) {
     link.textContent = index === 0 ? "Open primary source in new tab (required)" : `Open source ${index + 1}`;
     els.sourceLinks.append(link);
   }
+  const searches = asArray(item.suggestedSearches).filter(Boolean);
+  if (searches.length) {
+    const details = document.createElement("details");
+    details.className = "suggested-searches";
+    details.open = true;
+    const summary = document.createElement("summary");
+    summary.textContent = "Suggested searches";
+    const list = document.createElement("ul");
+    for (const search of searches.slice(0, 8)) {
+      const li = document.createElement("li");
+      const code = document.createElement("code");
+      code.textContent = search;
+      li.append(code);
+      list.append(li);
+    }
+    details.append(summary, list);
+    els.sourceLinks.append(details);
+  }
   els.sourcePreview.src = links[0];
 }
 
@@ -1379,7 +1556,7 @@ async function init() {
     state.providers = [];
     state.filtered = [];
     renderQueue();
-    els.queueSummary.textContent = `${error.message}. Run npm run export:review for the manual queue or npm run export:monitor for the ongoing monitor queue.`;
+    els.queueSummary.textContent = `${error.message}. Run npm run export:review, npm run export:claims, npm run export:gp-corroboration, or npm run export:monitor for the selected queue.`;
   }
 }
 

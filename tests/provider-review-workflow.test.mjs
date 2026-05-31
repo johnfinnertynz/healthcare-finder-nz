@@ -419,10 +419,15 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /choice-grid/);
   assert.match(html, /Ongoing monitor queue/);
   assert.match(html, /Claim review queue/);
+  assert.match(html, /GP source corroboration/);
   assert.match(html, /Auto-resolution proposals/);
   assert.match(html, /Review category/);
   assert.match(html, /Any batch/);
   assert.match(js, /provider-claim-review-queue\.json/);
+  assert.match(js, /gp-source-corroboration-queue\.json/);
+  assert.match(js, /gpTaskToItem/);
+  assert.match(js, /Suggested searches/);
+  assert.match(js, /DoctorPricer and search snippets are discovery-only/);
   assert.match(js, /provider-auto-resolution-proposals\.json/);
   assert.match(js, /autoDeprioritizeProposals/);
   assert.match(js, /queueItemsFromPayload/);
@@ -689,6 +694,17 @@ test("GP source corroboration queue isolates weak GP records without live mutati
   assert.ok(queue.tasks[0].disallowedEvidenceSources.some((source) => /search-result snippet/i.test(source)));
   assert.ok(queue.tasks[0].suggestedSearches.some((query) => query.includes("site:healthpoint.co.nz")));
   assert.equal(JSON.stringify(providers), original);
+});
+
+test("admin UI can load GP source corroboration tasks as review items", () => {
+  const html = fs.readFileSync("admin/index.html", "utf8");
+  const js = fs.readFileSync("admin/admin.js", "utf8");
+
+  assert.match(html, /<option value="gp">GP source corroboration<\/option>/);
+  assert.match(js, /Array\.isArray\(queue\.tasks\) && queue\.summary\?\.reviewGateRequired/);
+  assert.match(js, /reviewCategory: "GP source corroboration"/);
+  assert.match(js, /practice-owned, Healthpoint, PHO, HPI\/FHIR, or official source/);
+  assert.match(js, /Do not infer availability, enrolment, mental-health specialties, cultural support/);
 });
 
 test("broad tag findings only attach to matching fit and specialty text", () => {

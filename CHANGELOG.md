@@ -16,6 +16,9 @@
 - Added a dedicated GP source corroboration queue with 126 review-gated tasks
   for third-party/DoctorPricer GP records that still need stronger official or
   practice-owned website evidence.
+- Added GP source corroboration as a first-class auditor console queue with
+  task-specific evidence rules, suggested searches, and normal review-decision
+  export.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, and referral reports.
 

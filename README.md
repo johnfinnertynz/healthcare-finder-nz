@@ -495,6 +495,12 @@ planning view only: it helps hide/collapse low-risk checks and keep high-risk
 claim batches visible, but provider data still changes only through exported
 review decisions and the controlled apply script.
 
+The same console can load `data/gp-source-corroboration-queue.json` as
+**GP source corroboration**. Use it to confirm weak third-party GP records
+against practice-owned, Healthpoint, PHO, HPI/FHIR, or official sources. It is a
+review surface only and must not be used to infer availability, enrolment,
+specialty, cultural support, or funding eligibility.
+
 `draft:claim-batch` is a draft helper for a reviewed batch. It reads the claim
 queue and writes `data/provider-claim-batch-decision-draft.json` plus
 `PROVIDER_CLAIM_BATCH_DECISION_DRAFT.md`. It never edits `providers.json`.
@@ -515,9 +521,10 @@ it is a focused queue and does not include every low-risk GP record. Use
 `node tools/export-provider-review-queue.mjs --include-all` for a full dump.
 
 Open the local prototype at `admin/index.html` after serving the repo locally.
-The admin console can load the manual review queue, the claim review queue, or
-the ongoing monitor queue. It lets a reviewer inspect evidence and exports
-review decisions. It does not write to production data.
+The admin console can load the manual review queue, the claim review queue, the
+GP source corroboration queue, auto-resolution proposals, or the ongoing monitor
+queue. It lets a reviewer inspect evidence and exports review decisions. It
+does not write to production data.
 
 For future checks after the initial audit, run:
 

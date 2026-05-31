@@ -57,6 +57,10 @@ This cycle added a separate claim review queue:
   missing a practice website while retaining a third-party/DoctorPricer source.
   The queue gives reviewers suggested searches and explicit evidence rules
   without mutating live data.
+- The auditor console can now load the GP source corroboration queue directly.
+  Each task is normalized into the same review-item shape as the manual,
+  claim, proposal, and monitor queues, with task-specific instructions for
+  acceptable evidence and discovery-only sources.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -114,3 +118,6 @@ Auto-accept is allowed only when all are true:
    review proposal groups without treating them as live provider records.
 8. Use `npm run draft:claim-batch` after a manual evidence check to turn a
    reviewed batch into a draft decision file.
+9. Use the auditor console's **GP source corroboration** queue source to review
+   weak GP records and capture stronger website/contact evidence before any
+   live provider update.

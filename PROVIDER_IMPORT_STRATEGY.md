@@ -83,6 +83,10 @@ mark the claim as review-needed. It must not fake evidence text.
 - `npm run apply:review` applies only reviewed decisions through the controlled
   script.
 
+The local auditor console can load the GP corroboration queue as a first-class
+queue source. This is still a review surface only: it helps reviewers collect
+stronger source URLs and excerpts before any controlled `apply:review` step.
+
 ## Never Guess
 
 - accepting new clients
