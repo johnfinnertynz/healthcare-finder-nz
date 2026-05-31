@@ -1,6 +1,6 @@
 # GP Source Corroboration Queue
 
-Generated: 2026-05-31T20:46:27.682Z
+Generated: 2026-05-31T23:11:17.501Z
 
 This queue turns weak GP source records into focused, review-gated source checks. It does not mutate `providers.json` and it must not be used to infer availability, enrolment, mental-health specialty, or cultural support claims.
 
@@ -42,6 +42,16 @@ This queue turns weak GP source records into focused, review-gated source checks
 - provider-owned booking or enrolment page
 
 Do not use search-result snippets, DoctorPricer alone, LinkedIn/social-only pages, or blocked/private pages as evidence.
+
+## Google Places Helper
+
+For small review-gated batches, the Places discovery tool can run exact-practice lookups from this queue:
+
+```sh
+npm run discover:places -- --gp-corroboration-queue data/gp-source-corroboration-queue.json --region Northland --limit-queries 5 --max-results-per-query 3 --merge-existing
+```
+
+Places results are discovery/corroboration leads only. Reviewers still need stronger practice-owned, Healthpoint, PHO/HPI/FHIR, or official evidence before applying any provider update.
 
 ## First Tasks
 

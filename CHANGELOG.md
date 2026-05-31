@@ -36,6 +36,9 @@
 - Hardened provider source-page extraction so closure/announcement headings do
   not become provider names and flattened team lists do not merge adjacent
   clinician names.
+- Added exact-practice Google Places lookup support for the GP source
+  corroboration queue, including target provider IDs and safeguards against
+  broad matches on shared directory domains such as Healthpoint.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

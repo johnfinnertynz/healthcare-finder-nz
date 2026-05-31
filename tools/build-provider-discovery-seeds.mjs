@@ -170,13 +170,17 @@ function addGooglePlacesCandidateSeeds(map, placesPayload) {
   for (const candidate of placesPayload.candidates || []) {
     const record = candidate.suggestedProviderRecord || {};
     const possibleProviderId = candidate.possibleProviderIds?.[0] || "";
+    const reviewText = (candidate.reviewReasons || []).join(" ");
+    const type = record.type || candidate.type || "";
+    const isGpCorroborationLead = type === "gp" && (/GP source corroboration/i.test(reviewText) || /^gp-/.test(possibleProviderId));
+    const basePriority = priorityByType[type] || 65;
     addSeed(map, {
       seedId: `google-places:${candidate.candidateId || seedId([candidate.region, candidate.city, candidate.type, candidate.name])}`,
       region: record.region || candidate.region || "",
       city: record.city || candidate.city || "",
       suburb: "",
-      type: record.type || candidate.type || "",
-      providerType: record.type || candidate.type || "",
+      type,
+      providerType: type,
       knownProviderName: record.name || candidate.name || "",
       knownClinicianName: record.clinicianName || "",
       knownPracticeName: record.practiceName || candidate.name || "",
@@ -190,7 +194,7 @@ function addGooglePlacesCandidateSeeds(map, placesPayload) {
         "Google Places discovery candidate; corroborate with provider-owned, Healthpoint, official register, or professional-directory evidence before live use",
         ...(candidate.reviewReasons || [])
       ]).join("; "),
-      priority: Math.min(100, (priorityByType[record.type || candidate.type] || 65) + (possibleProviderId ? 8 : 15)),
+      priority: Math.min(100, basePriority + (isGpCorroborationLead ? 35 : possibleProviderId ? 8 : 15)),
       source: "google places candidate export"
     });
   }

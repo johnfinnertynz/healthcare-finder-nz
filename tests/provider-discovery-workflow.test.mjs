@@ -8,7 +8,7 @@ import { buildProviderDiscoverySeeds } from "../tools/build-provider-discovery-s
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
 import { buildProviderSuggestions } from "../tools/build-provider-suggestions.mjs";
 import { buildRoundOneQueries, buildSnowballQueries, enrichProviderCandidates } from "../tools/enrich-provider-candidates.mjs";
-import { buildGooglePlacesCandidatesFromResults, buildGooglePlacesDiscoveryPlan, candidateFromGooglePlace, mergeGooglePlacesCandidates } from "../tools/discover-google-places-providers.mjs";
+import { buildGooglePlacesCandidatesFromResults, buildGooglePlacesDiscoveryPlan, buildGooglePlacesPlanFromGpCorroborationQueue, candidateFromGooglePlace, mergeGooglePlacesCandidates } from "../tools/discover-google-places-providers.mjs";
 import { extractProviderEvidence } from "../tools/lib/provider-evidence-extractor.mjs";
 import { fetchPublicSource } from "../tools/lib/source-fetcher.mjs";
 import { withPsychiatristScopeMetadata } from "../tools/lib/provider-scope.mjs";
@@ -412,6 +412,51 @@ test("Google Places discovery plan uses high-priority regions without mutating l
   assert(plan.every((item) => item.textQuery.includes("New Zealand")));
 });
 
+test("Google Places can build exact-practice plans from the GP corroboration queue", () => {
+  const dir = tempDir();
+  const queuePath = path.join(dir, "gp-queue.json");
+  writeJson(queuePath, {
+    tasks: [
+      {
+        providerId: "gp-north",
+        name: "North Clinic",
+        type: "gp",
+        region: "Northland",
+        city: "Whangarei",
+        lat: -35.725,
+        lon: 174.324,
+        phone: "09 111 2222",
+        missingFields: ["website"],
+        priority: "medium",
+        priorityScore: 200,
+        reviewReason: "missing website"
+      },
+      {
+        providerId: "gp-auckland",
+        name: "Auckland Clinic",
+        type: "gp",
+        region: "Auckland",
+        city: "Auckland",
+        phone: "09 333 4444",
+        missingFields: ["website"],
+        priority: "medium",
+        priorityScore: 200
+      }
+    ]
+  });
+  const plan = buildGooglePlacesPlanFromGpCorroborationQueue({
+    gpCorroborationQueue: queuePath,
+    region: "Northland",
+    limitQueries: 5
+  });
+  assert.equal(plan.length, 1);
+  assert.equal(plan[0].targetProviderId, "gp-north");
+  assert.equal(plan[0].type, "gp");
+  assert.match(plan[0].textQuery, /North Clinic/);
+  assert.match(plan[0].textQuery, /09 111 2222/);
+  assert.equal(plan[0].radiusMeters, 8000);
+});
+
 test("Google Places result creates a review-gated candidate with no unsupported service claims", () => {
   const candidate = candidateFromGooglePlace({
     id: "places/example",
@@ -437,6 +482,121 @@ test("Google Places result creates a review-gated candidate with no unsupported 
   assert.deepEqual(candidate.suggestedProviderRecord.tags, []);
   assert.deepEqual(candidate.suggestedProviderRecord.advertisedSpecialties, []);
   assert(candidate.sourceEvidence.contact.some((item) => item.field === "phone"));
+});
+
+test("Google Places GP queue candidates keep target provider linkage review-gated", () => {
+  const candidate = candidateFromGooglePlace({
+    id: "places/gp-target",
+    displayName: { text: "North Clinic" },
+    formattedAddress: "10 Bank Street, Whangarei 0110, New Zealand",
+    nationalPhoneNumber: "09 111 2222",
+    websiteUri: "https://northclinic.nz",
+    googleMapsUri: "https://maps.google.com/?cid=999",
+    types: ["doctor", "health"]
+  }, {
+    queryId: "places-gp-corroborate:gp-north",
+    textQuery: "North Clinic Whangarei 09 111 2222 GP medical centre New Zealand",
+    region: "Northland",
+    city: "Whangarei",
+    type: "gp",
+    targetProviderId: "gp-north",
+    reason: "GP source corroboration task | missing fields: website"
+  }, [{
+    id: "gp-north",
+    name: "North Clinic",
+    type: "gp",
+    region: "Northland",
+    city: "Whangarei",
+    phone: "09 111 2222"
+  }]);
+  assert.equal(candidate.reviewGateRequired, true);
+  assert.equal(candidate.liveMutationAllowed, false);
+  assert.deepEqual(candidate.possibleProviderIds, ["gp-north"]);
+  assert(candidate.reviewReasons.some((reason) => /target GP source-corroboration provider: gp-north/.test(reason)));
+  assert.equal(candidate.suggestedProviderRecord.website, "https://northclinic.nz");
+  assert.deepEqual(candidate.suggestedProviderRecord.tags, []);
+});
+
+test("Google Places matching does not use shared directory domains as broad identity matches", () => {
+  const candidate = candidateFromGooglePlace({
+    id: "places/healthpoint-target",
+    displayName: { text: "Commercial Street Surgery" },
+    formattedAddress: "1 Commercial Street, Kawakawa 0210, New Zealand",
+    nationalPhoneNumber: "09 404 0885",
+    websiteUri: "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/commercial-street-surgery/",
+    googleMapsUri: "https://maps.google.com/?cid=1001",
+    types: ["doctor", "health"]
+  }, {
+    queryId: "places-gp-corroborate:gp-commercial",
+    textQuery: "Commercial Street Surgery Kawakawa 09 404 0885 GP medical centre New Zealand",
+    region: "Northland",
+    city: "Kawakawa",
+    type: "gp",
+    targetProviderId: "gp-commercial",
+    reason: "GP source corroboration task"
+  }, [
+    {
+      id: "gp-commercial",
+      name: "Commercial Street Surgery",
+      type: "gp",
+      region: "Northland",
+      city: "Kawakawa",
+      phone: "09 404 0885",
+      source: "https://doctorpricer.co.nz/commercial"
+    },
+    {
+      id: "gp-unrelated-healthpoint",
+      name: "Unrelated Clinic",
+      type: "gp",
+      region: "Auckland",
+      city: "Auckland",
+      source: "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/unrelated/"
+    }
+  ]);
+  assert.deepEqual(candidate.possibleProviderIds, ["gp-commercial"]);
+  assert(!candidate.duplicateSignals.includes("website-domain"));
+});
+
+test("Google Places merge scrubs stale shared-directory website matches", () => {
+  const stale = candidateFromGooglePlace({
+    id: "places/healthpoint-stale",
+    displayName: { text: "Commercial Street Surgery" },
+    formattedAddress: "1 Commercial Street, Kawakawa 0210, New Zealand",
+    nationalPhoneNumber: "09 404 0885",
+    websiteUri: "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/commercial-street-surgery/",
+    googleMapsUri: "https://maps.google.com/?cid=1002",
+    types: ["doctor", "health"]
+  }, {
+    queryId: "places-gp-corroborate:gp-commercial",
+    textQuery: "Commercial Street Surgery Kawakawa 09 404 0885 GP medical centre New Zealand",
+    region: "Northland",
+    city: "Kawakawa",
+    type: "gp",
+    targetProviderId: "gp-commercial",
+    reason: "GP source corroboration task"
+  }, [{
+    id: "gp-commercial",
+    name: "Commercial Street Surgery",
+    type: "gp",
+    region: "Northland",
+    city: "Kawakawa",
+    phone: "09 404 0885"
+  }]);
+  stale.existingProviderMatches.push({
+    providerId: "gp-unrelated-healthpoint",
+    name: "Unrelated Clinic",
+    type: "gp",
+    region: "Auckland",
+    city: "Auckland",
+    signals: ["website-domain"]
+  });
+  stale.possibleProviderIds.push("gp-unrelated-healthpoint");
+  stale.duplicateSignals.push("website-domain");
+  stale.reviewReasons.push("possible existing provider match: gp-commercial, gp-unrelated-healthpoint");
+  const [merged] = mergeGooglePlacesCandidates([stale], []);
+  assert.deepEqual(merged.possibleProviderIds, ["gp-commercial"]);
+  assert(!merged.existingProviderMatches.some((match) => match.providerId === "gp-unrelated-healthpoint"));
+  assert(!merged.reviewReasons.some((reason) => /gp-unrelated-healthpoint/.test(reason)));
 });
 
 test("Google Places candidate matching flags possible existing providers by website or phone", () => {
@@ -587,6 +747,66 @@ test("Google Places candidates become discovery seeds for source corroboration",
   assert.equal(seed.knownWebsite, "https://seedpsych.nz");
   assert.equal(seed.knownSourceUrl, "https://seedpsych.nz");
   assert.match(seed.reason, /corroborate/i);
+});
+
+test("Google Places GP corroboration seeds outrank stale weak GP source records", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const providerSourcesPath = path.join(dir, "provider-sources.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const placesPath = path.join(dir, "places.json");
+  writeJson(providersPath, [{
+    id: "gp-north",
+    name: "North Clinic",
+    type: "gp",
+    region: "Northland",
+    city: "Whangarei",
+    phone: "09 111 2222",
+    sourceQuality: "third-party public GP listing",
+    confidence: "low",
+    needsManualVerification: true
+  }]);
+  writeJson(providerSourcesPath, { liveSources: {} });
+  writeJson(sourceFitPath, { findings: [{ providerId: "gp-north", rule: "weak-gp-source", severity: "low", issue: "weak source" }] });
+  writeJson(emptyPath, { findings: [], items: [], queue: [] });
+  writeJson(placesPath, {
+    candidates: [
+      candidateFromGooglePlace({
+        id: "places/gp-north",
+        displayName: { text: "North Clinic" },
+        formattedAddress: "1 Bank Street, Whangarei 0110, New Zealand",
+        nationalPhoneNumber: "09 111 2222",
+        websiteUri: "https://northclinic.nz",
+        googleMapsUri: "https://maps.google.com/?cid=1234",
+        types: ["doctor", "health"]
+      }, {
+        queryId: "places-gp-corroborate:gp-north",
+        textQuery: "North Clinic Whangarei 09 111 2222 GP medical centre New Zealand",
+        region: "Northland",
+        city: "Whangarei",
+        type: "gp",
+        targetProviderId: "gp-north",
+        reason: "GP source corroboration task | missing fields: website"
+      }, [{ id: "gp-north", name: "North Clinic", type: "gp", phone: "09 111 2222" }])
+    ]
+  });
+  const output = buildProviderDiscoverySeeds({
+    providers: providersPath,
+    providerSources: providerSourcesPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath,
+    discoveryQueue: emptyPath,
+    googlePlacesCandidates: placesPath,
+    manualSeeds: path.join(dir, "missing-manual.json"),
+    region: "Northland",
+    type: "gp",
+    limit: 2
+  });
+  assert.equal(output.seeds[0].seedId.startsWith("google-places:"), true);
+  assert(output.seeds[0].priority > output.seeds[1].priority);
 });
 
 test("seed source fetching inspects provider websites but skips Google Maps sources", async () => {

@@ -76,6 +76,9 @@ manual review burden.
 - Hardened source-page extraction after the Northland batch exposed two noisy
   patterns: announcement headings being treated as service names, and adjacent
   team-list names being merged into one clinician.
+- Added exact-practice Google Places lookups for GP source-corroboration tasks.
+  A bounded Northland batch produced GP candidates linked back to queued
+  provider IDs while suppressing broad matches on shared directory domains.
 
 ## Next Backlog Items
 
@@ -93,9 +96,12 @@ manual review burden.
    `stored-provider-field` only.
 7. Keep adding extractor regression tests whenever generated discovery reports
    show obviously misleading provider names, clinician names, or closure text.
-8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
+8. Use bounded `discover:places -- --gp-corroboration-queue ...` batches for
+   weak GP records, then review the matched websites/Healthpoint links before
+   applying any updates.
+9. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-9. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
+10. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.

@@ -215,6 +215,17 @@ changes.
 For repeat targeted runs, add `--merge-existing` so new Places leads are merged
 into the current candidate file instead of replacing earlier candidates.
 
+To use Places as a review-gated helper for weak GP source records, run a small
+batch from the GP corroboration queue:
+
+```sh
+npm run discover:places -- --gp-corroboration-queue data/gp-source-corroboration-queue.json --region Northland --limit-queries 5 --max-results-per-query 3 --merge-existing
+```
+
+This creates exact-practice Places candidates tied back to the queued GP
+provider IDs. They still need practice-owned, Healthpoint, PHO/HPI/FHIR, or
+other stronger evidence before any provider row is updated.
+
 Places candidates are also included in `npm run discover:seeds`, so the normal
 evidence pipeline can use their provider-owned websites as review-gated
 corroboration leads. To fetch only known seed websites, without search-engine

@@ -375,6 +375,17 @@ a bounded source check. This mode skips Google Maps/search/social URLs and only
 creates evidence candidates for review. It must not turn Places data into live
 clinical claims.
 
+Google Places can also work from the GP source corroboration queue:
+
+```sh
+npm run discover:places -- --gp-corroboration-queue data/gp-source-corroboration-queue.json --region Northland --limit-queries 5 --merge-existing
+```
+
+Those results are exact-practice discovery leads tied back to queued GP
+provider IDs. They are not enough by themselves to change live GP records; a
+reviewer still needs stronger practice-owned, Healthpoint, PHO/HPI/FHIR, or
+official evidence.
+
 The evidence graph keeps probable provider identities separate. It can match on
 clinician name, practice name, domain, phone, email, address, city/region, and
 known directory URLs. It should not merge two clinicians just because they work

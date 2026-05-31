@@ -78,6 +78,9 @@ mark the claim as review-needed. It must not fake evidence text.
   candidates from regional priority gaps. It reads the API key only from an
   environment variable or local file and does not store it in outputs. Use
   `--merge-existing` for repeat targeted runs so earlier candidates are kept.
+- `npm run discover:places -- --gp-corroboration-queue
+  data/gp-source-corroboration-queue.json` runs exact-practice Places lookups
+  for weak GP source tasks and ties candidates back to the queued provider IDs.
 - `npm run discover:seeds` includes those Places candidates as discovery seeds,
   so provider websites and likely business identities can be corroborated by the
   normal evidence pipeline.

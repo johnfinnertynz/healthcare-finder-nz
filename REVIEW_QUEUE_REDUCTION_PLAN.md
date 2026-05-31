@@ -80,6 +80,9 @@ This cycle added a separate claim review queue:
 - Source-page extraction now avoids using closure/announcement headings as
   provider names and truncates title-prefixed clinician matches before they
   swallow adjacent team-list names.
+- The Places discovery tool can now run exact GP source-corroboration lookups
+  from `data/gp-source-corroboration-queue.json`, carry target provider IDs into
+  review, and avoid broad identity matches from shared directory domains.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
