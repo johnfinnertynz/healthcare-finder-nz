@@ -12,6 +12,8 @@ Updated: 2026-06-01
 - Provider validation warnings: 0.
 - Broken links in default link check: 0.
 - Blocked-by-site links in default link check: 1.
+- Regional priority report: 18 regions reviewed, 9 high priority, 9 medium
+  priority.
 
 Top provider-level root causes:
 
@@ -65,6 +67,10 @@ This cycle added a separate claim review queue:
   `needs_more_info` for unsaved items in narrowed filtered sets, preserves
   existing decisions, and keeps all live data changes behind exported decisions
   plus the controlled apply workflow.
+- `npm run export:regional-quality` now combines coverage, weak GP source
+  tasks, source-fit findings, availability/referral/watchlist signals, and
+  address/coordinate gaps into `REGIONAL_DATA_QUALITY_REPORT.md` so review
+  batches can start with the highest-risk regions.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -127,3 +133,5 @@ Auto-accept is allowed only when all are true:
    live provider update.
 10. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
+11. Run `npm run export:regional-quality` after each review/apply cycle and use
+    the high-priority regions to choose the next focused source research pass.

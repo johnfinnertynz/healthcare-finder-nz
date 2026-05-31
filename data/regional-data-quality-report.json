@@ -1,0 +1,2442 @@
+{
+  "generatedAt": "2026-05-31T21:35:18.249Z",
+  "safety": {
+    "purpose": "Reviewer triage only. This report does not prove provider availability and must not mutate live provider data.",
+    "noLiveProviderMutation": true,
+    "reviewGateRequired": true
+  },
+  "sources": {
+    "providers": "providers.json",
+    "sourceFitAudit": "data/provider-source-fit-audit.json",
+    "availabilityAudit": "data/provider-availability-audit.json",
+    "referralAudit": "data/provider-psychiatrist-referral-audit.json",
+    "gpCorroborationQueue": "data/gp-source-corroboration-queue.json",
+    "monitorQueue": "data/provider-monitor-queue.json",
+    "watchlist": "data/monitors/provider-availability-watchlist.json"
+  },
+  "summary": {
+    "regions": 18,
+    "highPriorityRegions": 9,
+    "mediumPriorityRegions": 9,
+    "lowPriorityRegions": 0,
+    "topPriorities": [
+      {
+        "region": "Auckland",
+        "priorityLevel": "high",
+        "priorityScore": 171,
+        "firstAction": "Corroborate 53 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources."
+      },
+      {
+        "region": "Northland",
+        "priorityLevel": "high",
+        "priorityScore": 140,
+        "firstAction": "Corroborate 16 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources."
+      },
+      {
+        "region": "Taranaki",
+        "priorityLevel": "high",
+        "priorityScore": 130,
+        "firstAction": "Corroborate 8 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources."
+      },
+      {
+        "region": "Manawatu-Whanganui",
+        "priorityLevel": "high",
+        "priorityScore": 126,
+        "firstAction": "Corroborate 10 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources."
+      },
+      {
+        "region": "Southland",
+        "priorityLevel": "high",
+        "priorityScore": 109,
+        "firstAction": "Corroborate 7 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources."
+      }
+    ]
+  },
+  "regions": [
+    {
+      "region": "Auckland",
+      "priorityLevel": "high",
+      "priorityScore": 171,
+      "coverage": {
+        "totalProviders": 364,
+        "directCare": 359,
+        "localDirectCare": 349,
+        "byType": {
+          "gp": 333,
+          "public-service": 6,
+          "psychologist": 2,
+          "psychiatrist": 5,
+          "counsellor": 1,
+          "addiction": 1,
+          "youth": 1
+        },
+        "gp": 333,
+        "counsellor": 1,
+        "psychologist": 2,
+        "talkingTherapy": 3,
+        "psychiatrist": 5,
+        "youth": 1,
+        "addiction": 1,
+        "publicMentalHealth": 6,
+        "missingSignals": []
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 78,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 25,
+          "low": 53,
+          "byRule": {
+            "broad-tag-without-source-support": 8,
+            "weak-telehealth-evidence": 8,
+            "weak-maori-evidence": 8,
+            "register-only-public-contact": 1,
+            "weak-gp-source": 53
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 53,
+        "monitorItems": 0,
+        "watchlistItems": 1,
+        "missingAddress": 4,
+        "missingCoords": 0,
+        "needsManualVerification": 350,
+        "thirdPartyOnlyGp": 333
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-the-auckland-city-doctors-36-8570-174-7616",
+          "name": "The Auckland City Doctors",
+          "type": "gp",
+          "city": "Auckland",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-airport-doctors-36-9962-174-7882",
+          "name": "Airport Doctors",
+          "type": "gp",
+          "city": "Auckland Airport",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-rosebank-road-medical-services-ltd-36-8944-174-6968",
+          "name": "Rosebank Road Medical Services Ltd.",
+          "type": "gp",
+          "city": "Avondale",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "auckland-auckland-mental-wellness-centre",
+          "name": "Auckland Mental Wellness Centre",
+          "type": "psychologist",
+          "city": "Remuera",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "auckland-mt-eden-counselling-psychotherapy",
+          "name": "Mt Eden Counselling & Psychotherapy",
+          "type": "counsellor",
+          "city": "Mt Eden",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "auckland-northspan-wellbeing",
+          "name": "Northspan Wellbeing",
+          "type": "counsellor",
+          "city": "Takapuna",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "crisis-auckland-central",
+          "name": "Auckland Central Mental Health Crisis Team",
+          "type": "public-service",
+          "city": "Auckland Central",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "crisis-auckland-south-east",
+          "name": "Auckland East and South Mental Health Crisis Team",
+          "type": "public-service",
+          "city": "East and South Auckland",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 53 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Review 25 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Northland",
+      "priorityLevel": "high",
+      "priorityScore": 140,
+      "coverage": {
+        "totalProviders": 55,
+        "directCare": 54,
+        "localDirectCare": 46,
+        "byType": {
+          "gp": 34,
+          "counsellor": 2,
+          "addiction": 2,
+          "public-service": 5,
+          "youth": 1,
+          "psychologist": 2
+        },
+        "gp": 34,
+        "counsellor": 2,
+        "psychologist": 2,
+        "talkingTherapy": 4,
+        "psychiatrist": 0,
+        "youth": 1,
+        "addiction": 2,
+        "publicMentalHealth": 5,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 25,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 9,
+          "low": 16,
+          "byRule": {
+            "weak-maori-evidence": 4,
+            "weak-telehealth-evidence": 2,
+            "broad-tag-without-source-support": 3,
+            "weak-gp-source": 16
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 16,
+        "monitorItems": 0,
+        "watchlistItems": 6,
+        "missingAddress": 5,
+        "missingCoords": 1,
+        "needsManualVerification": 42,
+        "thirdPartyOnlyGp": 34
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-hikurangi-medical-centre-35-5965-174-2857",
+          "name": "Hikurangi Medical Centre",
+          "type": "gp",
+          "city": "Hikurangi",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-wh-nau-ora-community-clinic-kaikohe-35-4081-173-7970",
+          "name": "Whānau Ora Community Clinic - Kaikohe",
+          "type": "gp",
+          "city": "Kaikohe",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-commercial-street-surgery-35-3806-174-0683",
+          "name": "Commercial Street Surgery",
+          "type": "gp",
+          "city": "Kawakawa",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-te-ara-tu-o-ng-ti-hine-35-3861-174-0698",
+          "name": "Te Ara Tu o Ngāti Hine",
+          "type": "gp",
+          "city": "Kawakawa",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "gp-te-ara-tu-o-ng-ti-hine-35-3882-174-0126",
+          "name": "Te Ara Tu o Ngāti Hine",
+          "type": "gp",
+          "city": "Moerewa",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "gp-te-ara-tu-o-ng-ti-hine-35-7273-174-3173",
+          "name": "Te Ara Tu o Ngāti Hine",
+          "type": "gp",
+          "city": "Whangārei",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "northland-healthnz-adult-community-mha",
+          "name": "Te Tai Tokerau Adult Community Mental Health & Addiction Service",
+          "type": "public-service",
+          "city": "Whangarei, Kaipara, Far North, Mid North, and Bay of Islands",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "crisis-northland",
+          "name": "Northland Mental Health Crisis Team",
+          "type": "public-service",
+          "city": "Northland",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 16 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Review 9 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Taranaki",
+      "priorityLevel": "high",
+      "priorityScore": 130,
+      "coverage": {
+        "totalProviders": 40,
+        "directCare": 39,
+        "localDirectCare": 35,
+        "byType": {
+          "gp": 26,
+          "psychologist": 3,
+          "public-service": 4,
+          "counsellor": 1,
+          "addiction": 1
+        },
+        "gp": 26,
+        "counsellor": 1,
+        "psychologist": 3,
+        "talkingTherapy": 4,
+        "psychiatrist": 0,
+        "youth": 0,
+        "addiction": 1,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local youth/rangatahi support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 20,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 12,
+          "low": 8,
+          "byRule": {
+            "weak-maori-evidence": 2,
+            "broad-tag-without-source-support": 9,
+            "weak-telehealth-evidence": 1,
+            "weak-gp-source": 8
+          }
+        },
+        "availability": {
+          "total": 1,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 1,
+          "low": 0,
+          "byRule": {
+            "blocked-or-unreachable-source": 1
+          }
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 8,
+        "monitorItems": 1,
+        "watchlistItems": 4,
+        "missingAddress": 5,
+        "missingCoords": 1,
+        "needsManualVerification": 29,
+        "thirdPartyOnlyGp": 26
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-eltham-health-centre-39-4313-174-2997",
+          "name": "Eltham Health Centre",
+          "type": "gp",
+          "city": "Eltham",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-full-circle-medical-39-1561-174-2042",
+          "name": "Full Circle Medical",
+          "type": "gp",
+          "city": "Inglewood",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-the-nest-health-centre-39-1561-174-2042",
+          "name": "The Nest Health Centre",
+          "type": "gp",
+          "city": "Inglewood",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-tui-ora-hauora-wh-nau-ng-motu-39-0687-174-0679",
+          "name": "Tui Ora Hauora ā-Whānau Ngāmotu",
+          "type": "gp",
+          "city": "New Plymouth",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "gp-tui-ora-hauora-wh-nau-whaitara-39-0020-174-2353",
+          "name": "Tui Ora Hauora ā-Whānau Whaitara",
+          "type": "gp",
+          "city": "Waitara",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "taranaki-future-4u-counselling",
+          "name": "Future 4U Counselling",
+          "type": "counsellor",
+          "city": "New Plymouth",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "taranaki-integrate-psychology",
+          "name": "Integrate Psychology",
+          "type": "psychologist",
+          "city": "New Plymouth, Stratford and Hawera",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "taranaki-progress-to-health",
+          "name": "Progress to Health Taranaki",
+          "type": "public-service",
+          "city": "Taranaki",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 8 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify a youth/rangatahi support pathway for this region.",
+        "Review 12 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Manawatu-Whanganui",
+      "priorityLevel": "high",
+      "priorityScore": 126,
+      "coverage": {
+        "totalProviders": 55,
+        "directCare": 54,
+        "localDirectCare": 48,
+        "byType": {
+          "gp": 37,
+          "counsellor": 1,
+          "psychologist": 2,
+          "public-service": 6,
+          "youth": 2
+        },
+        "gp": 37,
+        "counsellor": 1,
+        "psychologist": 2,
+        "talkingTherapy": 3,
+        "psychiatrist": 0,
+        "youth": 2,
+        "addiction": 0,
+        "publicMentalHealth": 4,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local addiction support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 25,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 15,
+          "low": 10,
+          "byRule": {
+            "weak-maori-evidence": 1,
+            "broad-tag-without-source-support": 9,
+            "weak-telehealth-evidence": 5,
+            "weak-gp-source": 10
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 10,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 5,
+        "missingCoords": 2,
+        "needsManualVerification": 41,
+        "thirdPartyOnlyGp": 37
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-te-waiora-community-health-services-40-3700-175-2349",
+          "name": "Te Waiora Community Health Services",
+          "type": "gp",
+          "city": "Himatangi Beach",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-horowhenua-community-practice-40-6287-175-2838",
+          "name": "Horowhenua Community Practice",
+          "type": "gp",
+          "city": "Levin",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-broadway-medical-chambers-40-3479-175-6257",
+          "name": "Broadway Medical Chambers",
+          "type": "gp",
+          "city": "Manawatu-Wanganui",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-best-care-whakapai-hauora-charitable-trust-40-3792-175-5843",
+          "name": "Best Care (Whakapai Hauora) Charitable Trust",
+          "type": "gp",
+          "city": "Manawatu-Wanganui",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "manawatu-authentically-u",
+          "name": "Authentically U",
+          "type": "counsellor",
+          "city": "Palmerston North",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "manawatu-cenpsyx-palmerston-north",
+          "name": "CenPsyX",
+          "type": "psychologist",
+          "city": "Palmerston North",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "manawatu-mana-o-te-tangata-peer-support",
+          "name": "Mana o te Tangata Trust",
+          "type": "public-service",
+          "city": "Palmerston North, Levin, and Woodville",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "crisis-manawatu-whanganui",
+          "name": "Manawatu-Whanganui Mental Health Crisis Teams",
+          "type": "public-service",
+          "city": "Palmerston North and Whanganui",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 10 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify alcohol, drug, or gambling support options for this region.",
+        "Review 15 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Southland",
+      "priorityLevel": "high",
+      "priorityScore": 109,
+      "coverage": {
+        "totalProviders": 38,
+        "directCare": 37,
+        "localDirectCare": 33,
+        "byType": {
+          "youth": 2,
+          "psychologist": 2,
+          "gp": 22,
+          "counsellor": 4,
+          "public-service": 3
+        },
+        "gp": 22,
+        "counsellor": 4,
+        "psychologist": 2,
+        "talkingTherapy": 6,
+        "psychiatrist": 0,
+        "youth": 2,
+        "addiction": 0,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local addiction support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 22,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 15,
+          "low": 7,
+          "byRule": {
+            "weak-maori-evidence": 1,
+            "broad-tag-without-source-support": 12,
+            "weak-telehealth-evidence": 2,
+            "weak-gp-source": 7
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 7,
+        "monitorItems": 0,
+        "watchlistItems": 1,
+        "missingAddress": 4,
+        "missingCoords": 0,
+        "needsManualVerification": 26,
+        "thirdPartyOnlyGp": 22
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-bluff-medical-centre-46-6043-168-3503",
+          "name": "Bluff Medical Centre",
+          "type": "gp",
+          "city": "Bluff",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-glengarry-medical-centre-46-4018-168-3855",
+          "name": "Glengarry Medical Centre",
+          "type": "gp",
+          "city": "Invercargill",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-queens-park-general-practice-ltd-46-4066-168-3530",
+          "name": "Queens Park General Practice Ltd",
+          "type": "gp",
+          "city": "Invercargill",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-waikiwi-medical-centre-46-3792-168-3474",
+          "name": "Waikiwi Medical Centre",
+          "type": "gp",
+          "city": "Invercargill",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "southland-annelize-prinsloo-south-coast",
+          "name": "Annelize Prinsloo - South Coast Psychology",
+          "type": "psychologist",
+          "city": "Invercargill and wider Southland",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "southland-gore-counselling-centre",
+          "name": "Gore Counselling Centre",
+          "type": "counsellor",
+          "city": "Gore",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "southland-adventure-development",
+          "name": "Adventure Development Southland",
+          "type": "youth",
+          "city": "Southland",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "southland-nga-kete-matauranga-pounamu",
+          "name": "Nga Kete Matauranga Pounamu",
+          "type": "public-service",
+          "city": "Invercargill / Southland",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 7 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify alcohol, drug, or gambling support options for this region.",
+        "Review 15 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Canterbury",
+      "priorityLevel": "high",
+      "priorityScore": 108,
+      "coverage": {
+        "totalProviders": 134,
+        "directCare": 132,
+        "localDirectCare": 123,
+        "byType": {
+          "gp": 101,
+          "psychologist": 4,
+          "public-service": 4,
+          "youth": 4,
+          "mens-centre": 1,
+          "addiction": 3,
+          "psychiatrist": 5,
+          "counsellor": 1
+        },
+        "gp": 101,
+        "counsellor": 1,
+        "psychologist": 4,
+        "talkingTherapy": 5,
+        "psychiatrist": 5,
+        "youth": 4,
+        "addiction": 3,
+        "publicMentalHealth": 4,
+        "missingSignals": []
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 21,
+          "high": 1,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 1,
+          "medium": 17,
+          "low": 3,
+          "byRule": {
+            "directory-treated-direct": 1,
+            "broad-tag-without-source-support": 12,
+            "weak-rainbow-evidence": 1,
+            "weak-maori-evidence": 1,
+            "register-only-public-contact": 1,
+            "weak-telehealth-evidence": 2,
+            "weak-gp-source": 3
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 3,
+        "monitorItems": 0,
+        "watchlistItems": 1,
+        "missingAddress": 10,
+        "missingCoords": 2,
+        "needsManualVerification": 124,
+        "thirdPartyOnlyGp": 100
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-avonhead-surgery-43-5130-172-5553",
+          "name": "Avonhead Surgery",
+          "type": "gp",
+          "city": "Christchurch",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-qe2-medical-centre-43-4950-172-7112",
+          "name": "QE2 Medical Centre",
+          "type": "gp",
+          "city": "Christchurch",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-rangiora-medical-good-street-43-3021-172-5938",
+          "name": "Rangiora Medical - Good Street",
+          "type": "gp",
+          "city": "Rangiora",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "canterbury-mherc",
+          "name": "Mental Health Education and Resource Centre",
+          "type": "directory",
+          "city": "Christchurch",
+          "reason": "directory-treated-direct"
+        },
+        {
+          "providerId": "canterbury-lucid-psychotherapy",
+          "name": "Lucid Psychotherapy and Counselling",
+          "type": "counsellor",
+          "city": "Christchurch",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "canterbury-talking-therapy",
+          "name": "Talking Therapy Psychotherapy and Counselling Centre",
+          "type": "counsellor",
+          "city": "Christchurch",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "canterbury-healthnz-adult-crisis",
+          "name": "Canterbury Adult Mental Health Single Point of Entry",
+          "type": "public-service",
+          "city": "Christchurch",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "canterbury-caflink",
+          "name": "Canterbury CAFLink",
+          "type": "youth",
+          "city": "Christchurch",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Review 17 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Nelson Marlborough Tasman",
+      "priorityLevel": "high",
+      "priorityScore": 105,
+      "coverage": {
+        "totalProviders": 39,
+        "directCare": 38,
+        "localDirectCare": 32,
+        "byType": {
+          "public-service": 5,
+          "psychologist": 2,
+          "gp": 23,
+          "counsellor": 1,
+          "youth": 1
+        },
+        "gp": 23,
+        "counsellor": 1,
+        "psychologist": 2,
+        "talkingTherapy": 3,
+        "psychiatrist": 0,
+        "youth": 1,
+        "addiction": 0,
+        "publicMentalHealth": 5,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local addiction support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 16,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 15,
+          "low": 1,
+          "byRule": {
+            "weak-maori-evidence": 1,
+            "broad-tag-without-source-support": 11,
+            "weak-telehealth-evidence": 3,
+            "weak-gp-source": 1
+          }
+        },
+        "availability": {
+          "total": 1,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 1,
+          "low": 0,
+          "byRule": {
+            "blocked-or-unreachable-source": 1
+          }
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 1,
+        "monitorItems": 1,
+        "watchlistItems": 1,
+        "missingAddress": 4,
+        "missingCoords": 3,
+        "needsManualVerification": 30,
+        "thirdPartyOnlyGp": 23
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-florence-medical-centre-41-3415-173-1893",
+          "name": "Florence Medical Centre",
+          "type": "gp",
+          "city": "Tasman",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-hauora-health-centre-41-2738-173-2873",
+          "name": "Hauora Health Centre",
+          "type": "gp",
+          "city": "Nelson",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "marlborough-rachael-sim-clinical-psychology",
+          "name": "Dr Rachael Sim Clinical Psychology",
+          "type": "psychologist",
+          "city": "Blenheim",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "marlborough-rosemary-crockett-counselling",
+          "name": "Rosemary Crockett Counselling",
+          "type": "counsellor",
+          "city": "Blenheim",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "marlborough-top-of-the-south-psych-services",
+          "name": "Top of the South Psych Services",
+          "type": "psychologist",
+          "city": "Blenheim",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "nelson-marlborough-tasman-care-marlborough",
+          "name": "Care Marlborough",
+          "type": "public-service",
+          "city": "Blenheim",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "crisis-nelson-marlborough-tasman",
+          "name": "Nelson, Marlborough and Tasman Mental Health Crisis Teams",
+          "type": "public-service",
+          "city": "Nelson, Marlborough, Tasman",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "nelson-marlborough-tasman-te-whare-mahana",
+          "name": "Te Whare Mahana",
+          "type": "public-service",
+          "city": "Golden Bay",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify alcohol, drug, or gambling support options for this region.",
+        "Review 15 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "South Canterbury",
+      "priorityLevel": "high",
+      "priorityScore": 101,
+      "coverage": {
+        "totalProviders": 30,
+        "directCare": 29,
+        "localDirectCare": 25,
+        "byType": {
+          "counsellor": 4,
+          "psychologist": 2,
+          "public-service": 3,
+          "gp": 16
+        },
+        "gp": 16,
+        "counsellor": 4,
+        "psychologist": 2,
+        "talkingTherapy": 6,
+        "psychiatrist": 0,
+        "youth": 0,
+        "addiction": 0,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local youth/rangatahi support",
+          "local addiction support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 15,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 13,
+          "low": 2,
+          "byRule": {
+            "broad-tag-without-source-support": 10,
+            "weak-telehealth-evidence": 3,
+            "weak-gp-source": 2
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 2,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 1,
+        "missingCoords": 6,
+        "needsManualVerification": 20,
+        "thirdPartyOnlyGp": 16
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-temuka-family-practice-44-2416-171-2772",
+          "name": "Temuka Family Practice",
+          "type": "gp",
+          "city": "Temuka",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-hirsch-ford-medical-44-3949-171-2480",
+          "name": "Hirsch-Ford Medical",
+          "type": "gp",
+          "city": "Timaru",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "south-canterbury-a-time-to-talk",
+          "name": "A Time to Talk",
+          "type": "counsellor",
+          "city": "Timaru",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "south-canterbury-aod-service",
+          "name": "Alcohol & Other Drugs (A&OD) South Canterbury",
+          "type": "addiction",
+          "city": "Timaru",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "south-canterbury-black-dog-therapy",
+          "name": "Black Dog Therapy",
+          "type": "counsellor",
+          "city": "Timaru",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "crisis-south-canterbury",
+          "name": "South Canterbury Mental Health Crisis Team",
+          "type": "public-service",
+          "city": "South Canterbury",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "south-canterbury-alice-mcclintock",
+          "name": "Alice McClintock - South Coast Psychology",
+          "type": "psychologist",
+          "city": "Timaru",
+          "reason": "missing coordinates"
+        },
+        {
+          "providerId": "south-canterbury-arowhenua-whanau-services",
+          "name": "Arowhenua Whanau Services",
+          "type": "public-service",
+          "city": "Temuka / Timaru / Waimate / Twizel",
+          "reason": "missing coordinates"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify a youth/rangatahi support pathway for this region.",
+        "Add or verify alcohol, drug, or gambling support options for this region.",
+        "Review 13 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Waikato",
+      "priorityLevel": "high",
+      "priorityScore": 98,
+      "coverage": {
+        "totalProviders": 72,
+        "directCare": 71,
+        "localDirectCare": 67,
+        "byType": {
+          "gp": 56,
+          "counsellor": 1,
+          "psychologist": 4,
+          "public-service": 4,
+          "addiction": 1,
+          "youth": 1
+        },
+        "gp": 56,
+        "counsellor": 1,
+        "psychologist": 4,
+        "talkingTherapy": 5,
+        "psychiatrist": 0,
+        "youth": 1,
+        "addiction": 1,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 18,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 14,
+          "low": 4,
+          "byRule": {
+            "weak-maori-evidence": 6,
+            "broad-tag-without-source-support": 7,
+            "weak-telehealth-evidence": 1,
+            "weak-gp-source": 4
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 4,
+        "monitorItems": 0,
+        "watchlistItems": 2,
+        "missingAddress": 4,
+        "missingCoords": 1,
+        "needsManualVerification": 59,
+        "thirdPartyOnlyGp": 56
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-dr-k-pillay-ltd-37-8833-175-4638",
+          "name": "Dr K Pillay LTD",
+          "type": "gp",
+          "city": "Cambridge",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-dr-n-p-e-schofield-37-9057-175-4759",
+          "name": "Dr N.P.E Schofield",
+          "type": "gp",
+          "city": "Cambridge",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-duke-st-health-medical-centre-37-8950-175-4715",
+          "name": "Duke St Health & Medical Centre",
+          "type": "gp",
+          "city": "Cambridge",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-horotiu-hauora-family-health-37-7008-175-2034",
+          "name": "Horotiu Hauora Family Health",
+          "type": "gp",
+          "city": "Hamilton",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-nga-miro-37-6628-175-1543",
+          "name": "Raukura Hauora O Tainui - Nga Miro",
+          "type": "gp",
+          "city": "Ngāruawāhia",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-te-papanui-whare-haumanu-37-7714-175-2931",
+          "name": "Raukura Hauora O Tainui - Te Papanui Whare Haumanu",
+          "type": "gp",
+          "city": "Hamilton",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-te-rengarenga-37-7955-175-2457",
+          "name": "Raukura Hauora O Tainui - Te Rengarenga",
+          "type": "gp",
+          "city": "Hamilton",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-waahi-37-5583-175-1537",
+          "name": "Raukura Hauora O Tainui - Waahi",
+          "type": "gp",
+          "city": "Huntly",
+          "reason": "weak-maori-evidence"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Review 14 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Wellington",
+      "priorityLevel": "medium",
+      "priorityScore": 88,
+      "coverage": {
+        "totalProviders": 98,
+        "directCare": 97,
+        "localDirectCare": 84,
+        "byType": {
+          "gp": 74,
+          "addiction": 1,
+          "psychologist": 1,
+          "psychiatrist": 2,
+          "youth": 3,
+          "counsellor": 1,
+          "public-service": 2
+        },
+        "gp": 74,
+        "counsellor": 1,
+        "psychologist": 1,
+        "talkingTherapy": 2,
+        "psychiatrist": 2,
+        "youth": 3,
+        "addiction": 1,
+        "publicMentalHealth": 2,
+        "missingSignals": []
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 25,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 22,
+          "low": 3,
+          "byRule": {
+            "register-only-public-contact": 2,
+            "weak-rainbow-evidence": 4,
+            "weak-telehealth-evidence": 8,
+            "broad-tag-without-source-support": 6,
+            "weak-maori-evidence": 1,
+            "weak-pasifika-evidence": 1,
+            "weak-gp-source": 3
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 3,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 3,
+        "missingCoords": 3,
+        "needsManualVerification": 87,
+        "thirdPartyOnlyGp": 74
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-kelburn-gps-41-2876-174-7656",
+          "name": "Kelburn GPs",
+          "type": "gp",
+          "city": "Kelburn",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-avalon-medical-centre-41-1977-174-9379",
+          "name": "Avalon Medical Centre",
+          "type": "gp",
+          "city": "Lower Hutt",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-t-tahi-bay-surgery-ltd-41-1089-174-8400",
+          "name": "Tītahi Bay Surgery Ltd",
+          "type": "gp",
+          "city": "Porirua",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "nzccp-alan-hackney",
+          "name": "Alan Hackney",
+          "type": "psychologist",
+          "city": "Wellington",
+          "reason": "register-only-public-contact"
+        },
+        {
+          "providerId": "nzccp-alana-malloy",
+          "name": "Alana Malloy",
+          "type": "psychologist",
+          "city": "Wellington",
+          "reason": "register-only-public-contact"
+        },
+        {
+          "providerId": "ranzcp-3038",
+          "name": "Dr Justin Barry-Walsh",
+          "type": "psychiatrist",
+          "city": "Khandallah",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "ranzcp-4171",
+          "name": "Prof Sunny Collings",
+          "type": "psychiatrist",
+          "city": "Kumutoto",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "wellington-piki-youth-support",
+          "name": "Piki",
+          "type": "youth",
+          "city": "Greater Wellington",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Review 22 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Rotorua and Taupo",
+      "priorityLevel": "medium",
+      "priorityScore": 87,
+      "coverage": {
+        "totalProviders": 41,
+        "directCare": 40,
+        "localDirectCare": 34,
+        "byType": {
+          "addiction": 2,
+          "public-service": 5,
+          "gp": 24,
+          "psychologist": 2,
+          "counsellor": 1
+        },
+        "gp": 24,
+        "counsellor": 1,
+        "psychologist": 2,
+        "talkingTherapy": 3,
+        "psychiatrist": 0,
+        "youth": 0,
+        "addiction": 2,
+        "publicMentalHealth": 5,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local youth/rangatahi support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 13,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 11,
+          "low": 2,
+          "byRule": {
+            "weak-maori-evidence": 1,
+            "broad-tag-without-source-support": 7,
+            "weak-telehealth-evidence": 3,
+            "weak-gp-source": 2
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 2,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 4,
+        "missingCoords": 3,
+        "needsManualVerification": 27,
+        "thirdPartyOnlyGp": 24
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-lakeview-clinic-38-1425-176-2528",
+          "name": "Lakeview Clinic",
+          "type": "gp",
+          "city": "Rotorua",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-western-heights-health-centre-38-1288-176-2199",
+          "name": "Western Heights Health Centre",
+          "type": "gp",
+          "city": "Rotorua",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-te-r-nanga-o-ng-ti-pikiao-general-practice-38-1365-176-2492",
+          "name": "Te Rūnanga o Ngāti Pikiao - General Practice",
+          "type": "gp",
+          "city": "Rotorua",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "rotorua-heads-and-hearts",
+          "name": "Heads and Hearts Psychology",
+          "type": "psychologist",
+          "city": "Rotorua",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "rotorua-healthnz-te-ngako-adult-mhas",
+          "name": "Te Ngako Rotorua Adult Mental Health and Addictions Service",
+          "type": "public-service",
+          "city": "Rotorua, Taupo, Turangi, and Mangakino",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "rotorua-lakes-icamhs",
+          "name": "Infant, Child and Adolescent Mental Health Service | Lakes",
+          "type": "youth",
+          "city": "Rotorua and Taupo",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "rotorua-taupo-ember-lakes-community-support",
+          "name": "Ember Rotorua and Lakes Community Support",
+          "type": "public-service",
+          "city": "Rotorua and Lakes",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "rotorua-taupo-lifewise-rotorua",
+          "name": "Lifewise Rotorua Mental Health & Addiction",
+          "type": "public-service",
+          "city": "Rotorua",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify a youth/rangatahi support pathway for this region.",
+        "Review 11 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Bay of Plenty",
+      "priorityLevel": "medium",
+      "priorityScore": 86,
+      "coverage": {
+        "totalProviders": 64,
+        "directCare": 62,
+        "localDirectCare": 57,
+        "byType": {
+          "counsellor": 2,
+          "public-service": 3,
+          "gp": 48,
+          "youth": 1,
+          "psychologist": 2,
+          "addiction": 1
+        },
+        "gp": 48,
+        "counsellor": 2,
+        "psychologist": 2,
+        "talkingTherapy": 4,
+        "psychiatrist": 0,
+        "youth": 1,
+        "addiction": 1,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 19,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 17,
+          "low": 2,
+          "byRule": {
+            "weak-telehealth-evidence": 2,
+            "broad-tag-without-source-support": 9,
+            "weak-maori-evidence": 5,
+            "register-only-public-contact": 1,
+            "weak-gp-source": 2
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 2,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 2,
+        "missingCoords": 1,
+        "needsManualVerification": 54,
+        "thirdPartyOnlyGp": 48
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-te-korowai-hauora-o-hauraki-paeroa-37-3817-175-6707",
+          "name": "Te Korowai Hauora o Hauraki - Paeroa",
+          "type": "gp",
+          "city": "Paeroa",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-te-whare-hauora-o-raungaiti-37-7387-175-7379",
+          "name": "Te Whare Hauora o Raungaiti",
+          "type": "gp",
+          "city": "Waharoa",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "bay-of-plenty-adult-community-mental-health",
+          "name": "Adult Community Mental Health Service | Bay of Plenty",
+          "type": "public-service",
+          "city": "Tauranga and Whakatane",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "bay-of-plenty-bay-counselling",
+          "name": "Bay Counselling and Therapy Service",
+          "type": "counsellor",
+          "city": "Tauranga",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "bay-of-plenty-psychology-group-tauranga",
+          "name": "The Psychology Group - Tauranga",
+          "type": "psychologist",
+          "city": "Tauranga",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "crisis-bay-of-plenty",
+          "name": "Bay of Plenty Mental Health Crisis Teams",
+          "type": "public-service",
+          "city": "Tauranga and Whakatane",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "bay-of-plenty-get-smart-tauranga",
+          "name": "Get Smart Tauranga",
+          "type": "youth",
+          "city": "Tauranga",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "bay-of-plenty-turning-point-trust",
+          "name": "Turning Point Trust",
+          "type": "public-service",
+          "city": "Tauranga",
+          "reason": "missing coordinates"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Review 17 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Otago",
+      "priorityLevel": "medium",
+      "priorityScore": 82,
+      "coverage": {
+        "totalProviders": 46,
+        "directCare": 45,
+        "localDirectCare": 42,
+        "byType": {
+          "youth": 2,
+          "gp": 29,
+          "psychiatrist": 3,
+          "psychologist": 5,
+          "counsellor": 2,
+          "public-service": 1
+        },
+        "gp": 29,
+        "counsellor": 2,
+        "psychologist": 5,
+        "talkingTherapy": 7,
+        "psychiatrist": 3,
+        "youth": 2,
+        "addiction": 0,
+        "publicMentalHealth": 1,
+        "missingSignals": [
+          "local addiction support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 19,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 10,
+          "low": 9,
+          "byRule": {
+            "broad-tag-without-source-support": 6,
+            "weak-maori-evidence": 2,
+            "weak-telehealth-evidence": 2,
+            "weak-gp-source": 9
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 9,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 4,
+        "missingCoords": 0,
+        "needsManualVerification": 40,
+        "thirdPartyOnlyGp": 29
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-albany-street-medical-centre-dunedin-45-8661-170-5089",
+          "name": "Albany Street Medical Centre (Dunedin)",
+          "type": "gp",
+          "city": "Dunedin",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-green-island-family-healthcare-45-9028-170-4301",
+          "name": "Green Island Family Healthcare",
+          "type": "gp",
+          "city": "Dunedin",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-helensburgh-medical-centre-45-8534-170-4836",
+          "name": "Helensburgh Medical Centre",
+          "type": "gp",
+          "city": "Dunedin",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "dunedin-bernadette-berry-delta-psychology",
+          "name": "Bernadette Berry, Delta Psychology",
+          "type": "psychologist",
+          "city": "Dunedin",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "dunedin-otago-clinical-psychology-centre",
+          "name": "University of Otago Clinical Psychology Centre",
+          "type": "psychologist",
+          "city": "Dunedin",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "dunedin-parker-chin-psychology",
+          "name": "Parker & Chin Psychology",
+          "type": "psychologist",
+          "city": "Dunedin",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "gp-m-ori-hill-clinic-45-8581-170-5008",
+          "name": "Māori Hill Clinic",
+          "type": "gp",
+          "city": "Dunedin",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "otago-adventure-development",
+          "name": "Adventure Development Otago",
+          "type": "youth",
+          "city": "Dunedin / Otago",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 9 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Add or verify alcohol, drug, or gambling support options for this region.",
+        "Review 10 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Tairawhiti",
+      "priorityLevel": "medium",
+      "priorityScore": 74,
+      "coverage": {
+        "totalProviders": 21,
+        "directCare": 20,
+        "localDirectCare": 16,
+        "byType": {
+          "counsellor": 2,
+          "gp": 7,
+          "public-service": 3,
+          "psychologist": 2,
+          "addiction": 2
+        },
+        "gp": 7,
+        "counsellor": 2,
+        "psychologist": 2,
+        "talkingTherapy": 4,
+        "psychiatrist": 0,
+        "youth": 0,
+        "addiction": 2,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local youth/rangatahi support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 11,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 7,
+          "low": 4,
+          "byRule": {
+            "broad-tag-without-source-support": 3,
+            "weak-telehealth-evidence": 4,
+            "weak-gp-source": 4
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 4,
+        "monitorItems": 0,
+        "watchlistItems": 1,
+        "missingAddress": 1,
+        "missingCoords": 1,
+        "needsManualVerification": 9,
+        "thirdPartyOnlyGp": 7
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-city-medical-centre-gisborne-38-6645-178-0226",
+          "name": "City Medical Centre Gisborne",
+          "type": "gp",
+          "city": "Gisborne",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-de-lautour-medical-38-6683-178-0475",
+          "name": "De Lautour Medical",
+          "type": "gp",
+          "city": "Gisborne",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "gp-te-puhi-kai-ti-community-health-centre-38-6741-178-0511",
+          "name": "Te Puhi Kai-ti Community Health Centre",
+          "type": "gp",
+          "city": "Gisborne",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "tairawhiti-atawhai-counselling",
+          "name": "Atawhai Counselling and Supervision",
+          "type": "counsellor",
+          "city": "Gisborne",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "tairawhiti-icamhs-te-whare-o-te-rito",
+          "name": "ICAMHS Te Whare o te Rito",
+          "type": "youth",
+          "city": "Gisborne",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "tairawhiti-older-persons-mental-health-services",
+          "name": "Older Persons Mental Health Services | Tairawhiti",
+          "type": "public-service",
+          "city": "Gisborne",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "tairawhiti-te-whare-oranga",
+          "name": "Te Whare Oranga Adult Community Mental Health & Addiction Services",
+          "type": "public-service",
+          "city": "Gisborne",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "crisis-tairawhiti",
+          "name": "Tairawhiti Mental Health Crisis Team",
+          "type": "public-service",
+          "city": "Gisborne",
+          "reason": "missing address"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify a youth/rangatahi support pathway for this region.",
+        "Review 7 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "National",
+      "priorityLevel": "medium",
+      "priorityScore": 73,
+      "coverage": {
+        "totalProviders": 35,
+        "directCare": 18,
+        "localDirectCare": 0,
+        "byType": {},
+        "gp": 0,
+        "counsellor": 0,
+        "psychologist": 0,
+        "talkingTherapy": 0,
+        "psychiatrist": 0,
+        "youth": 0,
+        "addiction": 0,
+        "publicMentalHealth": 0,
+        "missingSignals": []
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 10,
+          "high": 1,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 1,
+          "medium": 9,
+          "low": 0,
+          "byRule": {
+            "directory-treated-direct": 1,
+            "broad-tag-without-source-support": 7,
+            "direct-provider-directory-tag-review": 1,
+            "weak-maori-evidence": 1
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 0,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 0,
+        "missingCoords": 0,
+        "needsManualVerification": 14,
+        "thirdPartyOnlyGp": 0
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "national-family-services-directory",
+          "name": "Family Services Directory / 211 Helpline",
+          "type": "directory",
+          "city": "Aotearoa New Zealand",
+          "reason": "directory-treated-direct"
+        },
+        {
+          "providerId": "national-asian-family-services",
+          "name": "Asian Family Services",
+          "type": "counsellor",
+          "city": "Auckland, Wellington, Christchurch and telehealth",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "national-empath-psychology",
+          "name": "Empath Psychology",
+          "type": "psychologist",
+          "city": "Online",
+          "reason": "broad-tag-without-source-support"
+        }
+      ],
+      "recommendedActions": [
+        "Review national fallback records for overbroad tags, weak source evidence, or directory/direct-contact confusion.",
+        "Keep national services as reviewed fallback options, not substitutes for local direct-care coverage."
+      ]
+    },
+    {
+      "region": "West Coast",
+      "priorityLevel": "medium",
+      "priorityScore": 73,
+      "coverage": {
+        "totalProviders": 21,
+        "directCare": 20,
+        "localDirectCare": 12,
+        "byType": {
+          "gp": 4,
+          "public-service": 6,
+          "psychologist": 1,
+          "addiction": 1
+        },
+        "gp": 4,
+        "counsellor": 0,
+        "psychologist": 1,
+        "talkingTherapy": 1,
+        "psychiatrist": 0,
+        "youth": 0,
+        "addiction": 1,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway",
+          "local youth/rangatahi support"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 9,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 8,
+          "low": 1,
+          "byRule": {
+            "weak-telehealth-evidence": 4,
+            "broad-tag-without-source-support": 3,
+            "weak-maori-evidence": 1,
+            "weak-gp-source": 1
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 1,
+        "monitorItems": 0,
+        "watchlistItems": 1,
+        "missingAddress": 3,
+        "missingCoords": 2,
+        "needsManualVerification": 12,
+        "thirdPartyOnlyGp": 4
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-wood-medical-services-42-4442-171-1960",
+          "name": "Wood Medical Services",
+          "type": "gp",
+          "city": "Greymouth",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "west-coast-adult-community-mental-health",
+          "name": "Adult Community Mental Health Services | West Coast",
+          "type": "public-service",
+          "city": "Greymouth, Hokitika, and Westport",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "west-coast-camhs",
+          "name": "Child and Adolescent Mental Health Services | West Coast",
+          "type": "youth",
+          "city": "Greymouth and wider West Coast",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "west-coast-health-primary-counselling",
+          "name": "West Coast Health - Primary Health Counselling Programme",
+          "type": "counsellor",
+          "city": "Greymouth and wider West Coast",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "west-coast-homebuilders",
+          "name": "Homebuilders West Coast",
+          "type": "public-service",
+          "city": "West Coast",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "west-coast-healthnz-mental-health-addiction",
+          "name": "West Coast Mental Health and Addiction Services",
+          "type": "public-service",
+          "city": "West Coast",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "crisis-west-coast",
+          "name": "West Coast Mental Health Crisis Team",
+          "type": "public-service",
+          "city": "West Coast",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "west-coast-proactive-greymouth-psychology",
+          "name": "Proactive Greymouth",
+          "type": "psychologist",
+          "city": "Greymouth",
+          "reason": "missing coordinates"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Add or verify a youth/rangatahi support pathway for this region.",
+        "Review 8 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Hawke's Bay",
+      "priorityLevel": "medium",
+      "priorityScore": 58,
+      "coverage": {
+        "totalProviders": 37,
+        "directCare": 36,
+        "localDirectCare": 31,
+        "byType": {
+          "psychologist": 2,
+          "gp": 20,
+          "public-service": 4,
+          "youth": 1,
+          "psychiatrist": 1,
+          "addiction": 1,
+          "counsellor": 2
+        },
+        "gp": 20,
+        "counsellor": 2,
+        "psychologist": 2,
+        "talkingTherapy": 4,
+        "psychiatrist": 1,
+        "youth": 1,
+        "addiction": 1,
+        "publicMentalHealth": 3,
+        "missingSignals": []
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 12,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 12,
+          "low": 0,
+          "byRule": {
+            "weak-maori-evidence": 2,
+            "broad-tag-without-source-support": 7,
+            "weak-telehealth-evidence": 3
+          }
+        },
+        "availability": {
+          "total": 1,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 1,
+          "low": 0,
+          "byRule": {
+            "blocked-or-unreachable-source": 1
+          }
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 0,
+        "monitorItems": 1,
+        "watchlistItems": 2,
+        "missingAddress": 4,
+        "missingCoords": 2,
+        "needsManualVerification": 23,
+        "thirdPartyOnlyGp": 20
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-maraenui-medical-centre-39-5153-176-9056",
+          "name": "Maraenui Medical Centre",
+          "type": "gp",
+          "city": "Napier",
+          "reason": "weak-maori-evidence"
+        },
+        {
+          "providerId": "hawkes-bay-bay-psychology",
+          "name": "Bay Psychology",
+          "type": "psychologist",
+          "city": "Napier, Taradale, Hastings and Havelock North",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "hawkes-bay-community-mental-health-addiction",
+          "name": "Hawke's Bay Community Mental Health and Addiction Services",
+          "type": "public-service",
+          "city": "Napier, Hastings, Central Hawke's Bay, and Wairoa",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "hawkes-bay-craig-colhoun",
+          "name": "Dr Craig Colhoun Psychology",
+          "type": "psychologist",
+          "city": "Napier and Hastings",
+          "reason": "broad-tag-without-source-support"
+        },
+        {
+          "providerId": "crisis-hawkes-bay",
+          "name": "Hawke's Bay Mental Health Crisis Team",
+          "type": "public-service",
+          "city": "Hawke's Bay",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "hawkes-bay-te-taiwhenua-o-heretaunga",
+          "name": "Te Taiwhenua o Heretaunga",
+          "type": "public-service",
+          "city": "Hastings",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "hawkes-bay-whakiao-taurima-counselling",
+          "name": "Whakiao Taurima Counselling",
+          "type": "counsellor",
+          "city": "Hawke's Bay",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "hawkes-bay-healthnz-community-mhas",
+          "name": "Hawke's Bay Community Mental Health and Addiction Services",
+          "type": "public-service",
+          "city": "Napier / Hastings / Wairoa / Waipukurau",
+          "reason": "missing coordinates"
+        }
+      ],
+      "recommendedActions": [
+        "Review 12 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    },
+    {
+      "region": "Wairarapa",
+      "priorityLevel": "medium",
+      "priorityScore": 54,
+      "coverage": {
+        "totalProviders": 24,
+        "directCare": 23,
+        "localDirectCare": 20,
+        "byType": {
+          "counsellor": 2,
+          "psychologist": 2,
+          "gp": 11,
+          "public-service": 3,
+          "youth": 1,
+          "addiction": 1
+        },
+        "gp": 11,
+        "counsellor": 2,
+        "psychologist": 2,
+        "talkingTherapy": 4,
+        "psychiatrist": 0,
+        "youth": 1,
+        "addiction": 1,
+        "publicMentalHealth": 3,
+        "missingSignals": [
+          "local psychiatrist or psychiatry pathway"
+        ]
+      },
+      "qualitySignals": {
+        "sourceFit": {
+          "total": 3,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 2,
+          "low": 1,
+          "byRule": {
+            "weak-telehealth-evidence": 2,
+            "weak-gp-source": 1
+          }
+        },
+        "availability": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "referral": {
+          "total": 0,
+          "high": 0,
+          "highUnallowlisted": 0,
+          "highAllowlisted": 0,
+          "medium": 0,
+          "low": 0,
+          "byRule": {}
+        },
+        "gpCorroborationTasks": 1,
+        "monitorItems": 0,
+        "watchlistItems": 0,
+        "missingAddress": 4,
+        "missingCoords": 5,
+        "needsManualVerification": 14,
+        "thirdPartyOnlyGp": 11
+      },
+      "sampleProvidersNeedingReview": [
+        {
+          "providerId": "gp-kuripuni-medical-centre-40-9584-175-6494",
+          "name": "Kuripuni Medical Centre",
+          "type": "gp",
+          "city": "Masterton",
+          "reason": "GP source corroboration"
+        },
+        {
+          "providerId": "wairarapa-mhaids-camhs",
+          "name": "Wairarapa CAMHS | MHAIDS",
+          "type": "youth",
+          "city": "Masterton",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "wairarapa-mhaids-community-mental-health",
+          "name": "Wairarapa Community Mental Health Team | MHAIDS",
+          "type": "public-service",
+          "city": "Masterton",
+          "reason": "weak-telehealth-evidence"
+        },
+        {
+          "providerId": "wairarapa-capital-psychology-assessments",
+          "name": "Capital Psychology - Wairarapa Assessments",
+          "type": "psychologist",
+          "city": "Wairarapa",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "wairarapa-nic-allan-psychology",
+          "name": "Nicholas Allan Psychology",
+          "type": "psychologist",
+          "city": "Masterton",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "wairarapa-piki-youth-support",
+          "name": "Piki Wellington and Wairarapa",
+          "type": "youth",
+          "city": "Wairarapa",
+          "reason": "missing address"
+        },
+        {
+          "providerId": "wairarapa-briar-nicol-counselling",
+          "name": "Briar Nicol Counselling",
+          "type": "counsellor",
+          "city": "Wairarapa",
+          "reason": "missing coordinates"
+        },
+        {
+          "providerId": "wairarapa-changeability-counselling",
+          "name": "ChangeAbility Counselling & Family Violence Services",
+          "type": "counsellor",
+          "city": "Masterton",
+          "reason": "missing coordinates"
+        }
+      ],
+      "recommendedActions": [
+        "Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.",
+        "Find the clearest local psychiatry referral pathway and capture whether GP referral is required.",
+        "Review 2 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.",
+        "Resolve address and coordinate gaps that affect distance ranking."
+      ]
+    }
+  ]
+}

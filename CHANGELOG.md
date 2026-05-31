@@ -22,8 +22,11 @@
 - Added a conservative filtered-batch helper in the auditor console for saving
   `needs_more_info` decisions on narrowed sets without overwriting individual
   decisions or approving provider data in bulk.
+- Added a regional data-quality priority report that rolls provider coverage,
+  weak GP source tasks, source-fit findings, availability/referral/watchlist
+  signals, and address/coordinate gaps into reviewer-friendly regional actions.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
-  source-fit, availability, and referral reports.
+  source-fit, availability, referral, and regional data-quality reports.
 
 Safety notes:
 
@@ -31,7 +34,8 @@ Safety notes:
 - Unsupported broad/sensitive tags are still queued for human review when the
   specific claim value or public text is affected.
 - The next data-quality target is working through the GP corroboration queue or
-  adding source excerpt capture for high-risk review claims.
+  using the regional priority report to choose the next focused verification
+  batch.
 
 ## 2026-05-31
 

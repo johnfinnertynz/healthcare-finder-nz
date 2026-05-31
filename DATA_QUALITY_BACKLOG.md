@@ -17,6 +17,7 @@ manual review burden.
 | Address and coordinates | Some non-GP providers have missing address or coordinate evidence | Distance ranking can wrongly imply local access | Geocode only public professional addresses and mark uncertainty honestly |
 | Duplicates/shared practices | Shared domains, phones, and addresses create many conflict groups | Different clinicians at one practice must not be merged | Review as shared-practice batches, not automatic duplicate merges |
 | Claim/root-cause duplication | Provider-level findings can still create repeated field tasks when one root cause affects several stored fields | Inflated queues make auditors spend time on noise instead of risky claims | Keep tuning value-aware claim mapping; next target is source-excerpt capture for high-risk claims |
+| Regional prioritisation | Coverage, GP corroboration, audit, and distance-ranking risks were previously split across several reports | Reviewers could spend time in a large region while a thinner region has no specialist pathway | Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next manual research batch |
 
 ## Queue Reduction Targets
 
@@ -62,6 +63,9 @@ manual review burden.
 - Added a conservative filtered-batch helper to the auditor console. It can save
   `needs_more_info` decisions for narrowed sets of unsaved items, but it cannot
   bulk approve, bulk adjust, overwrite existing decisions, or mutate live data.
+- Added a regional data-quality priority report that combines local coverage,
+  weak GP source tasks, source-fit findings, availability/referral/watchlist
+  signals, and address/coordinate gaps without mutating live provider data.
 
 ## Next Backlog Items
 
@@ -77,4 +81,6 @@ manual review burden.
 5. Start manual review with the largest unsupported tag batches.
 6. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
-7. Build a thin-region priority view from claim quality plus provider coverage.
+7. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
+   weak-source verification batch, then refresh the report after decisions are
+   applied.

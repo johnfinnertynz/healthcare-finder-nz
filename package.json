@@ -25,6 +25,7 @@
     "export:claims": "node tools/export-provider-claim-review-queue.mjs",
     "export:auto-resolution": "node tools/export-provider-auto-resolution-proposals.mjs",
     "export:gp-corroboration": "node tools/export-gp-source-corroboration-queue.mjs",
+    "export:regional-quality": "node tools/export-regional-data-quality-report.mjs",
     "draft:claim-batch": "node tools/draft-claim-batch-review-decisions.mjs",
     "export:monitor": "node tools/export-provider-monitor-queue.mjs",
     "monitor:providers": "node tools/recheck-provider-availability.mjs --include-live && node tools/audit-provider-availability.mjs && node tools/export-provider-monitor-queue.mjs",

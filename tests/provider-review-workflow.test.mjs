@@ -9,6 +9,7 @@ import { buildClaimBatchDecisionDraft } from "../tools/draft-claim-batch-review-
 import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
 import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
+import { buildRegionalDataQualityReport } from "../tools/export-regional-data-quality-report.mjs";
 import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
 import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
@@ -997,4 +998,99 @@ test("provider monitor queue turns automated recheck changes into review items",
   assert.equal(queue.items[0].reviewPriority, "critical");
   assert.ok(queue.items.every((item) => item.reviewId.startsWith("monitor:")));
   assert.ok(queue.items.every((item) => Array.isArray(item.sourceUrls)));
+});
+
+test("regional data-quality report ranks thin regions and aggregates review signals without mutation", () => {
+  const strongAucklandProviders = [
+    baseProvider({ id: "akl-gp", type: "gp", region: "Auckland", tags: ["gp"], name: "Auckland GP" }),
+    baseProvider({ id: "akl-counsellor", type: "counsellor", region: "Auckland", tags: ["counsellor"], name: "Auckland Counsellor" }),
+    baseProvider({ id: "akl-psychologist", type: "psychologist", region: "Auckland", tags: ["psychologist"], name: "Auckland Psychologist" }),
+    baseProvider({ id: "akl-psychiatrist", type: "psychiatrist", region: "Auckland", tags: ["psychiatrist"], name: "Auckland Psychiatrist" }),
+    baseProvider({ id: "akl-youth", type: "youth", region: "Auckland", tags: ["youth"], name: "Auckland Youth" }),
+    baseProvider({ id: "akl-addiction", type: "addiction", region: "Auckland", tags: ["addiction"], name: "Auckland Addiction" }),
+    baseProvider({
+      id: "akl-public",
+      type: "public-service",
+      region: "Auckland",
+      tags: ["public-service", "mental-health"],
+      name: "Auckland Community Mental Health"
+    })
+  ];
+  const thinNorthlandProvider = baseProvider({
+    id: "northland-gp",
+    type: "gp",
+    region: "Northland",
+    city: "Whangarei",
+    name: "Northland GP",
+    website: "",
+    email: "",
+    phone: "09 000 0000",
+    address: "1 Bank Street, Whangarei",
+    lat: "",
+    lon: "",
+    source: "https://doctorpricer.co.nz/",
+    sourceQuality: "third-party public GP listing",
+    importSource: "doctorpricer",
+    tags: ["gp"],
+    fit: "General practice.",
+    firstStep: "Call the practice."
+  });
+  const providers = [thinNorthlandProvider, ...strongAucklandProviders];
+  const before = JSON.stringify(providers);
+
+  const report = buildRegionalDataQualityReport({
+    generatedAt: "2026-05-26T00:00:00.000Z",
+    providers,
+    sourceFitAudit: {
+      findings: [
+        {
+          providerId: "northland-gp",
+          providerName: "Northland GP",
+          region: "Northland",
+          rule: "weak-gp-source",
+          severity: "high",
+          issue: "Weak GP source."
+        }
+      ]
+    },
+    availabilityAudit: {
+      findings: [
+        {
+          providerId: "northland-gp",
+          providerName: "Northland GP",
+          region: "Northland",
+          rule: "blocked-or-unreachable-source",
+          severity: "medium"
+        }
+      ]
+    },
+    referralAudit: { findings: [] },
+    gpCorroborationQueue: {
+      tasks: [
+        {
+          providerId: "northland-gp",
+          name: "Northland GP",
+          type: "gp",
+          region: "Northland",
+          priority: "medium"
+        }
+      ]
+    },
+    monitorQueue: { items: [] },
+    watchlist: { items: [] }
+  });
+
+  const northland = report.regions.find((region) => region.region === "Northland");
+  const auckland = report.regions.find((region) => region.region === "Auckland");
+
+  assert.equal(JSON.stringify(providers), before, "regional report must not mutate provider input");
+  assert.equal(report.safety.noLiveProviderMutation, true);
+  assert.ok(northland.priorityScore > auckland.priorityScore);
+  assert.equal(northland.priorityLevel, "high");
+  assert.equal(northland.qualitySignals.sourceFit.highUnallowlisted, 1);
+  assert.equal(northland.qualitySignals.gpCorroborationTasks, 1);
+  assert.equal(northland.qualitySignals.missingCoords, 1);
+  assert.ok(northland.coverage.missingSignals.includes("local counselling/psychology contact"));
+  assert.ok(northland.recommendedActions.some((action) => /Corroborate 1 GP record/.test(action)));
+  assert.ok(report.summary.topPriorities.some((item) => item.region === "Northland"));
 });

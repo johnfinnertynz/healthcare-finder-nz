@@ -272,12 +272,13 @@ Before committing provider data changes:
 6. Run `node tools/audit-support-preferences.mjs providers.json`.
 7. Run `node tools/audit-address-coverage.mjs providers.json`.
 8. Run `node tools/audit-availability-watchlist.mjs`.
-9. Run `node tools/check-links.mjs`.
-10. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
-11. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
+9. Run `npm run export:regional-quality`.
+10. Run `node tools/check-links.mjs`.
+11. Check exact contact-type filters: GP, counsellor, psychologist, psychiatrist.
+12. Check opt-in filters: Maori, Pasifika, Asian, Rainbow, trauma-informed,
    telehealth, female provider, male provider.
-12. Check one local workflow in a large city and one in a thin-coverage region.
-13. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
+13. Check one local workflow in a large city and one in a thin-coverage region.
+14. Use `MANUAL_VERIFICATION_PLAN.md` for priority phone/email checks during
     soft launch.
 
 ## Human Review Queue
@@ -312,6 +313,22 @@ used for an exceptional local maintenance task.
 
 Every applied decision appends to `data/provider-review-log.jsonl`. The log is
 the audit trail and should not be rewritten during normal review work.
+
+## Regional Priority Report
+
+Use the regional data-quality report to decide where human review should start:
+
+```sh
+npm run export:regional-quality
+```
+
+The export writes `data/regional-data-quality-report.json` and
+`REGIONAL_DATA_QUALITY_REPORT.md`. It combines local direct-care coverage, weak
+GP source corroboration tasks, source-fit findings, availability/referral/
+watchlist signals, and address or coordinate gaps into reviewer actions by
+region. The report is triage only: it does not prove provider availability and
+must not update `providers.json` without a reviewed decision, validation,
+audits, and tests.
 
 ## Discovery And Snowball Enrichment
 

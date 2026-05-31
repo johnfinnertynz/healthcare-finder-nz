@@ -178,6 +178,18 @@ This writes `data/gp-source-corroboration-queue.json`,
 practice/Healthpoint/PHO/HPI/FHIR checks, rejects search snippets or
 DoctorPricer alone as evidence, and does not update `providers.json`.
 
+Export regional review priorities:
+
+```sh
+npm run export:regional-quality
+```
+
+This writes `data/regional-data-quality-report.json` and
+`REGIONAL_DATA_QUALITY_REPORT.md`. It combines local provider coverage, weak GP
+source tasks, source-fit findings, availability/referral/watchlist signals, and
+address or coordinate gaps into region-by-region actions. The report is
+triage-only and never updates live provider data.
+
 Import backend-only doctor register data after approved MCNZ access:
 
 ```sh
