@@ -82,6 +82,31 @@ and source-quality fields, but it must not be used to infer availability,
 enrolment, mental-health specialty, cultural support, language support, or
 funding eligibility.
 
+## Regional Priorities
+
+Run the regional report when deciding where the next review session should
+start:
+
+```bash
+npm run export:regional-quality
+```
+
+This writes:
+
+- `data/regional-data-quality-report.json`
+- `REGIONAL_DATA_QUALITY_REPORT.md`
+
+Choose **Regional priorities** from the queue selector. This is a planning-only
+view: it shows each region's coverage signals, weak GP source task count,
+source-fit findings, availability/referral/watchlist signals, address/coordinate
+gaps, recommended actions, and sample records to inspect.
+
+Use this view to decide which region and queue to work next. It disables
+provider-decision export because a regional priority is not itself a provider
+record. After choosing an action, switch to **Manual review queue**, **Claim
+review queue**, **GP source corroboration**, or **Ongoing monitor queue** and
+filter by the same region or provider ID before saving review decisions.
+
 ## Claim Review Queue
 
 Run the claim-level evidence exports when the provider review queue feels too

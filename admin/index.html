@@ -23,6 +23,7 @@
             <option value="gp">GP source corroboration</option>
             <option value="auto">Auto-resolution proposals</option>
             <option value="monitor">Ongoing monitor queue</option>
+            <option value="regional">Regional priorities</option>
           </select>
         </label>
         <button id="exportDecisions" type="button">Export decisions JSON</button>
@@ -209,8 +210,8 @@
           </section>
 
           <section id="practice-group" class="card-section">
-            <h3>Same practice / related records</h3>
-            <p class="muted">Use this when a clinic has multiple clinicians. Keep each clinician as a separate provider record, but share the practice contact and location fields when the source supports them.</p>
+            <h3 id="practiceGroupTitle">Same practice / related records</h3>
+            <p id="practiceGroupHelp" class="muted">Use this when a clinic has multiple clinicians. Keep each clinician as a separate provider record, but share the practice contact and location fields when the source supports them.</p>
             <div id="practiceSignals" class="practice-signals"></div>
             <div id="relatedRecords" class="related-records" aria-live="polite"></div>
             <details class="practice-template">

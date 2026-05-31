@@ -47,6 +47,7 @@ npm run evidence:conflicts
 npm run export:claims
 npm run export:gp-corroboration
 npm run export:auto-resolution
+npm run export:regional-quality
 ```
 
 Start a local server:
@@ -73,6 +74,7 @@ Use the **Queue** selector to choose:
 - **Auto-resolution proposals** for grouped low-risk de-prioritisation and
   high-risk manual batch planning.
 - **Ongoing monitor queue** for automated availability/recheck findings.
+- **Regional priorities** for choosing the next region and queue to review.
 
 In the claim queue, each item shows a claim field, claim value, risk level,
 score, batch key, source type, and required human action. Use it to work through
@@ -97,6 +99,13 @@ You can also choose **Auto-resolution proposals** in the admin console. Treat
 those rows as review-planning groups: low-risk rows can be collapsed out of your
 manual workload, while manual-batch rows tell you where human evidence checks
 still matter. They are not live provider records.
+
+Choose **Regional priorities** when you need to decide where to work next. Each
+row is a planning item for a region, showing coverage gaps, weak GP source
+tasks, source-fit issues, availability/referral/watchlist signals, and sample
+records. This view disables provider-decision export. Use it to pick a region,
+then switch to the relevant provider, claim, GP corroboration, or monitor queue
+and filter by that region before saving decisions.
 
 After reviewing a batch, you can draft a decision file without changing live
 data:

@@ -422,6 +422,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(html, /Claim review queue/);
   assert.match(html, /GP source corroboration/);
   assert.match(html, /Auto-resolution proposals/);
+  assert.match(html, /Regional priorities/);
   assert.match(html, /Review category/);
   assert.match(html, /Any batch/);
   assert.match(html, /Filtered batch/);
@@ -441,7 +442,12 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /Narrow the queue first and keep the filtered set to 100 items or fewer/);
   assert.match(js, /item\(s\) that already had decisions/);
   assert.match(js, /provider-monitor-queue\.json/);
+  assert.match(js, /regional-data-quality-report\.json/);
+  assert.match(js, /regionalPriorityToItem/);
+  assert.match(js, /planningOnly/);
+  assert.match(js, /do not export provider decisions/i);
   assert.match(html, /Same practice \/ related records/);
+  assert.match(html, /practiceGroupTitle/);
   assert.match(html, /New clinician from this practice/);
   assert.match(js, /relatedPracticeRecords/);
   assert.match(js, /practiceTemplateFor/);

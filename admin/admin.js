@@ -23,6 +23,12 @@ const QUEUE_SOURCES = {
     url: "../data/provider-monitor-queue.json",
     help: "Ongoing monitor queue: automated fetch and audit findings that need human confirmation before changing public data.",
     itemName: "monitor item(s)"
+  },
+  regional: {
+    url: "../data/regional-data-quality-report.json",
+    help: "Regional priorities: planning-only view of coverage, source quality, availability, referral, and location gaps. Use it to choose the next review batch; it does not export provider decisions.",
+    itemName: "regional priority item(s)",
+    planningOnly: true
   }
 };
 const DECISION_STORAGE_KEY = "healthcare-finder-provider-review-decisions-v1";
@@ -183,6 +189,8 @@ const els = {
   locationFields: document.querySelector("#locationFields"),
   tagsFields: document.querySelector("#tagsFields"),
   practiceSignals: document.querySelector("#practiceSignals"),
+  practiceGroupTitle: document.querySelector("#practiceGroupTitle"),
+  practiceGroupHelp: document.querySelector("#practiceGroupHelp"),
   relatedRecords: document.querySelector("#relatedRecords"),
   practiceTemplateJson: document.querySelector("#practiceTemplateJson"),
   copyPracticeTemplate: document.querySelector("#copyPracticeTemplate"),
@@ -193,6 +201,7 @@ const els = {
   rawProvider: document.querySelector("#rawProvider"),
   safetyWarnings: document.querySelector("#safetyWarnings"),
   decisionForm: document.querySelector("#decisionForm"),
+  decisionSection: document.querySelector("#decision"),
   decisionHelp: document.querySelector("#decisionHelp"),
   commonCorrections: document.querySelector("#commonCorrections"),
   correctionPreview: document.querySelector("#correctionPreview"),
@@ -427,6 +436,126 @@ function proposalToItem(proposal, index, kind) {
   };
 }
 
+function priorityFromLevel(level) {
+  if (level === "high") return "high";
+  if (level === "low") return "low";
+  return "medium";
+}
+
+function regionalRuleList(region) {
+  const missing = asArray(region.coverage?.missingSignals).map((signal) => `missing:${signal}`);
+  const quality = region.qualitySignals || {};
+  return unique([
+    "regional-priority",
+    ...missing,
+    quality.gpCorroborationTasks ? "weak-gp-source" : "",
+    quality.sourceFit?.total ? "source-fit-findings" : "",
+    quality.availability?.total ? "availability-findings" : "",
+    quality.referral?.total ? "referral-findings" : "",
+    quality.watchlistItems ? "watchlist-items" : "",
+    quality.missingAddress || quality.missingCoords ? "address-coordinate-gaps" : ""
+  ]);
+}
+
+function regionalPriorityToItem(region, index) {
+  const coverage = region.coverage || {};
+  const quality = region.qualitySignals || {};
+  const sourceFit = quality.sourceFit || {};
+  const availability = quality.availability || {};
+  const referral = quality.referral || {};
+  const addressGaps = (quality.missingAddress || 0) + (quality.missingCoords || 0);
+  const actions = asArray(region.recommendedActions);
+  const missing = asArray(coverage.missingSignals);
+  const samples = asArray(region.sampleProvidersNeedingReview);
+  const priority = priorityFromLevel(region.priorityLevel);
+  const auditRules = regionalRuleList(region);
+
+  return {
+    ...region,
+    reviewId: `regional-priority:${normalizeComparable(region.region || `region-${index + 1}`).replace(/\s+/g, "-")}`,
+    providerId: "",
+    name: `${region.region || "Unknown region"} regional priority`,
+    type: "regional-priority",
+    region: region.region || "",
+    city: "",
+    confidence: "planning",
+    sourceQuality: "aggregated local reports",
+    reviewCategory: "Regional data-quality priority",
+    reviewPriority: priority,
+    auditSeverity: priority,
+    batchKey: `regional:${priority}`,
+    auditRules,
+    reviewReasons: unique([
+      ...actions,
+      ...missing.map((signal) => `Missing coverage signal: ${signal}.`),
+      "Planning-only item. Switch to the relevant provider, claim, GP corroboration, or monitor queue before exporting provider-data decisions."
+    ]),
+    auditFindings: [
+      {
+        rule: "regional-coverage-snapshot",
+        severity: priority,
+        issue: `${coverage.localDirectCare || 0} local direct-care contact(s); ${missing.length ? `missing ${missing.join(", ")}` : "no missing coverage signals from this report"}.`,
+        suggestedFix: actions[0] || "Choose a focused review batch for this region."
+      },
+      {
+        rule: "regional-quality-signals",
+        severity: priority,
+        issue: `${sourceFit.total || 0} source-fit finding(s), ${quality.gpCorroborationTasks || 0} GP source task(s), ${availability.total || 0} availability finding(s), ${referral.total || 0} referral finding(s), ${addressGaps} address/coordinate gap(s).`,
+        suggestedFix: "Use the specific queues and source evidence checks before changing live provider data."
+      }
+    ],
+    publicCardPreviewText: [
+      `${region.region || "Unknown region"} | ${region.priorityLevel || "medium"} priority | score ${region.priorityScore ?? "n/a"}`,
+      "",
+      "Coverage:",
+      `- Local direct care: ${coverage.localDirectCare || 0}`,
+      `- GP: ${coverage.gp || 0}`,
+      `- Counselling/psychology: ${coverage.talkingTherapy || 0}`,
+      `- Psychologists: ${coverage.psychologist || 0}`,
+      `- Psychiatrists: ${coverage.psychiatrist || 0}`,
+      `- Youth: ${coverage.youth || 0}`,
+      `- Addiction: ${coverage.addiction || 0}`,
+      "",
+      "Next actions:",
+      ...actions.map((action) => `- ${action}`),
+      "",
+      samples.length ? "Sample records to inspect:" : "",
+      ...samples.map((sample) => `- ${sample.providerId} | ${sample.type} | ${sample.name} | ${sample.reason}`)
+    ].filter((line) => line !== "").join("\n"),
+    sourceUrls: [],
+    sourceEvidence: {
+      regionalPriority: [
+        {
+          field: "region",
+          value: region.region || "",
+          sourceUrl: "../data/regional-data-quality-report.json",
+          excerpt: "Aggregated from providers.json and local audit outputs. Review-only planning signal.",
+          confidence: "planning",
+          needsManualReview: false
+        }
+      ],
+      coverage: [
+        {
+          field: "missingSignals",
+          value: missing.join("; "),
+          sourceUrl: "../data/regional-data-quality-report.json",
+          excerpt: missing.length ? `Missing coverage signals: ${missing.join("; ")}.` : "No missing coverage signal in this report.",
+          confidence: "planning",
+          needsManualReview: true
+        }
+      ]
+    },
+    currentProvider: region,
+    claimId: `regional:${region.region || index + 1}`,
+    claimField: "regionalCoverage",
+    claimValue: actions[0] || "",
+    claimDecision: "planning_only",
+    claimRiskLevel: priority,
+    claimReason: "Use this regional item to choose a provider-review batch. Do not apply it as a provider decision.",
+    requiredHumanAction: actions[0] || "Choose a focused verification batch."
+  };
+}
+
 function taskSeverity(priority) {
   if (priority === "high") return "high";
   if (priority === "low") return "low";
@@ -577,6 +706,9 @@ function gpTaskToItem(task, index) {
 
 function queueItemsFromPayload(queue) {
   if (Array.isArray(queue.items)) return queue.items;
+  if (Array.isArray(queue.regions) && queue.safety?.noLiveProviderMutation) {
+    return queue.regions.map((region, index) => regionalPriorityToItem(region, index));
+  }
   if (Array.isArray(queue.tasks) && queue.summary?.reviewGateRequired) {
     return queue.tasks.map((task, index) => gpTaskToItem(task, index));
   }
@@ -590,11 +722,20 @@ function queueItemsFromPayload(queue) {
 }
 
 function decisionsForCurrentQueue() {
+  if (currentQueueSource().planningOnly) return [];
   const ids = new Set(state.items.map((item) => item.reviewId));
   return Object.keys(state.decisions).filter((reviewId) => ids.has(reviewId));
 }
 
 function updateProgress() {
+  if (currentQueueSource().planningOnly) {
+    els.progressText.textContent = `${state.items.length} regional planning item(s) loaded. Exported provider decisions are disabled in this view.`;
+    els.progressPercent.textContent = "";
+    els.reviewProgress.max = 1;
+    els.reviewProgress.value = state.items.length ? 1 : 0;
+    return;
+  }
+
   const savedCount = decisionsForCurrentQueue().length;
   const total = state.items.length || 1;
   const percent = Math.round((savedCount / total) * 100);
@@ -680,6 +821,13 @@ function canDraftFilteredBatch() {
 
 function renderBatchTools() {
   if (!els.batchSummary || !els.saveFilteredNeedsMoreInfo) return;
+  const panel = els.batchSummary.closest(".batch-draft");
+  if (panel) panel.hidden = currentQueueSource().planningOnly;
+  if (currentQueueSource().planningOnly) {
+    els.saveFilteredNeedsMoreInfo.disabled = true;
+    return;
+  }
+
   const existing = state.filtered.filter((item) => state.decisions[item.reviewId]).length;
   const unsaved = state.filtered.length - existing;
   const context = batchContextLabel();
@@ -711,6 +859,10 @@ function renderQueue() {
   updateProgress();
   renderBatchTools();
   const source = currentQueueSource();
+  if (els.exportDecisions) {
+    els.exportDecisions.disabled = Boolean(source.planningOnly);
+    els.exportDecisions.title = source.planningOnly ? "Regional priorities are planning-only and do not export provider decisions." : "";
+  }
   els.queueSummary.textContent = `${state.filtered.length} shown from ${state.items.length} ${source.itemName || "review item(s)"}.`;
   els.queueList.replaceChildren();
   for (const item of state.filtered) {
@@ -1027,6 +1179,10 @@ function practiceTemplateFor(item) {
 }
 
 function renderPracticeGroup(item) {
+  if (els.practiceGroupTitle) els.practiceGroupTitle.textContent = "Same practice / related records";
+  if (els.practiceGroupHelp) {
+    els.practiceGroupHelp.textContent = "Use this when a clinic has multiple clinicians. Keep each clinician as a separate provider record, but share the practice contact and location fields when the source supports them.";
+  }
   els.practiceSignals.replaceChildren();
   els.relatedRecords.replaceChildren();
   const signals = practiceSignalsFor(item);
@@ -1080,6 +1236,115 @@ function renderPracticeGroup(item) {
   els.practiceTemplateStatus.textContent = "";
 }
 
+function renderRegionalSamples(item) {
+  if (els.practiceGroupTitle) els.practiceGroupTitle.textContent = "Sample records to inspect";
+  if (els.practiceGroupHelp) {
+    els.practiceGroupHelp.textContent = "These are examples from the regional report. Switch to the relevant queue source and filter by this region or provider ID before exporting provider-data decisions.";
+  }
+  els.practiceSignals.replaceChildren();
+  els.relatedRecords.replaceChildren();
+  els.practiceTemplateJson.textContent = "";
+  els.practiceTemplateStatus.textContent = "";
+
+  const region = item.currentProvider || item;
+  const chips = [
+    `Priority score: ${region.priorityScore ?? "not set"}`,
+    `Level: ${region.priorityLevel || "not set"}`,
+    `Local direct care: ${region.coverage?.localDirectCare ?? 0}`,
+    `Weak GP source tasks: ${region.qualitySignals?.gpCorroborationTasks ?? 0}`,
+    `Source-fit findings: ${region.qualitySignals?.sourceFit?.total ?? 0}`
+  ];
+  for (const chipText of chips) {
+    const chip = document.createElement("span");
+    chip.className = "practice-chip";
+    chip.textContent = chipText;
+    els.practiceSignals.append(chip);
+  }
+
+  const samples = asArray(region.sampleProvidersNeedingReview);
+  if (!samples.length) {
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = "No sample records were attached to this regional priority item.";
+    els.relatedRecords.append(p);
+    return;
+  }
+
+  for (const sample of samples) {
+    const card = document.createElement("article");
+    card.className = "related-record";
+    card.innerHTML = `
+      <header>
+        <div>
+          <h4>${escapeHtml(sample.name || sample.providerId || "Sample provider")}</h4>
+          <p class="queue-meta">${escapeHtml([sample.type, sample.city, sample.reason].filter(Boolean).join(" | "))}</p>
+        </div>
+      </header>
+      <p class="queue-meta">${escapeHtml(sample.providerId || "")}</p>
+      <p class="match-reasons">Use search or the region filter in the provider/claim/GP queue to open the matching record.</p>
+    `;
+    els.relatedRecords.append(card);
+  }
+}
+
+function isRegionalPriorityItem(item) {
+  return item.reviewCategory === "Regional data-quality priority";
+}
+
+function renderRegionalFieldSections(item) {
+  const region = item.currentProvider || item;
+  const coverage = region.coverage || {};
+  const quality = region.qualitySignals || {};
+  const sourceFit = quality.sourceFit || {};
+  const availability = quality.availability || {};
+  const referral = quality.referral || {};
+  const missing = asArray(coverage.missingSignals);
+  const actions = asArray(region.recommendedActions);
+  const addressGaps = (quality.missingAddress || 0) + (quality.missingCoords || 0);
+
+  dl(els.rankingFields, [
+    ["Priority score", region.priorityScore],
+    ["Priority level", region.priorityLevel],
+    ["Total providers", coverage.totalProviders],
+    ["Direct care", coverage.directCare],
+    ["Local direct care", coverage.localDirectCare],
+    ["Needs manual verification", quality.needsManualVerification],
+    ["Third-party-only GP records", quality.thirdPartyOnlyGp]
+  ]);
+  dl(els.availabilityFields, [
+    ["Availability findings", availability.total],
+    ["Availability high", availability.high],
+    ["Availability medium", availability.medium],
+    ["Watchlist items", quality.watchlistItems],
+    ["Monitor items", quality.monitorItems]
+  ]);
+  dl(els.referralFields, [
+    ["Referral findings", referral.total],
+    ["Referral high", referral.high],
+    ["Recommended actions", actions]
+  ]);
+  dl(els.locationFields, [
+    ["Region", region.region],
+    ["Missing coverage signals", missing],
+    ["Missing addresses", quality.missingAddress],
+    ["Missing coordinates", quality.missingCoords],
+    ["Address/coordinate gaps", addressGaps]
+  ]);
+  dl(els.tagsFields, [
+    ["GP", coverage.gp],
+    ["Counsellor", coverage.counsellor],
+    ["Psychologist", coverage.psychologist],
+    ["Talking therapy total", coverage.talkingTherapy],
+    ["Psychiatrist", coverage.psychiatrist],
+    ["Youth", coverage.youth],
+    ["Addiction", coverage.addiction],
+    ["Public mental health", coverage.publicMentalHealth],
+    ["Source-fit findings", sourceFit.total],
+    ["Source-fit high unallowlisted", sourceFit.highUnallowlisted],
+    ["GP corroboration tasks", quality.gpCorroborationTasks]
+  ]);
+}
+
 function selectItem(reviewId) {
   state.selectedId = reviewId;
   const item = state.items.find((entry) => entry.reviewId === reviewId);
@@ -1105,11 +1370,17 @@ function selectItem(reviewId) {
   renderChecklist(item);
   els.publicPreview.textContent = item.publicCardPreviewText || "No public preview available.";
   renderFindings(item);
-  renderPracticeGroup(item);
+  if (isRegionalPriorityItem(item)) renderRegionalSamples(item);
+  else renderPracticeGroup(item);
   renderSources(item);
   renderSafetyWarnings(item);
-  renderDecision(item);
-  dl(els.rankingFields, [
+  if (isRegionalPriorityItem(item)) {
+    els.decisionSection?.classList.add("hidden");
+    renderRegionalFieldSections(item);
+  } else {
+    els.decisionSection?.classList.remove("hidden");
+    renderDecision(item);
+    dl(els.rankingFields, [
     ...(item.claimId ? [
       ["Claim field", item.claimField],
       ["Claim value", item.claimValue],
@@ -1125,15 +1396,15 @@ function selectItem(reviewId) {
     ["Confidence", item.confidence],
     ["Source quality", item.sourceQuality],
     ["Needs manual verification", item.needsManualVerification]
-  ]);
-  dl(els.availabilityFields, [
+    ]);
+    dl(els.availabilityFields, [
     ["Status", item.availabilityStatus],
     ["Checked", item.availabilityCheckedAt],
     ["Evidence", item.availabilityEvidence],
     ["Source", item.availabilitySource],
     ["Needs review", item.availabilityNeedsManualReview]
-  ]);
-  dl(els.referralFields, [
+    ]);
+    dl(els.referralFields, [
     ["Requires referral", item.requiresReferral],
     ["Referral type", item.referralType],
     ["Confidence", item.referralConfidence],
@@ -1141,15 +1412,15 @@ function selectItem(reviewId) {
     ["Source", item.referralSourceUrl],
     ["Excerpt", item.referralSourceExcerpt],
     ["Needs review", item.referralNeedsManualReview]
-  ]);
-  dl(els.locationFields, [
+    ]);
+    dl(els.locationFields, [
     ["Address", item.address],
     ["City", item.city],
     ["Region", item.region],
     ["Latitude", item.lat],
     ["Longitude", item.lon]
-  ]);
-  dl(els.tagsFields, [
+    ]);
+    dl(els.tagsFields, [
     ["Tags", item.tags],
     ["Need scope", item.needScope],
     ["Specialties", item.specialties],
@@ -1160,7 +1431,8 @@ function selectItem(reviewId) {
     ["Phone support", item.phoneSupport],
     ["In person", item.inPerson],
     ["Crisis only", item.crisisOnly]
-  ]);
+    ]);
+  }
   els.sourceEvidenceJson.textContent = JSON.stringify(item.sourceEvidence || {}, null, 2);
   els.rawProvider.textContent = JSON.stringify(item.currentProvider || item, null, 2);
 }
@@ -1659,7 +1931,7 @@ async function init() {
     state.providers = [];
     state.filtered = [];
     renderQueue();
-    els.queueSummary.textContent = `${error.message}. Run npm run export:review, npm run export:claims, npm run export:gp-corroboration, or npm run export:monitor for the selected queue.`;
+    els.queueSummary.textContent = `${error.message}. Run npm run export:review, npm run export:claims, npm run export:gp-corroboration, npm run export:regional-quality, or npm run export:monitor for the selected queue.`;
   }
 }
 
