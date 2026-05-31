@@ -1,7 +1,7 @@
 {
   "version": 1,
   "mode": "ongoing-provider-monitor",
-  "generatedAt": "2026-05-26T00:11:13.873Z",
+  "generatedAt": "2026-05-31T20:05:53.664Z",
   "providersPath": "providers.json",
   "watchlistPath": "data/monitors/provider-availability-watchlist.json",
   "sourceReports": {

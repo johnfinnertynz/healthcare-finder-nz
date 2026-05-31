@@ -1,6 +1,6 @@
 # Data Quality Backlog
 
-Updated: 2026-05-31
+Updated: 2026-06-01
 
 Care Finder should prefer fewer, better-sourced provider claims over broad but
 uncertain coverage. This backlog focuses on reducing unsafe certainty and the
@@ -16,6 +16,7 @@ manual review burden.
 | Referral pathways | Psychiatrist referral metadata passes audit but still needs ongoing checks | Direct-contact psychiatry recommendations can create dead ends | Keep GP-referral-first unless self-referral is explicit |
 | Address and coordinates | Some non-GP providers have missing address or coordinate evidence | Distance ranking can wrongly imply local access | Geocode only public professional addresses and mark uncertainty honestly |
 | Duplicates/shared practices | Shared domains, phones, and addresses create many conflict groups | Different clinicians at one practice must not be merged | Review as shared-practice batches, not automatic duplicate merges |
+| Claim/root-cause duplication | Provider-level findings can still create repeated field tasks when one root cause affects several stored fields | Inflated queues make auditors spend time on noise instead of risky claims | Keep tuning value-aware claim mapping; next target is weak GP source corroboration |
 
 ## Queue Reduction Targets
 
@@ -41,15 +42,21 @@ manual review burden.
   rows from unique affected providers.
 - Added a claim-batch decision draft helper that creates review-decision JSON
   without mutating live provider data.
+- Tuned the evidence graph so provider-level weak telehealth, cultural support,
+  and broad-tag findings only attach to matching tag or field claims. This cut
+  the focused claim-review queue from 2,389 items to 941 while keeping high-risk
+  claims review-gated.
 
 ## Next Backlog Items
 
 1. Add admin UI affordances for invoking/exporting reviewed claim-batch drafts
    after manual evidence checks.
 2. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
-3. Tune duplicate/shared-practice false positives, especially shared GP network
+3. Reduce weak GP source corroboration duplication so each affected practice has
+   one clear source-check task instead of repeated phone/sourceQuality rows.
+4. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
-4. Start manual review with the largest unsupported tag batches.
-5. Add source-excerpt capture to more importers so fewer claims are
+5. Start manual review with the largest unsupported tag batches.
+6. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
-6. Build a thin-region priority view from claim quality plus provider coverage.
+7. Build a thin-region priority view from claim quality plus provider coverage.

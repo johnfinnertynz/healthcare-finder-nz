@@ -528,6 +528,57 @@ test("claim review queue compresses repeated field-level work into batch groups"
   assert.ok(queue.summary.batches < queue.items.length, "batch count should compress repeated claim items");
 });
 
+test("claim queue attaches tag audit findings only to matching tag values", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const providers = [
+    baseProvider({
+      id: "targeted-tags",
+      name: "Targeted Tags",
+      tags: ["psychologist", "depression", "telehealth", "direct-contact", "cost"]
+    })
+  ];
+  writeJson(providersPath, providers);
+  writeJson(sourceFitPath, {
+    findings: [
+      {
+        providerId: "targeted-tags",
+        rule: "broad-tag-without-source-support",
+        severity: "medium",
+        issue: "Broad tag \"depression\" is present but source fields do not clearly support it.",
+        suggestedFix: "Remove depression or add evidence."
+      },
+      {
+        providerId: "targeted-tags",
+        rule: "weak-telehealth-evidence",
+        severity: "medium",
+        issue: "Telehealth or online availability is set but source fields do not clearly support remote care.",
+        suggestedFix: "Remove telehealth/online flags or add evidence."
+      }
+    ]
+  });
+  writeJson(emptyPath, { findings: [], items: [] });
+  const graph = buildProviderEvidenceGraph({
+    providers: providersPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath
+  });
+  const graphPath = path.join(dir, "graph.json");
+  writeJson(graphPath, graph);
+  const queue = buildProviderClaimReviewQueue({ graph: graphPath, providers: providersPath });
+  const tagItems = queue.items.filter((item) => item.claimField === "tags");
+  const queuedTags = tagItems.map((item) => item.claimValue).sort();
+
+  assert.deepEqual(queuedTags, ["depression", "telehealth"]);
+  assert.equal(tagItems.some((item) => item.claimValue === "direct-contact"), false);
+  assert.equal(tagItems.some((item) => item.claimValue === "cost"), false);
+  assert.equal(tagItems.some((item) => item.claimValue === "psychologist"), false);
+});
+
 test("claim batch draft helper creates review-gated adjustment decisions only after human confirmation", () => {
   const dir = tempDir();
   const providersPath = path.join(dir, "providers.json");

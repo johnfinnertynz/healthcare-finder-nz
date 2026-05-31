@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-06-01
+
+- Tightened claim-review queue generation so provider-level source-fit findings
+  only attach to matching claim values.
+- Reduced the focused claim review queue from 2,389 items to 941 while keeping
+  availability, referral, support tags, scope, and telehealth claims
+  review-gated.
+- Regenerated evidence graph, claim queue, provider review queue, monitor queue,
+  source-fit, availability, and referral reports.
+
+Safety notes:
+
+- This change does not mutate live provider data.
+- Unsupported broad/sensitive tags are still queued for human review when the
+  specific claim value is affected.
+- The next queue-reduction target is weak GP source corroboration duplication.
+
 ## 2026-05-31
 
 - Added a claim-level evidence graph for current provider records.

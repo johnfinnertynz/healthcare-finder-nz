@@ -1,6 +1,6 @@
 # Provider Source-Fit Audit
 
-Generated: 2026-05-31T08:20:24.114Z
+Generated: 2026-05-31T20:05:30.174Z
 
 Providers scanned: 1214
 
@@ -222,7 +222,7 @@ High severity findings block CI unless allowlisted in `data/provider-source-fit-
 | medium | waikato-the-psychology-centre - The Psychology Centre | Waikato / Hamilton | psychologist | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://tpc.org.nz/ | no |
 | medium | waikato-the-psychology-centre - The Psychology Centre | Waikato / Hamilton | psychologist | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://tpc.org.nz/ | no |
 | medium | wairarapa-mhaids-camhs - Wairarapa CAMHS \| MHAIDS | Wairarapa / Masterton | youth | Telehealth or online availability is set but source fields do not clearly support remote care. | Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments. | https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services/at/49-51-lincoln-road-masterton/ | no |
-| medium | wairarapa-mhaids-community-mental-health - Wairarapa Community Mental Health Team \| MHAIDS | Wairarapa / Masterton | public-service | Telehealth or online availability is set but source fields do not clearly support remote care. | Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments. | https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/ | no |
+| medium | wairarapa-mhaids-community-mental-health - Wairarapa Community Mental Health Team \| MHAIDS | Wairarapa / Masterton | public-service | Telehealth or online availability is set but source fields do not clearly support remote care. | Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments. | https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams | no |
 | medium | wellington-cbt-clinic - CBT Clinic | Wellington / Wellington CBD | psychologist | Broad tag "work" is present but source fields do not clearly support it. | Remove "work" or add source-backed specialties/services evidence. | https://www.cbtclinic.co.nz/ | no |
 | medium | wellington-cpep-services - Coastal Personal Empowerment & Psychological Services | Wellington / Wellington, Paraparaumu, Palmerston North, and online | psychologist | Broad tag "work" is present but source fields do not clearly support it. | Remove "work" or add source-backed specialties/services evidence. | https://www.cpepservices.com/ | no |
 | medium | wellington-evolve-youth-service - Evolve Wellington Youth Service | Wellington / Wellington | youth | rainbow support tag is present but source fields do not clearly support it. | Remove the tag or add a stronger public source/structured patientGroups/languages evidence. | https://www.evolveyouth.org.nz/contact | no |

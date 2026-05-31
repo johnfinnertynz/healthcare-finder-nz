@@ -1,6 +1,6 @@
 # Agent Tasks
 
-Updated: 2026-05-31
+Updated: 2026-06-01
 
 This file tracks autonomous data-quality tasks for Care Finder Aotearoa. Status
 values are `todo`, `doing`, `blocked`, or `done`.
@@ -21,3 +21,4 @@ values are `todo`, `doing`, `blocked`, or `done`.
 | CF-DQ-012 | Add auto-resolution proposal queue to auditor | Admin UX | Medium | Low | `admin/index.html`, `admin/admin.js`, `admin/README.md` | Auditor can switch to proposal groups, inspect low-risk de-prioritisation, and keep risky batches review-gated | done | Use after export:auto-resolution to plan review sessions |
 | CF-DQ-013 | Deduplicate claim batch provider samples | Reviewer efficiency | Medium | Low | `tools/export-provider-claim-review-queue.mjs`, `tools/export-provider-auto-resolution-proposals.mjs` | Batch exports show claim count, unique provider count, and deduplicated provider samples | done | Use providerCount to size human review batches |
 | CF-DQ-014 | Draft claim-batch review decisions | Controlled changes | High | Medium | `tools/draft-claim-batch-review-decisions.mjs`, tests, docs | Reviewed batches can create draft decision JSON without mutating providers; high-risk adjustments require explicit human review | done | Use drafts with apply:review only after source checks |
+| CF-DQ-015 | Target provider-level audit findings to matching claim values | Reviewer efficiency | High | Low | `tools/build-provider-evidence-graph.mjs`, `data/provider-claim-review-queue.json` | Weak telehealth/cultural/broad-tag findings only create claim-review items for the affected tag or field, not every tag on the provider | done | Continue reducing root-cause duplication in GP source corroboration batches |

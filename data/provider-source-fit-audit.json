@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-31T08:20:24.114Z",
+  "generatedAt": "2026-05-31T20:05:30.174Z",
   "providersScanned": 1214,
   "findings": [
     {
@@ -5753,7 +5753,7 @@
         "direct-contact"
       ],
       "needScope": [],
-      "source": "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/",
+      "source": "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams",
       "rule": "weak-telehealth-evidence",
       "severity": "medium",
       "issue": "Telehealth or online availability is set but source fields do not clearly support remote care.",

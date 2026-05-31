@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-31T08:20:44.732Z",
+  "generatedAt": "2026-05-31T20:05:53.926Z",
   "safety": {
     "advisoryOnly": true,
     "noLiveProviderMutation": true,
@@ -12,14 +12,14 @@
   "inputs": {
     "claims": 32548,
     "providerReviewItems": 513,
-    "claimReviewItems": 2389,
-    "claimBatches": 58,
+    "claimReviewItems": 941,
+    "claimBatches": 56,
     "conflictGroups": 1667
   },
   "summary": {
     "autoDeprioritizeClaims": 1449,
     "autoDeprioritizeGroups": 31,
-    "manualBatchGroups": 58,
+    "manualBatchGroups": 56,
     "blockedAutomationRules": 5,
     "byAutoField": {
       "name": 236,
@@ -36,10 +36,10 @@
     "byManualCategory": {
       "referral pathway review": 111,
       "availability review": 60,
-      "sensitive tag or scope evidence": 1929,
+      "sensitive tag or scope evidence": 487,
       "directory/direct-contact confusion": 17,
       "location or distance evidence": 8,
-      "needs quick human check": 8,
+      "needs quick human check": 2,
       "sensitive/scope evidence": 4,
       "GP source corroboration": 252
     }
@@ -1063,7 +1063,7 @@
           "providerName": "Wairarapa Community Mental Health Team | MHAIDS",
           "field": "address",
           "value": "Wairarapa Hospital Campus, Te Ore Ore Road, Masterton",
-          "sourceUrl": "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/"
+          "sourceUrl": "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams"
         }
       ]
     },
@@ -1730,265 +1730,50 @@
       "field": "tags",
       "sourceType": "provider_owned",
       "sourceOwnerType": "",
-      "count": 654,
+      "count": 152,
       "affectedProviders": 56,
-      "duplicateClaimRows": 598,
+      "duplicateClaimRows": 96,
       "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
       "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
       "liveMutationAllowed": false,
       "reviewGateRequiredForProviderData": true,
       "sampleProviders": [
         {
-          "providerId": "dunedin-parker-chin-psychology",
-          "name": "Parker & Chin Psychology",
-          "region": "Otago",
-          "city": "Dunedin",
-          "claimCount": 20,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "psychiatry-consultation",
-            "fit",
-            "depression",
-            "anxiety",
-            "trauma",
-            "trauma-informed"
-          ],
-          "sourceUrls": [
-            "https://www.parkerandchin.com/"
-          ]
-        },
-        {
-          "providerId": "taranaki-talkingpoint-new-plymouth",
-          "name": "TalkingPoint New Plymouth",
-          "region": "Taranaki",
-          "city": "New Plymouth",
-          "claimCount": 20,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "depression",
-            "anxiety",
-            "stress",
-            "ocd",
-            "trauma",
-            "ptsd"
-          ],
-          "sourceUrls": [
-            "https://www.talkingpoint.co.nz/new-plymouth/"
-          ]
-        },
-        {
-          "providerId": "wellington-cpep-services",
-          "name": "Coastal Personal Empowerment & Psychological Services",
-          "region": "Wellington",
-          "city": "Wellington, Paraparaumu, Palmerston North, and online",
-          "claimCount": 19,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "telehealth",
-            "online",
-            "depression",
-            "anxiety",
-            "autism",
-            "adhd"
-          ],
-          "sourceUrls": [
-            "https://www.cpepservices.com/"
-          ]
-        },
-        {
-          "providerId": "dunedin-otago-clinical-psychology-centre",
-          "name": "University of Otago Clinical Psychology Centre",
-          "region": "Otago",
-          "city": "Dunedin",
-          "claimCount": 16,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "fit",
-            "depression",
-            "anxiety",
-            "trauma",
-            "ptsd",
-            "ocd"
-          ],
-          "sourceUrls": [
-            "https://www.otago.ac.nz/psychology/clinicalpsychologycentre"
-          ]
-        },
-        {
           "providerId": "nzccp-alex-richards",
           "name": "Alex Richards",
           "region": "Canterbury",
           "city": "Christchurch",
-          "claimCount": 15,
+          "claimCount": 4,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
             "depression",
             "anxiety",
             "trauma",
-            "addiction",
-            "neurodiversity",
-            "youth"
+            "addiction"
           ],
           "sourceUrls": [
             "https://www.manawapsychology.co.nz/ko-wai-m%C4%81ua"
           ]
         },
         {
-          "providerId": "auckland-auckland-mental-wellness-centre",
-          "name": "Auckland Mental Wellness Centre",
-          "region": "Auckland",
-          "city": "Remuera",
-          "claimCount": 15,
+          "providerId": "wellington-cbt-clinic",
+          "name": "CBT Clinic",
+          "region": "Wellington",
+          "city": "Wellington CBD",
+          "claimCount": 4,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychologist",
-            "counselling-psychologist",
-            "assessment",
             "depression",
             "anxiety",
-            "trauma",
-            "adhd",
-            "autism"
+            "work",
+            "addiction"
           ],
           "sourceUrls": [
-            "https://aucklandmentalwellness.com/"
-          ]
-        },
-        {
-          "providerId": "hawkes-bay-bay-psychology",
-          "name": "Bay Psychology",
-          "region": "Hawke's Bay",
-          "city": "Napier, Taradale, Hastings and Havelock North",
-          "claimCount": 15,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "depression",
-            "anxiety",
-            "trauma",
-            "sexual-harm",
-            "acc",
-            "emdr"
-          ],
-          "sourceUrls": [
-            "https://baypsychology.co.nz/contact-us/"
-          ]
-        },
-        {
-          "providerId": "northland-jigsaw-north-counselling",
-          "name": "Jigsaw North Manaaki Whanau Counselling",
-          "region": "Northland",
-          "city": "Whangarei",
-          "claimCount": 15,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "counsellor",
-            "therapy",
-            "youth",
-            "child",
-            "family",
-            "whanau",
-            "maori",
-            "kaupapa-maori"
-          ],
-          "sourceUrls": [
-            "https://www.jigsawnorth.org.nz/counselling/"
-          ]
-        },
-        {
-          "providerId": "south-canterbury-mokonui-talk",
-          "name": "Mokonui-a-rangi TALK",
-          "region": "South Canterbury",
-          "city": "Timaru",
-          "claimCount": 15,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "counsellor",
-            "therapy",
-            "maori",
-            "kaupapa-maori",
-            "whanau",
-            "youth",
-            "family",
-            "depression"
-          ],
-          "sourceUrls": [
-            "https://www.mokonui.com/"
-          ]
-        },
-        {
-          "providerId": "manawatu-massey-palmerston-north-psychology-clinic",
-          "name": "Palmerston North Psychology Clinic - Massey University",
-          "region": "Manawatu-Whanganui",
-          "city": "Palmerston North",
-          "claimCount": 15,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "university-clinic",
-            "depression",
-            "anxiety",
-            "stress",
-            "health",
-            "assessment"
-          ],
-          "sourceUrls": [
-            "https://www.massey.ac.nz/about/clinics-and-services-for-the-public/massey-psychology-clinics/palmerston-north-manawat%C5%AB-psychology-clinic-massey-university/"
-          ]
-        },
-        {
-          "providerId": "southland-south-coast-psychology",
-          "name": "South Coast Psychology",
-          "region": "Southland",
-          "city": "Gore, Invercargill and wider Southland",
-          "claimCount": 15,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "counsellor",
-            "psychiatrist",
-            "depression",
-            "anxiety",
-            "trauma",
-            "sexual-harm"
-          ],
-          "sourceUrls": [
-            "https://southcoastpsychology.co.nz/"
+            "https://www.cbtclinic.co.nz/"
           ]
         },
         {
@@ -1996,1210 +1781,185 @@
           "name": "Future 4U Counselling",
           "region": "Taranaki",
           "city": "New Plymouth",
-          "claimCount": 14,
+          "claimCount": 4,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "counsellor",
-            "therapy",
             "addiction",
-            "alcohol",
-            "drug",
             "depression",
             "anxiety",
-            "stress"
+            "trauma"
           ],
           "sourceUrls": [
             "https://www.future4u.co.nz/"
           ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-third-party-directory-weak-maori-evidence",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "third_party_directory",
-      "sourceOwnerType": "",
-      "count": 320,
-      "affectedProviders": 32,
-      "duplicateClaimRows": 288,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
+        },
         {
-          "providerId": "gp-best-care-whakapai-hauora-charitable-trust-40-3792-175-5843",
-          "name": "Best Care (Whakapai Hauora) Charitable Trust",
-          "region": "Manawatu-Whanganui",
-          "city": "Manawatu-Wanganui",
-          "claimCount": 10,
+          "providerId": "christchurch-psychmed-natasha-pomeroy",
+          "name": "Natasha Pomeroy",
+          "region": "Canterbury",
+          "city": "Christchurch",
+          "claimCount": 4,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
             "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.facebook.com/profile.php?id=100092218263542&mibextid=ZbWKwL"
-          ]
-        },
-        {
-          "providerId": "gp-hauora-health-centre-41-2738-173-2873",
-          "name": "Hauora Health Centre",
-          "region": "Nelson Marlborough Tasman",
-          "city": "Nelson",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
             "depression",
-            "anxiety",
-            "work",
-            "cost"
+            "trauma",
+            "work"
           ],
           "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "http://www.hauorahealth.nz"
+            "https://www.christchurchpsychmed.co.nz/about"
           ]
         },
         {
-          "providerId": "gp-horotiu-hauora-family-health-37-7008-175-2034",
-          "name": "Horotiu Hauora Family Health",
-          "region": "Waikato",
-          "city": "Hamilton",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.horotiuhauora.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-m-ori-hill-clinic-45-8581-170-5008",
-          "name": "Māori Hill Clinic",
-          "region": "Otago",
-          "city": "Dunedin",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-maraenui-medical-centre-39-5153-176-9056",
-          "name": "Maraenui Medical Centre",
-          "region": "Hawke's Bay",
-          "city": "Napier",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.maraenuimedicalcentre.com/"
-          ]
-        },
-        {
-          "providerId": "gp-ng-ti-kahu-hauora-gp-service-37-6904-176-1078",
-          "name": "Ngāti Kahu Hauora GP Service",
-          "region": "Bay of Plenty",
-          "city": "Tauranga",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.ngatikahuhauora.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-tara-wh-nau-medical-centre-36-9582-174-8745",
-          "name": "Ōtara Whānau Medical Centre",
-          "region": "Auckland",
-          "city": "Ōtara",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://otarawhanuamc.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-pirirakau-hauora-gp-clinic-37-6671-176-0795",
-          "name": "Pirirakau Hauora GP Clinic",
-          "region": "Bay of Plenty",
-          "city": "Tauranga",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://pirirakauhauora.org.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-raukura-hauora-o-tainui-nga-miro-37-6628-175-1543",
-          "name": "Raukura Hauora O Tainui - Nga Miro",
-          "region": "Waikato",
-          "city": "Ngāruawāhia",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.raukura.org.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-raukura-hauora-o-tainui-te-papanui-whare-haumanu-37-7714-175-2931",
-          "name": "Raukura Hauora O Tainui - Te Papanui Whare Haumanu",
-          "region": "Waikato",
-          "city": "Hamilton",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.raukura.org.nz/locations-item/te-papanui-medical"
-          ]
-        },
-        {
-          "providerId": "gp-raukura-hauora-o-tainui-te-rengarenga-37-7955-175-2457",
-          "name": "Raukura Hauora O Tainui - Te Rengarenga",
-          "region": "Waikato",
-          "city": "Hamilton",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.raukura.org.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-raukura-hauora-o-tainui-waahi-37-5583-175-1537",
-          "name": "Raukura Hauora O Tainui - Waahi",
-          "region": "Waikato",
-          "city": "Huntly",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "gp",
-            "primary-care",
-            "mental-health",
-            "medication",
-            "depression",
-            "anxiety",
-            "work",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/",
-            "https://www.raukura.org.nz/"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-healthpoint-weak-telehealth-evidence",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "healthpoint",
-      "sourceOwnerType": "",
-      "count": 216,
-      "affectedProviders": 18,
-      "duplicateClaimRows": 198,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "rotorua-lakes-icamhs",
-          "name": "Infant, Child and Adolescent Mental Health Service | Lakes",
-          "region": "Rotorua and Taupo",
-          "city": "Rotorua and Taupo",
-          "claimCount": 19,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "youth",
-            "rangatahi",
-            "psychiatry-service",
-            "psychologist",
-            "child",
-            "adolescent",
-            "addiction",
-            "alcohol"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/public/psychiatry/infant-child-and-adolescent-mental-health/at/childrens-health-hub-1127-haupapa-street/"
-          ]
-        },
-        {
-          "providerId": "west-coast-camhs",
-          "name": "Child and Adolescent Mental Health Services | West Coast",
-          "region": "West Coast",
-          "city": "Greymouth and wider West Coast",
-          "claimCount": 15,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "youth",
-            "rangatahi",
-            "psychiatry-service",
-            "addiction",
-            "alcohol",
-            "drug",
-            "child",
-            "adolescent"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services-1/"
-          ]
-        },
-        {
-          "providerId": "nelson-marlborough-tasman-nelson-bays-primary-health",
-          "name": "Nelson Bays Primary Health - Mental Health and Addictions",
-          "region": "Nelson Marlborough Tasman",
-          "city": "Richmond / Nelson Tasman",
-          "claimCount": 14,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "gp",
-            "primary-care",
-            "youth",
-            "rangatahi",
-            "depression",
-            "anxiety",
-            "addiction"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/nelson-bays-primary-health-mental-health/"
-          ]
-        },
-        {
-          "providerId": "northland-healthnz-adult-community-mha",
-          "name": "Te Tai Tokerau Adult Community Mental Health & Addiction Service",
-          "region": "Northland",
-          "city": "Whangarei, Kaipara, Far North, Mid North, and Bay of Islands",
-          "claimCount": 14,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "psychologist",
-            "addiction",
-            "alcohol",
-            "drug",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/public/psychiatry/mental-health-addictions-adult-community/"
-          ]
-        },
-        {
-          "providerId": "hawkes-bay-community-mental-health-addiction",
-          "name": "Hawke's Bay Community Mental Health and Addiction Services",
-          "region": "Hawke's Bay",
-          "city": "Napier, Hastings, Central Hawke's Bay, and Wairoa",
-          "claimCount": 13,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "psychologist",
-            "addiction",
-            "alcohol",
-            "drug",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/community-mental-health-and-addiction-services/at/76-wellesley-road-napier-south-napier-1/"
-          ]
-        },
-        {
-          "providerId": "wairarapa-mhaids-camhs",
-          "name": "Wairarapa CAMHS | MHAIDS",
-          "region": "Wairarapa",
-          "city": "Masterton",
-          "claimCount": 13,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "youth",
-            "rangatahi",
-            "psychiatry-service",
-            "psychologist",
-            "child",
-            "adolescent",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/child-and-adolescent-mental-health-services/at/49-51-lincoln-road-masterton/"
-          ]
-        },
-        {
-          "providerId": "tairawhiti-icamhs-te-whare-o-te-rito",
-          "name": "ICAMHS Te Whare o te Rito",
-          "region": "Tairawhiti",
-          "city": "Gisborne",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "youth",
-            "rangatahi",
-            "psychiatry-service",
-            "child",
-            "adolescent",
-            "depression",
-            "anxiety",
-            "trauma"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/infant-child-and-adolescent-mental-health-2/at/gisborne-hospital/"
-          ]
-        },
-        {
-          "providerId": "taranaki-mhsop",
-          "name": "Mental Health Services for Older People | Taranaki",
-          "region": "Taranaki",
-          "city": "New Plymouth and Hawera",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "psychologist",
-            "older-adult",
-            "kaumatua",
-            "depression",
-            "anxiety",
-            "dementia"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-services-for-older-people-mhsop-1/"
-          ]
-        },
-        {
-          "providerId": "tairawhiti-te-whare-oranga",
-          "name": "Te Whare Oranga Adult Community Mental Health & Addiction Services",
-          "region": "Tairawhiti",
-          "city": "Gisborne",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "depression",
-            "anxiety",
-            "addiction",
-            "alcohol",
-            "drug",
-            "maternal"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/adult-community-mental-health-addiction-services-1/at/79-lowe-street-gisborne/"
-          ]
-        },
-        {
-          "providerId": "south-canterbury-aod-service",
-          "name": "Alcohol & Other Drugs (A&OD) South Canterbury",
-          "region": "South Canterbury",
-          "city": "Timaru",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "addiction",
-            "alcohol",
-            "drug",
-            "youth",
-            "rangatahi",
-            "depression",
-            "anxiety",
-            "telehealth"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/addiction/alcohol-other-drugs-aod-south-canterbury/"
-          ]
-        },
-        {
-          "providerId": "south-canterbury-mental-health-older-people",
-          "name": "Mental Health of Older People | South Canterbury",
-          "region": "South Canterbury",
-          "city": "Timaru",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "older-adult",
-            "kaumatua",
-            "depression",
-            "anxiety",
-            "dementia",
-            "assessment"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-of-older-people-south-canterbury/"
-          ]
-        },
-        {
-          "providerId": "tairawhiti-older-persons-mental-health-services",
-          "name": "Older Persons Mental Health Services | Tairawhiti",
-          "region": "Tairawhiti",
-          "city": "Gisborne",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "older-adult",
-            "kaumatua",
-            "depression",
-            "anxiety",
-            "dementia",
-            "assessment"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/older-persons-mental-health-services-tairawhiti/at/gisborne-hospital/"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-provider-owned-weak-telehealth-evidence",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "provider_owned",
-      "sourceOwnerType": "",
-      "count": 148,
-      "affectedProviders": 12,
-      "duplicateClaimRows": 136,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "wellington-rebecca-webster-clinical-psychologist",
-          "name": "Rebecca Webster Clinical Psychologist",
-          "region": "Wellington",
-          "city": "Te Aro",
-          "claimCount": 16,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "therapy",
-            "depression",
-            "anxiety",
-            "panic",
-            "ocd",
-            "addiction"
-          ],
-          "sourceUrls": [
-            "https://www.psychclinic.co.nz/"
-          ]
-        },
-        {
-          "providerId": "rotorua-taiohi-turama-youth-mental-health-addictions",
-          "name": "Taiohi Turama Primary Mental Health & Addictions Service",
+          "providerId": "rotorua-psychologist-nz-referrals",
+          "name": "Psychologist.nz Rotorua Referrals",
           "region": "Rotorua and Taupo",
           "city": "Rotorua",
-          "claimCount": 16,
+          "claimCount": 4,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "youth",
-            "rangatahi",
-            "addiction",
-            "alcohol",
-            "drug",
-            "depression",
-            "anxiety",
-            "grief"
-          ],
-          "sourceUrls": [
-            "https://taiohiturama.org.nz/services/mental-health-and-addictions/"
-          ]
-        },
-        {
-          "providerId": "auckland-mt-eden-counselling-psychotherapy",
-          "name": "Mt Eden Counselling & Psychotherapy",
-          "region": "Auckland",
-          "city": "Mt Eden",
-          "claimCount": 15,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "counsellor",
-            "therapy",
-            "psychotherapy",
             "depression",
             "anxiety",
             "trauma",
-            "relationships",
             "addiction"
           ],
           "sourceUrls": [
-            "https://www.mtedencounselling.co.nz/"
+            "https://psychologist.nz/"
           ]
         },
         {
-          "providerId": "hawkes-bay-crisp-counselling",
-          "name": "CRISP Counselling",
-          "region": "Hawke's Bay",
-          "city": "Napier",
-          "claimCount": 14,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "counsellor",
-            "therapy",
-            "depression",
-            "anxiety",
-            "panic",
-            "trauma",
-            "grief",
-            "relationships"
-          ],
-          "sourceUrls": [
-            "https://www.crispcounselling.com/"
-          ]
-        },
-        {
-          "providerId": "manawatu-mana-o-te-tangata-peer-support",
-          "name": "Mana o te Tangata Trust",
-          "region": "Manawatu-Whanganui",
-          "city": "Palmerston North, Levin, and Woodville",
-          "claimCount": 14,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "peer-support",
-            "maori",
-            "kaupapa-maori",
-            "whanau",
-            "addiction",
-            "youth",
-            "rangatahi"
-          ],
-          "sourceUrls": [
-            "https://www.platform.org.nz/members/our-members/view/mana-o-te-tangata",
-            "https://www.manaotetangata.org.nz/"
-          ]
-        },
-        {
-          "providerId": "tairawhiti-the-therapy-space",
-          "name": "The Therapy Space",
-          "region": "Tairawhiti",
-          "city": "Gisborne",
-          "claimCount": 14,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "therapy",
-            "depression",
-            "anxiety",
-            "panic",
-            "trauma",
-            "ptsd",
-            "sexual-harm"
-          ],
-          "sourceUrls": [
-            "https://www.thetherapyspace.nz/contact",
-            "https://www.thetherapyspace.nz/"
-          ]
-        },
-        {
-          "providerId": "northland-indigo-house-lynn-price",
-          "name": "Lynn Price",
-          "region": "Northland",
-          "city": "Whangarei",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychologist",
-            "therapy",
-            "trauma",
-            "sexual-harm",
-            "grief",
-            "relationships",
-            "female",
-            "acc"
-          ],
-          "sourceUrls": [
-            "https://indigohouse.co.nz/who-we-are/"
-          ]
-        },
-        {
-          "providerId": "otago-wellsouth-toku-oranga",
-          "name": "WellSouth Toku Oranga Access and Choice",
-          "region": "Otago",
-          "city": "Otago",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "gp",
-            "primary-care",
-            "depression",
-            "anxiety",
-            "addiction",
-            "telehealth",
-            "work"
-          ],
-          "sourceUrls": [
-            "https://wellsouth.nz/your-health/mental-health-and-wellbeing/toku-oranga-access-and-choice"
-          ]
-        },
-        {
-          "providerId": "southland-wellsouth-toku-oranga",
-          "name": "WellSouth Toku Oranga Southland",
+          "providerId": "southland-south-coast-psychology",
+          "name": "South Coast Psychology",
           "region": "Southland",
-          "city": "Southland",
-          "claimCount": 11,
+          "city": "Gore, Invercargill and wider Southland",
+          "claimCount": 4,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "public-service",
-            "gp",
-            "primary-care",
-            "depression",
-            "anxiety",
-            "addiction",
-            "telehealth",
-            "work"
-          ],
-          "sourceUrls": [
-            "https://wellsouth.nz/your-health/mental-health-and-wellbeing/toku-oranga-access-and-choice"
-          ]
-        },
-        {
-          "providerId": "hawkes-bay-lynda-chisholm-counselling",
-          "name": "Lynda Chisholm Counselling",
-          "region": "Hawke's Bay",
-          "city": "Napier",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "counsellor",
-            "therapy",
-            "depression",
-            "anxiety",
-            "relationships",
-            "grief",
-            "self-esteem",
-            "cbt"
-          ],
-          "sourceUrls": [
-            "https://lyndachisholm.nz/napier-counselling/"
-          ]
-        },
-        {
-          "providerId": "manawatu-supporting-families-anxiety-group",
-          "name": "Manawatu Supporting Families Anxiety Group",
-          "region": "Manawatu-Whanganui",
-          "city": "Palmerston North, Levin, and Dannevirke",
-          "claimCount": 8,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "peer-support",
-            "family",
-            "whanau",
-            "anxiety",
-            "cost",
-            "fit",
-            "direct-contact"
-          ],
-          "sourceUrls": [
-            "https://manawatusf.org.nz/anxiety-group"
-          ]
-        },
-        {
-          "providerId": "west-coast-pact-peer-support",
-          "name": "Pact West Coast Peer Support",
-          "region": "West Coast",
-          "city": "Westport, Hokitika, and Greymouth",
-          "claimCount": 8,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "peer-support",
-            "addiction",
-            "whanau",
-            "cost",
-            "transport",
-            "fit",
-            "direct-contact"
-          ],
-          "sourceUrls": [
-            "https://pactgroup.co.nz/consumer-advisors-and-peer-support/"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-official-register-weak-telehealth-evidenc",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "official_register",
-      "sourceOwnerType": "",
-      "count": 143,
-      "affectedProviders": 16,
-      "duplicateClaimRows": 127,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "ranzcp-4499",
-          "name": "Dr Campbell Emmerton",
-          "region": "Auckland",
-          "city": "Herne Bay",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "maori",
-            "rainbow",
-            "cost",
-            "depression"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4499/dr-campbell-emmerton"
-          ]
-        },
-        {
-          "providerId": "ranzcp-7046",
-          "name": "Dr John Joseph",
-          "region": "Auckland",
-          "city": "Mt Albert",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "maori",
-            "asian",
-            "rainbow",
-            "cost"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7046/dr-john-joseph"
-          ]
-        },
-        {
-          "providerId": "ranzcp-5481",
-          "name": "Dr Sally Rimkeit",
-          "region": "Wellington",
-          "city": "Hataitai",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "maori",
-            "rainbow",
-            "cost",
-            "depression"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit"
-          ]
-        },
-        {
-          "providerId": "ranzcp-4807",
-          "name": "Dr Scott Chambers",
-          "region": "Auckland",
-          "city": "Remuera",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "maori",
-            "rainbow",
-            "cost",
-            "depression"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4807/dr-scott-chambers"
-          ]
-        },
-        {
-          "providerId": "ranzcp-6743",
-          "name": "Dr Caleb Armstrong",
-          "region": "Bay of Plenty",
-          "city": "Gate Pa",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "maori",
-            "cost",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6743/dr-caleb-armstrong"
-          ]
-        },
-        {
-          "providerId": "ranzcp-2665",
-          "name": "Dr Ian Goodwin",
-          "region": "Auckland",
-          "city": "Auckland",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "rainbow",
-            "cost",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2665/dr-ian-goodwin"
-          ]
-        },
-        {
-          "providerId": "ranzcp-4859",
-          "name": "Dr Katie Ritchie",
-          "region": "Auckland",
-          "city": "Remuera",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "rainbow",
-            "cost",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4859/dr-katie-ritchie"
-          ]
-        },
-        {
-          "providerId": "ranzcp-5889",
-          "name": "Dr Struan Robertson",
-          "region": "Wellington",
-          "city": "CBD",
-          "claimCount": 10,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "maori",
-            "rainbow",
-            "depression",
-            "trauma"
-          ],
-          "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5889/dr-struan-robertson"
-          ]
-        },
-        {
-          "providerId": "ranzcp-13276",
-          "name": "Dr Evan Wilson",
-          "region": "Canterbury",
-          "city": "Bromley",
-          "claimCount": 9,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
             "depression",
             "anxiety",
             "trauma",
             "addiction"
           ],
           "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/13276/dr-evan-wilson"
+            "https://southcoastpsychology.co.nz/"
           ]
         },
         {
-          "providerId": "ranzcp-4371",
-          "name": "Dr Thomas Levien",
-          "region": "Nelson Marlborough Tasman",
-          "city": "Nelson",
-          "claimCount": 9,
+          "providerId": "christchurch-psychmed-steve-humm",
+          "name": "Steve Humm",
+          "region": "Canterbury",
+          "city": "Christchurch",
+          "claimCount": 4,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "cost",
+            "depression",
+            "anxiety",
+            "trauma",
+            "work"
+          ],
+          "sourceUrls": [
+            "https://www.christchurchpsychmed.co.nz/about"
+          ]
+        },
+        {
+          "providerId": "bay-of-plenty-te-puna-ora-mataatua-counselling",
+          "name": "Te Puna Ora o Mataatua - Nga Mata Wai Ora Counselling",
+          "region": "Bay of Plenty",
+          "city": "Whakatane",
+          "claimCount": 4,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "depression",
+            "anxiety",
+            "trauma",
+            "addiction"
+          ],
+          "sourceUrls": [
+            "https://www.tpoom.co.nz/service/counselling"
+          ]
+        },
+        {
+          "providerId": "south-canterbury-a-time-to-talk",
+          "name": "A Time to Talk",
+          "region": "South Canterbury",
+          "city": "Timaru",
+          "claimCount": 3,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
             "depression",
             "anxiety",
             "trauma"
           ],
           "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4371/dr-thomas-levien"
+            "https://atimetotalk.com/"
           ]
         },
         {
-          "providerId": "ranzcp-4171",
-          "name": "Prof Sunny Collings",
-          "region": "Wellington",
-          "city": "Kumutoto",
-          "claimCount": 8,
+          "providerId": "christchurch-psychmed-amanda-baird",
+          "name": "Amanda Baird",
+          "region": "Canterbury",
+          "city": "Christchurch",
+          "claimCount": 3,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "rainbow",
             "depression",
             "anxiety",
-            "direct-contact"
+            "work"
           ],
           "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4171/prof-sunny-collings"
+            "https://www.christchurchpsychmed.co.nz/about"
           ]
         },
         {
-          "providerId": "ranzcp-7045",
-          "name": "Dr Neena Joseph",
-          "region": "Auckland",
-          "city": "Avondale",
-          "claimCount": 7,
+          "providerId": "southland-annelize-prinsloo-south-coast",
+          "name": "Annelize Prinsloo - South Coast Psychology",
+          "region": "Southland",
+          "city": "Invercargill and wider Southland",
+          "claimCount": 3,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "fit",
-            "telehealth",
-            "asian",
-            "cost",
-            "direct-contact"
+            "trauma",
+            "depression",
+            "anxiety"
           ],
           "sourceUrls": [
-            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7045/dr-neena-joseph"
+            "https://southcoastpsychology.co.nz/provider/annelize-prinsloo/"
+          ]
+        },
+        {
+          "providerId": "national-asian-family-services",
+          "name": "Asian Family Services",
+          "region": "National",
+          "city": "Auckland, Wellington, Christchurch and telehealth",
+          "claimCount": 3,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "depression",
+            "anxiety",
+            "addiction"
+          ],
+          "sourceUrls": [
+            "https://www.asianfamilyservices.nz/"
           ]
         }
       ]
@@ -3898,139 +2658,6 @@
       ]
     },
     {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-provider-owned-weak-maori-evidence",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "provider_owned",
-      "sourceOwnerType": "",
-      "count": 57,
-      "affectedProviders": 5,
-      "duplicateClaimRows": 52,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "hawkes-bay-whakiao-taurima-counselling",
-          "name": "Whakiao Taurima Counselling",
-          "region": "Hawke's Bay",
-          "city": "Hawke's Bay",
-          "claimCount": 17,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "counsellor",
-            "therapy",
-            "maori",
-            "kaupapa-maori",
-            "whanau",
-            "female",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://wtcounselling.com/2025/04/23/whakiao-taurima-counselling-limited/"
-          ]
-        },
-        {
-          "providerId": "wellington-vincents-art-workshop",
-          "name": "Vincents Art Workshop",
-          "region": "Wellington",
-          "city": "Wellington",
-          "claimCount": 13,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "peer-support",
-            "cost",
-            "rainbow",
-            "lgbtqia",
-            "pasifika",
-            "maori",
-            "disability"
-          ],
-          "sourceUrls": [
-            "https://vincents.co.nz/contact%20us",
-            "https://vincents.co.nz/home"
-          ]
-        },
-        {
-          "providerId": "otago-te-kaika-toku-oranga",
-          "name": "Te Kaika Toku Oranga",
-          "region": "Otago",
-          "city": "Dunedin / Oamaru",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "maori",
-            "kaupapa-maori",
-            "gp",
-            "primary-care",
-            "depression",
-            "anxiety",
-            "addiction"
-          ],
-          "sourceUrls": [
-            "https://www.tekaika.nz/services/toku-oranga"
-          ]
-        },
-        {
-          "providerId": "west-coast-whare-manaaki",
-          "name": "Whare Manaaki o Te Tai Poutini",
-          "region": "West Coast",
-          "city": "Greymouth",
-          "claimCount": 8,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "maori",
-            "whanau",
-            "youth",
-            "wellbeing",
-            "cost",
-            "fit",
-            "direct-contact"
-          ],
-          "sourceUrls": [
-            "https://www.wharemanaaki.co.nz/contact"
-          ]
-        },
-        {
-          "providerId": "psychiatry-nz-jimi-macmillan",
-          "name": "Dr Jimi MacMillan",
-          "region": "National",
-          "city": "Telehealth across New Zealand",
-          "claimCount": 7,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "psychiatrist",
-            "medical-specialist",
-            "telehealth",
-            "adhd",
-            "maori",
-            "fit",
-            "direct-contact"
-          ],
-          "sourceUrls": [
-            "https://psychiatry.nz/"
-          ]
-        }
-      ]
-    },
-    {
       "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-provider-owned-broad-tag-without-source-",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
@@ -4241,200 +2868,222 @@
       ]
     },
     {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-professional-directory-broad-tag-without-",
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-third-party-directory-weak-maori-evidence",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
       "riskLevel": "high",
       "field": "tags",
-      "sourceType": "professional_directory",
+      "sourceType": "third_party_directory",
       "sourceOwnerType": "",
-      "count": 52,
-      "affectedProviders": 4,
-      "duplicateClaimRows": 48,
+      "count": 32,
+      "affectedProviders": 32,
+      "duplicateClaimRows": 0,
       "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
       "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
       "liveMutationAllowed": false,
       "reviewGateRequiredForProviderData": true,
       "sampleProviders": [
         {
-          "providerId": "marlborough-rachael-sim-clinical-psychology",
-          "name": "Dr Rachael Sim Clinical Psychology",
-          "region": "Nelson Marlborough Tasman",
-          "city": "Blenheim",
-          "claimCount": 16,
+          "providerId": "gp-best-care-whakapai-hauora-charitable-trust-40-3792-175-5843",
+          "name": "Best Care (Whakapai Hauora) Charitable Trust",
+          "region": "Manawatu-Whanganui",
+          "city": "Manawatu-Wanganui",
+          "claimCount": 1,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "adolescent",
-            "adult",
-            "depression",
-            "anxiety",
-            "stress",
-            "trauma"
+            "maori"
           ],
           "sourceUrls": [
-            "https://www.nzccp.co.nz/team/rachael-sim"
+            "https://doctorpricer.co.nz/",
+            "https://www.facebook.com/profile.php?id=100092218263542&mibextid=ZbWKwL"
           ]
         },
         {
-          "providerId": "dunedin-bernadette-berry-delta-psychology",
-          "name": "Bernadette Berry, Delta Psychology",
+          "providerId": "gp-hauora-health-centre-41-2738-173-2873",
+          "name": "Hauora Health Centre",
+          "region": "Nelson Marlborough Tasman",
+          "city": "Nelson",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://doctorpricer.co.nz/",
+            "http://www.hauorahealth.nz"
+          ]
+        },
+        {
+          "providerId": "gp-horotiu-hauora-family-health-37-7008-175-2034",
+          "name": "Horotiu Hauora Family Health",
+          "region": "Waikato",
+          "city": "Hamilton",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://doctorpricer.co.nz/",
+            "https://www.horotiuhauora.co.nz/"
+          ]
+        },
+        {
+          "providerId": "gp-m-ori-hill-clinic-45-8581-170-5008",
+          "name": "Māori Hill Clinic",
           "region": "Otago",
           "city": "Dunedin",
-          "claimCount": 15,
+          "claimCount": 1,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "fit",
-            "trauma",
-            "trauma-informed",
-            "ptsd",
-            "adhd",
-            "acc"
+            "maori"
           ],
           "sourceUrls": [
-            "https://www.nzccp.co.nz/team/bernadette-berry"
+            "https://doctorpricer.co.nz/"
           ]
         },
         {
-          "providerId": "taranaki-jeremy-clark-psychology",
-          "name": "Jeremy Clark Psychology",
-          "region": "Taranaki",
-          "city": "New Plymouth",
-          "claimCount": 11,
+          "providerId": "gp-maraenui-medical-centre-39-5153-176-9056",
+          "name": "Maraenui Medical Centre",
+          "region": "Hawke's Bay",
+          "city": "Napier",
+          "claimCount": 1,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "youth",
-            "male",
-            "depression",
-            "anxiety",
-            "trauma",
-            "cbt"
+            "maori"
           ],
           "sourceUrls": [
-            "https://www.nzccp.co.nz/team/jeremy-clark"
+            "https://doctorpricer.co.nz/",
+            "https://www.maraenuimedicalcentre.com/"
           ]
         },
         {
-          "providerId": "nzccp-allanah-casey",
-          "name": "Allanah Casey",
+          "providerId": "gp-ng-ti-kahu-hauora-gp-service-37-6904-176-1078",
+          "name": "Ngāti Kahu Hauora GP Service",
           "region": "Bay of Plenty",
           "city": "Tauranga",
-          "claimCount": 10,
+          "claimCount": 1,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "fit",
-            "acc",
-            "telehealth",
-            "cbt",
-            "emdr",
-            "act"
+            "maori"
           ],
           "sourceUrls": [
-            "https://www.nzccp.co.nz/team/allanah-casey"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-healthpoint-broad-tag-without-source-supp",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "healthpoint",
-      "sourceOwnerType": "",
-      "count": 36,
-      "affectedProviders": 3,
-      "duplicateClaimRows": 33,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "west-coast-health-primary-counselling",
-          "name": "West Coast Health - Primary Health Counselling Programme",
-          "region": "West Coast",
-          "city": "Greymouth and wider West Coast",
-          "claimCount": 18,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "counsellor",
-            "primary-care",
-            "gp-linked",
-            "funded",
-            "free",
-            "depression",
-            "anxiety",
-            "stress"
-          ],
-          "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/west-coast-health-primary-health-counselling/at/west-coast-health-office-163-mackay-street/",
-            "https://westcoasthealth.nz/"
+            "https://doctorpricer.co.nz/",
+            "https://www.ngatikahuhauora.co.nz/"
           ]
         },
         {
-          "providerId": "southland-loss-and-grief-centre",
-          "name": "Loss and Grief Centre Southland",
-          "region": "Southland",
-          "city": "Invercargill",
-          "claimCount": 9,
+          "providerId": "gp-tara-wh-nau-medical-centre-36-9582-174-8745",
+          "name": "Ōtara Whānau Medical Centre",
+          "region": "Auckland",
+          "city": "Ōtara",
+          "claimCount": 1,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "counsellor",
-            "therapy",
-            "grief",
-            "loss",
-            "depression",
-            "anxiety",
-            "cost",
-            "fit"
+            "maori"
           ],
           "sourceUrls": [
-            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/loss-and-grief-centre/at/17-the-crescent-invercargill/",
-            "https://www.lossandgriefcentre.com/"
+            "https://doctorpricer.co.nz/",
+            "https://otarawhanuamc.co.nz/"
           ]
         },
         {
-          "providerId": "wellington-taeaomanino-trust",
-          "name": "Taeaomanino Trust",
-          "region": "Wellington",
-          "city": "Porirua",
-          "claimCount": 9,
+          "providerId": "gp-pirirakau-hauora-gp-clinic-37-6671-176-0795",
+          "name": "Pirirakau Hauora GP Clinic",
+          "region": "Bay of Plenty",
+          "city": "Tauranga",
+          "claimCount": 1,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "pasifika",
-            "counsellor",
-            "depression",
-            "anxiety",
-            "addiction",
-            "gambling",
-            "family",
-            "cost"
+            "maori"
           ],
           "sourceUrls": [
-            "https://healthpoint.co.nz/community-health-and-social-services/community-health/taeaomanino-trust/"
+            "https://doctorpricer.co.nz/",
+            "https://pirirakauhauora.org.nz/"
+          ]
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-nga-miro-37-6628-175-1543",
+          "name": "Raukura Hauora O Tainui - Nga Miro",
+          "region": "Waikato",
+          "city": "Ngāruawāhia",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://doctorpricer.co.nz/",
+            "https://www.raukura.org.nz/"
+          ]
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-te-papanui-whare-haumanu-37-7714-175-2931",
+          "name": "Raukura Hauora O Tainui - Te Papanui Whare Haumanu",
+          "region": "Waikato",
+          "city": "Hamilton",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://doctorpricer.co.nz/",
+            "https://www.raukura.org.nz/locations-item/te-papanui-medical"
+          ]
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-te-rengarenga-37-7955-175-2457",
+          "name": "Raukura Hauora O Tainui - Te Rengarenga",
+          "region": "Waikato",
+          "city": "Hamilton",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://doctorpricer.co.nz/",
+            "https://www.raukura.org.nz/"
+          ]
+        },
+        {
+          "providerId": "gp-raukura-hauora-o-tainui-waahi-37-5583-175-1537",
+          "name": "Raukura Hauora O Tainui - Waahi",
+          "region": "Waikato",
+          "city": "Huntly",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://doctorpricer.co.nz/",
+            "https://www.raukura.org.nz/"
           ]
         }
       ]
@@ -4855,134 +3504,6 @@
           ],
           "sourceUrls": [
             "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/576/dr-murray-patton"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-ngo-directory-weak-telehealth-evidence",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "ngo_directory",
-      "sourceOwnerType": "",
-      "count": 24,
-      "affectedProviders": 2,
-      "duplicateClaimRows": 22,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "rotorua-healthnz-te-ngako-adult-mhas",
-          "name": "Te Ngako Rotorua Adult Mental Health and Addictions Service",
-          "region": "Rotorua and Taupo",
-          "city": "Rotorua, Taupo, Turangi, and Mangakino",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "addiction",
-            "alcohol",
-            "drug",
-            "serious-mental-health",
-            "depression",
-            "anxiety"
-          ],
-          "sourceUrls": [
-            "https://www.healthnz.govt.nz/hospitals-services/hospitals/rotorua-taupo-lakes/mental-health-addiction/adult-mhas-rotorua"
-          ]
-        },
-        {
-          "providerId": "wairarapa-mhaids-community-mental-health",
-          "name": "Wairarapa Community Mental Health Team | MHAIDS",
-          "region": "Wairarapa",
-          "city": "Masterton",
-          "claimCount": 12,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "public-service",
-            "psychiatry-service",
-            "depression",
-            "anxiety",
-            "bipolar",
-            "serious-mental-health",
-            "medication",
-            "cbt"
-          ],
-          "sourceUrls": [
-            "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-provider-owned-weak-rainbow-evidence",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "tags",
-      "sourceType": "provider_owned",
-      "sourceOwnerType": "",
-      "count": 19,
-      "affectedProviders": 2,
-      "duplicateClaimRows": 17,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "wellington-evolve-youth-service",
-          "name": "Evolve Wellington Youth Service",
-          "region": "Wellington",
-          "city": "Wellington",
-          "claimCount": 11,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "youth",
-            "rangatahi",
-            "depression",
-            "anxiety",
-            "addiction",
-            "alcohol",
-            "drug",
-            "rainbow"
-          ],
-          "sourceUrls": [
-            "https://www.evolveyouth.org.nz/contact"
-          ]
-        },
-        {
-          "providerId": "canterbury-te-tahi-youth",
-          "name": "Te Tahi Youth",
-          "region": "Canterbury",
-          "city": "Christchurch",
-          "claimCount": 8,
-          "claimFields": [
-            "tags"
-          ],
-          "claimValues": [
-            "youth",
-            "rangatahi",
-            "depression",
-            "anxiety",
-            "addiction",
-            "rainbow",
-            "cost",
-            "fit"
-          ],
-          "sourceUrls": [
-            "https://www.tetahiyouth.org.nz/"
           ]
         }
       ]
@@ -6671,6 +5192,216 @@
       ]
     },
     {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-official-register-weak-telehealth-evidenc",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "official_register",
+      "sourceOwnerType": "",
+      "count": 16,
+      "affectedProviders": 16,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "ranzcp-6743",
+          "name": "Dr Caleb Armstrong",
+          "region": "Bay of Plenty",
+          "city": "Gate Pa",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/6743/dr-caleb-armstrong"
+          ]
+        },
+        {
+          "providerId": "ranzcp-4499",
+          "name": "Dr Campbell Emmerton",
+          "region": "Auckland",
+          "city": "Herne Bay",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4499/dr-campbell-emmerton"
+          ]
+        },
+        {
+          "providerId": "ranzcp-13276",
+          "name": "Dr Evan Wilson",
+          "region": "Canterbury",
+          "city": "Bromley",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/13276/dr-evan-wilson"
+          ]
+        },
+        {
+          "providerId": "ranzcp-5617",
+          "name": "Dr Helen Austin",
+          "region": "Nelson Marlborough Tasman",
+          "city": "Blenheim",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5617/dr-helen-austin"
+          ]
+        },
+        {
+          "providerId": "ranzcp-2665",
+          "name": "Dr Ian Goodwin",
+          "region": "Auckland",
+          "city": "Auckland",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2665/dr-ian-goodwin"
+          ]
+        },
+        {
+          "providerId": "ranzcp-7046",
+          "name": "Dr John Joseph",
+          "region": "Auckland",
+          "city": "Mt Albert",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7046/dr-john-joseph"
+          ]
+        },
+        {
+          "providerId": "ranzcp-3038",
+          "name": "Dr Justin Barry-Walsh",
+          "region": "Wellington",
+          "city": "Khandallah",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/3038/dr-justin-barry-walsh"
+          ]
+        },
+        {
+          "providerId": "ranzcp-4859",
+          "name": "Dr Katie Ritchie",
+          "region": "Auckland",
+          "city": "Remuera",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4859/dr-katie-ritchie"
+          ]
+        },
+        {
+          "providerId": "ranzcp-7045",
+          "name": "Dr Neena Joseph",
+          "region": "Auckland",
+          "city": "Avondale",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/7045/dr-neena-joseph"
+          ]
+        },
+        {
+          "providerId": "ranzcp-5481",
+          "name": "Dr Sally Rimkeit",
+          "region": "Wellington",
+          "city": "Hataitai",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5481/dr-sally-rimkeit"
+          ]
+        },
+        {
+          "providerId": "ranzcp-4807",
+          "name": "Dr Scott Chambers",
+          "region": "Auckland",
+          "city": "Remuera",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/4807/dr-scott-chambers"
+          ]
+        },
+        {
+          "providerId": "ranzcp-5889",
+          "name": "Dr Struan Robertson",
+          "region": "Wellington",
+          "city": "CBD",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/5889/dr-struan-robertson"
+          ]
+        }
+      ]
+    },
+    {
       "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-phonesupport-provider-owned-weak-telehealth-",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
@@ -7095,55 +5826,118 @@
       ]
     },
     {
-      "proposalId": "manual-batch:needs-quick-human-check-review-high-tags-provider-owned-direct-provider-directory-tag-revi",
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-provider-owned-weak-maori-evidence",
       "action": "batch_manual_review",
-      "reviewCategory": "needs quick human check",
+      "reviewCategory": "sensitive tag or scope evidence",
       "riskLevel": "high",
       "field": "tags",
       "sourceType": "provider_owned",
       "sourceOwnerType": "",
-      "count": 7,
-      "affectedProviders": 1,
-      "duplicateClaimRows": 6,
-      "reason": "Claims in this batch still need human judgement: needs quick human check.",
-      "safeAutomation": "Review representative items first, then apply safe decisions individually.",
+      "count": 9,
+      "affectedProviders": 5,
+      "duplicateClaimRows": 4,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
       "liveMutationAllowed": false,
       "reviewGateRequiredForProviderData": true,
       "sampleProviders": [
         {
-          "providerId": "national-pathways-primary-mental-health",
-          "name": "Pathways Primary Mental Health Services",
-          "region": "National",
-          "city": "Auckland, Hauraki, Hamilton, Tauranga, Rotorua, Taupo, Wairarapa, Wellington, Nelson, Christchurch",
-          "claimCount": 7,
+          "providerId": "hawkes-bay-whakiao-taurima-counselling",
+          "name": "Whakiao Taurima Counselling",
+          "region": "Hawke's Bay",
+          "city": "Hawke's Bay",
+          "claimCount": 3,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "depression",
-            "anxiety",
-            "cost",
-            "gp",
-            "public-service",
-            "directory",
-            "same-day"
+            "maori",
+            "kaupapa-maori",
+            "whanau"
           ],
           "sourceUrls": [
-            "https://www.pathways.co.nz/services/primary-mental-health"
+            "https://wtcounselling.com/2025/04/23/whakiao-taurima-counselling-limited/"
+          ]
+        },
+        {
+          "providerId": "otago-te-kaika-toku-oranga",
+          "name": "Te Kaika Toku Oranga",
+          "region": "Otago",
+          "city": "Dunedin / Oamaru",
+          "claimCount": 2,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori",
+            "kaupapa-maori"
+          ],
+          "sourceUrls": [
+            "https://www.tekaika.nz/services/toku-oranga"
+          ]
+        },
+        {
+          "providerId": "west-coast-whare-manaaki",
+          "name": "Whare Manaaki o Te Tai Poutini",
+          "region": "West Coast",
+          "city": "Greymouth",
+          "claimCount": 2,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori",
+            "whanau"
+          ],
+          "sourceUrls": [
+            "https://www.wharemanaaki.co.nz/contact"
+          ]
+        },
+        {
+          "providerId": "psychiatry-nz-jimi-macmillan",
+          "name": "Dr Jimi MacMillan",
+          "region": "National",
+          "city": "Telehealth across New Zealand",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://psychiatry.nz/"
+          ]
+        },
+        {
+          "providerId": "wellington-vincents-art-workshop",
+          "name": "Vincents Art Workshop",
+          "region": "Wellington",
+          "city": "Wellington",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "maori"
+          ],
+          "sourceUrls": [
+            "https://vincents.co.nz/contact%20us",
+            "https://vincents.co.nz/home"
           ]
         }
       ]
     },
     {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-professional-directory-weak-rainbow-evide",
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-professional-directory-broad-tag-without-",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
       "riskLevel": "high",
       "field": "tags",
       "sourceType": "professional_directory",
       "sourceOwnerType": "",
-      "count": 6,
-      "affectedProviders": 1,
+      "count": 9,
+      "affectedProviders": 4,
       "duplicateClaimRows": 5,
       "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
       "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
@@ -7151,24 +5945,230 @@
       "reviewGateRequiredForProviderData": true,
       "sampleProviders": [
         {
-          "providerId": "nzccp-alana-malloy",
-          "name": "Alana Malloy",
-          "region": "Wellington",
-          "city": "Wellington",
-          "claimCount": 6,
+          "providerId": "marlborough-rachael-sim-clinical-psychology",
+          "name": "Dr Rachael Sim Clinical Psychology",
+          "region": "Nelson Marlborough Tasman",
+          "city": "Blenheim",
+          "claimCount": 3,
           "claimFields": [
             "tags"
           ],
           "claimValues": [
-            "psychologist",
-            "clinical-psychologist",
-            "fit",
-            "anxiety",
             "depression",
+            "anxiety",
+            "trauma"
+          ],
+          "sourceUrls": [
+            "https://www.nzccp.co.nz/team/rachael-sim"
+          ]
+        },
+        {
+          "providerId": "taranaki-jeremy-clark-psychology",
+          "name": "Jeremy Clark Psychology",
+          "region": "Taranaki",
+          "city": "New Plymouth",
+          "claimCount": 3,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "depression",
+            "anxiety",
+            "trauma"
+          ],
+          "sourceUrls": [
+            "https://www.nzccp.co.nz/team/jeremy-clark"
+          ]
+        },
+        {
+          "providerId": "dunedin-bernadette-berry-delta-psychology",
+          "name": "Bernadette Berry, Delta Psychology",
+          "region": "Otago",
+          "city": "Dunedin",
+          "claimCount": 2,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "trauma",
+            "anxiety"
+          ],
+          "sourceUrls": [
+            "https://www.nzccp.co.nz/team/bernadette-berry"
+          ]
+        },
+        {
+          "providerId": "nzccp-allanah-casey",
+          "name": "Allanah Casey",
+          "region": "Bay of Plenty",
+          "city": "Tauranga",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "anxiety"
+          ],
+          "sourceUrls": [
+            "https://www.nzccp.co.nz/team/allanah-casey"
+          ]
+        }
+      ]
+    },
+    {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-healthpoint-broad-tag-without-source-supp",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "healthpoint",
+      "sourceOwnerType": "",
+      "count": 8,
+      "affectedProviders": 3,
+      "duplicateClaimRows": 5,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "wellington-taeaomanino-trust",
+          "name": "Taeaomanino Trust",
+          "region": "Wellington",
+          "city": "Porirua",
+          "claimCount": 3,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "depression",
+            "anxiety",
+            "addiction"
+          ],
+          "sourceUrls": [
+            "https://healthpoint.co.nz/community-health-and-social-services/community-health/taeaomanino-trust/"
+          ]
+        },
+        {
+          "providerId": "west-coast-health-primary-counselling",
+          "name": "West Coast Health - Primary Health Counselling Programme",
+          "region": "West Coast",
+          "city": "Greymouth and wider West Coast",
+          "claimCount": 3,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "depression",
+            "anxiety",
+            "addiction"
+          ],
+          "sourceUrls": [
+            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/west-coast-health-primary-health-counselling/at/west-coast-health-office-163-mackay-street/",
+            "https://westcoasthealth.nz/"
+          ]
+        },
+        {
+          "providerId": "southland-loss-and-grief-centre",
+          "name": "Loss and Grief Centre Southland",
+          "region": "Southland",
+          "city": "Invercargill",
+          "claimCount": 2,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "depression",
+            "anxiety"
+          ],
+          "sourceUrls": [
+            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/loss-and-grief-centre/at/17-the-crescent-invercargill/",
+            "https://www.lossandgriefcentre.com/"
+          ]
+        }
+      ]
+    },
+    {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-provider-owned-weak-rainbow-evidence",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "provider_owned",
+      "sourceOwnerType": "",
+      "count": 6,
+      "affectedProviders": 4,
+      "duplicateClaimRows": 2,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "wellington-vincents-art-workshop",
+          "name": "Vincents Art Workshop",
+          "region": "Wellington",
+          "city": "Wellington",
+          "claimCount": 2,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "rainbow",
+            "lgbtqia"
+          ],
+          "sourceUrls": [
+            "https://vincents.co.nz/contact%20us",
+            "https://vincents.co.nz/home"
+          ]
+        },
+        {
+          "providerId": "wellington-womens-health-collective",
+          "name": "Wellington Women's Health Collective",
+          "region": "Wellington",
+          "city": "Wellington",
+          "claimCount": 2,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "rainbow",
+            "lgbtqia"
+          ],
+          "sourceUrls": [
+            "https://www.wwhc.org.nz/"
+          ]
+        },
+        {
+          "providerId": "wellington-evolve-youth-service",
+          "name": "Evolve Wellington Youth Service",
+          "region": "Wellington",
+          "city": "Wellington",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
             "rainbow"
           ],
           "sourceUrls": [
-            "https://www.nzccp.co.nz/team/alana-malloy"
+            "https://www.evolveyouth.org.nz/contact"
+          ]
+        },
+        {
+          "providerId": "canterbury-te-tahi-youth",
+          "name": "Te Tahi Youth",
+          "region": "Canterbury",
+          "city": "Christchurch",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "rainbow"
+          ],
+          "sourceUrls": [
+            "https://www.tetahiyouth.org.nz/"
           ]
         }
       ]
@@ -7450,44 +6450,6 @@
       ]
     },
     {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-patientgroups-provider-owned-weak-maori-eviden",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "patientGroups",
-      "sourceType": "provider_owned",
-      "sourceOwnerType": "",
-      "count": 4,
-      "affectedProviders": 1,
-      "duplicateClaimRows": 3,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "wellington-vincents-art-workshop",
-          "name": "Vincents Art Workshop",
-          "region": "Wellington",
-          "city": "Wellington",
-          "claimCount": 4,
-          "claimFields": [
-            "patientGroups"
-          ],
-          "claimValues": [
-            "Adults",
-            "People with disabilities",
-            "People on low incomes",
-            "People wanting a lower-pressure wellbeing space"
-          ],
-          "sourceUrls": [
-            "https://vincents.co.nz/contact%20us",
-            "https://vincents.co.nz/home"
-          ]
-        }
-      ]
-    },
-    {
       "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-professional-directory-broad-tag-without",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
@@ -7702,42 +6664,6 @@
       ]
     },
     {
-      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-patientgroups-provider-owned-weak-rainbow-evid",
-      "action": "batch_manual_review",
-      "reviewCategory": "sensitive tag or scope evidence",
-      "riskLevel": "high",
-      "field": "patientGroups",
-      "sourceType": "provider_owned",
-      "sourceOwnerType": "",
-      "count": 3,
-      "affectedProviders": 1,
-      "duplicateClaimRows": 2,
-      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
-      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "wellington-womens-health-collective",
-          "name": "Wellington Women's Health Collective",
-          "region": "Wellington",
-          "city": "Wellington",
-          "claimCount": 3,
-          "claimFields": [
-            "patientGroups"
-          ],
-          "claimValues": [
-            "Women",
-            "Non-binary people who prefer a women-centred space",
-            "Low-income wahine"
-          ],
-          "sourceUrls": [
-            "https://www.wwhc.org.nz/"
-          ]
-        }
-      ]
-    },
-    {
       "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-medium-fit-healthpoint-broad-tag-without-source-sup",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
@@ -7806,6 +6732,139 @@
       ]
     },
     {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-provider-owned-weak-telehealth-evidence",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "provider_owned",
+      "sourceOwnerType": "",
+      "count": 3,
+      "affectedProviders": 3,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "otago-te-kaika-toku-oranga",
+          "name": "Te Kaika Toku Oranga",
+          "region": "Otago",
+          "city": "Dunedin / Oamaru",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.tekaika.nz/services/toku-oranga"
+          ]
+        },
+        {
+          "providerId": "otago-wellsouth-toku-oranga",
+          "name": "WellSouth Toku Oranga Access and Choice",
+          "region": "Otago",
+          "city": "Otago",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://wellsouth.nz/your-health/mental-health-and-wellbeing/toku-oranga-access-and-choice"
+          ]
+        },
+        {
+          "providerId": "southland-wellsouth-toku-oranga",
+          "name": "WellSouth Toku Oranga Southland",
+          "region": "Southland",
+          "city": "Southland",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://wellsouth.nz/your-health/mental-health-and-wellbeing/toku-oranga-access-and-choice"
+          ]
+        }
+      ]
+    },
+    {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-healthpoint-weak-telehealth-evidence",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "healthpoint",
+      "sourceOwnerType": "",
+      "count": 3,
+      "affectedProviders": 3,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "south-canterbury-aod-service",
+          "name": "Alcohol & Other Drugs (A&OD) South Canterbury",
+          "region": "South Canterbury",
+          "city": "Timaru",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.healthpoint.co.nz/mental-health-addictions/addiction/alcohol-other-drugs-aod-south-canterbury/"
+          ]
+        },
+        {
+          "providerId": "nelson-marlborough-tasman-nelson-bays-primary-health",
+          "name": "Nelson Bays Primary Health - Mental Health and Addictions",
+          "region": "Nelson Marlborough Tasman",
+          "city": "Richmond / Nelson Tasman",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/nelson-bays-primary-health-mental-health/"
+          ]
+        },
+        {
+          "providerId": "west-coast-health-primary-counselling",
+          "name": "West Coast Health - Primary Health Counselling Programme",
+          "region": "West Coast",
+          "city": "Greymouth and wider West Coast",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "telehealth"
+          ],
+          "sourceUrls": [
+            "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/west-coast-health-primary-health-counselling/at/west-coast-health-office-163-mackay-street/",
+            "https://westcoasthealth.nz/"
+          ]
+        }
+      ]
+    },
+    {
       "proposalId": "manual-batch:referral-pathway-review-review-high-requiresreferral-ngo-directory-high-risk-claim-affects",
       "action": "batch_manual_review",
       "reviewCategory": "referral pathway review",
@@ -7850,7 +6909,7 @@
             "false"
           ],
           "sourceUrls": [
-            "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/"
+            "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams"
           ]
         }
       ]
@@ -7900,7 +6959,7 @@
             "self"
           ],
           "sourceUrls": [
-            "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/"
+            "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams"
           ]
         }
       ]
@@ -7947,10 +7006,10 @@
             "referralSourceExcerpt"
           ],
           "claimValues": [
-            "Public information suggests self-referral, online booking, or direct patient enquiry is available."
+            "Health NZ says a GP referral is best, but people can self-refer if they prefer not to go through their GP."
           ],
           "sourceUrls": [
-            "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/"
+            "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams"
           ]
         }
       ]
@@ -8000,7 +7059,7 @@
             "true"
           ],
           "sourceUrls": [
-            "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/"
+            "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams"
           ]
         }
       ]
@@ -8050,7 +7109,7 @@
             "false"
           ],
           "sourceUrls": [
-            "https://www.mhaids.health.nz/our-services/community-mental-health-teams-general-adult/"
+            "https://info.health.nz/locations/wellington-hutt-and-kapiti/mental-health-services/community-mental-health-teams"
           ]
         }
       ]
@@ -8573,6 +7632,40 @@
       ]
     },
     {
+      "proposalId": "manual-batch:needs-quick-human-check-review-high-tags-provider-owned-direct-provider-directory-tag-revi",
+      "action": "batch_manual_review",
+      "reviewCategory": "needs quick human check",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "provider_owned",
+      "sourceOwnerType": "",
+      "count": 1,
+      "affectedProviders": 1,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: needs quick human check.",
+      "safeAutomation": "Review representative items first, then apply safe decisions individually.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "national-pathways-primary-mental-health",
+          "name": "Pathways Primary Mental Health Services",
+          "region": "National",
+          "city": "Auckland, Hauraki, Hamilton, Tauranga, Rotorua, Taupo, Wairarapa, Wellington, Nelson, Christchurch",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "directory"
+          ],
+          "sourceUrls": [
+            "https://www.pathways.co.nz/services/primary-mental-health"
+          ]
+        }
+      ]
+    },
+    {
       "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-needscope-provider-owned-broad-tag-without-sou",
       "action": "batch_manual_review",
       "reviewCategory": "sensitive tag or scope evidence",
@@ -8605,12 +7698,81 @@
           ]
         }
       ]
+    },
+    {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-provider-owned-weak-pasifika-evidence",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "provider_owned",
+      "sourceOwnerType": "",
+      "count": 1,
+      "affectedProviders": 1,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "wellington-vincents-art-workshop",
+          "name": "Vincents Art Workshop",
+          "region": "Wellington",
+          "city": "Wellington",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "pasifika"
+          ],
+          "sourceUrls": [
+            "https://vincents.co.nz/contact%20us",
+            "https://vincents.co.nz/home"
+          ]
+        }
+      ]
+    },
+    {
+      "proposalId": "manual-batch:sensitive-tag-or-scope-evidence-review-high-tags-professional-directory-weak-rainbow-evide",
+      "action": "batch_manual_review",
+      "reviewCategory": "sensitive tag or scope evidence",
+      "riskLevel": "high",
+      "field": "tags",
+      "sourceType": "professional_directory",
+      "sourceOwnerType": "",
+      "count": 1,
+      "affectedProviders": 1,
+      "duplicateClaimRows": 0,
+      "reason": "Claims in this batch still need human judgement: sensitive tag or scope evidence.",
+      "safeAutomation": "Open source pages and remove unsupported tags or add short excerpts.",
+      "liveMutationAllowed": false,
+      "reviewGateRequiredForProviderData": true,
+      "sampleProviders": [
+        {
+          "providerId": "nzccp-alana-malloy",
+          "name": "Alana Malloy",
+          "region": "Wellington",
+          "city": "Wellington",
+          "claimCount": 1,
+          "claimFields": [
+            "tags"
+          ],
+          "claimValues": [
+            "rainbow"
+          ],
+          "sourceUrls": [
+            "https://www.nzccp.co.nz/team/alana-malloy"
+          ]
+        }
+      ]
     }
   ],
   "blockedAutomationRules": [
     {
       "rule": "high-risk-claims-review-gated",
-      "count": 1988,
+      "count": 540,
       "reason": "High-risk claims can affect suitability, clinical scope, referral, availability, culture, crisis, or telehealth matching."
     },
     {
@@ -8625,7 +7787,7 @@
     },
     {
       "rule": "sensitive-tags-need-evidence",
-      "count": 1933,
+      "count": 491,
       "reason": "Maori, Pasifika, Asian, Rainbow, trauma, addiction, sexual-harm, youth, men, and broad need tags need source evidence or explicit approval."
     },
     {

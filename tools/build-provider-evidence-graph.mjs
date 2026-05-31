@@ -82,6 +82,18 @@ const FIELD_RULE_HINTS = {
   firstStep: ["directory-treated-direct"]
 };
 
+const TAG_RULE_VALUES = {
+  "weak-maori-evidence": new Set(["maori", "kaupapa-maori", "whanau"]),
+  "weak-pasifika-evidence": new Set(["pasifika", "pacific"]),
+  "weak-asian-evidence": new Set(["asian"]),
+  "weak-rainbow-evidence": new Set(["rainbow", "lgbt", "lgbtq", "lgbtqia", "takatapui"]),
+  "weak-telehealth-evidence": new Set(["telehealth", "online"]),
+  "direct-provider-directory-tag-review": new Set(["directory", "direct-contact"]),
+  "directory-treated-direct": new Set(["directory", "direct-contact"])
+};
+
+const BROAD_NEED_TAGS = new Set(["depression", "anxiety", "trauma", "addiction", "work"]);
+
 function parseArgs(argv = process.argv.slice(2)) {
   const config = { ...DEFAULTS };
   for (let index = 0; index < argv.length; index += 1) {
@@ -169,10 +181,50 @@ function auditFindingMap(sourceFit, availability, referrals, reviewQueue) {
   return map;
 }
 
-function rulesForField(field, findings) {
+function normaliseTag(value) {
+  return normaliseComparable(value).replace(/\s+/g, "-");
+}
+
+function broadTagFromFinding(finding) {
+  const match = String(finding.issue || "").match(/Broad tag "([^"]+)"/i);
+  return match ? normaliseTag(match[1]) : "";
+}
+
+function tagRuleAppliesToValue(finding, value) {
+  const rule = finding.rule || "";
+  const tag = normaliseTag(value);
+  if (!tag) return false;
+  if (rule === "broad-tag-without-source-support") {
+    const namedTag = broadTagFromFinding(finding);
+    return namedTag ? tag === namedTag : BROAD_NEED_TAGS.has(tag);
+  }
+  const allowedValues = TAG_RULE_VALUES[rule];
+  return allowedValues ? allowedValues.has(tag) : true;
+}
+
+function patientGroupRuleAppliesToValue(finding, value) {
+  const rule = finding.rule || "";
+  const text = normaliseComparable(value);
+  if (rule === "weak-maori-evidence") return /\b(maori|kaupapa|whanau|iwi)\b/.test(text);
+  if (rule === "weak-pasifika-evidence") return /\b(pasifika|pacific|samoan|tongan|cook islands)\b/.test(text);
+  if (rule === "weak-asian-evidence") return /\b(asian|chinese|korean|indian|mandarin|cantonese|vietnamese|japanese|filipino|thai)\b/.test(text);
+  if (rule === "weak-rainbow-evidence") return /\b(rainbow|lgbt|lgbtq|lgbtqia|takatapui|gender diverse|transgender)\b/.test(text);
+  return true;
+}
+
+function ruleAppliesToClaimValue(field, value, finding) {
+  if (field === "tags") return tagRuleAppliesToValue(finding, value);
+  if (field === "patientGroups") return patientGroupRuleAppliesToValue(finding, value);
+  return true;
+}
+
+function rulesForField(field, value, findings) {
   const hints = FIELD_RULE_HINTS[field] || [];
   if (!hints.length) return [];
-  return findings.filter((finding) => hints.some((hint) => finding.rule?.includes(hint)));
+  return findings.filter((finding) =>
+    hints.some((hint) => finding.rule?.includes(hint))
+    && ruleAppliesToClaimValue(field, value, finding)
+  );
 }
 
 function sourceForField(provider, field) {
@@ -348,7 +400,7 @@ function claimFromField(provider, entry, findings) {
   const sourceType = sourceTypeFromUrl(sourceUrl);
   const sourceOwnerType = sourceOwnerTypeFromQuality(provider.sourceQuality, sourceUrl);
   const riskLevel = riskLevelForField(entry.field);
-  const fieldFindings = rulesForField(entry.field, findings);
+  const fieldFindings = rulesForField(entry.field, entry.value, findings);
   const excerpt = compact(excerptForField(provider, entry.field, entry.value));
   const score = claimScore({
     provider,
