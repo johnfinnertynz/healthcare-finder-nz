@@ -45,6 +45,7 @@ npm run evidence:graph
 npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
+npm run export:auto-resolution
 ```
 
 Start a local server:
@@ -73,6 +74,11 @@ score, batch key, source type, and required human action. Use it to work through
 large repeated issues such as unsupported broad tags, weak GP source
 corroboration, availability evidence, referral pathway wording, and coordinate
 gaps.
+
+Open `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` before a long review session. It
+separates low-risk claim noise that can be de-prioritized from high-risk batches
+that still need a person. It does not approve provider data and it does not
+change the public app.
 
 ## Review One Provider
 

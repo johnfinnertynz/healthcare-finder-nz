@@ -442,6 +442,7 @@ npm run evidence:graph
 npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
+npm run export:auto-resolution
 ```
 
 This writes:
@@ -452,15 +453,22 @@ This writes:
 - `data/provider-conflicts.json`
 - `data/provider-claim-review-queue.json`
 - `data/provider-claim-review-queue.csv`
+- `data/provider-auto-resolution-proposals.json`
+- `data/provider-auto-resolution-proposals.csv`
 - `PROVIDER_EVIDENCE_GRAPH.md`
 - `PROVIDER_CLAIM_REVIEW_QUEUE.md`
 - `PROVIDER_CONFLICTS.md`
+- `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md`
 
 The claim tools are advisory only. They split provider rows into small claims
 such as public phone, website, address, availability, referral pathway, support
 tags, and telehealth. Low-risk public contact/identity/location claims can be
 marked `auto_accept` in the graph, but the tooling does not mutate
 `providers.json`. High-risk claims stay review-gated.
+`export:auto-resolution` turns the graph and claim queue into explicit
+auto-deprioritization proposals for low-risk claim-review noise, plus manual
+batch tasks for everything still needing judgement. It does not approve or
+apply provider data changes.
 
 This writes:
 

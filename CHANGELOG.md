@@ -9,6 +9,8 @@
   grouping.
 - Added duplicate/shared-practice conflict detection.
 - Added claim review queue support in the local auditor console.
+- Added safe auto-resolution proposal exports for low-risk claim noise.
+- Added auditor filters for review category and batch key.
 - Added task, backlog, import strategy, and review queue reduction documents.
 
 Safety notes:

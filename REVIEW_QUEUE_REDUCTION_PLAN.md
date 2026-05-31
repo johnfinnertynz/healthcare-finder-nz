@@ -31,7 +31,10 @@ This cycle added a separate claim review queue:
 - 1,449 low-risk public contact, identity, or location claims were marked
   `auto_accept` in the advisory graph.
 - The focused claim queue contains 2,389 review-gated claim items grouped into
-  57 batches.
+  58 batches.
+- The auto-resolution proposal report identifies 1,449 low-risk claims in 31
+  groups that can be de-prioritized from manual claim review dashboards without
+  mutating live provider data.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -81,3 +84,5 @@ Auto-accept is allowed only when all are true:
    review faster.
 5. Add a reviewed batch-decision generator once the first human claim review
    session proves the workflow.
+6. Use `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` to hide low-risk claim noise and
+   keep reviewer effort on high-risk batches.

@@ -61,6 +61,7 @@ npm run evidence:graph
 npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
+npm run export:auto-resolution
 ```
 
 Then choose **Claim review queue** from the queue selector.
@@ -81,6 +82,12 @@ Use claim batches to plan work:
 The claim queue is advisory. It does not apply batch decisions to
 `providers.json`; exported decisions still need the controlled apply script and
 the normal validation suite.
+
+`npm run export:auto-resolution` writes
+`PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` and
+`data/provider-auto-resolution-proposals.json`. Use that report to understand
+which low-risk claim checks can be collapsed or hidden from manual dashboards
+and which large batches still need human judgement. It is not an approval tool.
 
 ## Discovery Suggestions
 

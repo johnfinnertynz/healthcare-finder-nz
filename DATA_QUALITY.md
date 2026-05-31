@@ -417,6 +417,7 @@ Provider rows are now also exported as field-level claims:
 npm run evidence:graph
 npm run evidence:score
 npm run export:claims
+npm run export:auto-resolution
 ```
 
 Each claim should carry:
@@ -455,6 +456,13 @@ The focused claim review queue compresses repeated issues into batches such as:
 
 Use `npm run export:claims -- --include-all` only for deep audits. The default
 claim queue stays focused so reviewers are not flooded with every stored field.
+
+`npm run export:auto-resolution` creates advisory proposals for what can be
+removed from manual claim review noise. The current policy is deliberately
+narrow: it may de-prioritize low-risk stored claims that are already strong
+enough, but it must not mutate provider data or approve high-risk claims. The
+output also lists automation blocks so reviewers can see why availability,
+referral, scope, support tags, and conflicts remain human-review work.
 
 Never guess:
 

@@ -34,14 +34,18 @@ manual review burden.
 - Added a focused claim review queue with batch grouping.
 - Added conflict/shared-practice detection.
 - Added an auditor queue option for claim-level review.
+- Added auto-resolution proposals that de-prioritize low-risk claim review noise
+  without applying provider data changes.
 
 ## Next Backlog Items
 
 1. Add a reviewed claim-batch decision format that can generate safe
    `provider-review-decisions.json` drafts.
-2. Tune duplicate/shared-practice false positives, especially shared GP network
+2. Tune the auditor UI so auto-deprioritized low-risk claim groups can be hidden
+   while still keeping high-risk batches prominent.
+3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
-3. Start manual review with the largest unsupported tag batches.
-4. Add source-excerpt capture to more importers so fewer claims are
+4. Start manual review with the largest unsupported tag batches.
+5. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
-5. Build a thin-region priority view from claim quality plus provider coverage.
+6. Build a thin-region priority view from claim quality plus provider coverage.

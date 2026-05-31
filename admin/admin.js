@@ -192,6 +192,8 @@ const els = {
     region: document.querySelector("#regionFilter"),
     type: document.querySelector("#typeFilter"),
     rule: document.querySelector("#ruleFilter"),
+    category: document.querySelector("#categoryFilter"),
+    batch: document.querySelector("#batchFilter"),
     severity: document.querySelector("#severityFilter"),
     availability: document.querySelector("#availabilityFilter"),
     referral: document.querySelector("#referralFilter"),
@@ -320,6 +322,8 @@ function setOptions() {
   optionList(els.filters.region, [...new Set(state.items.map((item) => item.region))]);
   optionList(els.filters.type, [...new Set(state.items.map((item) => item.type))]);
   optionList(els.filters.rule, [...new Set(state.items.flatMap((item) => item.auditRules || []))]);
+  optionList(els.filters.category, [...new Set(state.items.map((item) => item.reviewCategory))]);
+  optionList(els.filters.batch, [...new Set(state.items.map((item) => item.batchKey))]);
   optionList(els.filters.severity, [...new Set(state.items.map((item) => item.auditSeverity))]);
   optionList(els.filters.availability, [...new Set(state.items.map((item) => item.availabilityStatus))]);
   optionList(els.filters.referral, [...new Set(state.items.map((item) => item.referralType))]);
@@ -352,6 +356,8 @@ function filterItems() {
     region: els.filters.region.value,
     type: els.filters.type.value,
     rule: els.filters.rule.value,
+    category: els.filters.category.value,
+    batch: els.filters.batch.value,
     severity: els.filters.severity.value,
     availability: els.filters.availability.value,
     referral: els.filters.referral.value,
@@ -376,6 +382,8 @@ function filterItems() {
       && (!filters.region || item.region === filters.region)
       && (!filters.type || item.type === filters.type)
       && (!filters.rule || item.auditRules?.includes(filters.rule))
+      && (!filters.category || item.reviewCategory === filters.category)
+      && (!filters.batch || item.batchKey === filters.batch)
       && (!filters.severity || item.auditSeverity === filters.severity)
       && (!filters.availability || item.availabilityStatus === filters.availability)
       && (!filters.referral || item.referralType === filters.referral)

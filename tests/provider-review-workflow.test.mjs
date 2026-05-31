@@ -5,6 +5,7 @@ import path from "node:path";
 import test from "node:test";
 import { applyReviewDecisions } from "../tools/apply-provider-review-decisions.mjs";
 import { buildProviderEvidenceGraph } from "../tools/build-provider-evidence-graph.mjs";
+import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
 import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
 import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
@@ -368,8 +369,12 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /choice-grid/);
   assert.match(html, /Ongoing monitor queue/);
   assert.match(html, /Claim review queue/);
+  assert.match(html, /Review category/);
+  assert.match(html, /Any batch/);
   assert.match(js, /provider-claim-review-queue\.json/);
   assert.match(js, /Claim field/);
+  assert.match(js, /categoryFilter/);
+  assert.match(js, /batchFilter/);
   assert.match(js, /provider-monitor-queue\.json/);
   assert.match(html, /Same practice \/ related records/);
   assert.match(html, /New clinician from this practice/);
@@ -492,6 +497,63 @@ test("provider conflict detector flags likely shared practices without auto-merg
   assert.ok(shared);
   assert.equal(shared.likelySharedPractice, true);
   assert.equal(shared.likelyDuplicate, false);
+});
+
+test("auto-resolution proposals de-prioritize low-risk claims but keep risky batches review-gated", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const claimsPath = path.join(dir, "claims.json");
+  const claimQueuePath = path.join(dir, "claim-queue.json");
+  const providerQueuePath = path.join(dir, "provider-queue.json");
+  const conflictsPath = path.join(dir, "conflicts.json");
+  const provider = baseProvider({
+    id: "proposal-provider",
+    name: "Proposal Provider",
+    sourceQuality: "provider-owned page",
+    confidence: "high",
+    needsManualVerification: false,
+    tags: ["psychologist", "depression"]
+  });
+  writeJson(providersPath, [provider]);
+  writeJson(sourceFitPath, {
+    findings: [{
+      providerId: "proposal-provider",
+      rule: "broad-tag-without-source-support",
+      severity: "medium",
+      issue: "Broad tag needs source evidence.",
+      suggestedFix: "Remove tag or add evidence.",
+      source: provider.source
+    }]
+  });
+  writeJson(emptyPath, { findings: [] });
+  const graph = buildProviderEvidenceGraph({
+    providers: providersPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath
+  });
+  writeJson(claimsPath, { claims: graph.claims });
+  const graphPath = path.join(dir, "graph.json");
+  writeJson(graphPath, graph);
+  const claimQueue = buildProviderClaimReviewQueue({ graph: graphPath, claims: claimsPath, providers: providersPath });
+  writeJson(claimQueuePath, claimQueue);
+  writeJson(providerQueuePath, { items: [{ providerId: "proposal-provider" }] });
+  writeJson(conflictsPath, { summary: { total: 0 }, conflicts: [] });
+  const output = buildProviderAutoResolutionProposals({
+    claims: claimsPath,
+    claimQueue: claimQueuePath,
+    providerQueue: providerQueuePath,
+    conflicts: conflictsPath
+  });
+
+  assert.ok(output.summary.autoDeprioritizeClaims >= 1);
+  assert.ok(output.autoDeprioritizeProposals.some((proposal) => proposal.field === "name"));
+  assert.ok(output.manualBatchProposals.some((proposal) => proposal.reviewCategory === "sensitive tag or scope evidence"));
+  assert.equal(output.autoDeprioritizeProposals.every((proposal) => proposal.liveMutationAllowed === false), true);
+  assert.ok(output.blockedAutomationRules.some((rule) => rule.rule === "sensitive-tags-need-evidence"));
 });
 
 test("provider monitor queue turns automated recheck changes into review items", () => {
