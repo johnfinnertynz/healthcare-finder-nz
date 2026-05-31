@@ -1,17 +1,17 @@
 # Provider Auto-Resolution Proposals
 
-Generated: 2026-05-31T20:05:53.926Z
+Generated: 2026-05-31T20:10:43.343Z
 
 These proposals are a safety layer for reducing review noise. They do not mutate `providers.json` and they do not approve high-risk healthcare claims.
 
 ## Summary
 
 - Provider-level review items: 513
-- Claim-level review items: 941
-- Claim batch groups: 56
+- Claim-level review items: 815
+- Claim batch groups: 55
 - Low-risk claims that can be de-prioritized from manual claim review: 1449
 - Auto-deprioritize proposal groups: 31
-- Manual batch proposal groups: 56
+- Manual batch proposal groups: 55
 
 ## Safe Auto-Deprioritization
 
@@ -54,7 +54,6 @@ These proposals are a safety layer for reducing review noise. They do not mutate
 | Claims | Providers | Category | Field | Risk | Source type | Suggested action |
 | ---: | ---: | --- | --- | --- | --- | --- |
 | 152 | 56 | sensitive tag or scope evidence | tags | high | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 126 | 126 | GP source corroboration | phone | low | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
 | 126 | 126 | GP source corroboration | sourceQuality | medium | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
 | 117 | 19 | sensitive tag or scope evidence | specialties | high | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 56 | 56 | sensitive tag or scope evidence | fit | medium | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
@@ -93,6 +92,7 @@ These proposals are a safety layer for reducing review noise. They do not mutate
 | 2 | 2 | sensitive tag or scope evidence | onlineAvailable | high | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive/scope evidence | website | low | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | sensitive/scope evidence | sourceQuality | medium | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | availability review | availabilityEvidence | high | professional_directory | Review representative items first, then apply safe decisions individually. |
 
 ## Automation Blocks
 

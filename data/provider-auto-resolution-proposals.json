@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-31T20:05:53.926Z",
+  "generatedAt": "2026-05-31T20:10:43.343Z",
   "safety": {
     "advisoryOnly": true,
     "noLiveProviderMutation": true,
@@ -12,14 +12,14 @@
   "inputs": {
     "claims": 32548,
     "providerReviewItems": 513,
-    "claimReviewItems": 941,
-    "claimBatches": 56,
+    "claimReviewItems": 815,
+    "claimBatches": 55,
     "conflictGroups": 1667
   },
   "summary": {
     "autoDeprioritizeClaims": 1449,
     "autoDeprioritizeGroups": 31,
-    "manualBatchGroups": 56,
+    "manualBatchGroups": 55,
     "blockedAutomationRules": 5,
     "byAutoField": {
       "name": 236,
@@ -41,7 +41,7 @@
       "location or distance evidence": 8,
       "needs quick human check": 2,
       "sensitive/scope evidence": 4,
-      "GP source corroboration": 252
+      "GP source corroboration": 126
     }
   },
   "autoDeprioritizeProposals": [
@@ -1960,216 +1960,6 @@
           ],
           "sourceUrls": [
             "https://www.asianfamilyservices.nz/"
-          ]
-        }
-      ]
-    },
-    {
-      "proposalId": "manual-batch:gp-source-corroboration-review-low-phone-third-party-directory-weak-gp-source",
-      "action": "batch_manual_review",
-      "reviewCategory": "GP source corroboration",
-      "riskLevel": "low",
-      "field": "phone",
-      "sourceType": "third_party_directory",
-      "sourceOwnerType": "",
-      "count": 126,
-      "affectedProviders": 126,
-      "duplicateClaimRows": 0,
-      "reason": "Claims in this batch still need human judgement: GP source corroboration.",
-      "safeAutomation": "Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source.",
-      "liveMutationAllowed": false,
-      "reviewGateRequiredForProviderData": true,
-      "sampleProviders": [
-        {
-          "providerId": "gp-168-medical-centre-36-8780-174-7410",
-          "name": "168 ○ Medical Centre",
-          "region": "Auckland",
-          "city": "Sandringham",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 846 7311"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-airport-doctors-36-9962-174-7882",
-          "name": "Airport Doctors",
-          "region": "Auckland",
-          "city": "Auckland Airport",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 256 8655"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-albany-street-medical-centre-dunedin-45-8661-170-5089",
-          "name": "Albany Street Medical Centre (Dunedin)",
-          "region": "Otago",
-          "city": "Dunedin",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(03) 477 8812"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-alberton-medical-practice-36-8959-174-7319",
-          "name": "Alberton Medical Practice",
-          "region": "Auckland",
-          "city": "Sandringham",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 629 2088"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-all-care-family-medical-centre-northcote-36-8071-174-7412",
-          "name": "All Care Family Medical Centre - Northcote",
-          "region": "Auckland",
-          "city": "Kaipātiki",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 419 1267"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-all-care-family-medical-centre-ponsonby-36-8518-174-7452",
-          "name": "All Care Family Medical Centre - Ponsonby",
-          "region": "Auckland",
-          "city": "Ponsonby",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 376 5580"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-archers-medical-centre-36-7846-174-7340",
-          "name": "Archers Medical Centre",
-          "region": "Auckland",
-          "city": "Glenfield",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 444 9324"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-assist-healthcare-36-8844-174-7164",
-          "name": "Assist Healthcare",
-          "region": "Auckland",
-          "city": "Mount Albert",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 281 1900"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-avalon-medical-centre-41-1977-174-9379",
-          "name": "Avalon Medical Centre",
-          "region": "Wellington",
-          "city": "Lower Hutt",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(04) 567 7359"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-avonhead-surgery-43-5130-172-5553",
-          "name": "Avonhead Surgery",
-          "region": "Canterbury",
-          "city": "Christchurch",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "03 358 3300"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-bank-street-medical-35-7212-174-3204",
-          "name": "Bank Street Medical",
-          "region": "Northland",
-          "city": "Whangārei",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(09) 438 4379"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
-          ]
-        },
-        {
-          "providerId": "gp-bellomo-family-health-39-0500-174-0947",
-          "name": "Bellomo Family Health",
-          "region": "Taranaki",
-          "city": "New Plymouth",
-          "claimCount": 1,
-          "claimFields": [
-            "phone"
-          ],
-          "claimValues": [
-            "(06) 757 2222"
-          ],
-          "sourceUrls": [
-            "https://doctorpricer.co.nz/"
           ]
         }
       ]

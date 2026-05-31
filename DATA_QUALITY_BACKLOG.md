@@ -16,7 +16,7 @@ manual review burden.
 | Referral pathways | Psychiatrist referral metadata passes audit but still needs ongoing checks | Direct-contact psychiatry recommendations can create dead ends | Keep GP-referral-first unless self-referral is explicit |
 | Address and coordinates | Some non-GP providers have missing address or coordinate evidence | Distance ranking can wrongly imply local access | Geocode only public professional addresses and mark uncertainty honestly |
 | Duplicates/shared practices | Shared domains, phones, and addresses create many conflict groups | Different clinicians at one practice must not be merged | Review as shared-practice batches, not automatic duplicate merges |
-| Claim/root-cause duplication | Provider-level findings can still create repeated field tasks when one root cause affects several stored fields | Inflated queues make auditors spend time on noise instead of risky claims | Keep tuning value-aware claim mapping; next target is weak GP source corroboration |
+| Claim/root-cause duplication | Provider-level findings can still create repeated field tasks when one root cause affects several stored fields | Inflated queues make auditors spend time on noise instead of risky claims | Keep tuning value-aware claim mapping; next target is source-excerpt capture for high-risk claims |
 
 ## Queue Reduction Targets
 
@@ -46,14 +46,16 @@ manual review burden.
   and broad-tag findings only attach to matching tag or field claims. This cut
   the focused claim-review queue from 2,389 items to 941 while keeping high-risk
   claims review-gated.
+- Collapsed weak GP source corroboration into one source-check task per affected
+  practice, reducing the focused claim-review queue again from 941 items to 815.
 
 ## Next Backlog Items
 
 1. Add admin UI affordances for invoking/exporting reviewed claim-batch drafts
    after manual evidence checks.
 2. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
-3. Reduce weak GP source corroboration duplication so each affected practice has
-   one clear source-check task instead of repeated phone/sourceQuality rows.
+3. Corroborate weak GP source records against practice-owned, PHO, Healthpoint,
+   HPI/FHIR, or other official source data.
 4. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 5. Start manual review with the largest unsupported tag batches.

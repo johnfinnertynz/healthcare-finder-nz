@@ -1,13 +1,13 @@
 # Provider Claim Review Queue
 
-Generated: 2026-05-31T20:05:45.686Z
+Generated: 2026-05-31T20:10:42.768Z
 
 This queue is generated from field-level provider claims. It compresses recurring work into batches so reviewers do not have to inspect hundreds of near-identical issues one by one.
 
 ## Summary
 
-- Review items: 941
-- Batch groups: 56
+- Review items: 815
+- Batch groups: 55
 - Auto-accepted low-risk claims in graph: 1449
 - Review-gated claims in graph: 31099
 
@@ -16,7 +16,6 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | Claims | Providers | Category | Field | Decision | Source type | Suggested batch action |
 | ---: | ---: | --- | --- | --- | --- | --- |
 | 152 | 56 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 126 | 126 | GP source corroboration | phone | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
 | 126 | 126 | GP source corroboration | sourceQuality | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
 | 117 | 19 | sensitive tag or scope evidence | specialties | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 56 | 56 | sensitive tag or scope evidence | fit | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
@@ -55,6 +54,7 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | 2 | 2 | sensitive tag or scope evidence | onlineAvailable | review | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | sensitive/scope evidence | website | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | sensitive/scope evidence | sourceQuality | review | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | availability review | availabilityEvidence | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 
 ## Top Claim Items
 

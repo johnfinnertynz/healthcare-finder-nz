@@ -579,6 +579,54 @@ test("claim queue attaches tag audit findings only to matching tag values", () =
   assert.equal(tagItems.some((item) => item.claimValue === "psychologist"), false);
 });
 
+test("weak GP source audit creates one source-corroboration task per provider", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const providers = [
+    baseProvider({
+      id: "weak-gp-source",
+      name: "Weak GP Source",
+      type: "gp",
+      phone: "09 123 4567",
+      website: "",
+      source: "https://doctorpricer.co.nz/",
+      sourceQuality: "third-party public GP listing",
+      tags: ["gp", "primary-care"]
+    })
+  ];
+  writeJson(providersPath, providers);
+  writeJson(sourceFitPath, {
+    findings: [
+      {
+        providerId: "weak-gp-source",
+        rule: "weak-gp-source",
+        severity: "low",
+        issue: "GP record uses a third-party or generic source and is missing either phone or website.",
+        suggestedFix: "Verify against a practice-owned page, Healthpoint, HPI/FHIR export, or PHO data when available."
+      }
+    ]
+  });
+  writeJson(emptyPath, { findings: [], items: [] });
+  const graph = buildProviderEvidenceGraph({
+    providers: providersPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath
+  });
+  const graphPath = path.join(dir, "graph.json");
+  writeJson(graphPath, graph);
+  const queue = buildProviderClaimReviewQueue({ graph: graphPath, providers: providersPath });
+  const gpItems = queue.items.filter((item) => item.reviewCategory === "GP source corroboration");
+
+  assert.equal(gpItems.length, 1);
+  assert.equal(gpItems[0].providerId, "weak-gp-source");
+  assert.equal(gpItems[0].claimField, "sourceQuality");
+  assert.equal(gpItems.some((item) => item.claimField === "phone"), false);
+});
+
 test("claim batch draft helper creates review-gated adjustment decisions only after human confirmation", () => {
   const dir = tempDir();
   const providersPath = path.join(dir, "providers.json");

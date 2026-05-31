@@ -7,6 +7,9 @@
 - Reduced the focused claim review queue from 2,389 items to 941 while keeping
   availability, referral, support tags, scope, and telehealth claims
   review-gated.
+- Collapsed weak GP source corroboration from duplicate phone/sourceQuality rows
+  into one source-check task per affected GP, reducing the focused claim queue
+  again to 815 items.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, and referral reports.
 
@@ -15,7 +18,8 @@ Safety notes:
 - This change does not mutate live provider data.
 - Unsupported broad/sensitive tags are still queued for human review when the
   specific claim value is affected.
-- The next queue-reduction target is weak GP source corroboration duplication.
+- The next data-quality target is actual GP source corroboration or source
+  excerpt capture for high-risk review claims.
 
 ## 2026-05-31
 

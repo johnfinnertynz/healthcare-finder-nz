@@ -413,7 +413,11 @@ export function buildProviderClaimReviewQueue(config = {}) {
   const merged = { ...DEFAULTS, ...config };
   let graph = readJsonIfExists(merged.graph, null);
   if (!graph) graph = buildProviderEvidenceGraph({ providers: merged.providers });
-  const claimsPayload = readJsonIfExists(merged.claims, { claims: [] });
+  const graphNodes = asArray(graph.nodes);
+  const graphHasNodeClaims = graphNodes.some((node) => Array.isArray(node.claims) && node.claims.length);
+  const claimsPayload = graphHasNodeClaims
+    ? { claims: asArray(graph.claims) }
+    : readJsonIfExists(merged.claims, { claims: [] });
   const claimsByProviderId = new Map();
   for (const claim of asArray(claimsPayload.claims)) {
     const bucket = claimsByProviderId.get(claim.providerId) || [];
@@ -422,8 +426,8 @@ export function buildProviderClaimReviewQueue(config = {}) {
   }
   const providers = readJsonIfExists(merged.providers, []);
   const providersById = new Map(providers.map((provider) => [provider.id, provider]));
-  const nodesByProviderId = new Map(asArray(graph.nodes).map((node) => [node.providerId, node]));
-  let items = asArray(graph.nodes).flatMap((node) =>
+  const nodesByProviderId = new Map(graphNodes.map((node) => [node.providerId, node]));
+  let items = graphNodes.flatMap((node) =>
     asArray(node.claims?.length ? node.claims : claimsByProviderId.get(node.providerId))
       .filter((claim) => shouldIncludeClaim(claim, node, providersById.get(claim.providerId), merged))
       .map((claim) => itemFromClaim(claim, node, providersById.get(claim.providerId)))
@@ -439,7 +443,7 @@ export function buildProviderClaimReviewQueue(config = {}) {
     ? asArray(graph.claims)
     : asArray(claimsPayload.claims).length
       ? asArray(claimsPayload.claims)
-      : asArray(graph.nodes).flatMap((node) => asArray(node.claims));
+      : graphNodes.flatMap((node) => asArray(node.claims));
   const batches = batchesFromItems(items);
   return {
     version: 1,

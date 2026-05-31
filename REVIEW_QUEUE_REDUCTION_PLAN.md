@@ -5,7 +5,7 @@ Updated: 2026-06-01
 ## Baseline
 
 - Provider-level focused review queue: 513 items.
-- Focused claim-level review queue: 941 items in 56 batches.
+- Focused claim-level review queue: 815 items in 55 batches.
 - Source-fit findings: 361.
 - Availability findings: 3.
 - Provider validation warnings: 0.
@@ -31,8 +31,8 @@ This cycle added a separate claim review queue:
 - Provider rows split into 32,548 field-level claims.
 - 1,449 low-risk public contact, identity, or location claims were marked
   `auto_accept` in the advisory graph.
-- The focused claim queue now contains 941 review-gated claim items grouped into
-  56 batches.
+- The focused claim queue now contains 815 review-gated claim items grouped into
+  55 batches.
 - The auto-resolution proposal report identifies 1,449 low-risk claims in 31
   groups that can be de-prioritized from manual claim review dashboards without
   mutating live provider data.
@@ -43,13 +43,16 @@ This cycle added a separate claim review queue:
   findings are now value-aware in the claim graph. A weak telehealth finding
   queues telehealth/online claims instead of every tag on that provider; a
   broad-tag finding queues the named broad tag rather than unrelated tags.
+- Weak GP source findings now queue one source-corroboration task per affected
+  GP practice instead of separate phone and sourceQuality tasks for the same
+  root cause.
 - Reviewed claim batches can now produce draft decision JSON through
   `npm run draft:claim-batch`; this is still draft-only and must go through the
   controlled apply, validation, audit, and test path.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
-removing 1,448 noisy claim rows from the focused claim-review queue and turning
+removing 1,574 noisy claim rows from the focused claim-review queue and turning
 the remaining repeated work into batch categories.
 
 ## Batch Priorities
