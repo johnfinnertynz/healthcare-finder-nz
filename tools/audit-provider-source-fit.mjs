@@ -63,7 +63,7 @@ function hasAnyTag(provider, values) {
   return values.some((tag) => hasTag(provider, tag));
 }
 
-function sourceText(provider, { includeTags = false, includeAdvertisedSpecialties = true } = {}) {
+function sourceText(provider, { includeTags = false, includeAdvertisedSpecialties = false } = {}) {
   return [
     provider.name,
     provider.clinicianName,
@@ -348,7 +348,7 @@ function evaluateProvider(provider) {
         findings,
         provider,
         "advertised-specialty-without-source-support",
-        "medium",
+        "high",
         `Advertised specialties are present without clear source support: ${unsupportedAdvertised.slice(0, 5).join(", ")}.`,
         "Keep baselineScope separate from advertisedSpecialties, or add provider/profile source evidence for these advertised interests."
       );

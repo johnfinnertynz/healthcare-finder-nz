@@ -129,6 +129,45 @@ function recordIssue(bucket, provider, message) {
   bucket.push(`${provider.id || "(missing id)"}: ${message}`);
 }
 
+function normaliseText(value) {
+  return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function specialtySupportedBySource(specialty, text) {
+  const value = normaliseText(specialty).toLowerCase();
+  if (!value) return true;
+  if (text.includes(value)) return true;
+
+  const meaningfulWords = value
+    .split(/[^a-z0-9]+/i)
+    .filter((word) => word.length >= 4 && !["disorder", "disorders", "support", "therapy", "assessment"].includes(word));
+  return meaningfulWords.length > 0 && meaningfulWords.some((word) => text.includes(word));
+}
+
+function advertisedSpecialtySourceText(provider) {
+  return [
+    provider.name,
+    provider.clinicianName,
+    provider.practiceName,
+    provider.type,
+    provider.region,
+    provider.city,
+    provider.source,
+    provider.website,
+    provider.sourceQuality,
+    provider.cost,
+    provider.fit,
+    provider.firstStep,
+    provider.hours,
+    ...(provider.specialties || []),
+    ...(provider.patientGroups || []),
+    ...(provider.ageGroups || []),
+    ...(provider.services || []),
+    ...(provider.languages || []),
+    ...(provider.advertisedSpecialtyEvidence || []).flatMap((item) => [item?.sourceUrl, item?.excerpt])
+  ].join(" ").toLowerCase();
+}
+
 if (!Array.isArray(providers)) {
   errors.push("providers.json must contain an array");
 } else {
@@ -211,6 +250,11 @@ if (!Array.isArray(providers)) {
       }
       if (provider.advertisedSpecialtyEvidence?.some((item) => item && item.sourceUrl && !isUrl(item.sourceUrl))) {
         recordIssue(errors, provider, "advertisedSpecialtyEvidence sourceUrl must be an http(s) URL when present");
+      }
+      const unsupportedAdvertisedSpecialties = (provider.advertisedSpecialties || [])
+        .filter((specialty) => !specialtySupportedBySource(specialty, advertisedSpecialtySourceText(provider)));
+      if (unsupportedAdvertisedSpecialties.length) {
+        recordIssue(errors, provider, `advertisedSpecialties must be supported by source text (${unsupportedAdvertisedSpecialties.slice(0, 5).join(", ")})`);
       }
       if (!hasValue(provider.specialtyTagsSource)) recordIssue(errors, provider, "psychiatrist records need specialtyTagsSource");
     }
