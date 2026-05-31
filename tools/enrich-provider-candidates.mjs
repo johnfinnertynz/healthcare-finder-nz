@@ -26,6 +26,8 @@ const DEFAULTS = {
   maxRounds: 3,
   maxResultsPerQuery: 10,
   rateLimitMs: 1500,
+  fetchSeedSources: false,
+  maxSeedSources: 25,
   seedFile: "data/discovery/provider-discovery-seeds.json",
   providers: "providers.json",
   candidatesOut: "data/discovery/provider-candidates.json",
@@ -73,6 +75,8 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--limit") config.limit = Number(argv[++index]);
     else if (arg === "--dry-run") config.dryRun = true;
     else if (arg === "--no-network") config.noNetwork = true;
+    else if (arg === "--fetch-seed-sources") config.fetchSeedSources = true;
+    else if (arg === "--max-seed-sources") config.maxSeedSources = Number(argv[++index]);
     else if (arg === "--use-google-api") config.useGoogleApi = true;
     else if (arg === "--use-bing-api") config.useBingApi = true;
   }
@@ -100,6 +104,24 @@ function sleep(ms) {
 
 function cleanQuery(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
+}
+
+function shouldFetchSeedSource(url = "") {
+  const domain = sourceDomain(url);
+  if (!domain) return false;
+  if (/(^|\.)google\.|(^|\.)bing\.|(^|\.)duckduckgo\.com$|(^|\.)linkedin\.com$|(^|\.)facebook\.com$|(^|\.)instagram\.com$|(^|\.)x\.com$|(^|\.)twitter\.com$/i.test(domain)) return false;
+  return /^https?:\/\//i.test(url);
+}
+
+function rawSeedSourceUrls(seed = {}) {
+  return unique([seed.knownWebsite, seed.knownSourceUrl])
+    .map((url) => String(url || "").trim())
+    .filter((url) => /^https?:\/\//i.test(url));
+}
+
+function seedSourceUrls(seed = {}) {
+  return rawSeedSourceUrls(seed)
+    .filter(shouldFetchSeedSource);
 }
 
 function typeTerms(type) {
@@ -197,7 +219,9 @@ export function buildSnowballQueries(candidate = {}, round = 2) {
 function seedClaims(seed = {}) {
   const capturedAt = new Date().toISOString();
   const sourceUrl = seed.knownSourceUrl || seed.knownWebsite || "";
-  const sourceType = sourceTypeFromUrl(sourceUrl);
+  const sourceType = /google places/i.test(`${seed.source || ""} ${seed.reason || ""} ${seed.seedId || ""}`)
+    ? "google_places"
+    : sourceTypeFromUrl(sourceUrl);
   const base = {
     sourceUrl,
     sourceType,
@@ -481,7 +505,7 @@ async function processSearchResult(result, queryItem, graph, providers, config, 
   }
 
   const extracted = extractProviderEvidence({
-    html: fetchResult.body,
+    html: fetchResult.text || fetchResult.body || "",
     url: fetchResult.finalUrl || result.url,
     sourceType,
     capturedAt: fetchResult.capturedAt,
@@ -495,6 +519,58 @@ async function processSearchResult(result, queryItem, graph, providers, config, 
     reviewReasons: [`extracted from ${sourceType}`]
   }, providers);
   await sleep(config.rateLimitMs);
+}
+
+async function processSeedSources(seed, graph, providers, config, stats, remainingFetchBudget = Infinity) {
+  const rawUrls = rawSeedSourceUrls(seed);
+  const urls = seedSourceUrls(seed);
+  stats.seedSourcesSkipped += rawUrls.length - urls.length;
+  let attempted = 0;
+  for (const url of urls.slice(0, remainingFetchBudget)) {
+    const sourceType = sourceTypeFromUrl(url);
+    const fetchResult = await fetchPublicSource(url, { timeoutMs: 10_000 });
+    attempted += 1;
+    stats.seedSourcesChecked += 1;
+    if (!fetchResult.ok) {
+      stats.seedSourcesSkipped += 1;
+      mergeClaims(graph, [evidenceItem({
+        field: "source",
+        value: url,
+        sourceUrl: url,
+        sourceType,
+        excerpt: fetchResult.error || fetchResult.reason || "Seed source was skipped, blocked, or unreachable.",
+        capturedAt: fetchResult.capturedAt,
+        confidence: "low",
+        extractor: "seed-source-fetcher",
+        needsManualReview: true
+      })], {
+        seedId: seed.seedId,
+        reviewReasons: [`seed source ${fetchResult.error || fetchResult.reason || "fetch failed"}`],
+        possibleProviderId: seed.possibleProviderId || ""
+      }, providers);
+      continue;
+    }
+
+    stats.seedSourcesFetched += 1;
+    const extracted = extractProviderEvidence({
+      html: fetchResult.text || "",
+      url: fetchResult.finalUrl || url,
+      sourceType,
+      capturedAt: fetchResult.capturedAt,
+      region: seed.region,
+      city: seed.city,
+      type: seed.providerType || seed.type,
+      title: seed.knownProviderName || seed.knownPracticeName || seed.knownClinicianName || ""
+    });
+    mergeClaims(graph, extracted, {
+      seedId: seed.seedId,
+      reviewReasons: [`extracted from seed source ${sourceType}`],
+      possibleProviderId: seed.possibleProviderId || ""
+    }, providers);
+    await sleep(config.rateLimitMs);
+  }
+  if (urls.length > remainingFetchBudget) stats.seedSourcesSkipped += urls.length - remainingFetchBudget;
+  return attempted;
 }
 
 function prepareSeeds(config) {
@@ -530,6 +606,9 @@ function writeReport(filePath, output) {
     `- Search queries queued/run: ${output.searches.length}`,
     `- Sources fetched: ${output.stats.sourcesFetched}`,
     `- Blocked/unreachable/skipped sources: ${output.stats.blockedOrUnreachable}`,
+    `- Seed source pages checked: ${output.stats.seedSourcesChecked}`,
+    `- Seed source pages fetched: ${output.stats.seedSourcesFetched}`,
+    `- Seed source pages skipped: ${output.stats.seedSourcesSkipped}`,
     `- Public LinkedIn corroboration signals: ${output.stats.linkedInSignals}`,
     `- Mode: ${output.mode}`,
     "",
@@ -566,7 +645,10 @@ export async function enrichProviderCandidates(options = {}) {
     sourcesFetched: 0,
     blockedOrUnreachable: 0,
     linkedInSignals: 0,
-    apiResults: 0
+    apiResults: 0,
+    seedSourcesChecked: 0,
+    seedSourcesFetched: 0,
+    seedSourcesSkipped: 0
   };
 
   for (const seed of seeds) {
@@ -576,6 +658,15 @@ export async function enrichProviderCandidates(options = {}) {
       reviewReasons: [seed.reason || "discovery seed"]
     }, providers);
     allSearches.push(...buildRoundOneQueries(seed));
+  }
+
+  if (config.fetchSeedSources && !config.noNetwork) {
+    let remainingSeedSourceBudget = Number.isFinite(config.maxSeedSources) ? Math.max(0, config.maxSeedSources) : Infinity;
+    for (const seed of seeds) {
+      if (remainingSeedSourceBudget <= 0) break;
+      const attempted = await processSeedSources(seed, graph, providers, config, stats, remainingSeedSourceBudget);
+      remainingSeedSourceBudget -= attempted;
+    }
   }
 
   const seenQueries = new Set();
@@ -625,13 +716,15 @@ export async function enrichProviderCandidates(options = {}) {
       noBlockedSourceBypass: true,
       linkedInCorroborationOnly: true,
       noLiveProviderMutation: true,
-      reviewGateRequired: true
+      reviewGateRequired: true,
+      seedSourceFetchingReviewGated: true
     },
     inputs: {
       seedFile: config.seedFile,
       sourceSeedGeneratedAt: seedPayload.generatedAt || "",
       seedsAvailable: seedPayload.seeds?.length || 0,
       seedsProcessed: seeds.length,
+      seedSourceFetchLimit: config.fetchSeedSources && !config.noNetwork ? config.maxSeedSources : 0,
       providers: providers.length
     },
     stats,

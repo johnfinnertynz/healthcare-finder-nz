@@ -76,7 +76,14 @@ mark the claim as review-needed. It must not fake evidence text.
 - `npm run discover:suggest` creates review-gated candidate additions/patches.
 - `npm run discover:places` creates review-gated Google Places business
   candidates from regional priority gaps. It reads the API key only from an
-  environment variable or local file and does not store it in outputs.
+  environment variable or local file and does not store it in outputs. Use
+  `--merge-existing` for repeat targeted runs so earlier candidates are kept.
+- `npm run discover:seeds` includes those Places candidates as discovery seeds,
+  so provider websites and likely business identities can be corroborated by the
+  normal evidence pipeline.
+- `npm run discover:enrich -- --fetch-seed-sources --max-seed-sources 10`
+  fetches a small capped set of known seed websites. It skips Google Maps,
+  search engines, and social URLs, and only writes review-gated evidence.
 - `npm run evidence:graph` creates claim-level evidence from current providers.
 - `npm run export:claims` creates the compressed claim review queue.
 - `npm run export:gp-corroboration` creates a dedicated queue for weak

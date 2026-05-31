@@ -26,7 +26,8 @@ const DEFAULTS = {
   maxResultsPerQuery: 8,
   rateLimitMs: 300,
   radiusMeters: 25_000,
-  noNetwork: false
+  noNetwork: false,
+  mergeExisting: false
 };
 
 const REGION_CENTRES = {
@@ -99,6 +100,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--csv-out") config.csvOut = argv[++index];
     else if (arg === "--md-out") config.mdOut = argv[++index];
     else if (arg === "--no-network") config.noNetwork = true;
+    else if (arg === "--merge-existing") config.mergeExisting = true;
   }
   return config;
 }
@@ -438,10 +440,69 @@ export function buildGooglePlacesCandidatesFromResults(resultsByQuery = [], prov
   }
   return [...byPlace.values()].sort((a, b) =>
     (b.action === "research_new_provider") - (a.action === "research_new_provider")
-    || TYPE_PRIORITY[b.type] - TYPE_PRIORITY[a.type]
+    || (TYPE_PRIORITY[b.type] || 0) - (TYPE_PRIORITY[a.type] || 0)
     || a.region.localeCompare(b.region)
     || a.name.localeCompare(b.name)
   );
+}
+
+export function mergeGooglePlacesCandidates(existingCandidates = [], newCandidates = []) {
+  const byId = new Map();
+  for (const candidate of existingCandidates) {
+    if (!candidate?.candidateId) continue;
+    byId.set(candidate.candidateId, candidate);
+  }
+  for (const candidate of newCandidates) {
+    if (!candidate?.candidateId) continue;
+    const existing = byId.get(candidate.candidateId);
+    if (!existing) {
+      byId.set(candidate.candidateId, candidate);
+      continue;
+    }
+    byId.set(candidate.candidateId, {
+      ...existing,
+      ...candidate,
+      query: unique([existing.query, candidate.query]).filter(Boolean).join(" | "),
+      sourceUrlsUsed: unique([...(existing.sourceUrlsUsed || []), ...(candidate.sourceUrlsUsed || [])]),
+      reviewReasons: unique([...(existing.reviewReasons || []), ...(candidate.reviewReasons || [])]),
+      possibleProviderIds: unique([...(existing.possibleProviderIds || []), ...(candidate.possibleProviderIds || [])]),
+      existingProviderMatches: [...(existing.existingProviderMatches || []), ...(candidate.existingProviderMatches || [])],
+      duplicateSignals: unique([...(existing.duplicateSignals || []), ...(candidate.duplicateSignals || [])]),
+      claims: [...(existing.claims || []), ...(candidate.claims || [])]
+    });
+  }
+  return [...byId.values()]
+    .map(normaliseGooglePlacesCandidateTypeConflict)
+    .sort((a, b) =>
+      (b.action === "research_new_provider") - (a.action === "research_new_provider")
+      || (TYPE_PRIORITY[b.type] || 0) - (TYPE_PRIORITY[a.type] || 0)
+      || a.region.localeCompare(b.region)
+      || a.name.localeCompare(b.name)
+    );
+}
+
+function normaliseGooglePlacesCandidateTypeConflict(candidate = {}) {
+  const queryTypes = unique((candidate.claims || [])
+    .filter((claimItem) => claimItem.field === "type")
+    .map((claimItem) => claimItem.value)
+    .filter(Boolean));
+  if (queryTypes.length <= 1) return candidate;
+  const matchedProviderTypes = unique((candidate.existingProviderMatches || [])
+    .map((match) => match.type)
+    .filter(Boolean));
+  const resolvedType = matchedProviderTypes.length === 1 ? matchedProviderTypes[0] : "unknown";
+  return {
+    ...candidate,
+    type: resolvedType,
+    suggestedProviderRecord: {
+      ...(candidate.suggestedProviderRecord || {}),
+      type: resolvedType
+    },
+    reviewReasons: unique([
+      ...(candidate.reviewReasons || []),
+      `conflicting Google Places search query types: ${queryTypes.join(", ")}; confirm provider type from a stronger source${matchedProviderTypes.length === 1 ? `; existing matched provider type kept as ${resolvedType}` : ""}`
+    ])
+  };
 }
 
 async function searchPlaces(queryItem, config, apiKey) {
@@ -518,7 +579,10 @@ function writeMarkdown(filePath, output) {
     `- Mode: ${output.mode}`,
     `- Search queries planned: ${output.searchPlan.length}`,
     `- Search queries run: ${output.stats.queriesRun}`,
+    `- Places returned: ${output.stats.placesReturned}`,
+    `- New candidates in this run: ${output.stats.newCandidates}`,
     `- Candidates found: ${output.candidates.length}`,
+    `- Existing candidates merged: ${output.inputs.mergeExisting ? output.inputs.existingCandidates : 0}`,
     `- API errors: ${output.errors.length}`,
     `- API key stored in output: no`,
     "",
@@ -565,7 +629,12 @@ export async function discoverGooglePlacesProviders(options = {}) {
     }
   }
 
-  const candidates = buildGooglePlacesCandidatesFromResults(results, providers);
+  const discoveredCandidates = buildGooglePlacesCandidatesFromResults(results, providers);
+  const existingOutput = config.mergeExisting ? readJsonIfExists(config.jsonOut, { candidates: [] }) : { candidates: [] };
+  const candidates = (config.mergeExisting
+    ? mergeGooglePlacesCandidates(existingOutput.candidates || [], discoveredCandidates)
+    : discoveredCandidates)
+    .map(normaliseGooglePlacesCandidateTypeConflict);
   const output = {
     version: 1,
     generatedAt: new Date().toISOString(),
@@ -585,12 +654,15 @@ export async function discoverGooglePlacesProviders(options = {}) {
       apiKeySource: apiKey ? (config.apiKeyFile ? "file" : "environment") : "none",
       region: config.region || "",
       type: config.type || "",
-      maxResultsPerQuery: config.maxResultsPerQuery
+      maxResultsPerQuery: config.maxResultsPerQuery,
+      mergeExisting: Boolean(config.mergeExisting),
+      existingCandidates: existingOutput.candidates?.length || 0
     },
     stats: {
       queriesPlanned: searchPlan.length,
       queriesRun: apiKey ? searchPlan.length : 0,
       placesReturned: results.reduce((total, result) => total + result.places.length, 0),
+      newCandidates: discoveredCandidates.length,
       candidates: candidates.length
     },
     searchPlan,

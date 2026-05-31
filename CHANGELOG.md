@@ -28,6 +28,11 @@
 - Added a Google Places discovery candidate exporter and auditor queue source.
   It uses the official Places API when a local key is supplied, stores no key
   material, and keeps all candidates review-gated.
+- Fed Google Places candidates into the normal discovery seed pipeline and added
+  capped seed-source website fetching for review-gated corroboration.
+- Added incremental `--merge-existing` support for Places discovery and ran a
+  bounded Northland psychiatry batch, producing 8 review-gated Places candidates
+  and 11 discovery suggestions without live provider mutation.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

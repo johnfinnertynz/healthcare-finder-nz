@@ -4,7 +4,7 @@ Updated: 2026-06-01
 
 ## Baseline
 
-- Provider-level focused review queue: 513 items.
+- Provider-level focused review queue: 525 items.
 - Focused claim-level review queue: 638 items in 53 batches.
 - Dedicated GP source corroboration queue: 126 tasks.
 - Source-fit findings: 361.
@@ -71,11 +71,19 @@ This cycle added a separate claim review queue:
   tasks, source-fit findings, availability/referral/watchlist signals, and
   address/coordinate gaps into `REGIONAL_DATA_QUALITY_REPORT.md` so review
   batches can start with the highest-risk regions.
+- Google Places candidates now feed into the normal discovery seed pipeline,
+  and `discover:enrich -- --fetch-seed-sources` can inspect a capped number of
+  known provider websites to collect review-gated source excerpts.
+- A bounded Northland psychiatry Places run produced 8 review-gated business
+  candidates and 11 discovery suggestions. Some are likely non-psychiatry
+  services found by the query and must be confirmed or rejected by the auditor.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
 removing 1,751 noisy claim rows from the focused claim-review queue and turning
-the remaining repeated work into batch categories.
+the remaining repeated work into batch categories. The provider-level queue can
+grow slightly when new discovery candidates are added; those are intentionally
+review-gated rather than published.
 
 ## Batch Priorities
 

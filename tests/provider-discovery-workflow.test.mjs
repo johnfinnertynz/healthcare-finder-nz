@@ -4,10 +4,11 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { auditProviders } from "../tools/audit-provider-source-fit.mjs";
+import { buildProviderDiscoverySeeds } from "../tools/build-provider-discovery-seeds.mjs";
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
 import { buildProviderSuggestions } from "../tools/build-provider-suggestions.mjs";
 import { buildRoundOneQueries, buildSnowballQueries, enrichProviderCandidates } from "../tools/enrich-provider-candidates.mjs";
-import { buildGooglePlacesCandidatesFromResults, buildGooglePlacesDiscoveryPlan, candidateFromGooglePlace } from "../tools/discover-google-places-providers.mjs";
+import { buildGooglePlacesCandidatesFromResults, buildGooglePlacesDiscoveryPlan, candidateFromGooglePlace, mergeGooglePlacesCandidates } from "../tools/discover-google-places-providers.mjs";
 import { extractProviderEvidence } from "../tools/lib/provider-evidence-extractor.mjs";
 import { fetchPublicSource } from "../tools/lib/source-fetcher.mjs";
 import { withPsychiatristScopeMetadata } from "../tools/lib/provider-scope.mjs";
@@ -468,6 +469,216 @@ test("Google Places candidate matching flags possible existing providers by webs
   assert.equal(candidates[0].action, "corroborate_existing_provider");
   assert.deepEqual(candidates[0].possibleProviderIds, ["existing-provider"]);
   assert(candidates[0].duplicateSignals.includes("phone"));
+});
+
+test("Google Places incremental runs can merge existing candidates without replacing them", () => {
+  const existing = candidateFromGooglePlace({
+    id: "places/existing",
+    displayName: { text: "Existing Psychology" },
+    formattedAddress: "20 George Street, Dunedin 9016, New Zealand",
+    websiteUri: "https://existingpsych.nz",
+    googleMapsUri: "https://maps.google.com/?cid=456",
+    types: ["health"]
+  }, {
+    queryId: "places:otago:psychologist",
+    textQuery: "psychologist Dunedin Otago New Zealand",
+    region: "Otago",
+    city: "Dunedin",
+    type: "psychologist"
+  }, []);
+  const fresh = candidateFromGooglePlace({
+    id: "places/new",
+    displayName: { text: "North Psychiatry" },
+    formattedAddress: "1 Bank Street, Whangarei 0110, New Zealand",
+    nationalPhoneNumber: "09 222 3333",
+    googleMapsUri: "https://maps.google.com/?cid=654",
+    types: ["health"]
+  }, {
+    queryId: "places:northland:psychiatrist",
+    textQuery: "psychiatrist Whangarei Northland New Zealand",
+    region: "Northland",
+    city: "Whangarei",
+    type: "psychiatrist"
+  }, []);
+  const merged = mergeGooglePlacesCandidates([existing], [fresh]);
+  assert.equal(merged.length, 2);
+  assert(merged.some((candidate) => candidate.name === "Existing Psychology"));
+  assert(merged.some((candidate) => candidate.name === "North Psychiatry"));
+});
+
+test("Google Places merge flags conflicting query types instead of silently relabelling", () => {
+  const psychologyLead = candidateFromGooglePlace({
+    id: "places/shared",
+    displayName: { text: "Shared Therapy" },
+    formattedAddress: "3 Bank Street, Whangarei 0110, New Zealand",
+    googleMapsUri: "https://maps.google.com/?cid=111",
+    types: ["health"]
+  }, {
+    queryId: "places:northland:psychologist",
+    textQuery: "psychologist Whangarei Northland New Zealand",
+    region: "Northland",
+    city: "Whangarei",
+    type: "psychologist"
+  }, []);
+  const psychiatryLead = candidateFromGooglePlace({
+    id: "places/shared",
+    displayName: { text: "Shared Therapy" },
+    formattedAddress: "3 Bank Street, Whangarei 0110, New Zealand",
+    googleMapsUri: "https://maps.google.com/?cid=111",
+    types: ["health"]
+  }, {
+    queryId: "places:northland:psychiatrist",
+    textQuery: "psychiatrist Whangarei Northland New Zealand",
+    region: "Northland",
+    city: "Whangarei",
+    type: "psychiatrist"
+  }, []);
+  const [merged] = mergeGooglePlacesCandidates([psychologyLead], [psychiatryLead]);
+  assert.equal(merged.type, "unknown");
+  assert.equal(merged.suggestedProviderRecord.type, "unknown");
+  assert(merged.reviewReasons.some((reason) => /conflicting Google Places search query types/.test(reason)));
+});
+
+test("Google Places candidates become discovery seeds for source corroboration", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const providerSourcesPath = path.join(dir, "provider-sources.json");
+  const placesPath = path.join(dir, "places.json");
+  writeJson(providersPath, []);
+  writeJson(emptyPath, { findings: [], items: [], queue: [] });
+  writeJson(providerSourcesPath, { liveSources: {} });
+  writeJson(placesPath, {
+    version: 1,
+    candidates: [
+      candidateFromGooglePlace({
+        id: "places/seed",
+        displayName: { text: "Seed Psychology" },
+        formattedAddress: "2 Bank Street, Whangarei 0110, New Zealand",
+        nationalPhoneNumber: "09 111 2222",
+        websiteUri: "https://seedpsych.nz",
+        googleMapsUri: "https://maps.google.com/?cid=321",
+        types: ["health"]
+      }, {
+        queryId: "places:northland:psychologist",
+        textQuery: "psychologist Whangarei Northland New Zealand",
+        region: "Northland",
+        city: "Whangarei",
+        type: "psychologist"
+      }, [])
+    ]
+  });
+  const output = buildProviderDiscoverySeeds({
+    providers: providersPath,
+    providerSources: providerSourcesPath,
+    sourceFitAudit: emptyPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath,
+    discoveryQueue: emptyPath,
+    googlePlacesCandidates: placesPath,
+    manualSeeds: path.join(dir, "missing-manual.json")
+  });
+  const seed = output.seeds.find((item) => item.seedId.startsWith("google-places:"));
+  assert.ok(seed);
+  assert.equal(output.inputs.googlePlacesCandidates, 1);
+  assert.equal(seed.region, "Northland");
+  assert.equal(seed.providerType, "psychologist");
+  assert.equal(seed.knownWebsite, "https://seedpsych.nz");
+  assert.equal(seed.knownSourceUrl, "https://seedpsych.nz");
+  assert.match(seed.reason, /corroborate/i);
+});
+
+test("seed source fetching inspects provider websites but skips Google Maps sources", async () => {
+  const dir = tempDir();
+  const seedFile = path.join(dir, "seeds.json");
+  const providersPath = path.join(dir, "providers.json");
+  writeJson(seedFile, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    seeds: [{
+      seedId: "google-places:test-provider",
+      region: "Northland",
+      city: "Whangarei",
+      providerType: "psychologist",
+      knownProviderName: "Seed Psychology",
+      knownWebsite: "https://seedpsych.nz",
+      knownSourceUrl: "https://maps.google.com/?cid=321",
+      priority: 95,
+      reason: "Google Places discovery candidate"
+    }]
+  });
+  writeJson(providersPath, []);
+
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (url) => {
+    calls.push(String(url));
+    return new Response(`
+      <!doctype html>
+      <html>
+        <head><title>Seed Psychology Whangarei</title></head>
+        <body>
+          <h1>Seed Psychology</h1>
+          <p>Clinical psychologist in Whangarei supporting anxiety and depression.</p>
+          <p>Phone 09 123 4567 or email hello@seedpsych.nz.</p>
+        </body>
+      </html>
+    `, { status: 200, headers: { "content-type": "text/html" } });
+  };
+  try {
+    const output = await enrichProviderCandidates({
+      seedFile,
+      providers: providersPath,
+      fetchSeedSources: true,
+      maxSeedSources: 1,
+      noNetwork: false,
+      dryRun: true,
+      rateLimitMs: 0,
+      maxRounds: 1,
+      limit: 1
+    });
+    assert.deepEqual(calls, ["https://seedpsych.nz"]);
+    assert.equal(output.stats.seedSourcesChecked, 1);
+    assert.equal(output.stats.seedSourcesFetched, 1);
+    assert.equal(output.stats.seedSourcesSkipped, 1);
+    assert(output.candidates.some((candidate) => candidate.phones.includes("09 123 4567")));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("Google Places seed values alone stay manual research until stronger sources are fetched", async () => {
+  const dir = tempDir();
+  const seedFile = path.join(dir, "seeds.json");
+  const providersPath = path.join(dir, "providers.json");
+  writeJson(seedFile, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    seeds: [{
+      seedId: "google-places:places-only",
+      region: "Northland",
+      city: "Whangarei",
+      providerType: "psychiatrist",
+      knownProviderName: "Places Only Psychiatry",
+      knownPhone: "09 333 4444",
+      knownWebsite: "https://placesonly.example.nz",
+      knownSourceUrl: "https://placesonly.example.nz",
+      source: "google places candidate export",
+      priority: 100,
+      reason: "Google Places discovery candidate"
+    }]
+  });
+  writeJson(providersPath, []);
+  const output = await enrichProviderCandidates({
+    seedFile,
+    providers: providersPath,
+    noNetwork: true,
+    dryRun: true,
+    maxRounds: 1,
+    limit: 1
+  });
+  const suggestions = suggestionsFor(output.candidates);
+  assert.equal(suggestions.suggestions[0].action, "needs_manual_research");
+  assert.match(suggestions.suggestions[0].sourceSummary, /Google Places/);
 });
 
 test("Google Places candidates feed the auditor review queue without becoming live providers", () => {

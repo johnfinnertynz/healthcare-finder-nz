@@ -125,7 +125,7 @@ function suggestionAction(node, candidateRecord, existingProvider) {
 
 function reviewReasonsFor(node, candidateRecord, action) {
   const reasons = [...(node.reviewReasons || [])];
-  if (onlyDiscoverySignals(node)) reasons.push("search-result, LinkedIn, or unknown-source data cannot create a live provider");
+  if (onlyDiscoverySignals(node)) reasons.push("search-result, Google Places, LinkedIn, or unknown-source data cannot create a live provider");
   if (node.conflicts?.length) reasons.push(`conflicting fields: ${node.conflicts.map((conflict) => conflict.field).join(", ")}`);
   if (candidateRecord.availabilityStatus === "accepting" && !hasAcceptingEvidence(node)) {
     reasons.push("accepting availability is not explicit enough to publish");

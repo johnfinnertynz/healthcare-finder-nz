@@ -11,6 +11,7 @@ const DEFAULTS = {
   availabilityAudit: "data/provider-availability-audit.json",
   referralAudit: "data/provider-psychiatrist-referral-audit.json",
   discoveryQueue: "data/discovery/provider-search-queue.json",
+  googlePlacesCandidates: "data/discovery/google-places-provider-candidates.json",
   manualSeeds: "data/discovery/manual-provider-discovery-seeds.json",
   out: "data/discovery/provider-discovery-seeds.json"
 };
@@ -36,6 +37,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--type") config.type = argv[++index];
     else if (arg === "--limit") config.limit = Number(argv[++index]);
     else if (arg === "--manual-seeds") config.manualSeeds = argv[++index];
+    else if (arg === "--google-places-candidates") config.googlePlacesCandidates = argv[++index];
     else if (arg === "--out") config.out = argv[++index];
   }
   return config;
@@ -164,6 +166,36 @@ function addDiscoveryPlaceSeeds(map, discoveryQueue) {
   }
 }
 
+function addGooglePlacesCandidateSeeds(map, placesPayload) {
+  for (const candidate of placesPayload.candidates || []) {
+    const record = candidate.suggestedProviderRecord || {};
+    const possibleProviderId = candidate.possibleProviderIds?.[0] || "";
+    addSeed(map, {
+      seedId: `google-places:${candidate.candidateId || seedId([candidate.region, candidate.city, candidate.type, candidate.name])}`,
+      region: record.region || candidate.region || "",
+      city: record.city || candidate.city || "",
+      suburb: "",
+      type: record.type || candidate.type || "",
+      providerType: record.type || candidate.type || "",
+      knownProviderName: record.name || candidate.name || "",
+      knownClinicianName: record.clinicianName || "",
+      knownPracticeName: record.practiceName || candidate.name || "",
+      knownAddress: record.address || candidate.address || "",
+      knownPhone: record.phone || candidate.phone || "",
+      knownEmail: record.email || "",
+      knownWebsite: record.website || candidate.website || "",
+      knownSourceUrl: record.website || candidate.website || record.source || candidate.googleMapsUri || "",
+      possibleProviderId: possibleProviderId || record.id || candidate.candidateId || "",
+      reason: unique([
+        "Google Places discovery candidate; corroborate with provider-owned, Healthpoint, official register, or professional-directory evidence before live use",
+        ...(candidate.reviewReasons || [])
+      ]).join("; "),
+      priority: Math.min(100, (priorityByType[record.type || candidate.type] || 65) + (possibleProviderId ? 8 : 15)),
+      source: "google places candidate export"
+    });
+  }
+}
+
 function addManualSeeds(map, manualSeeds) {
   const items = Array.isArray(manualSeeds) ? manualSeeds : manualSeeds.seeds || [];
   for (const seed of items) {
@@ -196,6 +228,7 @@ export function buildProviderDiscoverySeeds(config = {}) {
   const referrals = readJsonIfExists(merged.referralAudit, { findings: [] });
   const reviewQueue = readJsonIfExists(merged.reviewQueue, { items: [] });
   const discoveryQueue = readJsonIfExists(merged.discoveryQueue, { queue: [] });
+  const googlePlacesCandidates = readJsonIfExists(merged.googlePlacesCandidates, { candidates: [] });
   const manualSeeds = readJsonIfExists(merged.manualSeeds, { seeds: [] });
   const providerSources = readJsonIfExists(merged.providerSources, {});
 
@@ -206,6 +239,7 @@ export function buildProviderDiscoverySeeds(config = {}) {
   addAuditSeeds(seedMap, providersById, referrals, "psychiatrist-referral");
   addReviewQueueSeeds(seedMap, providersById, reviewQueue);
   addDiscoveryPlaceSeeds(seedMap, discoveryQueue);
+  addGooglePlacesCandidateSeeds(seedMap, googlePlacesCandidates);
   addManualSeeds(seedMap, manualSeeds);
 
   const seeds = applyFilters([...seedMap.values()], merged);
@@ -226,6 +260,7 @@ export function buildProviderDiscoverySeeds(config = {}) {
       referralFindings: referrals.findings?.length || 0,
       reviewQueueItems: reviewQueue.items?.length || 0,
       discoveryQueueItems: discoveryQueue.queue?.length || 0,
+      googlePlacesCandidates: googlePlacesCandidates.candidates?.length || 0,
       manualSeeds: Array.isArray(manualSeeds) ? manualSeeds.length : manualSeeds.seeds?.length || 0,
       configuredLiveSources: Object.keys(providerSources.liveSources || {}).filter((key) => providerSources.liveSources[key]).length
     },

@@ -1,15 +1,15 @@
 # Provider Review Queue
 
-Generated: 2026-05-31T22:16:29.760Z
+Generated: 2026-05-31T22:44:54.092Z
 
 Focused queue: yes.
 
 ## Summary
 
-- Review items: 516
-- Critical: 3
-- High: 276
-- Medium: 91
+- Review items: 525
+- Critical: 5
+- High: 279
+- Medium: 95
 - Low: 146
 
 ## Top Queue Items
@@ -18,7 +18,9 @@ Focused queue: yes.
 | --- | --- | --- | --- | --- | --- | --- |
 | critical | high | canterbury-mherc - Mental Health Education and Resource Centre | directory | Canterbury / Christchurch | directory-treated-direct | high: directory-treated-direct; provider details need manual verification; address missing coordinates |
 | critical | high | national-family-services-directory - Family Services Directory / 211 Helpline | directory | National / Aotearoa New Zealand | directory-treated-direct | high: directory-treated-direct; provider details need manual verification |
-| critical | high | canterbury-addiction-central-service - Christchurch Central Service | addiction | Canterbury / Christchurch | discovery-suggestion, needs_manual_research, conflict-name, conflict-phone, conflict-type | provider discovery suggestion; conflicting name, phone, type values; existing provider enrichment; review queue high: medium: missing-address; availability needs manual review; conflicting fields: name, phone, type |
+| critical | high | candidate-dr-sarah-castle-edoardo-giorgi - Sarah Castle | psychiatrist | Northland / Whangarei | discovery-suggestion, needs_manual_research, conflict-name, conflict-practiceName, conflict-tags | provider discovery suggestion; conflicting name, practiceName, tags values; extracted from seed source provider_owned; conflicting fields: name, practiceName, tags |
+| critical | high | candidate-whangarei-care-will-be-closing-its-doors-shortly - Whangarei CARE will be closing its doors shortly | counsellor | Northland / Whangarei | discovery-suggestion, needs_manual_research, conflict-name, conflict-practiceName, conflict-address, conflict-type | provider discovery suggestion; conflicting name, practiceName, address, type values; extracted from seed source provider_owned; conflicting fields: name, practiceName, address, type |
+| critical | high | northland-hagan-provan-psychology-services - candidate:dec8f3f12127927b |  | / | discovery-suggestion, needs_manual_research, conflict-source | provider discovery suggestion; conflicting source values; no direct public contact found; seed source login-or-captcha-required; conflicting fields: source |
 | high | medium | psychiatry-nz-jimi-macmillan - Dr Jimi MacMillan | psychiatrist | National / Telehealth across New Zealand | weak-maori-evidence | medium: weak-maori-evidence; provider details need manual verification; availability needs manual review; referral pathway needs manual review; psychiatrist referral pathway unknown; availability status is waitlist; address missing coordinates |
 | high | medium | wellington-womens-health-collective - Wellington Women's Health Collective | counsellor | Wellington / Wellington | broad-tag-without-source-support, weak-rainbow-evidence, weak-telehealth-evidence | medium: broad-tag-without-source-support; medium: weak-rainbow-evidence; medium: weak-telehealth-evidence; availability needs manual review; address missing coordinates |
 | high | medium | nzccp-alana-malloy - Alana Malloy | psychologist | Wellington / Wellington | register-only-public-contact, weak-rainbow-evidence, missing-address | medium: register-only-public-contact; medium: weak-rainbow-evidence; medium: missing-address; provider details need manual verification; availability needs manual review |
@@ -94,7 +96,5 @@ Focused queue: yes.
 | high | medium | nzccp-alex-richards - Alex Richards | psychologist | Canterbury / Christchurch | broad-tag-without-source-support | medium: broad-tag-without-source-support; availability needs manual review |
 | high | medium | hawkes-bay-bay-psychology - Bay Psychology | psychologist | Hawke's Bay / Napier, Taradale, Hastings and Havelock North | broad-tag-without-source-support | medium: broad-tag-without-source-support; availability needs manual review |
 | high | medium | hawkes-bay-craig-colhoun - Dr Craig Colhoun Psychology | psychologist | Hawke's Bay / Napier and Hastings | broad-tag-without-source-support | medium: broad-tag-without-source-support; availability needs manual review |
-| high | medium | manawatu-cenpsyx-palmerston-north - CenPsyX | psychologist | Manawatu-Whanganui / Palmerston North | broad-tag-without-source-support | medium: broad-tag-without-source-support; availability needs manual review |
-| high | medium | manawatu-massey-palmerston-north-psychology-clinic - Palmerston North Psychology Clinic - Massey University | psychologist | Manawatu-Whanganui / Palmerston North | broad-tag-without-source-support | medium: broad-tag-without-source-support; availability needs manual review |
 
 Review decisions must be applied with `npm run apply:review`; the public app does not write provider data from the browser.

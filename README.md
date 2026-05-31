@@ -212,6 +212,21 @@ telehealth, cost, or cultural/support-preference claims. Candidates feed the
 auditor queue and still require stronger source evidence before live data
 changes.
 
+For repeat targeted runs, add `--merge-existing` so new Places leads are merged
+into the current candidate file instead of replacing earlier candidates.
+
+Places candidates are also included in `npm run discover:seeds`, so the normal
+evidence pipeline can use their provider-owned websites as review-gated
+corroboration leads. To fetch only known seed websites, without search-engine
+API calls, use a small bounded run:
+
+```sh
+npm run discover:enrich -- --fetch-seed-sources --max-seed-sources 10 --limit 10
+```
+
+This skips Google Maps/search/social URLs, respects source blocks, and still
+only writes candidates and evidence for review.
+
 Import backend-only doctor register data after approved MCNZ access:
 
 ```sh
@@ -424,8 +439,8 @@ npm run export:review
 ```
 
 `discover:seeds` combines existing provider records, audit findings, review
-queue items, thin-region discovery queues, and optional manual seeds into
-`data/discovery/provider-discovery-seeds.json`.
+queue items, thin-region discovery queues, Google Places candidates, and
+optional manual seeds into `data/discovery/provider-discovery-seeds.json`.
 
 `discover:enrich` supports iterative "snowball" enrichment. Round 1 builds
 searches from city/type/provider names. Later rounds use discovered clinician
@@ -443,6 +458,18 @@ Without API keys, or with `--no-network`, the tool writes queues and candidate
 evidence from existing seeds instead of scraping search result HTML. It does not
 bypass blocked sites, login-only pages, CAPTCHA pages, LinkedIn restrictions, or
 source-site embedding restrictions.
+
+For already-known source URLs, such as provider websites found by Google Places,
+`discover:enrich` can fetch a capped number of seed websites without using a
+search API:
+
+```sh
+npm run discover:enrich -- --fetch-seed-sources --max-seed-sources 10 --limit 10
+```
+
+Seed-source fetching skips Google Maps, search engines, social networks, and
+unsupported file types. It is only used to capture reviewable excerpts and field
+evidence; it never writes directly to `providers.json`.
 
 `discover:places` is a separate Google Places discovery aid. It reads regional
 priority gaps, uses the official Places Text Search API when a local key is

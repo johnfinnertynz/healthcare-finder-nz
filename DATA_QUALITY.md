@@ -359,7 +359,7 @@ Google Places discovery uses its own bounded review-gated export:
 
 ```sh
 npm run discover:places -- --no-network
-npm run discover:places -- --api-key-file "path/to/google-places-api-key.txt" --region Northland --type psychologist --limit-queries 2
+npm run discover:places -- --api-key-file "path/to/google-places-api-key.txt" --region Northland --type psychologist --limit-queries 2 --merge-existing
 ```
 
 The key must remain local or in a secret manager. Do not commit it, paste it into
@@ -367,6 +367,13 @@ reports, or expose it in browser code. Places results may corroborate public
 business identity, phone, website, address, and coordinates. They must not be
 used alone for condition scope, advertised specialties, availability, referral,
 cost, telehealth, cultural/safety tags, or direct clinical suitability.
+
+Google Places candidates are allowed to become discovery seeds. If a candidate
+has a public provider-owned website, `npm run discover:enrich --
+--fetch-seed-sources --max-seed-sources 10 --limit 10` may fetch that website as
+a bounded source check. This mode skips Google Maps/search/social URLs and only
+creates evidence candidates for review. It must not turn Places data into live
+clinical claims.
 
 The evidence graph keeps probable provider identities separate. It can match on
 clinician name, practice name, domain, phone, email, address, city/region, and

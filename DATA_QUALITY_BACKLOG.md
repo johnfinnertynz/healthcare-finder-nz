@@ -66,6 +66,13 @@ manual review burden.
 - Added a regional data-quality priority report that combines local coverage,
   weak GP source tasks, source-fit findings, availability/referral/watchlist
   signals, and address/coordinate gaps without mutating live provider data.
+- Added Google Places candidates to the normal discovery seed flow and added a
+  capped seed-source website fetch mode, so likely provider websites can produce
+  reviewable excerpts before a human auditor decides whether to update live
+  data.
+- Ran a bounded Northland psychiatry Places discovery batch. It added review
+  leads, including a Northland Psychiatry source, while keeping query-type
+  conflicts and non-specialist-looking matches gated for audit.
 
 ## Next Backlog Items
 
@@ -81,6 +88,9 @@ manual review burden.
 5. Start manual review with the largest unsupported tag batches.
 6. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
-7. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
+7. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
+   runs for high-priority thin regions, then send resulting candidates through
+   the auditor.
+8. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.
