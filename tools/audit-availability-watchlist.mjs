@@ -9,6 +9,7 @@ const WATCHLIST_NOTE_PATTERNS = [
   /unable to accept new clients/i,
   /not taking new patients/i,
   /not taking new clients/i,
+  /at capacity/i,
   /closed to new (?:patients|clients|referrals)/i
 ];
 

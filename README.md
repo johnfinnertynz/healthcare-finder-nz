@@ -209,6 +209,7 @@ node tools/find-unavailable-providers.mjs
 node tools/audit-availability-watchlist.mjs
 node tools/audit-provider-availability.mjs
 node tools/recheck-provider-availability.mjs
+npm run export:monitor
 ```
 
 The watchlist lives at `data/monitors/provider-availability-watchlist.json`.
@@ -217,7 +218,9 @@ matching unavailable wording and is manually reviewed. The availability audit
 writes `data/provider-availability-audit.json` and
 `AVAILABILITY_RECHECK_REPORT.md`. The cautious live recheck writes
 `data/provider-availability-recheck-results.json`; it does not overwrite
-provider records.
+provider records. `npm run export:monitor` turns those automated findings into
+`data/provider-monitor-queue.json`, `data/provider-monitor-queue.csv`, and
+`PROVIDER_MONITOR_QUEUE.md` so an auditor can review changes in the same console.
 
 Availability statuses are intentionally conservative:
 
@@ -445,8 +448,21 @@ it is a focused queue and does not include every low-risk GP record. Use
 `node tools/export-provider-review-queue.mjs --include-all` for a full dump.
 
 Open the local prototype at `admin/index.html` after serving the repo locally.
-The admin console loads the queue, lets a reviewer inspect evidence, and exports
-review decisions. It does not write to production data.
+The admin console can load either the manual review queue or the ongoing monitor
+queue. It lets a reviewer inspect evidence and exports review decisions. It does
+not write to production data.
+
+For future checks after the initial audit, run:
+
+```sh
+npm run monitor:providers
+```
+
+That command cautiously fetches provider/watchlist source pages, reruns the
+availability audit, and exports an auditor-friendly monitor queue. Automated
+fetching is advisory only: a changed page, blocked page, or possible availability
+change must still be confirmed by a person before `providers.json` is changed.
+The weekly GitHub Actions audit also exports the monitor queue as an artifact.
 
 Place an exported decision file at `data/provider-review-decisions.json`, then
 apply it through the controlled script:

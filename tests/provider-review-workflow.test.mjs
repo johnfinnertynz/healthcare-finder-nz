@@ -4,6 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { applyReviewDecisions } from "../tools/apply-provider-review-decisions.mjs";
+import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
 
 function tempDir() {
@@ -362,4 +363,105 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /availabilityStatus/);
   assert.match(js, /referralType/);
   assert.match(js, /choice-grid/);
+  assert.match(html, /Ongoing monitor queue/);
+  assert.match(js, /provider-monitor-queue\.json/);
+  assert.match(html, /Same practice \/ related records/);
+  assert.match(html, /New clinician from this practice/);
+  assert.match(js, /relatedPracticeRecords/);
+  assert.match(js, /practiceTemplateFor/);
+  assert.match(js, /providers\.json/);
+  assert.match(js, /tags: \[\]/);
+  assert.match(js, /Draft copied from shared practice details only/);
+});
+
+test("provider monitor queue turns automated recheck changes into review items", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const watchlistPath = path.join(dir, "watchlist.json");
+  const availabilityAuditPath = path.join(dir, "availability-audit.json");
+  const recheckPath = path.join(dir, "recheck.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "live-provider",
+      name: "Live Provider",
+      availabilityStatus: "unknown",
+      availabilityCheckedAt: "2026-05-01",
+      website: "https://example.org/live"
+    })
+  ]);
+  writeJson(watchlistPath, {
+    version: 1,
+    items: [
+      {
+        id: "watch-provider",
+        name: "Watch Provider",
+        type: "psychologist",
+        region: "Otago",
+        city: "Dunedin",
+        url: "https://example.org/watch",
+        lastKnownStatus: "unavailable",
+        providerCandidate: {
+          name: "Watch Provider",
+          type: "psychologist",
+          region: "Otago",
+          city: "Dunedin",
+          website: "https://example.org/watch"
+        }
+      }
+    ]
+  });
+  writeJson(availabilityAuditPath, {
+    findings: [
+      {
+        providerId: "live-provider",
+        providerName: "Live Provider",
+        rule: "stale-availability",
+        severity: "medium",
+        issue: "Availability is stale.",
+        suggestedAction: "Recheck availability.",
+        source: "https://example.org/live"
+      }
+    ]
+  });
+  writeJson(recheckPath, {
+    checkedAt: "2026-05-26T00:00:00.000Z",
+    results: [
+      {
+        id: "watch-provider",
+        name: "Watch Provider",
+        sourceKind: "watchlist",
+        url: "https://example.org/watch",
+        currentStatus: "not_accepting",
+        detectedStatus: "possibly_available",
+        changed: true,
+        evidence: "new client enquiries welcome",
+        checkedAt: "2026-05-26T00:00:00.000Z"
+      },
+      {
+        id: "live-provider",
+        name: "Live Provider",
+        sourceKind: "live-provider",
+        url: "https://example.org/live",
+        currentStatus: "unknown",
+        detectedStatus: "not_accepting",
+        changed: true,
+        evidence: "not accepting new clients",
+        checkedAt: "2026-05-26T00:00:00.000Z"
+      }
+    ]
+  });
+
+  const queue = buildProviderMonitorQueue({
+    providers: providersPath,
+    watchlist: watchlistPath,
+    availabilityAudit: availabilityAuditPath,
+    recheckResults: recheckPath,
+    now: new Date("2026-05-26T00:00:00.000Z")
+  });
+
+  assert.equal(queue.mode, "ongoing-provider-monitor");
+  assert.ok(queue.items.some((item) => item.auditRules.includes("watchlist-possibly-available")));
+  assert.equal(queue.items[0].reviewPriority, "critical");
+  assert.ok(queue.items.every((item) => item.reviewId.startsWith("monitor:")));
+  assert.ok(queue.items.every((item) => Array.isArray(item.sourceUrls)));
 });

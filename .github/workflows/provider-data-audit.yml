@@ -54,6 +54,10 @@ jobs:
         if: github.event_name != 'pull_request'
         run: node tools/recheck-provider-availability.mjs
 
+      - name: Export ongoing provider monitor queue
+        if: github.event_name != 'pull_request'
+        run: node tools/export-provider-monitor-queue.mjs
+
       - name: Check provider links
         if: github.event_name != 'pull_request'
         run: node tools/check-links.mjs
@@ -71,6 +75,16 @@ jobs:
         with:
           name: provider-availability-recheck
           path: data/provider-availability-recheck-results.json
+
+      - name: Upload provider monitor queue
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-monitor-queue
+          path: |
+            data/provider-monitor-queue.json
+            data/provider-monitor-queue.csv
+            PROVIDER_MONITOR_QUEUE.md
 
       - name: Upload provider availability audit
         if: always()

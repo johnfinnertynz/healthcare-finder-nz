@@ -1,4 +1,13 @@
-const QUEUE_URL = "../data/provider-review-queue.json";
+const QUEUE_SOURCES = {
+  review: {
+    url: "../data/provider-review-queue.json",
+    help: "Manual review queue: first-pass data corrections before public recommendations change."
+  },
+  monitor: {
+    url: "../data/provider-monitor-queue.json",
+    help: "Ongoing monitor queue: automated fetch and audit findings that need human confirmation before changing public data."
+  }
+};
 const DECISION_STORAGE_KEY = "healthcare-finder-provider-review-decisions-v1";
 
 const TYPE_OPTIONS = [
@@ -127,6 +136,7 @@ const DECISION_HELP = {
 const state = {
   queue: null,
   items: [],
+  providers: [],
   filtered: [],
   selectedId: "",
   decisions: loadDecisions()
@@ -134,6 +144,9 @@ const state = {
 
 const els = {
   queueSummary: document.querySelector("#queueSummary"),
+  queueModeHelp: document.querySelector("#queueModeHelp"),
+  queueSource: document.querySelector("#queueSource"),
+  queueJsonLink: document.querySelector("#queueJsonLink"),
   progressText: document.querySelector("#progressText"),
   progressPercent: document.querySelector("#progressPercent"),
   reviewProgress: document.querySelector("#reviewProgress"),
@@ -152,6 +165,11 @@ const els = {
   referralFields: document.querySelector("#referralFields"),
   locationFields: document.querySelector("#locationFields"),
   tagsFields: document.querySelector("#tagsFields"),
+  practiceSignals: document.querySelector("#practiceSignals"),
+  relatedRecords: document.querySelector("#relatedRecords"),
+  practiceTemplateJson: document.querySelector("#practiceTemplateJson"),
+  copyPracticeTemplate: document.querySelector("#copyPracticeTemplate"),
+  practiceTemplateStatus: document.querySelector("#practiceTemplateStatus"),
   sourceLinks: document.querySelector("#sourceLinks"),
   sourcePreview: document.querySelector("#sourcePreview"),
   sourceEvidenceJson: document.querySelector("#sourceEvidenceJson"),
@@ -235,6 +253,11 @@ function providerValue(item, field) {
   return provider[field] ?? item[field];
 }
 
+function recordValue(record, field) {
+  const provider = record.currentProvider || record.provider || record;
+  return provider[field] ?? record[field];
+}
+
 function editableValue(value) {
   if (Array.isArray(value)) return value.join(", ");
   if (value === undefined || value === null) return "";
@@ -246,6 +269,35 @@ function normalizeForCompare(value) {
   if (typeof value === "boolean") return value ? "true" : "false";
   if (value === undefined || value === null) return "";
   return String(value).trim();
+}
+
+function normalizeComparable(value) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function compactPhone(value) {
+  return String(value || "").replace(/\D/g, "");
+}
+
+function sourceHost(value) {
+  try {
+    return new URL(value || "").hostname.replace(/^www\./, "").toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+function emailHost(value) {
+  return String(value || "").split("@")[1]?.toLowerCase() || "";
+}
+
+function isProviderOwnedHost(host) {
+  return host && !/(healthpoint|nzccp|psychologytoday|yourhealthinmind|ranzcp|mcnz|psychologistsboard|linkedin|google|bing)\./i.test(host);
 }
 
 function optionList(select, values, currentLabel = "") {
@@ -326,6 +378,10 @@ function filterItems() {
       && (!filters.decision || itemDecision(item) === filters.decision);
   });
   renderQueue();
+}
+
+function currentQueueSource() {
+  return QUEUE_SOURCES[els.queueSource?.value] || QUEUE_SOURCES.review;
 }
 
 function renderQueue() {
@@ -475,6 +531,221 @@ function renderSafetyWarnings(item) {
   els.safetyWarnings.append(list);
 }
 
+function displayNameForRecord(record) {
+  const clinician = recordValue(record, "clinicianName");
+  const practice = recordValue(record, "practiceName");
+  const name = recordValue(record, "name");
+  return clinician ? `${clinician}${practice ? `, ${practice}` : ""}` : name || recordValue(record, "providerId") || recordValue(record, "id");
+}
+
+function practiceSignalsFor(record) {
+  const practiceName = recordValue(record, "practiceName") || (recordValue(record, "clinicianName") ? "" : recordValue(record, "name"));
+  const domains = unique([
+    recordValue(record, "website"),
+    recordValue(record, "source"),
+    recordValue(record, "bookingUrl")
+  ].map(sourceHost)).filter(isProviderOwnedHost);
+  const emailDomain = emailHost(recordValue(record, "email"));
+  const phone = compactPhone(recordValue(record, "phone"));
+  const address = normalizeComparable(recordValue(record, "address"));
+  return {
+    practiceName,
+    practiceKey: normalizeComparable(practiceName),
+    domains,
+    emailDomain,
+    phone,
+    address,
+    city: normalizeComparable(recordValue(record, "city")),
+    region: normalizeComparable(recordValue(record, "region"))
+  };
+}
+
+function recordIdentity(record) {
+  return record.reviewId || record.providerId || record.id || "";
+}
+
+function allAuditorRecords() {
+  const queueByProviderId = new Map(state.items.map((item) => [item.providerId, item]));
+  const liveProviderIds = new Set(state.providers.map((provider) => provider.id));
+  const liveRecords = state.providers.map((provider) => ({
+    ...provider,
+    recordKind: "live provider",
+    queueItem: queueByProviderId.get(provider.id) || null
+  }));
+  const suggestionRecords = state.items
+    .filter((item) => !item.currentProvider && !liveProviderIds.has(item.providerId))
+    .map((item) => ({
+      ...item,
+      recordKind: item.reviewId?.startsWith("discovery:") ? "discovery suggestion" : "queue item",
+      queueItem: item
+    }));
+  return [...liveRecords, ...suggestionRecords];
+}
+
+function relatedMatchReasons(current, candidate) {
+  if (recordIdentity(current) && recordIdentity(current) === recordIdentity(candidate)) return [];
+  if (recordValue(current, "id") && recordValue(current, "id") === recordValue(candidate, "id")) return [];
+
+  const a = practiceSignalsFor(current);
+  const b = practiceSignalsFor(candidate);
+  const reasons = [];
+  if (a.practiceKey && b.practiceKey && a.practiceKey === b.practiceKey) reasons.push("same practice name");
+  if (a.domains.some((host) => b.domains.includes(host))) reasons.push("same provider-owned website");
+  if (a.phone && b.phone && a.phone === b.phone) reasons.push("same phone");
+  if (a.address && b.address && a.address === b.address) reasons.push("same address");
+  if (a.emailDomain && b.emailDomain && a.emailDomain === b.emailDomain && isProviderOwnedHost(a.emailDomain)) reasons.push("same email domain");
+
+  const strongEnough = reasons.includes("same practice name")
+    || reasons.includes("same provider-owned website")
+    || reasons.includes("same phone")
+    || reasons.includes("same address")
+    || reasons.length >= 2;
+  return strongEnough ? reasons : [];
+}
+
+function relatedPracticeRecords(item) {
+  return allAuditorRecords()
+    .map((record) => ({ record, reasons: relatedMatchReasons(item, record) }))
+    .filter((entry) => entry.reasons.length)
+    .sort((a, b) =>
+      b.reasons.length - a.reasons.length
+      || displayNameForRecord(a.record).localeCompare(displayNameForRecord(b.record))
+    )
+    .slice(0, 16);
+}
+
+function practiceTemplateFor(item) {
+  const practiceName = providerValue(item, "practiceName") || (providerValue(item, "clinicianName") ? providerValue(item, "name") : "");
+  const currentType = providerValue(item, "type") || "";
+  const clinicianTypes = new Set(["counsellor", "gp", "psychologist", "psychiatrist"]);
+  const type = clinicianTypes.has(currentType) ? currentType : "";
+  const todayValue = today();
+  const sourceName = providerValue(item, "name") || practiceName || "selected record";
+  const draftNotes = [
+    "Draft copied from shared practice details only.",
+    "Confirm clinician name, clinician-specific contact source, scope, availability, referral pathway, and support-preference tags before importing."
+  ];
+  if (!type) {
+    draftNotes.push(`The selected record is ${currentType || "not typed"} (${sourceName}), so do not treat it as an individual clinician without a separate public clinician/practice source.`);
+  }
+  return {
+    id: `TODO-${type || "clinician"}-new-clinician-${normalizeComparable(practiceName || providerValue(item, "name")).replace(/\s+/g, "-")}`,
+    name: `TODO clinician name${practiceName ? `, ${practiceName}` : ""}`,
+    clinicianName: "",
+    practiceName,
+    type,
+    region: providerValue(item, "region") || "",
+    city: providerValue(item, "city") || "",
+    address: providerValue(item, "address") || "",
+    lat: providerValue(item, "lat") ?? "",
+    lon: providerValue(item, "lon") ?? "",
+    phone: providerValue(item, "phone") || "",
+    text: providerValue(item, "text") || "",
+    email: providerValue(item, "email") || "",
+    website: providerValue(item, "website") || "",
+    bookingUrl: providerValue(item, "bookingUrl") || "",
+    source: providerValue(item, "source") || providerValue(item, "website") || "",
+    sourceQuality: providerValue(item, "sourceQuality") || "provider-owned page",
+    confidence: "low",
+    needsManualVerification: true,
+    verified: "",
+    lastVerified: "",
+    availabilityStatus: "not_published",
+    availabilityCheckedAt: todayValue,
+    availabilityEvidence: "",
+    availabilitySource: "",
+    availabilityNeedsManualReview: true,
+    requiresReferral: type === "psychiatrist" ? true : "",
+    referralType: type === "psychiatrist" ? "unknown" : "",
+    referralSourceUrl: "",
+    referralSourceExcerpt: "",
+    referralConfidence: type === "psychiatrist" ? "low" : "",
+    referralLastChecked: "",
+    referralNeedsManualReview: type === "psychiatrist" ? true : "",
+    tags: [],
+    needScope: [],
+    specialties: [],
+    services: [],
+    patientGroups: [],
+    ageGroups: [],
+    onlineAvailable: providerValue(item, "onlineAvailable") === true,
+    phoneSupport: providerValue(item, "phoneSupport") === true,
+    inPerson: providerValue(item, "inPerson") !== false,
+    crisisOnly: false,
+    fit: "",
+    firstStep: "",
+    cost: providerValue(item, "cost") || "",
+    hours: "",
+    sourceEvidence: {
+      identity: [],
+      contact: [],
+      address: [],
+      availability: [],
+      referral: [],
+      scope: [],
+      tags: {},
+      telehealth: [],
+      cultural: [],
+      cost: []
+    },
+    reviewNotes: draftNotes.join(" ")
+  };
+}
+
+function renderPracticeGroup(item) {
+  els.practiceSignals.replaceChildren();
+  els.relatedRecords.replaceChildren();
+  const signals = practiceSignalsFor(item);
+  const chips = [
+    signals.practiceName ? `Practice: ${signals.practiceName}` : "",
+    signals.domains.length ? `Domain: ${signals.domains.join(", ")}` : "",
+    signals.phone ? `Phone: ${providerValue(item, "phone")}` : "",
+    signals.address ? `Address: ${providerValue(item, "address")}` : ""
+  ].filter(Boolean);
+  if (!chips.length) chips.push("No strong shared-practice signal on this record yet.");
+  for (const chipText of chips) {
+    const chip = document.createElement("span");
+    chip.className = "practice-chip";
+    chip.textContent = chipText;
+    els.practiceSignals.append(chip);
+  }
+
+  const related = relatedPracticeRecords(item);
+  if (!related.length) {
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = "No related live providers or queue items found from practice name, website, phone, email domain, or address.";
+    els.relatedRecords.append(p);
+  } else {
+    for (const { record, reasons } of related) {
+      const card = document.createElement("article");
+      card.className = "related-record";
+      const queueItem = record.queueItem || state.items.find((entry) => entry.providerId && entry.providerId === recordValue(record, "id"));
+      const queueButton = queueItem
+        ? `<button type="button" data-open-related="${escapeHtml(queueItem.reviewId)}">Open queue item</button>`
+        : "";
+      card.innerHTML = `
+        <header>
+          <div>
+            <h4>${escapeHtml(displayNameForRecord(record))}</h4>
+            <p class="queue-meta">${escapeHtml([recordValue(record, "type"), recordValue(record, "region"), recordValue(record, "city"), record.recordKind].filter(Boolean).join(" | "))}</p>
+          </div>
+          <div class="related-actions">${queueButton}</div>
+        </header>
+        <p class="match-reasons">Matched by: ${escapeHtml(reasons.join(", "))}</p>
+        <p class="queue-meta">${escapeHtml(recordValue(record, "id") || recordValue(record, "providerId") || recordIdentity(record))}</p>
+      `;
+      const button = card.querySelector("[data-open-related]");
+      button?.addEventListener("click", () => selectItem(button.dataset.openRelated));
+      els.relatedRecords.append(card);
+    }
+  }
+
+  const template = practiceTemplateFor(item);
+  els.practiceTemplateJson.textContent = `${JSON.stringify(template, null, 2)}\n`;
+  els.practiceTemplateStatus.textContent = "";
+}
+
 function selectItem(reviewId) {
   state.selectedId = reviewId;
   const item = state.items.find((entry) => entry.reviewId === reviewId);
@@ -500,6 +771,7 @@ function selectItem(reviewId) {
   renderChecklist(item);
   els.publicPreview.textContent = item.publicCardPreviewText || "No public preview available.";
   renderFindings(item);
+  renderPracticeGroup(item);
   renderSources(item);
   renderSafetyWarnings(item);
   renderDecision(item);
@@ -920,6 +1192,17 @@ els.clearDecision.addEventListener("click", () => {
   filterItems();
 });
 
+els.copyPracticeTemplate?.addEventListener("click", async () => {
+  const textValue = els.practiceTemplateJson.textContent || "";
+  if (!textValue.trim()) return;
+  try {
+    await navigator.clipboard.writeText(textValue);
+    els.practiceTemplateStatus.textContent = "Template copied. Keep it review-gated and add source evidence before importing.";
+  } catch {
+    els.practiceTemplateStatus.textContent = "Could not access clipboard. Select the template JSON and copy it manually.";
+  }
+});
+
 els.exportDecisions.addEventListener("click", () => {
   const decisions = Object.values(state.decisions);
   const payload = {
@@ -945,15 +1228,36 @@ for (const control of Object.values(els.filters)) {
 
 async function init() {
   try {
-    const response = await fetch(QUEUE_URL, { cache: "no-store" });
+    const source = currentQueueSource();
+    els.queueModeHelp.textContent = source.help;
+    els.queueJsonLink.href = source.url;
+    els.queueSummary.textContent = "Loading review queue...";
+    els.queueList.replaceChildren();
+    els.emptyState.classList.remove("hidden");
+    els.detailView.classList.add("hidden");
+    state.selectedId = "";
+    const response = await fetch(source.url, { cache: "no-store" });
     if (!response.ok) throw new Error(`Could not load queue JSON (${response.status})`);
     state.queue = await response.json();
     state.items = Array.isArray(state.queue.items) ? state.queue.items : [];
+    try {
+      const providersResponse = await fetch("../providers.json", { cache: "no-store" });
+      state.providers = providersResponse.ok ? await providersResponse.json() : [];
+    } catch {
+      state.providers = [];
+    }
     setOptions();
     filterItems();
   } catch (error) {
-    els.queueSummary.textContent = error.message;
+    state.queue = null;
+    state.items = [];
+    state.providers = [];
+    state.filtered = [];
+    renderQueue();
+    els.queueSummary.textContent = `${error.message}. Run npm run export:review for the manual queue or npm run export:monitor for the ongoing monitor queue.`;
   }
 }
+
+els.queueSource?.addEventListener("change", init);
 
 init();

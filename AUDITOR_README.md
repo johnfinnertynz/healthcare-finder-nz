@@ -355,6 +355,35 @@ npm test
 
 If any command fails, do not publish the changes until the failure is understood and fixed.
 
+## Ongoing Checks After The First Audit
+
+After a provider has been reviewed, the project can keep checking source pages in the future.
+
+Run:
+
+```sh
+npm run monitor:providers
+```
+
+This does three things:
+
+1. Cautiously fetches provider and watchlist source pages.
+2. Looks for availability wording such as accepting, waitlist, not accepting, or referrals paused.
+3. Builds an ongoing monitor queue for human review.
+
+Open the admin console and use the **Queue** selector to choose **Ongoing monitor queue**.
+
+Treat monitor items as prompts to check, not automatic truth. A blocked page, 404, changed phrase, or possible availability change should be opened in the browser and confirmed before changing public data.
+
+Good monitor decisions:
+
+- Use `adjust` when the source clearly supports a changed field.
+- Use `move_to_watchlist` when a live provider now appears unavailable.
+- Use `needs_more_info` when the automated fetch was blocked or unclear.
+- Use `approve` only when the source still supports the current record.
+
+Never mark a provider as accepting just because the old unavailable wording disappeared. Look for explicit accepting-new-clients or booking evidence, or leave availability as `unknown` / `not_published`.
+
 ## What To Do When You Are Unsure
 
 Choose `needs_more_info`.
@@ -389,4 +418,3 @@ Before a reviewed change should affect public users, it must:
 3. Be applied by `npm run apply:review`.
 4. Be recorded in `data/provider-review-log.jsonl`.
 5. Pass validation, audits, and tests.
-

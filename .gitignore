@@ -4,3 +4,4 @@ data/imports/*
 data/registers/*
 !data/registers/README.md
 data/reports/*
+outputs/

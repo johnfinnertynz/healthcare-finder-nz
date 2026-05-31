@@ -123,6 +123,17 @@ progress {
   flex-wrap: wrap;
 }
 
+.queue-source {
+  display: grid;
+  gap: 4px;
+  min-width: 210px;
+  margin: 0;
+}
+
+.queue-source select {
+  min-height: 40px;
+}
+
 .app-shell {
   display: grid;
   grid-template-columns: minmax(320px, 410px) 1fr;
@@ -413,6 +424,78 @@ textarea {
 .data-list dd {
   margin: 0;
   overflow-wrap: anywhere;
+}
+
+.practice-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 8px 0 12px;
+}
+
+.practice-chip {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 9px;
+}
+
+.related-records {
+  display: grid;
+  gap: 10px;
+}
+
+.related-record {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+}
+
+.related-record header {
+  align-items: start;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.related-record h4 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.related-record .related-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.related-record .related-actions button {
+  min-height: 32px;
+  padding: 0 10px;
+}
+
+.match-reasons {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.practice-template {
+  border-top: 1px solid var(--border);
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
+.practice-template summary {
+  cursor: pointer;
+  font-weight: 800;
 }
 
 .source-links {

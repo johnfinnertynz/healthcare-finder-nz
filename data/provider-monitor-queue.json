@@ -1,0 +1,461 @@
+{
+  "version": 1,
+  "mode": "ongoing-provider-monitor",
+  "generatedAt": "2026-05-26T00:11:13.873Z",
+  "providersPath": "providers.json",
+  "watchlistPath": "data/monitors/provider-availability-watchlist.json",
+  "sourceReports": {
+    "availabilityAudit": "data/provider-availability-audit.json",
+    "recheckResults": "data/provider-availability-recheck-results.json"
+  },
+  "cadenceDays": {
+    "availability": {
+      "accepting": 90,
+      "waitlist": 30,
+      "not_accepting": 14,
+      "referrals_paused": 14,
+      "unknown": 90,
+      "not_published": 90
+    },
+    "verification": 180
+  },
+  "summary": {
+    "total": 3,
+    "critical": 0,
+    "high": 0,
+    "medium": 3,
+    "low": 0
+  },
+  "items": [
+    {
+      "reviewId": "monitor:fetch-blocked-or-failed:hawkes-bay-janneke-van-rooijen-psychology",
+      "providerId": "hawkes-bay-janneke-van-rooijen-psychology",
+      "name": "Janneke van Rooijen Psychology",
+      "clinicianName": "",
+      "practiceName": "",
+      "type": "psychologist",
+      "region": "Hawke's Bay",
+      "city": "Napier",
+      "address": "49 Tennyson Street, The Daily Telegraph Building, Napier",
+      "lat": "",
+      "lon": "",
+      "phone": "",
+      "text": "",
+      "email": "jvrpsychology@gmail.com",
+      "website": "https://www.jvrpsychology.com/",
+      "bookingUrl": "",
+      "source": "https://www.jvrpsychology.com/",
+      "sourceQuality": "",
+      "confidence": "low",
+      "needsManualVerification": true,
+      "verified": "",
+      "lastVerified": "",
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-25T02:58:53.843Z",
+      "availabilityEvidence": "404",
+      "availabilitySource": "https://www.jvrpsychology.com/",
+      "availabilityNeedsManualReview": true,
+      "requiresReferral": "",
+      "referralType": "",
+      "referralSourceUrl": "",
+      "referralSourceExcerpt": "",
+      "referralConfidence": "",
+      "referralLastChecked": "",
+      "referralNeedsManualReview": "",
+      "tags": [
+        "psychologist",
+        "assessment",
+        "child",
+        "adolescent",
+        "youth",
+        "parenting",
+        "learning",
+        "depression",
+        "anxiety",
+        "adhd",
+        "cost",
+        "fit",
+        "direct-contact"
+      ],
+      "needScope": [],
+      "specialties": [],
+      "services": [],
+      "patientGroups": [],
+      "ageGroups": [],
+      "onlineAvailable": "",
+      "phoneSupport": "",
+      "inPerson": "",
+      "crisisOnly": "",
+      "auditSeverity": "medium",
+      "auditRules": [
+        "fetch-blocked-or-failed"
+      ],
+      "auditFindings": [
+        {
+          "source": "ongoing-monitor",
+          "severity": "medium",
+          "rule": "fetch-blocked-or-failed",
+          "issue": "Automated fetch could not verify the provider source.",
+          "suggestedFix": "Manual browser/call/email review needed; do not infer availability from a blocked or failed request.",
+          "sourceUrl": "https://www.jvrpsychology.com/",
+          "raw": {
+            "sourceKind": "watchlist",
+            "currentStatus": "not_accepting",
+            "detectedStatus": "check_failed",
+            "evidence": "404",
+            "matchedPattern": "",
+            "checkedAt": "2026-05-25T02:58:53.843Z"
+          }
+        }
+      ],
+      "suggestedFixes": [
+        "Manual browser/call/email review needed; do not infer availability from a blocked or failed request."
+      ],
+      "reviewPriority": "medium",
+      "reviewReasons": [
+        "Automated fetch could not verify the provider source.",
+        "Use a browser, phone, or email check. Do not infer availability from a blocked or failed automated fetch."
+      ],
+      "sourceUrls": [
+        "https://www.jvrpsychology.com/"
+      ],
+      "sourceEvidenceSummary": "404",
+      "sourceEvidence": {
+        "contact": [],
+        "address": [],
+        "availability": [
+          {
+            "field": "availabilityStatus",
+            "value": "check_failed",
+            "sourceUrl": "https://www.jvrpsychology.com/",
+            "excerpt": "404",
+            "capturedAt": "2026-05-25T02:58:53.843Z",
+            "confidence": "medium",
+            "needsManualReview": true
+          }
+        ],
+        "referral": [],
+        "scope": [],
+        "tags": {},
+        "telehealth": [],
+        "cultural": [],
+        "cost": []
+      },
+      "publicCardPreviewText": "Janneke van Rooijen Psychology Hawke's Bay / Napier Monitor task: fetch-blocked-or-failed. Current status: not_accepting. Automated check saw: check_failed. Evidence: 404. Use a browser, phone, or email check. Do not infer availability from a blocked or failed automated fetch.",
+      "reviewDecision": "",
+      "correctedFields": {},
+      "reviewer": "",
+      "reviewedDate": "",
+      "reviewNotes": "",
+      "currentProvider": {
+        "name": "Janneke van Rooijen Psychology",
+        "type": "psychologist",
+        "region": "Hawke's Bay",
+        "city": "Napier",
+        "address": "49 Tennyson Street, The Daily Telegraph Building, Napier",
+        "email": "jvrpsychology@gmail.com",
+        "website": "https://www.jvrpsychology.com/",
+        "source": "https://www.jvrpsychology.com/",
+        "tags": [
+          "psychologist",
+          "assessment",
+          "child",
+          "adolescent",
+          "youth",
+          "parenting",
+          "learning",
+          "depression",
+          "anxiety",
+          "adhd",
+          "cost",
+          "fit",
+          "direct-contact"
+        ],
+        "id": "hawkes-bay-janneke-van-rooijen-psychology"
+      }
+    },
+    {
+      "reviewId": "monitor:fetch-blocked-or-failed:marlborough-durkin-zintl-psychology",
+      "providerId": "marlborough-durkin-zintl-psychology",
+      "name": "Durkin Zintl Psychology",
+      "clinicianName": "",
+      "practiceName": "",
+      "type": "psychologist",
+      "region": "Nelson Marlborough Tasman",
+      "city": "Blenheim and telehealth",
+      "address": "",
+      "lat": "",
+      "lon": "",
+      "phone": "",
+      "text": "",
+      "email": "",
+      "website": "https://www.durkinzintlpsychology.co.nz/",
+      "bookingUrl": "",
+      "source": "https://www.durkinzintlpsychology.co.nz/",
+      "sourceQuality": "",
+      "confidence": "low",
+      "needsManualVerification": true,
+      "verified": "",
+      "lastVerified": "",
+      "availabilityStatus": "referrals_paused",
+      "availabilityCheckedAt": "2026-05-25T02:58:53.843Z",
+      "availabilityEvidence": "TypeError",
+      "availabilitySource": "https://www.durkinzintlpsychology.co.nz/",
+      "availabilityNeedsManualReview": true,
+      "requiresReferral": "",
+      "referralType": "",
+      "referralSourceUrl": "",
+      "referralSourceExcerpt": "",
+      "referralConfidence": "",
+      "referralLastChecked": "",
+      "referralNeedsManualReview": "",
+      "tags": [
+        "psychologist",
+        "assessment",
+        "therapy",
+        "child",
+        "adolescent",
+        "family",
+        "trauma",
+        "acc",
+        "sensitive-claims",
+        "telehealth",
+        "fit",
+        "direct-contact"
+      ],
+      "needScope": [],
+      "specialties": [],
+      "services": [],
+      "patientGroups": [],
+      "ageGroups": [],
+      "onlineAvailable": "",
+      "phoneSupport": "",
+      "inPerson": "",
+      "crisisOnly": "",
+      "auditSeverity": "medium",
+      "auditRules": [
+        "fetch-blocked-or-failed"
+      ],
+      "auditFindings": [
+        {
+          "source": "ongoing-monitor",
+          "severity": "medium",
+          "rule": "fetch-blocked-or-failed",
+          "issue": "Automated fetch could not verify the provider source.",
+          "suggestedFix": "Manual browser/call/email review needed; do not infer availability from a blocked or failed request.",
+          "sourceUrl": "https://www.durkinzintlpsychology.co.nz/",
+          "raw": {
+            "sourceKind": "watchlist",
+            "currentStatus": "referrals_paused",
+            "detectedStatus": "check_failed",
+            "evidence": "TypeError",
+            "matchedPattern": "",
+            "checkedAt": "2026-05-25T02:58:53.843Z"
+          }
+        }
+      ],
+      "suggestedFixes": [
+        "Manual browser/call/email review needed; do not infer availability from a blocked or failed request."
+      ],
+      "reviewPriority": "medium",
+      "reviewReasons": [
+        "Automated fetch could not verify the provider source.",
+        "Use a browser, phone, or email check. Do not infer availability from a blocked or failed automated fetch."
+      ],
+      "sourceUrls": [
+        "https://www.durkinzintlpsychology.co.nz/"
+      ],
+      "sourceEvidenceSummary": "TypeError",
+      "sourceEvidence": {
+        "contact": [],
+        "address": [],
+        "availability": [
+          {
+            "field": "availabilityStatus",
+            "value": "check_failed",
+            "sourceUrl": "https://www.durkinzintlpsychology.co.nz/",
+            "excerpt": "TypeError",
+            "capturedAt": "2026-05-25T02:58:53.843Z",
+            "confidence": "medium",
+            "needsManualReview": true
+          }
+        ],
+        "referral": [],
+        "scope": [],
+        "tags": {},
+        "telehealth": [],
+        "cultural": [],
+        "cost": []
+      },
+      "publicCardPreviewText": "Durkin Zintl Psychology Nelson Marlborough Tasman / Blenheim and telehealth Monitor task: fetch-blocked-or-failed. Current status: referrals_paused. Automated check saw: check_failed. Evidence: TypeError. Use a browser, phone, or email check. Do not infer availability from a blocked or failed automated fetch.",
+      "reviewDecision": "",
+      "correctedFields": {},
+      "reviewer": "",
+      "reviewedDate": "",
+      "reviewNotes": "",
+      "currentProvider": {
+        "name": "Durkin Zintl Psychology",
+        "type": "psychologist",
+        "region": "Nelson Marlborough Tasman",
+        "city": "Blenheim and telehealth",
+        "website": "https://www.durkinzintlpsychology.co.nz/",
+        "source": "https://www.durkinzintlpsychology.co.nz/",
+        "tags": [
+          "psychologist",
+          "assessment",
+          "therapy",
+          "child",
+          "adolescent",
+          "family",
+          "trauma",
+          "acc",
+          "sensitive-claims",
+          "telehealth",
+          "fit",
+          "direct-contact"
+        ],
+        "id": "marlborough-durkin-zintl-psychology"
+      }
+    },
+    {
+      "reviewId": "monitor:fetch-blocked-or-failed:taranaki-tosca-counselling",
+      "providerId": "taranaki-tosca-counselling",
+      "name": "Tosca Lammerts van Bueren Counselling",
+      "clinicianName": "",
+      "practiceName": "",
+      "type": "counsellor",
+      "region": "Taranaki",
+      "city": "New Plymouth",
+      "address": "Unit 1/55 Rimu Street, Strandon, New Plymouth",
+      "lat": "",
+      "lon": "",
+      "phone": "+64 20 4020 6817",
+      "text": "",
+      "email": "connexionwithcompassion@gmail.com",
+      "website": "https://www.counsellingnewplymouth.nz/",
+      "bookingUrl": "",
+      "source": "https://www.counsellingnewplymouth.nz/",
+      "sourceQuality": "",
+      "confidence": "low",
+      "needsManualVerification": true,
+      "verified": "",
+      "lastVerified": "",
+      "availabilityStatus": "not_accepting",
+      "availabilityCheckedAt": "2026-05-25T02:58:53.843Z",
+      "availabilityEvidence": "404",
+      "availabilitySource": "https://www.counsellingnewplymouth.nz/",
+      "availabilityNeedsManualReview": true,
+      "requiresReferral": "",
+      "referralType": "",
+      "referralSourceUrl": "",
+      "referralSourceExcerpt": "",
+      "referralConfidence": "",
+      "referralLastChecked": "",
+      "referralNeedsManualReview": "",
+      "tags": [
+        "counsellor",
+        "therapy",
+        "family",
+        "whanau",
+        "trauma",
+        "depression",
+        "anxiety",
+        "fit",
+        "direct-contact"
+      ],
+      "needScope": [],
+      "specialties": [],
+      "services": [],
+      "patientGroups": [],
+      "ageGroups": [],
+      "onlineAvailable": "",
+      "phoneSupport": "",
+      "inPerson": "",
+      "crisisOnly": "",
+      "auditSeverity": "medium",
+      "auditRules": [
+        "fetch-blocked-or-failed"
+      ],
+      "auditFindings": [
+        {
+          "source": "ongoing-monitor",
+          "severity": "medium",
+          "rule": "fetch-blocked-or-failed",
+          "issue": "Automated fetch could not verify the provider source.",
+          "suggestedFix": "Manual browser/call/email review needed; do not infer availability from a blocked or failed request.",
+          "sourceUrl": "https://www.counsellingnewplymouth.nz/",
+          "raw": {
+            "sourceKind": "watchlist",
+            "currentStatus": "not_accepting",
+            "detectedStatus": "check_failed",
+            "evidence": "404",
+            "matchedPattern": "",
+            "checkedAt": "2026-05-25T02:58:53.843Z"
+          }
+        }
+      ],
+      "suggestedFixes": [
+        "Manual browser/call/email review needed; do not infer availability from a blocked or failed request."
+      ],
+      "reviewPriority": "medium",
+      "reviewReasons": [
+        "Automated fetch could not verify the provider source.",
+        "Use a browser, phone, or email check. Do not infer availability from a blocked or failed automated fetch."
+      ],
+      "sourceUrls": [
+        "https://www.counsellingnewplymouth.nz/"
+      ],
+      "sourceEvidenceSummary": "404",
+      "sourceEvidence": {
+        "contact": [],
+        "address": [],
+        "availability": [
+          {
+            "field": "availabilityStatus",
+            "value": "check_failed",
+            "sourceUrl": "https://www.counsellingnewplymouth.nz/",
+            "excerpt": "404",
+            "capturedAt": "2026-05-25T02:58:53.843Z",
+            "confidence": "medium",
+            "needsManualReview": true
+          }
+        ],
+        "referral": [],
+        "scope": [],
+        "tags": {},
+        "telehealth": [],
+        "cultural": [],
+        "cost": []
+      },
+      "publicCardPreviewText": "Tosca Lammerts van Bueren Counselling Taranaki / New Plymouth Monitor task: fetch-blocked-or-failed. Current status: not_accepting. Automated check saw: check_failed. Evidence: 404. Use a browser, phone, or email check. Do not infer availability from a blocked or failed automated fetch.",
+      "reviewDecision": "",
+      "correctedFields": {},
+      "reviewer": "",
+      "reviewedDate": "",
+      "reviewNotes": "",
+      "currentProvider": {
+        "name": "Tosca Lammerts van Bueren Counselling",
+        "type": "counsellor",
+        "region": "Taranaki",
+        "city": "New Plymouth",
+        "address": "Unit 1/55 Rimu Street, Strandon, New Plymouth",
+        "phone": "+64 20 4020 6817",
+        "email": "connexionwithcompassion@gmail.com",
+        "website": "https://www.counsellingnewplymouth.nz/",
+        "source": "https://www.counsellingnewplymouth.nz/",
+        "tags": [
+          "counsellor",
+          "therapy",
+          "family",
+          "whanau",
+          "trauma",
+          "depression",
+          "anxiety",
+          "fit",
+          "direct-contact"
+        ],
+        "id": "taranaki-tosca-counselling"
+      }
+    }
+  ]
+}

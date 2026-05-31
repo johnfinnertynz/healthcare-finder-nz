@@ -15,8 +15,15 @@
         <h1>Provider Auditor Console</h1>
       </div>
       <div class="header-actions">
+        <label class="queue-source">
+          Queue
+          <select id="queueSource">
+            <option value="review">Manual review queue</option>
+            <option value="monitor">Ongoing monitor queue</option>
+          </select>
+        </label>
         <button id="exportDecisions" type="button">Export decisions JSON</button>
-        <a class="secondary-link" href="../data/provider-review-queue.json" target="_blank" rel="noopener noreferrer">Open queue JSON</a>
+        <a id="queueJsonLink" class="secondary-link" href="../data/provider-review-queue.json" target="_blank" rel="noopener noreferrer">Open queue JSON</a>
         <a class="secondary-link" href="../AUDITOR_README.md" target="_blank" rel="noopener noreferrer">Auditor guide</a>
       </div>
     </header>
@@ -26,6 +33,7 @@
         <section class="panel-block">
           <h2>Queue</h2>
           <p id="queueSummary" class="muted">Loading review queue...</p>
+          <p id="queueModeHelp" class="muted">Manual review queue: first-pass data corrections before public recommendations change.</p>
           <div class="review-progress" aria-label="Review progress">
             <div class="progress-row">
               <span id="progressText">No decisions saved yet.</span>
@@ -114,6 +122,7 @@
             <a href="#users-see">What users would see</a>
             <a href="#flagged">Why flagged</a>
             <a href="#ranking">Ranking fields</a>
+            <a href="#practice-group">Same practice</a>
             <a href="#evidence">Source evidence</a>
             <a href="#decision">Decision</a>
           </nav>
@@ -163,6 +172,20 @@
               <h3>Tags and scope</h3>
               <dl id="tagsFields" class="data-list"></dl>
             </div>
+          </section>
+
+          <section id="practice-group" class="card-section">
+            <h3>Same practice / related records</h3>
+            <p class="muted">Use this when a clinic has multiple clinicians. Keep each clinician as a separate provider record, but share the practice contact and location fields when the source supports them.</p>
+            <div id="practiceSignals" class="practice-signals"></div>
+            <div id="relatedRecords" class="related-records" aria-live="polite"></div>
+            <details class="practice-template">
+              <summary>New clinician from this practice</summary>
+              <p class="muted">This is a draft template only. Fill clinician-specific fields and source evidence before adding it through the reviewed data workflow.</p>
+              <button id="copyPracticeTemplate" type="button" class="secondary">Copy template JSON</button>
+              <p id="practiceTemplateStatus" class="muted" role="status"></p>
+              <pre id="practiceTemplateJson"></pre>
+            </details>
           </section>
 
           <section id="evidence" class="card-section">

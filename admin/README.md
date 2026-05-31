@@ -31,6 +31,26 @@ For the step-by-step human review process, start with `../AUDITOR_README.md`.
    npm test
    ```
 
+## Ongoing Monitor Queue
+
+After the first audit, run future automated checks with:
+
+```bash
+npm run monitor:providers
+```
+
+This fetches provider/watchlist source pages cautiously, reruns availability
+checks, and writes:
+
+- `data/provider-monitor-queue.json`
+- `data/provider-monitor-queue.csv`
+- `PROVIDER_MONITOR_QUEUE.md`
+
+Use the **Queue** selector in the admin console to switch from the manual review
+queue to the ongoing monitor queue. Monitor items are still human review tasks:
+do not change live provider data until a reviewer confirms the evidence and
+exports/applies a decision.
+
 ## Discovery Suggestions
 
 Provider discovery outputs also feed this review workflow:
@@ -51,6 +71,23 @@ then export a decision for the controlled apply script.
 Search-result snippets and public LinkedIn signals are discovery/corroboration
 only. Do not approve specialties, availability, cultural tags, telehealth, or
 psychiatry self-referral from those sources alone.
+
+## Multi-Clinician Practices
+
+When one business has several clinicians, keep each clinician as a separate
+provider record and reuse shared practice details only when the source supports
+them. The **Same practice / related records** section compares practice name,
+provider-owned website, phone, email domain, and address against live providers
+and queue items.
+
+Use **New clinician from this practice** to copy a draft JSON template for
+another clinician at the same business. It is not a live write path. Fill in the
+clinician name, clinician-specific scope, source evidence, availability, and
+referral details before importing through the reviewed data workflow. The
+template deliberately does not copy specialties, condition tags, or cultural
+support tags from another clinician. If the selected record is a directory,
+helpline, or service rather than an individual clinician, treat the template as
+a prompt for manual research only.
 
 ## Decisions
 
