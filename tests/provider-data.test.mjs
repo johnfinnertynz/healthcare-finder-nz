@@ -276,7 +276,17 @@ test("source-fit audit keeps psychiatrist baseline separate from unsupported sou
     advertisedSpecialties: ["Depression"],
     advertisedSpecialtyEvidence: [{ sourceUrl: base.source, excerpt: "Manual claim", confidence: "low" }]
   }]).findings;
-  assert.equal(unsupportedAdvertised.some((finding) => finding.rule === "advertised-specialty-without-source-support"), true);
+  assert.equal(unsupportedAdvertised.some((finding) => finding.rule === "advertised-specialty-without-source-support" && finding.severity === "high"), true);
+
+  const unsupportedAdvertisedWithBroadTag = auditProviders([{
+    ...base,
+    id: "unsupported-advertised-broad-tag",
+    tags: ["psychiatrist", "depression"],
+    advertisedSpecialties: ["Depression"],
+    advertisedSpecialtyEvidence: [{ sourceUrl: base.source, excerpt: "Manual claim", confidence: "low" }]
+  }]).findings;
+  assert.equal(unsupportedAdvertisedWithBroadTag.some((finding) => finding.rule === "advertised-specialty-without-source-support" && finding.severity === "high"), true);
+  assert.equal(unsupportedAdvertisedWithBroadTag.some((finding) => finding.rule === "broad-tag-without-source-support"), true);
 
   const unsupportedPsychologistTag = auditProviders([{
     ...base,
@@ -909,14 +919,28 @@ test("privacy, disclaimer, correction, and crisis links are visible from the hom
   assert.match(indexHtml, /Provider database last updated/i);
 });
 
-test("public pages include the Shielded Site widget assets", () => {
+test("public pages include a local Shielded Site link without third-party page script", () => {
   const shieldedScript = fs.readFileSync("assets/shielded-site.js", "utf8");
-  assert.match(shieldedScript, /https:\/\/staticcdn\.co\.nz\/embed\/embed\.js/, "Shielded Site initializer should load the official embed script");
-  assert.match(shieldedScript, /https:\/\/shielded\.co\.nz\/img\/custom-logo\.png/, "Shielded Site initializer should use the official button logo");
+  assert.doesNotMatch(shieldedScript, /staticcdn\.co\.nz|createElement\("script"\)|append\(script\)/, "Shielded Site helper must not execute a third-party script on the intake page");
+  assert.match(shieldedScript, /https:\/\/shielded\.co\.nz\//, "Shielded Site helper should open the external support site only when clicked");
+  assert.match(shieldedScript, /noopener noreferrer/, "External Shielded Site link should not expose the opener");
 
   for (const pagePath of publicHtmlPages) {
     const html = fs.readFileSync(pagePath, "utf8");
     assert.match(html, /href="assets\/shielded-site\.css"/, `${pagePath} should load Shielded Site styles`);
     assert.match(html, /src="assets\/shielded-site\.js"/, `${pagePath} should initialise the Shielded Site button`);
   }
+});
+
+test("provider data audit workflow keeps API secrets out of pull-request jobs", () => {
+  const workflow = fs.readFileSync(".github/workflows/provider-data-audit.yml", "utf8");
+  const refreshStep = workflow.match(/- name: Refresh approved provider data[\s\S]*?run: node tools\/refresh-provider-database\.mjs/)?.[0] || "";
+  const beforeRefresh = workflow.slice(0, workflow.indexOf("- name: Refresh approved provider data"));
+
+  assert.doesNotMatch(beforeRefresh, /HEALTHPOINT_API_(?:URL|TOKEN)/, "PR-run validation/test steps must not inherit Healthpoint secrets");
+  assert.match(refreshStep, /if: github\.event_name != 'pull_request'/);
+  assert.match(refreshStep, /HEALTHPOINT_API_URL: \$\{\{ secrets\.HEALTHPOINT_API_URL \}\}/);
+  assert.match(refreshStep, /HEALTHPOINT_API_TOKEN: \$\{\{ secrets\.HEALTHPOINT_API_TOKEN \}\}/);
+  assert.match(workflow, /permissions:\s*\n\s+contents: read/);
+  assert.doesNotMatch(workflow, /Upload provider source-fit audit[\s\S]{0,120}if: always\(\)/, "PR artifacts should not upload untrusted generated files unconditionally");
 });

@@ -280,6 +280,54 @@ test("adjust applies only allowed corrected fields and rejects unsafe fields", (
   assert.match(result.errors[0].error, /Unsafe correctedFields/);
 });
 
+test("adjust cannot add unsupported advertised specialties without evidence", () => {
+  const provider = baseProvider({
+    id: "advertised-specialty-safety",
+    type: "psychiatrist",
+    tags: ["psychiatrist"],
+    advertisedSpecialties: [],
+    advertisedSpecialtyEvidence: []
+  });
+  const rejected = applyReviewDecisions({
+    providers: [provider],
+    decisions: {
+      decisions: [
+        {
+          providerId: "advertised-specialty-safety",
+          action: "adjust",
+          correctedFields: { advertisedSpecialties: ["Depression"] },
+          sourceExcerpt: "Profile says private psychiatrist.",
+          reviewer: "tester",
+          reviewedDate: "2026-05-26"
+        }
+      ]
+    }
+  });
+  const accepted = applyReviewDecisions({
+    providers: [provider],
+    decisions: {
+      decisions: [
+        {
+          providerId: "advertised-specialty-safety",
+          action: "adjust",
+          correctedFields: {
+            advertisedSpecialties: ["Depression"],
+            advertisedSpecialtyEvidence: [{ sourceUrl: provider.source, excerpt: "Profile lists Depression as a special interest." }]
+          },
+          sourceExcerpt: "Profile lists Depression as a special interest.",
+          reviewer: "tester",
+          reviewedDate: "2026-05-26"
+        }
+      ]
+    }
+  });
+
+  assert.equal(rejected.applied.length, 0);
+  assert.match(rejected.errors[0].error, /advertised specialties/i);
+  assert.equal(accepted.applied.length, 1);
+  assert.deepEqual(accepted.providers[0].advertisedSpecialties, ["Depression"]);
+});
+
 test("reject removes provider safely and writes log event", () => {
   const provider = baseProvider({ id: "reject-me" });
   const result = applyReviewDecisions({

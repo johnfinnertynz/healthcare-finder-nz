@@ -6,12 +6,12 @@ on:
   schedule:
     - cron: "0 20 * * 0"
 
+permissions:
+  contents: read
+
 jobs:
   audit:
     runs-on: ubuntu-latest
-    env:
-      HEALTHPOINT_API_URL: ${{ secrets.HEALTHPOINT_API_URL }}
-      HEALTHPOINT_API_TOKEN: ${{ secrets.HEALTHPOINT_API_TOKEN }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -41,6 +41,9 @@ jobs:
 
       - name: Refresh approved provider data
         if: github.event_name != 'pull_request'
+        env:
+          HEALTHPOINT_API_URL: ${{ secrets.HEALTHPOINT_API_URL }}
+          HEALTHPOINT_API_TOKEN: ${{ secrets.HEALTHPOINT_API_TOKEN }}
         run: node tools/refresh-provider-database.mjs
 
       - name: Discover unavailable provider candidates
@@ -63,21 +66,21 @@ jobs:
         run: node tools/check-links.mjs
 
       - name: Upload refresh report
-        if: always()
+        if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: provider-refresh-report
           path: data/reports/provider-refresh-report.json
 
       - name: Upload availability monitor report
-        if: always()
+        if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: provider-availability-recheck
           path: data/provider-availability-recheck-results.json
 
       - name: Upload provider monitor queue
-        if: always()
+        if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: provider-monitor-queue
@@ -87,7 +90,7 @@ jobs:
             PROVIDER_MONITOR_QUEUE.md
 
       - name: Upload provider availability audit
-        if: always()
+        if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: provider-availability-audit
@@ -96,14 +99,14 @@ jobs:
             AVAILABILITY_RECHECK_REPORT.md
 
       - name: Upload unavailable candidate report
-        if: always()
+        if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: provider-unavailable-candidates
           path: data/reports/provider-unavailable-candidates.json
 
       - name: Upload provider source-fit audit
-        if: always()
+        if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: provider-source-fit-audit
@@ -112,7 +115,7 @@ jobs:
             PROVIDER_SOURCE_FIT_AUDIT.md
 
       - name: Upload psychiatrist referral audit
-        if: always()
+        if: github.event_name != 'pull_request' && always()
         uses: actions/upload-artifact@v4
         with:
           name: psychiatrist-referral-audit

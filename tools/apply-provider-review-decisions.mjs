@@ -188,6 +188,17 @@ function changedArrayValues(before = [], after = []) {
   return (Array.isArray(after) ? after : []).filter((value) => !beforeSet.has(value));
 }
 
+function specialtySupportedByText(specialty, text) {
+  const value = String(specialty || "").replace(/\s+/g, " ").trim().toLowerCase();
+  const source = String(text || "").toLowerCase();
+  if (!value) return true;
+  if (source.includes(value)) return true;
+  const words = value
+    .split(/[^a-z0-9]+/i)
+    .filter((word) => word.length >= 4 && !["disorder", "disorders", "support", "therapy", "assessment"].includes(word));
+  return words.length > 0 && words.some((word) => source.includes(word));
+}
+
 function validateSafety(provider, nextProvider, decision) {
   const approvals = explicitApprovals(decision);
   const action = decision.action || decision.reviewDecision;
@@ -237,6 +248,12 @@ function validateSafety(provider, nextProvider, decision) {
   const addedBroadTags = addedTags.filter((tag) => BROAD_TAGS.has(tag));
   if (addedBroadTags.length && !approvals.has("broad-tags") && !addedBroadTags.every((tag) => approvals.has(`tag:${tag}`)) && !evidenceText) {
     throw new Error(`${providerLabel(provider)} cannot add broad need tags without source evidence or explicit reviewer approval.`);
+  }
+
+  const addedAdvertisedSpecialties = changedArrayValues(provider.advertisedSpecialties, nextProvider.advertisedSpecialties);
+  const unsupportedAdvertisedSpecialties = addedAdvertisedSpecialties.filter((specialty) => !specialtySupportedByText(specialty, evidenceText));
+  if (unsupportedAdvertisedSpecialties.length && !approvals.has("advertised-specialties")) {
+    throw new Error(`${providerLabel(provider)} cannot add advertised specialties without source evidence that names the specialty or explicit advertised-specialties approval.`);
   }
 
   if ((provider.type === "directory" || provider.tags?.includes("directory")) && nextProvider.type !== "directory" && !hasDirectPracticeContact(nextProvider)) {

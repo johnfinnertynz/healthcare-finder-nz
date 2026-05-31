@@ -529,7 +529,6 @@ function profileText(provider) {
     provider.firstStep,
     provider.appointmentWait,
     ...(provider.specialties || []),
-    ...(provider.advertisedSpecialties || []),
     ...(provider.services || []),
     ...(provider.ageGroups || []),
     ...(provider.patientGroups || []),
@@ -538,9 +537,42 @@ function profileText(provider) {
   ].join(" ").toLowerCase();
 }
 
+function specialtySupportedByText(specialty, text) {
+  const value = String(specialty || "").replace(/\s+/g, " ").trim().toLowerCase();
+  if (!value) return false;
+  if (text.includes(value)) return true;
+  const words = value
+    .split(/[^a-z0-9]+/i)
+    .filter((word) => word.length >= 4 && !["disorder", "disorders", "support", "therapy", "assessment"].includes(word));
+  return words.length > 0 && words.some((word) => text.includes(word));
+}
+
+function advertisedSpecialtyEvidenceText(provider) {
+  return (provider.advertisedSpecialtyEvidence || [])
+    .map((item) => {
+      if (typeof item === "string") return item;
+      return [
+        item?.value,
+        item?.excerpt,
+        item?.field,
+        item?.sourceUrl
+      ].filter(Boolean).join(" ");
+    })
+    .join(" ")
+    .toLowerCase();
+}
+
+function sourceBackedAdvertisedSpecialties(provider) {
+  const listed = Array.isArray(provider.advertisedSpecialties) ? provider.advertisedSpecialties : [];
+  if (!listed.length) return [];
+  const evidence = advertisedSpecialtyEvidenceText(provider);
+  if (!evidence) return [];
+  return listed.filter((specialty) => specialtySupportedByText(specialty, evidence));
+}
+
 function advertisedSpecialtyText(provider) {
-  const listed = Array.isArray(provider.advertisedSpecialties)
-    ? provider.advertisedSpecialties
+  const listed = Array.isArray(provider.advertisedSpecialties) && provider.advertisedSpecialties.length
+    ? sourceBackedAdvertisedSpecialties(provider)
     : Array.isArray(provider.specialties)
       ? provider.specialties
       : [];
@@ -637,7 +669,9 @@ function providerNeedScopeLabel(provider) {
 
 function providerSpecialties(provider) {
   if (Array.isArray(provider.advertisedSpecialties) && provider.advertisedSpecialties.length) {
-    return provider.advertisedSpecialties.slice(0, 6).join(", ");
+    const sourceBacked = sourceBackedAdvertisedSpecialties(provider);
+    if (sourceBacked.length) return sourceBacked.slice(0, 6).join(", ");
+    if (provider.type === "psychiatrist") return "";
   }
 
   if (Array.isArray(provider.specialties) && provider.specialties.length) {
