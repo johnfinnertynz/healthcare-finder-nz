@@ -60,6 +60,7 @@ export function sourceTypeFromUrl(url = "") {
   if (/nzccp\.co\.nz$/i.test(host) || /psychologytoday\.com$/i.test(host) || /talkingworks\.co\.nz$/i.test(host)) return "professional_directory";
   if (/linkedin\.com$/i.test(host)) return "linkedIn_public";
   if (/google\.com$|bing\.com$/i.test(host)) return "search_result";
+  if (/doctorpricer\.co\.nz$/i.test(host)) return "third_party_directory";
   if (/mentalhealth\.org\.nz$|health\.nz$|healthnz\.govt\.nz$/i.test(host)) return "ngo_directory";
   return "provider_owned";
 }
@@ -239,4 +240,57 @@ export function sourceTypeLabel(type) {
     third_party_directory: "third-party directory",
     unknown: "unknown source"
   }[type] || type || "unknown source";
+}
+
+export const fieldRisk = {
+  name: "low",
+  clinicianName: "low",
+  practiceName: "low",
+  website: "low",
+  phone: "low",
+  text: "medium",
+  email: "medium",
+  bookingUrl: "medium",
+  address: "low",
+  city: "low",
+  region: "low",
+  lat: "low",
+  lon: "low",
+  coordinateSource: "low",
+  coordinateConfidence: "low",
+  type: "high",
+  availabilityStatus: "high",
+  availabilityEvidence: "high",
+  referralType: "high",
+  requiresReferral: "high",
+  tags: "high",
+  needScope: "high",
+  specialties: "high",
+  advertisedSpecialties: "high",
+  patientGroups: "high",
+  ageGroups: "high",
+  onlineAvailable: "high",
+  phoneSupport: "medium",
+  inPerson: "medium",
+  crisisOnly: "high",
+  cost: "high",
+  fit: "medium",
+  firstStep: "medium"
+};
+
+export function riskLevelForField(field) {
+  return fieldRisk[field] || "medium";
+}
+
+export function sourceOwnerTypeFromQuality(sourceQuality = "", sourceUrl = "") {
+  const text = String(sourceQuality || "").toLowerCase();
+  const sourceType = sourceTypeFromUrl(sourceUrl);
+  if (/provider[- ]owned/.test(text)) return "provider_owned";
+  if (/clinic[- ]owned|practice[- ]owned/.test(text)) return "clinic_owned";
+  if (/healthpoint/.test(text)) return "healthpoint";
+  if (/official|government|health nz|health agency/.test(text)) return "official";
+  if (/professional register|professional directory|directory/.test(text)) return "professional_directory";
+  if (/third-party|third party/.test(text)) return "third_party_directory";
+  if (sourceType === "provider_owned") return "provider_owned";
+  return sourceType || "unknown";
 }

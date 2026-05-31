@@ -435,6 +435,33 @@ where practical:
 npm run export:review
 ```
 
+For field-level claim review and queue compression, run:
+
+```sh
+npm run evidence:graph
+npm run evidence:score
+npm run evidence:conflicts
+npm run export:claims
+```
+
+This writes:
+
+- `data/provider-evidence-graph.json`
+- `data/provider-claims.json`
+- `data/provider-claim-scores.json`
+- `data/provider-conflicts.json`
+- `data/provider-claim-review-queue.json`
+- `data/provider-claim-review-queue.csv`
+- `PROVIDER_EVIDENCE_GRAPH.md`
+- `PROVIDER_CLAIM_REVIEW_QUEUE.md`
+- `PROVIDER_CONFLICTS.md`
+
+The claim tools are advisory only. They split provider rows into small claims
+such as public phone, website, address, availability, referral pathway, support
+tags, and telehealth. Low-risk public contact/identity/location claims can be
+marked `auto_accept` in the graph, but the tooling does not mutate
+`providers.json`. High-risk claims stay review-gated.
+
 This writes:
 
 - `data/provider-review-queue.json`
@@ -448,9 +475,9 @@ it is a focused queue and does not include every low-risk GP record. Use
 `node tools/export-provider-review-queue.mjs --include-all` for a full dump.
 
 Open the local prototype at `admin/index.html` after serving the repo locally.
-The admin console can load either the manual review queue or the ongoing monitor
-queue. It lets a reviewer inspect evidence and exports review decisions. It does
-not write to production data.
+The admin console can load the manual review queue, the claim review queue, or
+the ongoing monitor queue. It lets a reviewer inspect evidence and exports
+review decisions. It does not write to production data.
 
 For future checks after the initial audit, run:
 

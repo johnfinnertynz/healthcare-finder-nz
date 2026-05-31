@@ -409,6 +409,53 @@ Each evidence item supports:
 Do not fake excerpts. If an importer cannot capture a source excerpt for a
 claim, mark the relevant evidence item as `needsManualReview: true`.
 
+## Claim-Level Evidence Graph
+
+Provider rows are now also exported as field-level claims:
+
+```sh
+npm run evidence:graph
+npm run evidence:score
+npm run export:claims
+```
+
+Each claim should carry:
+
+- `claimId`
+- `providerId`
+- `field`
+- `value`
+- `sourceUrl`
+- `sourceType`
+- `sourceOwnerType`
+- `excerpt` when an actual short excerpt is available
+- `sourceLastChecked`
+- `confidence`
+- `riskLevel`
+- `decision`
+- `reason`
+- `requiredHumanAction`
+
+The graph is advisory. It does not change `providers.json`.
+
+`auto_accept` is limited to low-risk public identity, contact, or location
+claims from strong sources with no attached audit conflict. It must not be used
+for availability, referral pathways, provider type, clinical scope, support
+preference tags, telehealth, cost, age eligibility, crisis suitability, or
+directory/direct-provider status.
+
+The focused claim review queue compresses repeated issues into batches such as:
+
+- GP source corroboration
+- sensitive tag or scope evidence
+- availability review
+- referral pathway review
+- location and distance evidence
+- directory/direct-contact confusion
+
+Use `npm run export:claims -- --include-all` only for deep audits. The default
+claim queue stays focused so reviewers are not flooded with every stored field.
+
 Never guess:
 
 - accepting-new-client status

@@ -4,6 +4,9 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { applyReviewDecisions } from "../tools/apply-provider-review-decisions.mjs";
+import { buildProviderEvidenceGraph } from "../tools/build-provider-evidence-graph.mjs";
+import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
+import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
 import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
 
@@ -364,6 +367,9 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /referralType/);
   assert.match(js, /choice-grid/);
   assert.match(html, /Ongoing monitor queue/);
+  assert.match(html, /Claim review queue/);
+  assert.match(js, /provider-claim-review-queue\.json/);
+  assert.match(js, /Claim field/);
   assert.match(js, /provider-monitor-queue\.json/);
   assert.match(html, /Same practice \/ related records/);
   assert.match(html, /New clinician from this practice/);
@@ -372,6 +378,120 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /providers\.json/);
   assert.match(js, /tags: \[\]/);
   assert.match(js, /Draft copied from shared practice details only/);
+});
+
+test("provider evidence graph splits rows into scored claims and review-gates high-risk fields", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const availabilityPath = path.join(dir, "availability.json");
+  const referralPath = path.join(dir, "referral.json");
+  const reviewQueuePath = path.join(dir, "review-queue.json");
+  const provider = baseProvider({
+    id: "claim-source",
+    name: "Claim Source",
+    sourceQuality: "provider-owned page",
+    confidence: "high",
+    needsManualVerification: false,
+    tags: ["psychologist", "depression"],
+    availabilityStatus: "accepting",
+    availabilityEvidence: "",
+    availabilityNeedsManualReview: true
+  });
+  writeJson(providersPath, [provider]);
+  writeJson(sourceFitPath, {
+    findings: [{
+      providerId: "claim-source",
+      rule: "broad-tag-without-source-support",
+      severity: "medium",
+      issue: "Broad tag needs source evidence.",
+      suggestedFix: "Remove tag or add evidence.",
+      source: "https://example.org/source"
+    }]
+  });
+  writeJson(availabilityPath, { findings: [] });
+  writeJson(referralPath, { findings: [] });
+  writeJson(reviewQueuePath, { items: [] });
+  const graph = buildProviderEvidenceGraph({
+    providers: providersPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: availabilityPath,
+    referralAudit: referralPath,
+    reviewQueue: reviewQueuePath
+  });
+  const node = graph.nodes[0];
+  const nameClaim = node.claims.find((claim) => claim.field === "name");
+  const tagClaim = node.claims.find((claim) => claim.field === "tags" && claim.value === "depression");
+  const acceptingClaim = node.claims.find((claim) => claim.field === "availabilityStatus");
+  assert.equal(nameClaim.decision, "auto_accept");
+  assert.equal(tagClaim.decision, "review");
+  assert.equal(tagClaim.riskLevel, "high");
+  assert.equal(acceptingClaim.decision, "review");
+  assert.match(acceptingClaim.reason, /accepting availability/i);
+});
+
+test("claim review queue compresses repeated field-level work into batch groups", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const providers = [
+    baseProvider({ id: "batch-one", name: "Batch One", tags: ["psychologist", "depression"] }),
+    baseProvider({ id: "batch-two", name: "Batch Two", tags: ["psychologist", "depression"] })
+  ];
+  writeJson(providersPath, providers);
+  writeJson(sourceFitPath, {
+    findings: providers.map((provider) => ({
+      providerId: provider.id,
+      rule: "broad-tag-without-source-support",
+      severity: "medium",
+      issue: "Broad depression tag needs source support.",
+      suggestedFix: "Remove or evidence tag.",
+      source: provider.source
+    }))
+  });
+  writeJson(emptyPath, { findings: [] });
+  const graph = buildProviderEvidenceGraph({
+    providers: providersPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath
+  });
+  const graphPath = path.join(dir, "graph.json");
+  writeJson(graphPath, graph);
+  const queue = buildProviderClaimReviewQueue({ graph: graphPath, providers: providersPath });
+  assert.ok(queue.items.some((item) => item.claimField === "tags" && item.claimValue === "depression"));
+  assert.ok(queue.batches.some((batch) => batch.claimField === "tags" && batch.count >= 2));
+  assert.ok(queue.summary.batches < queue.items.length, "batch count should compress repeated claim items");
+});
+
+test("provider conflict detector flags likely shared practices without auto-merging clinicians", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "clinician-one",
+      name: "Alex One, Shared Clinic",
+      clinicianName: "Alex One",
+      practiceName: "Shared Clinic",
+      website: "https://sharedclinic.nz",
+      email: "admin@sharedclinic.nz"
+    }),
+    baseProvider({
+      id: "clinician-two",
+      name: "Blair Two, Shared Clinic",
+      clinicianName: "Blair Two",
+      practiceName: "Shared Clinic",
+      website: "https://sharedclinic.nz",
+      email: "admin@sharedclinic.nz"
+    })
+  ]);
+  const report = detectProviderConflicts({ providers: providersPath, graph: path.join(dir, "missing-graph.json") });
+  const shared = report.conflicts.find((conflict) => conflict.kind === "shared-domain" && conflict.key === "sharedclinic.nz");
+  assert.ok(shared);
+  assert.equal(shared.likelySharedPractice, true);
+  assert.equal(shared.likelyDuplicate, false);
 });
 
 test("provider monitor queue turns automated recheck changes into review items", () => {

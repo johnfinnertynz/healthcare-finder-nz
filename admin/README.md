@@ -51,6 +51,37 @@ queue to the ongoing monitor queue. Monitor items are still human review tasks:
 do not change live provider data until a reviewer confirms the evidence and
 exports/applies a decision.
 
+## Claim Review Queue
+
+Run the claim-level evidence exports when the provider review queue feels too
+large or repetitive:
+
+```bash
+npm run evidence:graph
+npm run evidence:score
+npm run evidence:conflicts
+npm run export:claims
+```
+
+Then choose **Claim review queue** from the queue selector.
+
+Claim items focus on one field at a time, such as `tags`, `availabilityStatus`,
+`referralType`, `phone`, `address`, or `onlineAvailable`. The detail panel shows
+the claim field, value, risk, score, batch key, source type, source owner, and
+required human action.
+
+Use claim batches to plan work:
+
+- unsupported broad or sensitive tags: remove the tag or add source excerpts
+- weak GP source: corroborate practice details against stronger sources
+- availability: keep accepting only with explicit current wording
+- referral: keep psychiatry GP-first unless self-referral is explicit
+- location: add coordinates only from public professional addresses
+
+The claim queue is advisory. It does not apply batch decisions to
+`providers.json`; exported decisions still need the controlled apply script and
+the normal validation suite.
+
 ## Discovery Suggestions
 
 Provider discovery outputs also feed this review workflow:

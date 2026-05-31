@@ -37,6 +37,16 @@ From the project folder, generate the review queue:
 npm run export:review
 ```
 
+When you want to review repeated field-level issues in batches, also generate
+the claim queue:
+
+```sh
+npm run evidence:graph
+npm run evidence:score
+npm run evidence:conflicts
+npm run export:claims
+```
+
 Start a local server:
 
 ```sh
@@ -49,7 +59,20 @@ Open:
 http://127.0.0.1:4174/admin/index.html
 ```
 
-If the queue does not load, rerun `npm run export:review` and refresh the page.
+If the queue does not load, rerun `npm run export:review` for the manual queue
+or `npm run export:claims` for the claim queue, then refresh the page.
+
+Use the **Queue** selector to choose:
+
+- **Manual review queue** for provider-level decisions.
+- **Claim review queue** for one-field-at-a-time checks grouped by batch key.
+- **Ongoing monitor queue** for automated availability/recheck findings.
+
+In the claim queue, each item shows a claim field, claim value, risk level,
+score, batch key, source type, and required human action. Use it to work through
+large repeated issues such as unsupported broad tags, weak GP source
+corroboration, availability evidence, referral pathway wording, and coordinate
+gaps.
 
 ## Review One Provider
 

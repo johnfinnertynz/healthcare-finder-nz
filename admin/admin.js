@@ -3,6 +3,10 @@ const QUEUE_SOURCES = {
     url: "../data/provider-review-queue.json",
     help: "Manual review queue: first-pass data corrections before public recommendations change."
   },
+  claims: {
+    url: "../data/provider-claim-review-queue.json",
+    help: "Claim review queue: field-level evidence tasks grouped into batches so repeated source/risk issues can be reviewed faster."
+  },
   monitor: {
     url: "../data/provider-monitor-queue.json",
     help: "Ongoing monitor queue: automated fetch and audit findings that need human confirmation before changing public data."
@@ -477,6 +481,8 @@ function renderChecklist(item) {
   title.textContent = "Required checks for this item";
   const list = document.createElement("ul");
   const checks = unique([
+    item.claimId ? `Resolve claim "${item.claimField}" (${item.claimRiskLevel} risk): ${item.requiredHumanAction || item.claimReason}` : "",
+    item.claimDecision === "auto_accept" ? "This is an advisory low-risk auto-accept claim; still use reviewed decisions before live data changes." : "",
     ...(item.reviewReasons || []),
     ...(item.auditFindings || []).map((finding) => finding.issue || finding.rule),
     item.availabilityNeedsManualReview ? "Confirm availability status and do not mark accepting without explicit evidence." : "",
@@ -500,6 +506,10 @@ function renderChecklist(item) {
 function renderSafetyWarnings(item) {
   els.safetyWarnings.replaceChildren();
   const warnings = unique([
+    item.claimRiskLevel === "high"
+      ? "This claim is high risk. Do not approve or adjust it without source evidence or explicit reviewer notes." : "",
+    item.claimDecision === "watchlist"
+      ? "This claim points to unavailable or paused status. Keep it out of first recommendations unless a current source proves otherwise." : "",
     item.availabilityStatus === "accepting" && !item.availabilityEvidence
       ? "Availability is marked accepting without explicit evidence. Add evidence or change the status." : "",
     item.type === "psychiatrist" && item.referralType === "self" && !item.referralSourceExcerpt
@@ -776,6 +786,14 @@ function selectItem(reviewId) {
   renderSafetyWarnings(item);
   renderDecision(item);
   dl(els.rankingFields, [
+    ...(item.claimId ? [
+      ["Claim field", item.claimField],
+      ["Claim value", item.claimValue],
+      ["Claim decision", item.claimDecision],
+      ["Claim risk", item.claimRiskLevel],
+      ["Claim score", item.claimScore],
+      ["Batch key", item.batchKey]
+    ] : []),
     ["Name", item.name],
     ["Clinician", item.clinicianName],
     ["Practice", item.practiceName],
