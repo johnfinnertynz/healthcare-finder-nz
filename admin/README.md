@@ -88,6 +88,11 @@ The claim queue is advisory. It does not apply batch decisions to
 `providers.json`; exported decisions still need the controlled apply script and
 the normal validation suite.
 
+After a batch has been reviewed, use `npm run draft:claim-batch` to generate a
+draft decision file. The draft helper can mark a batch as `needs_more_info`, or
+remove explicitly reviewed unsupported values from array fields. It does not add
+high-risk claims and it does not write live data.
+
 `npm run export:auto-resolution` writes
 `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` and
 `data/provider-auto-resolution-proposals.json`. Use that report to understand

@@ -443,6 +443,7 @@ npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
 npm run export:auto-resolution
+npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
 ```
 
 This writes:
@@ -475,6 +476,13 @@ from the queue selector as **Auto-resolution proposals**. This is a reviewer
 planning view only: it helps hide/collapse low-risk checks and keep high-risk
 claim batches visible, but provider data still changes only through exported
 review decisions and the controlled apply script.
+
+`draft:claim-batch` is a draft helper for a reviewed batch. It reads the claim
+queue and writes `data/provider-claim-batch-decision-draft.json` plus
+`PROVIDER_CLAIM_BATCH_DECISION_DRAFT.md`. It never edits `providers.json`.
+Adjustment drafts for high-risk batches require `--confirmed-human-review`, a
+reviewer, and source excerpt or notes, and currently only support removing
+values from array fields such as `tags`, `needScope`, and `specialties`.
 
 This writes:
 

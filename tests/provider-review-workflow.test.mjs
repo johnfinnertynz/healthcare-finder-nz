@@ -5,6 +5,7 @@ import path from "node:path";
 import test from "node:test";
 import { applyReviewDecisions } from "../tools/apply-provider-review-decisions.mjs";
 import { buildProviderEvidenceGraph } from "../tools/build-provider-evidence-graph.mjs";
+import { buildClaimBatchDecisionDraft } from "../tools/draft-claim-batch-review-decisions.mjs";
 import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
 import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
@@ -477,6 +478,70 @@ test("claim review queue compresses repeated field-level work into batch groups"
   assert.equal(tagBatch.providers.length, 2);
   assert.equal(tagBatch.duplicateClaimRows, tagBatch.count - tagBatch.providerCount);
   assert.ok(queue.summary.batches < queue.items.length, "batch count should compress repeated claim items");
+});
+
+test("claim batch draft helper creates review-gated adjustment decisions only after human confirmation", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const sourceFitPath = path.join(dir, "source-fit.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const claimQueuePath = path.join(dir, "claim-queue.json");
+  const providers = [
+    baseProvider({ id: "draft-one", name: "Draft One", tags: ["psychologist", "depression", "anxiety"] }),
+    baseProvider({ id: "draft-two", name: "Draft Two", tags: ["psychologist", "depression"] })
+  ];
+  writeJson(providersPath, providers);
+  writeJson(sourceFitPath, {
+    findings: providers.map((provider) => ({
+      providerId: provider.id,
+      rule: "broad-tag-without-source-support",
+      severity: "medium",
+      issue: "Broad depression tag needs source support.",
+      suggestedFix: "Remove or evidence tag.",
+      source: provider.source
+    }))
+  });
+  writeJson(emptyPath, { findings: [] });
+  const graph = buildProviderEvidenceGraph({
+    providers: providersPath,
+    sourceFitAudit: sourceFitPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath
+  });
+  const graphPath = path.join(dir, "graph.json");
+  writeJson(graphPath, graph);
+  const queue = buildProviderClaimReviewQueue({ graph: graphPath, providers: providersPath });
+  writeJson(claimQueuePath, queue);
+  const tagBatch = queue.batches.find((batch) => batch.claimField === "tags" && batch.count >= 2);
+
+  assert.throws(() => buildClaimBatchDecisionDraft({
+    claimQueue: claimQueuePath,
+    providers: providersPath,
+    batchKey: tagBatch.batchKey,
+    decision: "adjust",
+    field: "tags",
+    removeValues: ["depression"],
+    reviewer: "Reviewer"
+  }), /confirmed-human-review|source-excerpt|notes/);
+
+  const draft = buildClaimBatchDecisionDraft({
+    claimQueue: claimQueuePath,
+    providers: providersPath,
+    batchKey: tagBatch.batchKey,
+    decision: "adjust",
+    field: "tags",
+    removeValues: ["depression"],
+    reviewer: "Reviewer",
+    sourceExcerpt: "Human review confirmed this broad tag is not supported by the cited source.",
+    confirmedHumanReview: true
+  });
+
+  assert.equal(draft.safety.noLiveProviderMutation, true);
+  assert.equal(draft.summary.decisionsDrafted, 2);
+  assert.equal(draft.decisions.every((decision) => decision.action === "adjust"), true);
+  assert.equal(draft.decisions.every((decision) => !decision.correctedFields.tags.includes("depression")), true);
+  assert.equal(draft.decisions.every((decision) => decision.correctedFields.tags.includes("psychologist")), true);
 });
 
 test("provider conflict detector flags likely shared practices without auto-merging clinicians", () => {

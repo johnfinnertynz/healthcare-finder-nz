@@ -470,6 +470,14 @@ safe low-risk checks and to plan manual batches. Do not use it to mark
 availability, referral pathway, cultural/safety tags, telehealth, cost,
 specialty, or provider type as approved without reviewed source evidence.
 
+`npm run draft:claim-batch -- --batch-key "<batch key>"` can prepare a
+review-decision draft from one claim batch. This helper is intentionally narrow:
+it does not write live provider data, it defaults to `needs_more_info`, and
+`adjust` drafts require `--confirmed-human-review`, a reviewer, and source
+excerpt or notes. Adjustment drafts only remove values from existing array
+fields; they must not add support tags, telehealth, scope, availability, or
+referral claims.
+
 Never guess:
 
 - accepting-new-client status

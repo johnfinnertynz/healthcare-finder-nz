@@ -13,6 +13,8 @@
 - Added auditor filters for review category and batch key.
 - Added an auditor queue source for auto-resolution proposal groups.
 - Deduplicated claim-batch provider samples so large batches show unique provider counts.
+- Added a claim-batch decision draft helper for review-gated `needs_more_info`
+  and safe array-value removal drafts.
 - Added task, backlog, import strategy, and review queue reduction documents.
 
 Safety notes:

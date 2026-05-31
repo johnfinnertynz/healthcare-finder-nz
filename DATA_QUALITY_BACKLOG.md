@@ -39,13 +39,14 @@ manual review burden.
 - Added an auditor queue option for auto-resolution proposal groups.
 - Deduplicated claim-batch provider samples so batch size separates total claim
   rows from unique affected providers.
+- Added a claim-batch decision draft helper that creates review-decision JSON
+  without mutating live provider data.
 
 ## Next Backlog Items
 
-1. Add a reviewed claim-batch decision format that can generate safe
-   `provider-review-decisions.json` drafts.
-2. Add reviewed claim-batch decision helpers after a human review session proves
-   which grouped actions are safe enough to draft.
+1. Add admin UI affordances for invoking/exporting reviewed claim-batch drafts
+   after manual evidence checks.
+2. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 4. Start manual review with the largest unsupported tag batches.

@@ -87,6 +87,24 @@ those rows as review-planning groups: low-risk rows can be collapsed out of your
 manual workload, while manual-batch rows tell you where human evidence checks
 still matter. They are not live provider records.
 
+After reviewing a batch, you can draft a decision file without changing live
+data:
+
+```sh
+npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
+```
+
+For a reviewed tag/scope cleanup where you are removing an unsupported value:
+
+```sh
+npm run draft:claim-batch -- --batch-key "<batch key>" --decision adjust --field tags --remove-values depression --reviewer "Your name" --source-excerpt "Short evidence note" --confirmed-human-review
+```
+
+The draft helper only writes `data/provider-claim-batch-decision-draft.json` and
+`PROVIDER_CLAIM_BATCH_DECISION_DRAFT.md`. It does not apply the decision. Review
+the draft, then apply it through the normal controlled review script and run the
+validation suite.
+
 ## Review One Provider
 
 For each item:

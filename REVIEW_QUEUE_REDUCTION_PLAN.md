@@ -38,6 +38,9 @@ This cycle added a separate claim review queue:
 - Claim-batch exports now report both total claim rows and unique affected
   provider counts, so repeated tags on one provider do not make a batch look
   larger than the human review workload.
+- Reviewed claim batches can now produce draft decision JSON through
+  `npm run draft:claim-batch`; this is still draft-only and must go through the
+  controlled apply, validation, audit, and test path.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -91,3 +94,5 @@ Auto-accept is allowed only when all are true:
    keep reviewer effort on high-risk batches.
 7. Use the auditor console's **Auto-resolution proposals** queue source to
    review proposal groups without treating them as live provider records.
+8. Use `npm run draft:claim-batch` after a manual evidence check to turn a
+   reviewed batch into a draft decision file.
