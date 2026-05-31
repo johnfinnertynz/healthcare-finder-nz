@@ -276,31 +276,62 @@ function batchesFromItems(items) {
       sourceType: item.sourceType,
       auditRules: item.auditRules,
       count: 0,
-      providers: [],
+      providerMap: new Map(),
       regions: new Set(),
       sampleValues: [],
       suggestedBatchAction: ""
     };
     batch.count += 1;
-    if (batch.providers.length < 12) batch.providers.push({ providerId: item.providerId, name: item.name, region: item.region, city: item.city });
+    const providerKey = item.providerId || item.reviewId;
+    const providerSample = batch.providerMap.get(providerKey) || {
+      providerId: item.providerId,
+      name: item.name,
+      region: item.region,
+      city: item.city,
+      claimCount: 0,
+      claimFields: [],
+      claimValues: [],
+      sourceUrls: []
+    };
+    providerSample.claimCount += 1;
+    providerSample.claimFields = unique([...providerSample.claimFields, item.claimField]);
+    providerSample.claimValues = unique([...providerSample.claimValues, String(item.claimValue ?? "")]).slice(0, 8);
+    providerSample.sourceUrls = unique([...providerSample.sourceUrls, ...asArray(item.sourceUrls)]).slice(0, 4);
+    batch.providerMap.set(providerKey, providerSample);
     batch.regions.add(item.region || "unknown");
     if (batch.sampleValues.length < 8) batch.sampleValues.push(item.claimValue);
     map.set(item.batchKey, batch);
   }
-  return [...map.values()].map((batch) => ({
-    ...batch,
-    regions: [...batch.regions].sort(),
-    sampleValues: unique(batch.sampleValues.map((value) => String(value))),
-    suggestedBatchAction: batch.claimDecision === "auto_accept"
-      ? "Can be auto-resolved as low-risk if validation passes; no live mutation is performed by export."
-      : batch.reviewCategory === "GP source corroboration"
-        ? "Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source."
-        : batch.reviewCategory === "location and distance evidence"
-          ? "Batch geocode/address check; do not show as local if coordinates remain missing."
-          : batch.reviewCategory === "sensitive tag or scope evidence"
-            ? "Open source pages and remove unsupported tags or add short excerpts."
-            : "Review representative items first, then apply safe decisions individually."
-  })).sort((a, b) => b.count - a.count || a.reviewCategory.localeCompare(b.reviewCategory));
+  return [...map.values()].map((batch) => {
+    const providerCount = batch.providerMap.size;
+    const providers = [...batch.providerMap.values()]
+      .sort((a, b) => b.claimCount - a.claimCount || a.name.localeCompare(b.name))
+      .slice(0, 12);
+    return {
+      batchKey: batch.batchKey,
+      reviewCategory: batch.reviewCategory,
+      claimDecision: batch.claimDecision,
+      claimRiskLevel: batch.claimRiskLevel,
+      claimField: batch.claimField,
+      sourceType: batch.sourceType,
+      auditRules: batch.auditRules,
+      count: batch.count,
+      providerCount,
+      duplicateClaimRows: Math.max(0, batch.count - providerCount),
+      providers,
+      regions: [...batch.regions].sort(),
+      sampleValues: unique(batch.sampleValues.map((value) => String(value))),
+      suggestedBatchAction: batch.claimDecision === "auto_accept"
+        ? "Can be auto-resolved as low-risk if validation passes; no live mutation is performed by export."
+        : batch.reviewCategory === "GP source corroboration"
+          ? "Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source."
+          : batch.reviewCategory === "location and distance evidence"
+            ? "Batch geocode/address check; do not show as local if coordinates remain missing."
+            : batch.reviewCategory === "sensitive tag or scope evidence"
+              ? "Open source pages and remove unsupported tags or add short excerpts."
+              : "Review representative items first, then apply safe decisions individually."
+    };
+  }).sort((a, b) => b.count - a.count || a.reviewCategory.localeCompare(b.reviewCategory));
 }
 
 function countBy(items, getter) {
@@ -364,11 +395,11 @@ function writeMarkdown(filePath, queue) {
     "",
     "## Largest Batches",
     "",
-    "| Count | Category | Field | Decision | Source type | Suggested batch action |",
-    "| --- | --- | --- | --- | --- | --- |"
+    "| Claims | Providers | Category | Field | Decision | Source type | Suggested batch action |",
+    "| ---: | ---: | --- | --- | --- | --- | --- |"
   ];
   for (const batch of queue.batches.slice(0, 40)) {
-    lines.push(`| ${batch.count} | ${batch.reviewCategory} | ${batch.claimField} | ${batch.claimDecision} | ${batch.sourceType} | ${batch.suggestedBatchAction.replace(/\|/g, "\\|")} |`);
+    lines.push(`| ${batch.count} | ${batch.providerCount} | ${batch.reviewCategory} | ${batch.claimField} | ${batch.claimDecision} | ${batch.sourceType} | ${batch.suggestedBatchAction.replace(/\|/g, "\\|")} |`);
   }
   lines.push("", "## Top Claim Items", "", "| Priority | Provider | Field | Value | Reason |", "| --- | --- | --- | --- | --- |");
   for (const item of queue.items.slice(0, 80)) {

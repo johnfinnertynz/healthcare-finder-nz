@@ -117,7 +117,8 @@ function manualBatchProposals(claimQueue) {
     sourceType: batch.sourceType,
     sourceOwnerType: "",
     count: batch.count,
-    affectedProviders: batch.count,
+    affectedProviders: batch.providerCount || unique(asArray(batch.providers).map((provider) => provider.providerId)).length || batch.count,
+    duplicateClaimRows: batch.duplicateClaimRows || 0,
     reason: `Claims in this batch still need human judgement: ${batch.reviewCategory}.`,
     safeAutomation: batch.suggestedBatchAction || "Review representative items, then apply individual reviewed decisions.",
     liveMutationAllowed: false,
@@ -178,6 +179,7 @@ function writeCsv(filePath, proposals) {
     "sourceOwnerType",
     "count",
     "affectedProviders",
+    "duplicateClaimRows",
     "reason",
     "safeAutomation",
     "liveMutationAllowed",
@@ -215,9 +217,9 @@ function writeMarkdown(filePath, output) {
   for (const proposal of output.autoDeprioritizeProposals.slice(0, 40)) {
     lines.push(`| ${proposal.count} | ${proposal.field} | ${proposal.sourceType} | ${proposal.sourceOwnerType} | ${proposal.safeAutomation.replace(/\|/g, "\\|")} |`);
   }
-  lines.push("", "## Manual Batch Work", "", "| Count | Category | Field | Risk | Source type | Suggested action |", "| ---: | --- | --- | --- | --- | --- |");
+  lines.push("", "## Manual Batch Work", "", "| Claims | Providers | Category | Field | Risk | Source type | Suggested action |", "| ---: | ---: | --- | --- | --- | --- | --- |");
   for (const proposal of output.manualBatchProposals.slice(0, 40)) {
-    lines.push(`| ${proposal.count} | ${proposal.reviewCategory} | ${proposal.field} | ${proposal.riskLevel} | ${proposal.sourceType} | ${proposal.safeAutomation.replace(/\|/g, "\\|")} |`);
+    lines.push(`| ${proposal.count} | ${proposal.affectedProviders} | ${proposal.reviewCategory} | ${proposal.field} | ${proposal.riskLevel} | ${proposal.sourceType} | ${proposal.safeAutomation.replace(/\|/g, "\\|")} |`);
   }
   lines.push("", "## Automation Blocks", "", "| Rule | Count | Why blocked |", "| --- | ---: | --- |");
   for (const rule of output.blockedAutomationRules) {

@@ -1,6 +1,6 @@
 # Provider Claim Review Queue
 
-Generated: 2026-05-31T08:13:15.341Z
+Generated: 2026-05-31T08:20:44.078Z
 
 This queue is generated from field-level provider claims. It compresses recurring work into batches so reviewers do not have to inspect hundreds of near-identical issues one by one.
 
@@ -13,48 +13,48 @@ This queue is generated from field-level provider claims. It compresses recurrin
 
 ## Largest Batches
 
-| Count | Category | Field | Decision | Source type | Suggested batch action |
-| --- | --- | --- | --- | --- | --- |
-| 654 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 320 | sensitive tag or scope evidence | tags | review | third_party_directory | Open source pages and remove unsupported tags or add short excerpts. |
-| 216 | sensitive tag or scope evidence | tags | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
-| 148 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 143 | sensitive tag or scope evidence | tags | review | official_register | Open source pages and remove unsupported tags or add short excerpts. |
-| 126 | GP source corroboration | phone | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
-| 126 | GP source corroboration | sourceQuality | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
-| 117 | sensitive tag or scope evidence | specialties | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 57 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 56 | sensitive tag or scope evidence | fit | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 52 | sensitive tag or scope evidence | tags | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
-| 36 | sensitive tag or scope evidence | tags | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
-| 24 | availability review | availabilityEvidence | review | official_register | Review representative items first, then apply safe decisions individually. |
-| 24 | availability review | availabilityStatus | review | official_register | Review representative items first, then apply safe decisions individually. |
-| 24 | sensitive tag or scope evidence | tags | review | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
-| 19 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 18 | referral pathway review | requiresReferral | review | healthpoint | Review representative items first, then apply safe decisions individually. |
-| 18 | referral pathway review | referralType | review | healthpoint | Review representative items first, then apply safe decisions individually. |
-| 18 | referral pathway review | referralSourceExcerpt | review | healthpoint | Review representative items first, then apply safe decisions individually. |
-| 17 | referral pathway review | requiresReferral | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 17 | referral pathway review | referralType | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 17 | referral pathway review | referralSourceExcerpt | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 16 | sensitive tag or scope evidence | phoneSupport | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
-| 16 | sensitive tag or scope evidence | onlineAvailable | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
-| 15 | sensitive tag or scope evidence | phoneSupport | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 15 | sensitive tag or scope evidence | onlineAvailable | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 7 | needs quick human check | tags | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 6 | sensitive tag or scope evidence | tags | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
-| 5 | availability review | availabilityEvidence | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 5 | availability review | availabilityStatus | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 5 | directory/direct-contact confusion | tags | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 5 | directory/direct-contact confusion | tags | review | healthpoint | Review representative items first, then apply safe decisions individually. |
-| 4 | sensitive tag or scope evidence | patientGroups | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 4 | sensitive tag or scope evidence | fit | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
-| 3 | location or distance evidence | website | review | professional_directory | Review representative items first, then apply safe decisions individually. |
-| 3 | location or distance evidence | sourceQuality | review | professional_directory | Review representative items first, then apply safe decisions individually. |
-| 3 | sensitive tag or scope evidence | patientGroups | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 3 | sensitive tag or scope evidence | fit | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
-| 2 | referral pathway review | requiresReferral | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
-| 2 | referral pathway review | referralType | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
+| Claims | Providers | Category | Field | Decision | Source type | Suggested batch action |
+| ---: | ---: | --- | --- | --- | --- | --- |
+| 654 | 56 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 320 | 32 | sensitive tag or scope evidence | tags | review | third_party_directory | Open source pages and remove unsupported tags or add short excerpts. |
+| 216 | 18 | sensitive tag or scope evidence | tags | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
+| 148 | 12 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 143 | 16 | sensitive tag or scope evidence | tags | review | official_register | Open source pages and remove unsupported tags or add short excerpts. |
+| 126 | 126 | GP source corroboration | phone | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
+| 126 | 126 | GP source corroboration | sourceQuality | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
+| 117 | 19 | sensitive tag or scope evidence | specialties | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 57 | 5 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 56 | 56 | sensitive tag or scope evidence | fit | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 52 | 4 | sensitive tag or scope evidence | tags | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
+| 36 | 3 | sensitive tag or scope evidence | tags | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
+| 24 | 24 | availability review | availabilityEvidence | review | official_register | Review representative items first, then apply safe decisions individually. |
+| 24 | 24 | availability review | availabilityStatus | review | official_register | Review representative items first, then apply safe decisions individually. |
+| 24 | 2 | sensitive tag or scope evidence | tags | review | ngo_directory | Open source pages and remove unsupported tags or add short excerpts. |
+| 19 | 2 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 18 | 18 | referral pathway review | requiresReferral | review | healthpoint | Review representative items first, then apply safe decisions individually. |
+| 18 | 18 | referral pathway review | referralType | review | healthpoint | Review representative items first, then apply safe decisions individually. |
+| 18 | 18 | referral pathway review | referralSourceExcerpt | review | healthpoint | Review representative items first, then apply safe decisions individually. |
+| 17 | 17 | referral pathway review | requiresReferral | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 17 | 17 | referral pathway review | referralType | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 17 | 17 | referral pathway review | referralSourceExcerpt | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 16 | 16 | sensitive tag or scope evidence | phoneSupport | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
+| 16 | 16 | sensitive tag or scope evidence | onlineAvailable | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
+| 15 | 15 | sensitive tag or scope evidence | phoneSupport | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 15 | 15 | sensitive tag or scope evidence | onlineAvailable | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 7 | 1 | needs quick human check | tags | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 6 | 1 | sensitive tag or scope evidence | tags | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
+| 5 | 5 | availability review | availabilityEvidence | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 5 | 5 | availability review | availabilityStatus | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 5 | 1 | directory/direct-contact confusion | tags | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 5 | 1 | directory/direct-contact confusion | tags | review | healthpoint | Review representative items first, then apply safe decisions individually. |
+| 4 | 1 | sensitive tag or scope evidence | patientGroups | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 4 | 4 | sensitive tag or scope evidence | fit | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
+| 3 | 3 | location or distance evidence | website | review | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 3 | 3 | location or distance evidence | sourceQuality | review | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 3 | 1 | sensitive tag or scope evidence | patientGroups | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
+| 3 | 3 | sensitive tag or scope evidence | fit | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
+| 2 | 2 | referral pathway review | requiresReferral | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
+| 2 | 2 | referral pathway review | referralType | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
 
 ## Top Claim Items
 

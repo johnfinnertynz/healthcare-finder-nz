@@ -12,6 +12,7 @@
 - Added safe auto-resolution proposal exports for low-risk claim noise.
 - Added auditor filters for review category and batch key.
 - Added an auditor queue source for auto-resolution proposal groups.
+- Deduplicated claim-batch provider samples so large batches show unique provider counts.
 - Added task, backlog, import strategy, and review queue reduction documents.
 
 Safety notes:

@@ -72,6 +72,10 @@ Claim items focus on one field at a time, such as `tags`, `availabilityStatus`,
 the claim field, value, risk, score, batch key, source type, source owner, and
 required human action.
 
+Batch summaries separate total claim rows from unique affected providers. A
+single provider may create several tag or scope claims, so use provider count to
+estimate the real review workload.
+
 Use claim batches to plan work:
 
 - unsupported broad or sensitive tags: remove the tag or add source excerpts

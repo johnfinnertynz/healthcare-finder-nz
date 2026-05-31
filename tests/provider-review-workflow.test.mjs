@@ -471,7 +471,11 @@ test("claim review queue compresses repeated field-level work into batch groups"
   writeJson(graphPath, graph);
   const queue = buildProviderClaimReviewQueue({ graph: graphPath, providers: providersPath });
   assert.ok(queue.items.some((item) => item.claimField === "tags" && item.claimValue === "depression"));
-  assert.ok(queue.batches.some((batch) => batch.claimField === "tags" && batch.count >= 2));
+  const tagBatch = queue.batches.find((batch) => batch.claimField === "tags" && batch.count >= 2);
+  assert.ok(tagBatch);
+  assert.equal(tagBatch.providerCount, 2);
+  assert.equal(tagBatch.providers.length, 2);
+  assert.equal(tagBatch.duplicateClaimRows, tagBatch.count - tagBatch.providerCount);
   assert.ok(queue.summary.batches < queue.items.length, "batch count should compress repeated claim items");
 });
 

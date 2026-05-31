@@ -37,6 +37,8 @@ manual review burden.
 - Added auto-resolution proposals that de-prioritize low-risk claim review noise
   without applying provider data changes.
 - Added an auditor queue option for auto-resolution proposal groups.
+- Deduplicated claim-batch provider samples so batch size separates total claim
+  rows from unique affected providers.
 
 ## Next Backlog Items
 

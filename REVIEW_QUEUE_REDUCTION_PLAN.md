@@ -35,6 +35,9 @@ This cycle added a separate claim review queue:
 - The auto-resolution proposal report identifies 1,449 low-risk claims in 31
   groups that can be de-prioritized from manual claim review dashboards without
   mutating live provider data.
+- Claim-batch exports now report both total claim rows and unique affected
+  provider counts, so repeated tags on one provider do not make a batch look
+  larger than the human review workload.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
