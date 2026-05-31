@@ -369,9 +369,13 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /choice-grid/);
   assert.match(html, /Ongoing monitor queue/);
   assert.match(html, /Claim review queue/);
+  assert.match(html, /Auto-resolution proposals/);
   assert.match(html, /Review category/);
   assert.match(html, /Any batch/);
   assert.match(js, /provider-claim-review-queue\.json/);
+  assert.match(js, /provider-auto-resolution-proposals\.json/);
+  assert.match(js, /autoDeprioritizeProposals/);
+  assert.match(js, /queueItemsFromPayload/);
   assert.match(js, /Claim field/);
   assert.match(js, /categoryFilter/);
   assert.match(js, /batchFilter/);

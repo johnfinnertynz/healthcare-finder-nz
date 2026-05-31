@@ -1,15 +1,23 @@
 const QUEUE_SOURCES = {
   review: {
     url: "../data/provider-review-queue.json",
-    help: "Manual review queue: first-pass data corrections before public recommendations change."
+    help: "Manual review queue: first-pass data corrections before public recommendations change.",
+    itemName: "review item(s)"
   },
   claims: {
     url: "../data/provider-claim-review-queue.json",
-    help: "Claim review queue: field-level evidence tasks grouped into batches so repeated source/risk issues can be reviewed faster."
+    help: "Claim review queue: field-level evidence tasks grouped into batches so repeated source/risk issues can be reviewed faster.",
+    itemName: "claim review item(s)"
+  },
+  auto: {
+    url: "../data/provider-auto-resolution-proposals.json",
+    help: "Auto-resolution proposals: advisory-only groups for de-prioritising safe low-risk checks and keeping risky batches review-gated.",
+    itemName: "proposal group(s)"
   },
   monitor: {
     url: "../data/provider-monitor-queue.json",
-    help: "Ongoing monitor queue: automated fetch and audit findings that need human confirmation before changing public data."
+    help: "Ongoing monitor queue: automated fetch and audit findings that need human confirmation before changing public data.",
+    itemName: "monitor item(s)"
   }
 };
 const DECISION_STORAGE_KEY = "healthcare-finder-provider-review-decisions-v1";
@@ -334,6 +342,91 @@ function itemDecision(item) {
   return state.decisions[item.reviewId]?.action || state.decisions[item.reviewId]?.reviewDecision || "";
 }
 
+function priorityFromRisk(riskLevel) {
+  if (riskLevel === "low") return "low";
+  if (riskLevel === "medium") return "medium";
+  return "high";
+}
+
+function proposalTitle(proposal) {
+  if (proposal.action === "auto_deprioritize_low_risk_claims") {
+    return `Low-risk ${proposal.field || "claim"} checks from ${proposal.sourceType || "trusted source"}`;
+  }
+  return `${proposal.reviewCategory || "Manual batch"}${proposal.field ? `: ${proposal.field}` : ""}`;
+}
+
+function proposalToItem(proposal, index, kind) {
+  const samples = asArray(proposal.sampleProviders);
+  const sourceUrls = unique(samples.map((sample) => sample.sourceUrl));
+  const actionLabel = kind === "auto" ? "Advisory auto-deprioritisation" : "Manual batch review";
+  return {
+    ...proposal,
+    reviewId: proposal.proposalId || `${kind}-proposal-${index + 1}`,
+    providerId: "",
+    name: proposalTitle(proposal),
+    type: proposal.sourceType || kind,
+    region: "",
+    city: "",
+    confidence: proposal.riskLevel === "low" ? "high" : "review",
+    sourceQuality: proposal.sourceType || "",
+    reviewPriority: priorityFromRisk(proposal.riskLevel),
+    auditSeverity: proposal.riskLevel || "medium",
+    batchKey: proposal.proposalId || "",
+    auditRules: unique([proposal.action, proposal.reviewCategory, proposal.field]),
+    reviewReasons: unique([
+      proposal.reason,
+      proposal.safeAutomation,
+      `${proposal.count || 0} claim(s) across ${proposal.affectedProviders || 0} provider(s).`,
+      proposal.liveMutationAllowed === false ? "This proposal must not mutate providers.json directly." : ""
+    ]),
+    auditFindings: [{
+      rule: proposal.action || actionLabel,
+      severity: proposal.riskLevel || "medium",
+      issue: proposal.reason || "Review this proposal group.",
+      suggestedFix: proposal.safeAutomation || "Use reviewed decisions before applying provider-data changes."
+    }],
+    publicCardPreviewText: [
+      actionLabel,
+      `Count: ${proposal.count || 0} claim(s), ${proposal.affectedProviders || 0} provider(s).`,
+      `Category: ${proposal.reviewCategory || "not set"}.`,
+      `Field: ${proposal.field || "not field-specific"}.`,
+      `Safe action: ${proposal.safeAutomation || "Review before applying."}`,
+      "Provider data changes still require exported decisions, controlled apply, validation, audits, and tests.",
+      samples.length ? `Sample providers:\n${samples.map((sample) => `- ${sample.providerName || sample.providerId || "Unknown provider"} (${sample.field || proposal.field || "field"})`).join("\n")}` : ""
+    ].filter(Boolean).join("\n"),
+    sourceUrls,
+    sourceEvidence: {
+      proposal: [{
+        field: proposal.field || "batch",
+        value: proposal.reviewCategory || proposal.action || "",
+        sourceUrl: sourceUrls[0] || "",
+        excerpt: proposal.reason || "",
+        confidence: proposal.riskLevel === "low" ? "high" : "review",
+        needsManualReview: kind !== "auto"
+      }]
+    },
+    currentProvider: proposal,
+    claimId: proposal.proposalId,
+    claimField: proposal.field,
+    claimValue: proposal.reviewCategory,
+    claimDecision: kind === "auto" ? "auto_accept" : "review",
+    claimRiskLevel: proposal.riskLevel,
+    claimReason: proposal.reason,
+    requiredHumanAction: proposal.safeAutomation
+  };
+}
+
+function queueItemsFromPayload(queue) {
+  if (Array.isArray(queue.items)) return queue.items;
+  if (Array.isArray(queue.autoDeprioritizeProposals) || Array.isArray(queue.manualBatchProposals)) {
+    return [
+      ...asArray(queue.autoDeprioritizeProposals).map((proposal, index) => proposalToItem(proposal, index, "auto")),
+      ...asArray(queue.manualBatchProposals).map((proposal, index) => proposalToItem(proposal, index, "manual"))
+    ];
+  }
+  return [];
+}
+
 function decisionsForCurrentQueue() {
   const ids = new Set(state.items.map((item) => item.reviewId));
   return Object.keys(state.decisions).filter((reviewId) => ids.has(reviewId));
@@ -374,6 +467,11 @@ function filterItems() {
       item.source,
       item.website,
       item.sourceEvidenceSummary,
+      item.reviewCategory,
+      item.batchKey,
+      item.claimField,
+      item.action,
+      item.safeAutomation,
       ...(item.auditRules || []),
       ...(item.reviewReasons || [])
     ].join(" ").toLowerCase();
@@ -398,7 +496,8 @@ function currentQueueSource() {
 
 function renderQueue() {
   updateProgress();
-  els.queueSummary.textContent = `${state.filtered.length} shown from ${state.items.length} review items.`;
+  const source = currentQueueSource();
+  els.queueSummary.textContent = `${state.filtered.length} shown from ${state.items.length} ${source.itemName || "review item(s)"}.`;
   els.queueList.replaceChildren();
   for (const item of state.filtered) {
     const li = document.createElement("li");
@@ -1265,7 +1364,7 @@ async function init() {
     const response = await fetch(source.url, { cache: "no-store" });
     if (!response.ok) throw new Error(`Could not load queue JSON (${response.status})`);
     state.queue = await response.json();
-    state.items = Array.isArray(state.queue.items) ? state.queue.items : [];
+    state.items = queueItemsFromPayload(state.queue);
     try {
       const providersResponse = await fetch("../providers.json", { cache: "no-store" });
       state.providers = providersResponse.ok ? await providersResponse.json() : [];

@@ -36,13 +36,14 @@ manual review burden.
 - Added an auditor queue option for claim-level review.
 - Added auto-resolution proposals that de-prioritize low-risk claim review noise
   without applying provider data changes.
+- Added an auditor queue option for auto-resolution proposal groups.
 
 ## Next Backlog Items
 
 1. Add a reviewed claim-batch decision format that can generate safe
    `provider-review-decisions.json` drafts.
-2. Tune the auditor UI so auto-deprioritized low-risk claim groups can be hidden
-   while still keeping high-risk batches prominent.
+2. Add reviewed claim-batch decision helpers after a human review session proves
+   which grouped actions are safe enough to draft.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 4. Start manual review with the largest unsupported tag batches.

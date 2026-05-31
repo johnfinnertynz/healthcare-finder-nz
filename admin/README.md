@@ -64,7 +64,8 @@ npm run export:claims
 npm run export:auto-resolution
 ```
 
-Then choose **Claim review queue** from the queue selector.
+Then choose **Claim review queue** from the queue selector for individual
+field checks, or **Auto-resolution proposals** for the compressed proposal view.
 
 Claim items focus on one field at a time, such as `tags`, `availabilityStatus`,
 `referralType`, `phone`, `address`, or `onlineAvailable`. The detail panel shows
@@ -88,6 +89,12 @@ the normal validation suite.
 `data/provider-auto-resolution-proposals.json`. Use that report to understand
 which low-risk claim checks can be collapsed or hidden from manual dashboards
 and which large batches still need human judgement. It is not an approval tool.
+
+The admin console can now load the same JSON through **Auto-resolution
+proposals**. Each row is a proposal group, not a provider record. Low-risk rows
+show checks that may be de-prioritized from manual dashboards; manual-batch rows
+show high-risk groups that still need a person. Saving a decision here is only a
+local note until it is exported and applied through the controlled review flow.
 
 ## Discovery Suggestions
 

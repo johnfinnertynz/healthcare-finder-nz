@@ -67,6 +67,8 @@ Use the **Queue** selector to choose:
 
 - **Manual review queue** for provider-level decisions.
 - **Claim review queue** for one-field-at-a-time checks grouped by batch key.
+- **Auto-resolution proposals** for grouped low-risk de-prioritisation and
+  high-risk manual batch planning.
 - **Ongoing monitor queue** for automated availability/recheck findings.
 
 In the claim queue, each item shows a claim field, claim value, risk level,
@@ -79,6 +81,11 @@ Open `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` before a long review session. It
 separates low-risk claim noise that can be de-prioritized from high-risk batches
 that still need a person. It does not approve provider data and it does not
 change the public app.
+
+You can also choose **Auto-resolution proposals** in the admin console. Treat
+those rows as review-planning groups: low-risk rows can be collapsed out of your
+manual workload, while manual-batch rows tell you where human evidence checks
+still matter. They are not live provider records.
 
 ## Review One Provider
 

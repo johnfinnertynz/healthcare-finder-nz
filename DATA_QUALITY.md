@@ -464,6 +464,12 @@ enough, but it must not mutate provider data or approve high-risk claims. The
 output also lists automation blocks so reviewers can see why availability,
 referral, scope, support tags, and conflicts remain human-review work.
 
+The auditor console may display those proposals as a queue source, but each row
+is still a planning group rather than a provider approval. Use it to collapse
+safe low-risk checks and to plan manual batches. Do not use it to mark
+availability, referral pathway, cultural/safety tags, telehealth, cost,
+specialty, or provider type as approved without reviewed source evidence.
+
 Never guess:
 
 - accepting-new-client status

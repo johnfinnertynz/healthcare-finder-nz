@@ -470,6 +470,12 @@ auto-deprioritization proposals for low-risk claim-review noise, plus manual
 batch tasks for everything still needing judgement. It does not approve or
 apply provider data changes.
 
+The local auditor console can load `data/provider-auto-resolution-proposals.json`
+from the queue selector as **Auto-resolution proposals**. This is a reviewer
+planning view only: it helps hide/collapse low-risk checks and keep high-risk
+claim batches visible, but provider data still changes only through exported
+review decisions and the controlled apply script.
+
 This writes:
 
 - `data/provider-review-queue.json`

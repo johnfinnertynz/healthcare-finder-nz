@@ -86,3 +86,5 @@ Auto-accept is allowed only when all are true:
    session proves the workflow.
 6. Use `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` to hide low-risk claim noise and
    keep reviewer effort on high-risk batches.
+7. Use the auditor console's **Auto-resolution proposals** queue source to
+   review proposal groups without treating them as live provider records.
