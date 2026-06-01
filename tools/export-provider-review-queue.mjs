@@ -480,6 +480,34 @@ function reviewReasons(provider, findings) {
   return unique(reasons);
 }
 
+function reviewCategoryForProvider(provider, findings, reasons) {
+  const rulesText = findings.map((finding) => finding.rule || "").join(" ").toLowerCase();
+  const reasonText = reasons.join(" ").toLowerCase();
+  const tags = asArray(provider.tags);
+  const hasSensitiveTag = tags.some((tag) => BROAD_NEED_TAGS.has(tag) || SUPPORT_TAGS.has(tag) || TELEHEALTH_TAGS.has(tag));
+
+  if (rulesText.includes("weak-gp-source")) return "GP source corroboration";
+  if (/availability|watchlist|accepting-without|waitlist|not_accepting|referrals_paused/.test(rulesText) || RISKY_AVAILABILITY.has(provider.availabilityStatus)) {
+    return "Availability review";
+  }
+  if (provider.type === "psychiatrist" && (!provider.referralType || provider.referralType === "unknown" || provider.referralNeedsManualReview)) {
+    return "Referral pathway review";
+  }
+  if (/referral/.test(rulesText)) return "Referral pathway review";
+  if (/directory|direct|register/.test(rulesText) || provider.type === "directory" || tags.includes("directory")) {
+    return "Directory/direct-contact confusion";
+  }
+  if (/address|coordinate|geocode|region|local|outside-nz/.test(rulesText) || /coordinates/.test(reasonText)) {
+    return "Location and distance evidence";
+  }
+  if (/broken|blocked|link/.test(rulesText)) return "Blocked or broken source";
+  if (directProvider(provider) && !hasPublicContact(provider)) return "Missing public contact";
+  if (/broad-tag|overbroad|unsupported|weak-(maori|pasifika|asian|rainbow)|support-tag|cultural|telehealth|online|scope/.test(rulesText) || (provider.needsManualVerification && hasSensitiveTag)) {
+    return "Sensitive tag or scope evidence";
+  }
+  return "Needs quick human check";
+}
+
 function reviewScore(provider, findings, reasons) {
   let score = 0;
   if (findings.some((finding) => finding.severity === "high" && !finding.allowlisted)) score += 10_000;
@@ -528,6 +556,7 @@ function itemFromProvider(provider, findings, scan, includeAll) {
   if (!shouldInclude(provider, findings, reasons, includeAll)) return null;
   const auditSeverity = highestSeverity(findings);
   const score = reviewScore(provider, findings, reasons);
+  const reviewCategory = reviewCategoryForProvider(provider, findings, reasons);
   const sourceUrls = unique([
     provider.website,
     provider.bookingUrl,
@@ -539,6 +568,7 @@ function itemFromProvider(provider, findings, scan, includeAll) {
 
   return {
     reviewId: `provider:${provider.id}`,
+    reviewCategory,
     providerId: provider.id || "",
     name: provider.name || "",
     clinicianName: provider.clinicianName || "",
@@ -684,6 +714,29 @@ function priorityForDiscoverySuggestion(suggestion) {
   return score;
 }
 
+function reviewCategoryForDiscoverySuggestion(suggestion, record = {}) {
+  const type = record.type || suggestion.type || "";
+  const action = suggestion.action || "";
+  const reviewText = [
+    action,
+    ...(suggestion.reviewReasons || []),
+    ...(suggestion.conflicts || []).map((conflict) => conflict.field || "")
+  ].join(" ").toLowerCase();
+
+  if (action === "move_to_watchlist" || /waitlist|not_accepting|referrals_paused|not accepting|availability status|availability evidence/.test(reviewText)) {
+    return "Availability review";
+  }
+  if (type === "psychiatrist") return "Referral pathway review";
+  if (suggestion.conflicts?.length) return "Discovery source conflict";
+  if (/broad|specialt|maori|pasifika|asian|rainbow|telehealth|online|scope/.test(reviewText)) {
+    return "Sensitive tag or scope evidence";
+  }
+  if (action === "add_new_provider") return "Discovery: new provider candidate";
+  if (action === "update_existing_provider") return "Discovery: existing provider update";
+  if (action === "needs_manual_research") return "Discovery: manual research";
+  return "Discovery suggestion";
+}
+
 function discoverySuggestionItems(providerSuggestions, includeAll) {
   const suggestions = asArray(providerSuggestions.suggestions);
   if (!suggestions.length) return [];
@@ -693,6 +746,7 @@ function discoverySuggestionItems(providerSuggestions, includeAll) {
       const record = suggestion.suggestedProviderRecord || {};
       const score = priorityForDiscoverySuggestion(suggestion);
       const auditSeverity = suggestion.conflicts?.length ? "high" : suggestion.action === "needs_manual_research" ? "medium" : "low";
+      const reviewCategory = reviewCategoryForDiscoverySuggestion(suggestion, record);
       const sourceUrls = unique([
         ...(suggestion.sourceUrlsUsed || []),
         record.website,
@@ -710,6 +764,7 @@ function discoverySuggestionItems(providerSuggestions, includeAll) {
 
       return {
         reviewId: `discovery:${suggestion.suggestionId || suggestion.candidateId}`,
+        reviewCategory,
         providerId: suggestion.existingProviderId || record.id || suggestion.candidateId || "",
         name: record.name || suggestion.name || "",
         clinicianName: record.clinicianName || "",
@@ -796,6 +851,21 @@ function priorityForGooglePlacesCandidate(candidate) {
   return score;
 }
 
+function reviewCategoryForGooglePlacesCandidate(candidate) {
+  const text = [
+    candidate.action || "",
+    candidate.type || "",
+    ...(candidate.reviewReasons || [])
+  ].join(" ").toLowerCase();
+
+  if (/gp source corroboration|weak gp|weak-gp|source corroboration/.test(text) || candidate.type === "gp") {
+    return "GP source corroboration";
+  }
+  if (/waitlist|not accepting|not_accepting|referrals_paused|availability status|availability evidence/.test(text)) return "Availability review";
+  if (candidate.type === "psychiatrist") return "Referral pathway review";
+  return "Google Places discovery";
+}
+
 function compactDiscoverySuggestion(suggestion = {}) {
   return {
     suggestionId: suggestion.suggestionId || "",
@@ -854,6 +924,7 @@ function googlePlacesCandidateItems(placesPayload, includeAll) {
     .map((candidate) => {
       const record = candidate.suggestedProviderRecord || {};
       const score = priorityForGooglePlacesCandidate(candidate);
+      const reviewCategory = reviewCategoryForGooglePlacesCandidate(candidate);
       const sourceUrls = unique([
         ...(candidate.sourceUrlsUsed || []),
         candidate.googleMapsUri,
@@ -873,6 +944,7 @@ function googlePlacesCandidateItems(placesPayload, includeAll) {
 
       return {
         reviewId: `places:${candidate.candidateId}`,
+        reviewCategory,
         providerId: candidate.possibleProviderIds?.[0] || record.id || candidate.candidateId || "",
         name: record.name || candidate.name || "",
         clinicianName: record.clinicianName || "",
@@ -970,6 +1042,7 @@ function csvEscape(value) {
 function writeCsv(filePath, items) {
   const headers = [
     "reviewId",
+    "reviewCategory",
     "providerId",
     "name",
     "clinicianName",
@@ -1058,15 +1131,24 @@ function writeMarkdown(filePath, queue) {
     `- Medium: ${queue.summary.byPriority.medium || 0}`,
     `- Low: ${queue.summary.byPriority.low || 0}`,
     "",
+    "## By Review Category",
+    "",
+    "| Category | Items |",
+    "| --- | --- |",
+    ...Object.entries(queue.summary.byCategory || {})
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([category, count]) => `| ${String(category).replace(/\|/g, "\\|")} | ${count} |`),
+    "",
     "## Top Queue Items",
     "",
-    "| Priority | Severity | Provider | Type | Region / City | Rules | Reasons |",
-    "| --- | --- | --- | --- | --- | --- | --- |"
+    "| Priority | Severity | Category | Provider | Type | Region / City | Rules | Reasons |",
+    "| --- | --- | --- | --- | --- | --- | --- | --- |"
   ];
   for (const item of queue.items.slice(0, 80)) {
     lines.push([
       item.reviewPriority,
       item.auditSeverity,
+      item.reviewCategory,
       `${item.providerId} - ${item.name}`,
       item.type,
       `${item.region} / ${item.city}`,
@@ -1144,6 +1226,7 @@ export function buildProviderReviewQueue(config = {}) {
       total: items.length,
       byPriority: countsBy(items, "reviewPriority"),
       bySeverity: countsBy(items, "auditSeverity"),
+      byCategory: countsBy(items, "reviewCategory"),
       byType: countsBy(items, "type"),
       byRegion: countsBy(items, "region")
     },

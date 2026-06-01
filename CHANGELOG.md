@@ -45,6 +45,10 @@
 - Hardened exact GP Places matching so target provider links require a real
   name, phone, or address signal, and stale exact-query results that match a
   different provider are filtered during merge.
+- Added explicit provider review categories to the exported review queue, CSV,
+  and Markdown report so the auditor filter can split GP corroboration, source
+  conflicts, sensitive scope tags, availability, referral, location, directory
+  contact, and Google Places discovery work.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

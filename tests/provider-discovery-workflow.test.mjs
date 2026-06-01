@@ -333,6 +333,9 @@ test("discovery suggestions feed the provider review queue", () => {
     mdOut: path.join(dir, "queue.md")
   });
   assert(queue.items.some((item) => item.reviewId.startsWith("discovery:")));
+  const discoveryItem = queue.items.find((item) => item.reviewId.startsWith("discovery:"));
+  assert.equal(discoveryItem.reviewCategory, "Discovery: new provider candidate");
+  assert.equal(queue.summary.byCategory["Discovery: new provider candidate"], 1);
 });
 
 test("generated suggested patches include source evidence", () => {
@@ -1128,6 +1131,7 @@ test("Google Places candidates feed the auditor review queue without becoming li
   const item = queue.items.find((entry) => entry.reviewId.startsWith("places:"));
   assert.ok(item);
   assert.equal(item.name, "Queue Psychology");
+  assert.equal(item.reviewCategory, "Google Places discovery");
   assert.equal(item.auditRules.includes("google-places-candidate"), true);
   assert.match(item.sourceQuality, /Google Places/);
   assert.equal(item.currentProvider, null);

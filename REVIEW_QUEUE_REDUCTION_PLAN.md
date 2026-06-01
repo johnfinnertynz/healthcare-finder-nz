@@ -10,7 +10,7 @@ Updated: 2026-06-01
 - Focused claim-level review queue: 638 items in 53 batches.
 - Dedicated GP source corroboration queue: 126 tasks.
 - Source-fit findings: 361.
-- Availability findings: 3.
+- Availability findings: 30.
 - Provider validation warnings: 0.
 - Broken links in default link check: 0.
 - Blocked-by-site links in default link check: 1.
@@ -28,6 +28,21 @@ Top provider-level root causes:
 | Weak Maori evidence | 37 |
 | Missing coordinates | 35 |
 | Availability watchlist | 20 |
+
+Current provider-level review categories:
+
+| Review category | Count |
+| --- | ---: |
+| GP source corroboration | 250 |
+| Location and distance evidence | 130 |
+| Sensitive tag or scope evidence | 111 |
+| Availability review | 53 |
+| Needs quick human check | 41 |
+| Directory/direct-contact confusion | 34 |
+| Discovery source conflict | 31 |
+| Referral pathway review | 20 |
+| Google Places discovery | 3 |
+| Discovery: existing provider update | 2 |
 
 ## Claim-Level Reduction Layer
 
@@ -95,6 +110,11 @@ This cycle added a separate claim review queue:
   result must match the queued target by name, phone, or address; old/stale
   exact-query results that only matched a different provider are dropped during
   merge instead of being shown as provider corroboration.
+- Provider review queue exports now include `reviewCategory` in JSON and CSV,
+  plus a category summary in `PROVIDER_REVIEW_QUEUE.md`. This makes the
+  auditor category filter actionable across GP corroboration, source conflicts,
+  sensitive scope tags, availability, referral, location, directory/contact, and
+  Google Places discovery work.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by

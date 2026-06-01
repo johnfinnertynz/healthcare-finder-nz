@@ -118,6 +118,8 @@ test("export queue includes high source-fit findings and sorts high risk first",
   assert.equal(queue.items[0].providerId, "critical-provider");
   assert.equal(queue.items[0].auditSeverity, "high");
   assert.ok(queue.items[0].auditRules.includes("directory-treated-direct"));
+  assert.equal(queue.items[0].reviewCategory, "Directory/direct-contact confusion");
+  assert.equal(queue.summary.byCategory["Directory/direct-contact confusion"], 1);
 });
 
 test("export queue includes availability risk, referral review, address concerns, broad tags, cultural tags, and telehealth claims", () => {
@@ -197,6 +199,10 @@ test("export queue includes availability risk, referral review, address concerns
   assert.ok(ids.includes("tagged-risk"));
   assert.ok(queue.items.find((item) => item.providerId === "tagged-risk").auditRules.includes("weak-maori-evidence"));
   assert.ok(queue.items.find((item) => item.providerId === "tagged-risk").auditRules.includes("weak-telehealth-evidence"));
+  assert.equal(queue.items.find((item) => item.providerId === "availability-risk").reviewCategory, "Availability review");
+  assert.equal(queue.items.find((item) => item.providerId === "psychiatrist-review").reviewCategory, "Referral pathway review");
+  assert.equal(queue.items.find((item) => item.providerId === "missing-coords").reviewCategory, "Location and distance evidence");
+  assert.equal(queue.items.find((item) => item.providerId === "tagged-risk").reviewCategory, "Sensitive tag or scope evidence");
 });
 
 test("focused export does not dump low-risk GP manual records by default", () => {
