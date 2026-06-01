@@ -296,6 +296,14 @@ function escapeHtml(value) {
   }[char]));
 }
 
+function safeClassName(value, fallback = "unknown") {
+  const className = String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return className || fallback;
+}
+
 function asArray(value) {
   if (Array.isArray(value)) return value;
   if (value === undefined || value === null || value === "") return [];
@@ -1168,8 +1176,8 @@ function renderQueue() {
     button.innerHTML = `
       <span class="queue-title">${escapeHtml(item.name || item.providerId)}</span>
       <span class="queue-meta">${escapeHtml([item.type, item.region, item.city].filter(Boolean).join(" | "))}</span>
-      <span class="queue-meta"><span class="priority ${escapeHtml(item.reviewPriority)}">${escapeHtml(item.reviewPriority)}</span> ${escapeHtml(compact((item.auditRules || []).join(", "), 90))}</span>
-      ${sourceCaptureStatus(item) ? `<span class="queue-meta"><span class="capture-status ${escapeHtml(sourceCaptureStatus(item))}">source ${escapeHtml(sourceCaptureStatus(item).replace(/_/g, " "))}</span>${item.sourceCapture?.error ? ` ${escapeHtml(compact(item.sourceCapture.error, 80))}` : ""}</span>` : ""}
+      <span class="queue-meta"><span class="priority ${safeClassName(item.reviewPriority)}">${escapeHtml(item.reviewPriority)}</span> ${escapeHtml(compact((item.auditRules || []).join(", "), 90))}</span>
+      ${sourceCaptureStatus(item) ? `<span class="queue-meta"><span class="capture-status ${safeClassName(sourceCaptureStatus(item))}">source ${escapeHtml(sourceCaptureStatus(item).replace(/_/g, " "))}</span>${item.sourceCapture?.error ? ` ${escapeHtml(compact(item.sourceCapture.error, 80))}` : ""}</span>` : ""}
       ${itemDecision(item) ? `<span class="queue-meta">Decision: ${escapeHtml(itemDecision(item))}</span>` : ""}
     `;
     button.addEventListener("click", () => selectItem(item.reviewId));
@@ -1748,7 +1756,7 @@ function renderFindings(item) {
   }
   for (const finding of item.auditFindings) {
     const section = document.createElement("section");
-    section.className = `finding ${finding.severity || ""}`;
+    section.className = `finding ${safeClassName(finding.severity || "")}`;
     section.innerHTML = `
       <strong>${escapeHtml(finding.rule || "audit finding")} (${escapeHtml(finding.severity || "unknown")})</strong>
       <p>${escapeHtml(finding.issue || "")}</p>

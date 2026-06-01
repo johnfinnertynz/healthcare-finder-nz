@@ -717,6 +717,27 @@ test("address suggestions require explicit selection", () => {
   assert.doesNotMatch(script, /Checking the best New Zealand match/);
 });
 
+test("public app sanitises provider-controlled links and CSS class tokens", () => {
+  const script = fs.readFileSync("script.js", "utf8");
+  assert.match(script, /function safeMailAddress/);
+  assert.match(script, /function safeClassToken/);
+  assert.ok(script.includes(".replace(/(?!^)\\+/g, \"\")"));
+  assert.match(script, /const email = safeMailAddress\(target\.email\);/);
+  assert.match(script, /mailto:\$\{email\}\?subject=/);
+  assert.doesNotMatch(script, /mailto:\$\{target\.email\}/);
+  assert.match(script, /provider-card--availability-\$\{safeClassToken\(availabilityStatus\)\}/);
+  assert.match(script, /availability-note--\$\{safeClassToken\(availabilityStatus\)\}/);
+  assert.match(script, /recommendation-card--availability-\$\{safeClassToken\(availabilityStatus\)\}/);
+});
+
+test("admin review UI keeps dynamic classes token-safe", () => {
+  const admin = fs.readFileSync("admin/admin.js", "utf8");
+  assert.match(admin, /function safeClassName/);
+  assert.match(admin, /priority \$\{safeClassName\(item\.reviewPriority\)\}/);
+  assert.match(admin, /capture-status \$\{safeClassName\(sourceCaptureStatus\(item\)\)\}/);
+  assert.match(admin, /section\.className = `finding \$\{safeClassName\(finding\.severity \|\| ""\)\}`;/);
+});
+
 test("provider discovery queue script covers the Wikipedia populated-place source and official search APIs", () => {
   const discoveryScript = fs.readFileSync("tools/build-provider-discovery-queue.mjs", "utf8");
   assert.match(discoveryScript, /List_of_populated_places_in_New_Zealand/);

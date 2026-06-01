@@ -345,7 +345,9 @@ function addPath(paths, item) {
 }
 
 function normalisePhone(phone) {
-  return String(phone || "").replace(/[^\d+]/g, "");
+  return String(phone || "")
+    .replace(/[^\d+]/g, "")
+    .replace(/(?!^)\+/g, "");
 }
 
 function escapeHtml(value) {
@@ -353,7 +355,22 @@ function escapeHtml(value) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function safeClassToken(value, fallback = "unknown") {
+  const token = String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return token || fallback;
+}
+
+function safeMailAddress(value) {
+  const email = String(value || "").trim();
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) return "";
+  return email;
 }
 
 function monthLabel(value) {
@@ -996,7 +1013,7 @@ function providerTypeIconAsset(type) {
 
 function providerTypeBadge(provider) {
   const label = escapeHtml(providerTypeLabel(provider.type));
-  const typeClass = escapeHtml(providerTypeClass(provider.type));
+  const typeClass = safeClassToken(providerTypeClass(provider.type));
   const iconPath = escapeHtml(providerTypeIconAsset(provider.type));
   return `
     <span class="provider-type-badge provider-type-badge--${typeClass}" aria-label="${label}" title="${label}">
@@ -1133,7 +1150,7 @@ function renderProviders() {
           `;
 
       return `
-        <article class="provider-card provider-card--availability-${escapeHtml(availabilityStatus)} ${isSelected ? "selected" : ""}">
+        <article class="provider-card provider-card--availability-${safeClassToken(availabilityStatus)} ${isSelected ? "selected" : ""}">
           <div class="provider-card__header">
             <div>
               ${providerNameMarkup(provider)}
@@ -1149,7 +1166,7 @@ function renderProviders() {
             <p class="provider-detail"><strong>First step:</strong> ${providerFirstStep}</p>
             ${referralNote ? `<p class="provider-detail referral-note"><strong>Referral:</strong> ${escapeHtml(referralNote)}</p>` : ""}
             <p class="provider-detail"><strong>Cost:</strong> ${providerCost}</p>
-            <p class="provider-detail availability-note availability-note--${escapeHtml(availabilityStatus)}"><strong>Availability:</strong> ${escapeHtml(availabilityNote)}</p>
+            <p class="provider-detail availability-note availability-note--${safeClassToken(availabilityStatus)}"><strong>Availability:</strong> ${escapeHtml(availabilityNote)}</p>
             ${contact ? `<p class="provider-detail"><strong>Contact:</strong> ${contact}</p>` : ""}
           </div>
           <div class="provider-actions">
@@ -2177,11 +2194,12 @@ function setContactAction(element, href, label) {
 }
 
 function contactMailtoHref(target, message) {
-  if (!target.email) return "";
+  const email = safeMailAddress(target.email);
+  if (!email) return "";
 
   const subject = encodeURIComponent(target.subject || "Mental health support enquiry");
   const body = encodeURIComponent(message || "");
-  return `mailto:${target.email}?subject=${subject}&body=${body}`;
+  return `mailto:${email}?subject=${subject}&body=${body}`;
 }
 
 function updateContactActions(target, message) {
@@ -2307,7 +2325,7 @@ function render() {
           const referralNote = providerReferralNote(move.provider);
           const gpReferral = providerRequiresGpReferral(move.provider);
           return `
-        <article class="recommendation-card recommendation-card--availability-${escapeHtml(availabilityStatus)} ${index === 0 ? "recommendation-card--primary" : ""}">
+        <article class="recommendation-card recommendation-card--availability-${safeClassToken(availabilityStatus)} ${index === 0 ? "recommendation-card--primary" : ""}">
           <div class="recommendation-rank">${index + 1}</div>
           <div>
             <div class="recommendation-card__header">
@@ -2320,7 +2338,7 @@ function render() {
             </div>
             <p>${escapeHtml(move.provider.firstStep)}</p>
             ${referralNote ? `<p class="referral-note">${escapeHtml(referralNote)}</p>` : ""}
-            <p class="availability-note availability-note--${escapeHtml(availabilityStatus)}">${escapeHtml(availabilityNote)}</p>
+            <p class="availability-note availability-note--${safeClassToken(availabilityStatus)}">${escapeHtml(availabilityNote)}</p>
             <ul>
               ${move.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}
             </ul>
@@ -2349,7 +2367,7 @@ function render() {
     <details class="path-details">
       <summary>Why these paths?</summary>
       ${paths.map((path) => `
-        <article class="path-card ${escapeHtml(path.tone || "")}">
+        <article class="path-card ${safeClassToken(path.tone || "")}">
           <h3>${escapeHtml(path.title)}</h3>
           <p>${escapeHtml(path.body)}</p>
           ${safeHref(path.href, { allowHash: true }) ? `<a href="${escapeHtml(safeHref(path.href, { allowHash: true }))}"${externalLinkAttrs(safeHref(path.href, { allowHash: true }))}>${escapeHtml(path.action)}</a>` : ""}
