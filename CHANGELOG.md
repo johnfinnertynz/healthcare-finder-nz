@@ -60,6 +60,8 @@
   login navigation are not falsely treated as blocked. The current GP review
   pack now has captured snippets for 64 of 68 ready GP source leads; the
   remaining 4 are marked blocked or failed for human browser review.
+- Added an auditor **Source capture** filter and queue badges for captured,
+  blocked, failed, skipped, not-fetched, and prefilled source evidence states.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

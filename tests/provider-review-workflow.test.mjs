@@ -916,16 +916,22 @@ test("GP corroboration review pack does not treat login portals as source eviden
 test("admin UI can load GP source corroboration tasks as review items", () => {
   const html = fs.readFileSync("admin/index.html", "utf8");
   const js = fs.readFileSync("admin/admin.js", "utf8");
+  const css = fs.readFileSync("admin/admin.css", "utf8");
 
   assert.match(html, /<option value="gp">GP source corroboration<\/option>/);
   assert.match(html, /<option value="gpReviewPack">GP corroboration review pack<\/option>/);
+  assert.match(html, /id="captureFilter"/);
   assert.match(js, /Array\.isArray\(queue\.tasks\) && queue\.summary\?\.reviewGateRequired/);
   assert.match(js, /reviewCategory: "GP source corroboration"/);
   assert.match(js, /gp-corroboration-review-pack\.json/);
   assert.match(js, /item\.prefillCorrectedFields/);
   assert.match(js, /item\.sourceExcerpt/);
+  assert.match(js, /sourceCaptureStatus/);
+  assert.match(js, /capture-status/);
   assert.match(js, /practice-owned, Healthpoint, PHO, HPI\/FHIR, or official source/);
   assert.match(js, /Do not infer availability, enrolment, mental-health specialties, cultural support/);
+  assert.match(css, /\.capture-status\.captured/);
+  assert.match(css, /\.capture-status\.blocked/);
 });
 
 test("broad tag findings only attach to matching fit and specialty text", () => {

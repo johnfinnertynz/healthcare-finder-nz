@@ -236,6 +236,7 @@ const els = {
     severity: document.querySelector("#severityFilter"),
     availability: document.querySelector("#availabilityFilter"),
     referral: document.querySelector("#referralFilter"),
+    capture: document.querySelector("#captureFilter"),
     decision: document.querySelector("#decisionFilter")
   }
 };
@@ -346,6 +347,7 @@ function isProviderOwnedHost(host) {
 }
 
 function optionList(select, values, currentLabel = "") {
+  if (!select) return;
   const first = select.querySelector("option");
   select.replaceChildren(first);
   for (const value of values.filter(Boolean).sort((a, b) => a.localeCompare(b))) {
@@ -366,11 +368,20 @@ function setOptions() {
   optionList(els.filters.severity, [...new Set(state.items.map((item) => item.auditSeverity))]);
   optionList(els.filters.availability, [...new Set(state.items.map((item) => item.availabilityStatus))]);
   optionList(els.filters.referral, [...new Set(state.items.map((item) => item.referralType))]);
+  optionList(els.filters.capture, [...new Set(state.items.map((item) => sourceCaptureStatus(item)))]);
   optionList(els.filters.decision, ["approve", "adjust", "reject", "move_to_watchlist", "duplicate", "needs_more_info"]);
 }
 
 function itemDecision(item) {
   return state.decisions[item.reviewId]?.action || state.decisions[item.reviewId]?.reviewDecision || "";
+}
+
+function sourceCaptureStatus(item) {
+  if (item.sourceCapture?.status) return item.sourceCapture.status;
+  if (item.sourceExcerpt || item.suggestedSourceExcerpt) return "prefilled";
+  const priority = item.priority || item.reviewPriority;
+  if (item.reviewCategory === "GP source corroboration" && priority === "ready_for_source_capture") return "not_fetched";
+  return "";
 }
 
 function priorityFromRisk(riskLevel) {
@@ -858,6 +869,7 @@ function filterItems() {
     severity: els.filters.severity.value,
     availability: els.filters.availability.value,
     referral: els.filters.referral.value,
+    capture: els.filters.capture?.value || "",
     decision: els.filters.decision.value
   };
 
@@ -876,6 +888,11 @@ function filterItems() {
       item.claimField,
       item.action,
       item.safeAutomation,
+      sourceCaptureStatus(item),
+      item.sourceCapture?.error,
+      item.sourceCapture?.finalUrl,
+      item.sourceExcerpt,
+      item.suggestedSourceExcerpt,
       ...(item.auditRules || []),
       ...(item.reviewReasons || [])
     ].join(" ").toLowerCase();
@@ -889,6 +906,7 @@ function filterItems() {
       && (!filters.severity || item.auditSeverity === filters.severity)
       && (!filters.availability || item.availabilityStatus === filters.availability)
       && (!filters.referral || item.referralType === filters.referral)
+      && (!filters.capture || sourceCaptureStatus(item) === filters.capture)
       && (!filters.decision || itemDecision(item) === filters.decision);
   });
   renderQueue();
@@ -904,7 +922,8 @@ function batchNarrowingFilters() {
     ["type", els.filters.type.value],
     ["severity", els.filters.severity.value],
     ["availability", els.filters.availability.value],
-    ["referral", els.filters.referral.value]
+    ["referral", els.filters.referral.value],
+    ["capture", els.filters.capture?.value || ""]
   ].filter(([, value]) => Boolean(value));
 }
 
@@ -977,6 +996,7 @@ function renderQueue() {
       <span class="queue-title">${escapeHtml(item.name || item.providerId)}</span>
       <span class="queue-meta">${escapeHtml([item.type, item.region, item.city].filter(Boolean).join(" | "))}</span>
       <span class="queue-meta"><span class="priority ${escapeHtml(item.reviewPriority)}">${escapeHtml(item.reviewPriority)}</span> ${escapeHtml(compact((item.auditRules || []).join(", "), 90))}</span>
+      ${sourceCaptureStatus(item) ? `<span class="queue-meta"><span class="capture-status ${escapeHtml(sourceCaptureStatus(item))}">source ${escapeHtml(sourceCaptureStatus(item).replace(/_/g, " "))}</span>${item.sourceCapture?.error ? ` ${escapeHtml(compact(item.sourceCapture.error, 80))}` : ""}</span>` : ""}
       ${itemDecision(item) ? `<span class="queue-meta">Decision: ${escapeHtml(itemDecision(item))}</span>` : ""}
     `;
     button.addEventListener("click", () => selectItem(item.reviewId));
@@ -1496,6 +1516,12 @@ function selectItem(reviewId) {
     ["Type", item.type],
     ["Confidence", item.confidence],
     ["Source quality", item.sourceQuality],
+    ...(sourceCaptureStatus(item) ? [
+      ["Source capture", sourceCaptureStatus(item)],
+      ["Capture final URL", item.sourceCapture?.finalUrl || ""],
+      ["Capture error", item.sourceCapture?.error || ""],
+      ["Prefilled excerpt", item.sourceExcerpt || item.suggestedSourceExcerpt || ""]
+    ] : []),
     ["Needs manual verification", item.needsManualVerification]
     ]);
     dl(els.availabilityFields, [

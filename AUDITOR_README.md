@@ -108,10 +108,12 @@ first. Open the candidate source, confirm the existing provider is the same
 practice, then copy or confirm a short excerpt showing the practice name and
 contact details. If the export used `--fetch-sources`, the excerpt field may
 already be prefilled, but you still need to check it before saving a decision.
-Use any draft corrected fields as a starting point. Items marked **manual
-compare conflict** or **source lookup needed** should not be adjusted until the
-identity/source problem is resolved. Login portals and Google Maps-only links
-are leads only.
+Use the **Source capture** filter to work **captured** snippets first, then
+switch to **blocked**, **failed**, **skipped**, or **not fetched** for browser
+review. Use any draft corrected fields as a starting point. Items marked
+**manual compare conflict** or **source lookup needed** should not be adjusted
+until the identity/source problem is resolved. Login portals and Google
+Maps-only links are leads only.
 
 In the Google Places candidates queue, each item is a likely business lead from
 the official Places API. It may help you find a public phone, website, address,

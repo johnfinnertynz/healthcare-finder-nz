@@ -104,6 +104,9 @@ manual review burden.
 - Ran the GP corroboration review pack across all 68 ready-for-source-capture
   GP leads. The export now includes prefilled review snippets for 64 of them;
   4 remain blocked or failed and need human browser review.
+- Added an auditor **Source capture** filter and queue badges so captured GP
+  snippets can be reviewed separately from blocked, failed, skipped, or
+  not-yet-fetched source checks.
 
 ## Next Backlog Items
 
@@ -111,8 +114,8 @@ manual review burden.
    the conservative `needs_more_info` batch helper is understandable.
 2. Work through the auditor console's **GP source corroboration** and
    **GP corroboration review pack** queues, starting with the 64 captured GP
-   snippets, the 4 failed source captures, and the two high-confidence
-   update-existing GP suggestions.
+   snippets using the **Source capture: captured** filter, the 4 failed source
+   captures, and the two high-confidence update-existing GP suggestions.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 4. Start manual review with the largest unsupported tag batches.

@@ -107,6 +107,8 @@ Choose **GP corroboration review pack** from the queue selector. This view
 groups the GP source-corroboration tasks that already have a likely
 Healthpoint, practice-site, or clinic-network lead. It labels each item as
 ready for source capture, manual compare conflict, or source lookup needed.
+Use the **Source capture** filter to separate captured snippets from blocked,
+failed, skipped, or not-yet-fetched source checks.
 
 The pack can pre-fill draft public contact/source fields, but it is not an
 approval. When exported with `--fetch-sources`, it may also pre-fill a short

@@ -614,7 +614,8 @@ records most likely to have a usable Healthpoint or practice-site lead. It
 pre-fills only draft public contact/source fields. If the pack was exported
 with `--fetch-sources`, it may also pre-fill a short source excerpt for the
 auditor to check. It still requires human confirmation before any adjustment is
-exported.
+exported. Use the **Source capture** filter in the auditor to separate captured
+snippets from blocked, failed, skipped, or not-yet-fetched source checks.
 
 For triage, the console has a conservative filtered-batch helper. After a queue
 is narrowed by batch, rule, category, search, region, type, severity,
