@@ -151,6 +151,10 @@ manual review burden.
   findings with 33 source-support excerpts, 62 review-gated safe-removal
   candidates, 109 human-browser-review rows, 13 skipped sources, and 3 failed
   fetches.
+- Added source-fit capture coverage metrics and completed the current eligible
+  capture set. The export now covers 227 of 227 eligible findings with 36
+  source-support excerpts, 64 review-gated safe-removal candidates, 110
+  human-browser-review rows, 14 skipped sources, and 3 failed fetches.
 - Added a GP corroboration decision draft helper. After a reviewer checks
   captured GP source snippets, it can draft contact/source-only `adjust`
   decisions; failed source captures can be drafted as `needs_more_info`.

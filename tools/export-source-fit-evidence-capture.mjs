@@ -342,12 +342,15 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
   const providers = readJson(merged.providers);
   const providerById = new Map(providers.map((provider) => [provider.id, provider]));
   const audit = readJson(merged.sourceFitAudit);
+  const allFindings = asArray(audit.findings || audit);
+  const allCaptureFindings = relevantFindings(allFindings, { ...merged, limit: Infinity }, new Set());
+  const eligibleIssueKeys = new Set(allCaptureFindings.map(issueKey));
   const existingCapture = readExistingCapture(merged);
   const existingItems = asArray(existingCapture?.items);
   const existingKeys = merged.skipExisting
     ? new Set(existingItems.map(itemIssueKey).filter((key) => key !== "||"))
     : new Set();
-  const findings = relevantFindings(asArray(audit.findings || audit), merged, existingKeys);
+  const findings = relevantFindings(allFindings, merged, existingKeys);
   const fetcher = merged.fetcher || fetchPublicSource;
   const fetchCache = new Map();
   const items = [];
@@ -509,7 +512,15 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
   const outputItems = (merged.mergeExisting ? mergeCaptureItems(existingItems, items) : items)
     .map((item) => withBatchMetadata(item));
   const batches = summarizeBatches(outputItems);
+  const capturedIssueKeys = new Set(outputItems.map(itemIssueKey).filter((key) => eligibleIssueKeys.has(key)));
+  const eligibleCapturedCount = capturedIssueKeys.size;
+  const eligibleTotal = eligibleIssueKeys.size;
+  const coveragePercent = eligibleTotal ? Math.round((eligibleCapturedCount / eligibleTotal) * 1000) / 10 : 100;
   const summary = summarizeItems(outputItems, {
+    eligibleFindingsTotal: eligibleTotal,
+    eligibleFindingsCaptured: eligibleCapturedCount,
+    eligibleFindingsRemaining: Math.max(0, eligibleTotal - eligibleCapturedCount),
+    eligibleCoveragePercent: coveragePercent,
     newFindingsConsidered: findings.length,
     existingItemsAvailable: existingItems.length,
     existingItemsSkipped: existingKeys.size,
@@ -583,6 +594,10 @@ function writeMarkdown(filePath, output) {
     "## Summary",
     "",
     `- Findings considered: ${output.summary.findingsConsidered}`,
+    `- Eligible source-fit findings: ${output.summary.eligibleFindingsTotal ?? output.summary.findingsConsidered}`,
+    `- Eligible findings captured: ${output.summary.eligibleFindingsCaptured ?? output.items.length}`,
+    `- Eligible findings remaining: ${output.summary.eligibleFindingsRemaining ?? 0}`,
+    `- Eligible capture coverage: ${output.summary.eligibleCoveragePercent ?? 100}%`,
     `- New findings checked this run: ${output.summary.newFindingsConsidered ?? output.summary.findingsConsidered}`,
     `- Existing items merged: ${output.summary.existingItemsMerged ?? 0}`,
     `- Total items in output: ${output.summary.totalItems ?? output.items.length}`,

@@ -1,29 +1,33 @@
 # Provider Source-Fit Evidence Capture
 
-Generated: 2026-06-01T08:07:22.272Z
+Generated: 2026-06-01T08:14:57.856Z
 
 This report fetches public source pages for selected source-fit findings and captures short evidence excerpts. It does not change `providers.json`.
 
 ## Summary
 
-- Findings considered: 220
-- New findings checked this run: 80
-- Existing items merged: 140
-- Total items in output: 220
-- Source support found: 33
-- Safe removal candidates: 62
-- Needs human browser review: 109
+- Findings considered: 227
+- Eligible source-fit findings: 227
+- Eligible findings captured: 227
+- Eligible findings remaining: 0
+- Eligible capture coverage: 100%
+- New findings checked this run: 7
+- Existing items merged: 220
+- Total items in output: 227
+- Source support found: 36
+- Safe removal candidates: 64
+- Needs human browser review: 110
 - Fetch failed: 3
-- Source skipped/not fetched: 13
+- Source skipped/not fetched: 14
 
 ## Status Counts
 
 | Status | Count |
 | --- | ---: |
-| needs_human_browser_review | 109 |
-| source_skipped | 13 |
-| safe_removal_candidate | 62 |
-| source_support_found | 33 |
+| needs_human_browser_review | 110 |
+| source_skipped | 14 |
+| safe_removal_candidate | 64 |
+| source_support_found | 36 |
 | fetch_failed | 3 |
 
 ## Review Batches
@@ -31,23 +35,23 @@ This report fetches public source pages for selected source-fit findings and cap
 | Items | Providers | Batch | Suggested action |
 | ---: | ---: | --- | --- |
 | 31 | 31 | source-fit:needs_human_browser_review:weak-maori-evidence:maori | Open the source manually; add evidence or leave the row as needs_more_info. |
-| 26 | 26 | source-fit:needs_human_browser_review:weak-telehealth-evidence:telehealth | Open the source manually; add evidence or leave the row as needs_more_info. |
-| 22 | 22 | source-fit:safe_removal_candidate:weak-telehealth-evidence:telehealth | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
+| 27 | 27 | source-fit:needs_human_browser_review:weak-telehealth-evidence:telehealth | Open the source manually; add evidence or leave the row as needs_more_info. |
+| 24 | 24 | source-fit:safe_removal_candidate:weak-telehealth-evidence:telehealth | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
 | 21 | 21 | source-fit:needs_human_browser_review:broad-tag-without-source-support:depression | Open the source manually; add evidence or leave the row as needs_more_info. |
 | 18 | 18 | source-fit:needs_human_browser_review:broad-tag-without-source-support:anxiety | Open the source manually; add evidence or leave the row as needs_more_info. |
 | 14 | 14 | source-fit:safe_removal_candidate:broad-tag-without-source-support:depression | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
 | 13 | 13 | source-fit:safe_removal_candidate:broad-tag-without-source-support:anxiety | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
-| 11 | 11 | source-fit:source_support_found:broad-tag-without-source-support:anxiety | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
-| 10 | 10 | source-fit:source_support_found:broad-tag-without-source-support:depression | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
+| 12 | 12 | source-fit:source_support_found:broad-tag-without-source-support:anxiety | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
+| 11 | 11 | source-fit:source_support_found:broad-tag-without-source-support:depression | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
 | 7 | 7 | source-fit:needs_human_browser_review:broad-tag-without-source-support:trauma | Open the source manually; add evidence or leave the row as needs_more_info. |
 | 6 | 6 | source-fit:safe_removal_candidate:broad-tag-without-source-support:trauma | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
 | 5 | 5 | source-fit:source_skipped:broad-tag-without-source-support:anxiety | Treat as source lookup work; do not adjust the provider until a stronger source is checked. |
 | 5 | 5 | source-fit:source_skipped:broad-tag-without-source-support:depression | Treat as source lookup work; do not adjust the provider until a stronger source is checked. |
 | 5 | 5 | source-fit:source_support_found:broad-tag-without-source-support:trauma | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
 | 4 | 4 | source-fit:safe_removal_candidate:weak-maori-evidence:maori | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
+| 4 | 4 | source-fit:source_support_found:broad-tag-without-source-support:addiction | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
 | 3 | 3 | source-fit:needs_human_browser_review:broad-tag-without-source-support:work | Open the source manually; add evidence or leave the row as needs_more_info. |
 | 3 | 3 | source-fit:needs_human_browser_review:weak-rainbow-evidence:rainbow | Open the source manually; add evidence or leave the row as needs_more_info. |
-| 3 | 3 | source-fit:source_support_found:broad-tag-without-source-support:addiction | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
 | 2 | 2 | source-fit:fetch_failed:broad-tag-without-source-support:depression | Treat as source lookup work; do not adjust the provider until a stronger source is checked. |
 | 2 | 2 | source-fit:source_skipped:weak-telehealth-evidence:telehealth | Treat as source lookup work; do not adjust the provider until a stronger source is checked. |
 | 2 | 2 | source-fit:source_support_found:weak-telehealth-evidence:telehealth | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
@@ -56,6 +60,7 @@ This report fetches public source pages for selected source-fit findings and cap
 | 1 | 1 | source-fit:safe_removal_candidate:weak-pasifika-evidence:pasifika | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
 | 1 | 1 | source-fit:safe_removal_candidate:weak-rainbow-evidence:rainbow | Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims. |
 | 1 | 1 | source-fit:source_skipped:broad-tag-without-source-support:trauma | Treat as source lookup work; do not adjust the provider until a stronger source is checked. |
+| 1 | 1 | source-fit:source_skipped:weak-maori-evidence:maori | Treat as source lookup work; do not adjust the provider until a stronger source is checked. |
 | 1 | 1 | source-fit:source_support_found:weak-maori-evidence:maori | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
 | 1 | 1 | source-fit:source_support_found:weak-rainbow-evidence:rainbow | Check captured excerpts, then keep the claim only if it clearly applies to this provider. |
 

@@ -245,6 +245,8 @@ Each capture item also has a batch key in the form
 `source-fit:<status>:<rule>:<target>`, so auditors can filter repeated issues
 such as safe-removal candidates for unsupported depression tags without mixing
 them with unrelated claims.
+The report also shows eligible capture coverage so reviewers can see how many
+source-fit findings this capture tool can handle and how many remain unchecked.
 
 Export regional review priorities:
 

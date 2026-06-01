@@ -712,6 +712,9 @@ Each source-fit capture row has a batch key in the form
 `source-fit:<status>:<rule>:<target>`. Use the auditor **Batch** filter to work
 one repeated issue at a time, such as all safe-removal candidates for
 unsupported telehealth flags, without mixing them with unrelated claims.
+The summary includes eligible capture coverage. A zero remaining count means
+the current capture rules have checked every source-fit finding they are
+designed to handle; other audit rules may still need different review queues.
 
 After reviewing safe-removal candidates, draft controlled decisions with:
 

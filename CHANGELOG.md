@@ -97,6 +97,11 @@
   covers 220 findings with 33 captured support excerpts, 62 review-gated
   safe-removal candidates, 109 human-browser-review rows, 13 skipped sources,
   and 3 failed fetches.
+- Added eligible coverage metrics to source-fit capture and completed the
+  current eligible source-fit capture set. The review file now covers 227 of
+  227 eligible findings, with 36 captured support excerpts, 64 review-gated
+  safe-removal candidates, 110 human-browser-review rows, 14 skipped sources,
+  and 3 failed fetches.
 - Added `npm run draft:gp-corroboration`, a review-gated helper that turns
   human-confirmed GP corroboration review-pack rows into contact/source-only
   `adjust` decision drafts. It can also draft `needs_more_info` decisions for

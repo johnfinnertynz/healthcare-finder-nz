@@ -609,6 +609,10 @@ test("source-fit evidence capture separates supported claims from safe removal c
   assert.equal(output.summary.sourceSupportFound, 1);
   assert.equal(output.summary.safeRemovalCandidates, 1);
   assert.equal(output.summary.needsHumanBrowserReview, 1);
+  assert.equal(output.summary.eligibleFindingsTotal, 3);
+  assert.equal(output.summary.eligibleFindingsCaptured, 3);
+  assert.equal(output.summary.eligibleFindingsRemaining, 0);
+  assert.equal(output.summary.eligibleCoveragePercent, 100);
   assert.equal(output.summary.batchCount, 3);
   assert.equal(byId.get("supported-anxiety").status, "source_support_found");
   assert.equal(
@@ -800,6 +804,10 @@ test("source-fit evidence capture can skip and merge existing batches", async ()
 
   assert.deepEqual(fetched, ["https://next.example.nz"]);
   assert.equal(output.summary.newFindingsConsidered, 1);
+  assert.equal(output.summary.eligibleFindingsTotal, 3);
+  assert.equal(output.summary.eligibleFindingsCaptured, 2);
+  assert.equal(output.summary.eligibleFindingsRemaining, 1);
+  assert.equal(output.summary.eligibleCoveragePercent, 66.7);
   assert.equal(output.summary.existingItemsSkipped, 1);
   assert.equal(output.summary.existingItemsMerged, 1);
   assert.equal(output.summary.totalItems, 2);
