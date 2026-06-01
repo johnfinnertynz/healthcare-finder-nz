@@ -247,6 +247,12 @@ function toRecord(profile) {
     website: profileUrl,
     lat: address.latitude ?? "",
     lon: address.longitude ?? "",
+    ...(address.latitude !== null && address.longitude !== null ? {
+      coordinateSource: `RANZCP Your Health in Mind profile ${verifiedMonth}`,
+      coordinatePrecision: "professional directory listing",
+      coordinateConfidence: "medium",
+      geocodeNeedsManualReview: true
+    } : {}),
     hours: wait.trim() || "Ask provider about current availability",
     cost: "Private specialist fees usually apply. Ask about referral needs, insurance, ACC, or any funded options.",
     tags: tagsFor(profile, address),

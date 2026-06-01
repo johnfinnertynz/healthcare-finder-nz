@@ -18,6 +18,7 @@ import {
   baselinePsychiatristScopeNote,
   baselinePsychiatristScopeSource
 } from "./lib/provider-scope.mjs";
+import { isNewZealandCoordinate } from "./lib/provider-geocoder.mjs";
 
 const [, , providersPath = "providers.json"] = process.argv;
 const providers = JSON.parse(fs.readFileSync(providersPath, "utf8"));
@@ -290,8 +291,7 @@ if (!Array.isArray(providers)) {
     if (hasLat && hasLon) {
       const lat = Number(provider.lat);
       const lon = Number(provider.lon);
-      if (!Number.isFinite(lat) || lat < -48 || lat > -33) recordIssue(errors, provider, `lat looks outside New Zealand (${provider.lat})`);
-      if (!Number.isFinite(lon) || lon < 165 || lon > 180) recordIssue(errors, provider, `lon looks outside New Zealand (${provider.lon})`);
+      if (!isNewZealandCoordinate(lat, lon)) recordIssue(errors, provider, `coordinates look outside New Zealand (${provider.lat}, ${provider.lon})`);
     }
   }
 }

@@ -254,7 +254,12 @@ function mapPractice(practice, seed, fetchedAt) {
     website,
     lat,
     lon,
-    ...(lat && lon ? { coordinateSource: `DoctorPricer public API ${fetchedAt}` } : {}),
+    ...(lat && lon ? {
+      coordinateSource: `DoctorPricer public API ${fetchedAt}`,
+      coordinatePrecision: "business listing",
+      coordinateConfidence: "medium",
+      geocodeNeedsManualReview: true
+    } : {}),
     hours: "Ask the practice about appointment, enrolment, and after-hours options.",
     cost: priceLabel(practice.price),
     tags: [...new Set(tags)],

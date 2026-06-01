@@ -95,6 +95,10 @@
   `adjust` decision drafts. It can also draft `needs_more_info` decisions for
   failed source captures and cannot approve availability, enrolment, scope,
   cultural support, funding, or referral claims.
+- Hardened coordinate metadata for distance ranking. New geocodes now keep
+  source, precision, confidence, and manual-review fields; out-of-NZ Nominatim
+  results are rejected; and existing coordinate records were backfilled with
+  honest coordinate metadata without marking any address as manually verified.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T06:01:46.986Z",
+  "generatedAt": "2026-06-01T07:16:06.895Z",
   "safety": {
     "purpose": "Reviewer triage only. This report does not prove provider availability and must not mutate live provider data.",
     "noLiveProviderMutation": true,

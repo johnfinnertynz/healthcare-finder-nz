@@ -209,6 +209,12 @@ function resourceRecords(bundle) {
         website,
         lat: coords.lat,
         lon: coords.lon,
+        ...(coords.lat && coords.lon ? {
+          coordinateSource: `official FHIR provider export ${verifiedMonth}`,
+          coordinatePrecision: "official provider export",
+          coordinateConfidence: "medium",
+          geocodeNeedsManualReview: true
+        } : {}),
         hours: resource.availableTime ? "See source for opening hours" : "Ask provider about hours",
         cost: type === "gp"
           ? "Varies by practice; enrolled patients usually pay less. Ask about Community Services Card and Very Low Cost Access fees."

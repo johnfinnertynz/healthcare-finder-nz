@@ -34,6 +34,7 @@
     "apply:review": "node tools/apply-provider-review-decisions.mjs",
     "draft:source-fit-capture": "node tools/draft-source-fit-capture-decisions.mjs",
     "draft:gp-corroboration": "node tools/draft-gp-corroboration-decisions.mjs",
+    "backfill:coordinate-metadata": "node tools/backfill-coordinate-metadata.mjs",
     "discover:providers": "node tools/build-provider-discovery-queue.mjs",
     "discover:seeds": "node tools/build-provider-discovery-seeds.mjs",
     "discover:enrich": "node tools/enrich-provider-candidates.mjs",

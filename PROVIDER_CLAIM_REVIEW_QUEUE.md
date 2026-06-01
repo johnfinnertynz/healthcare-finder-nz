@@ -1,15 +1,15 @@
 # Provider Claim Review Queue
 
-Generated: 2026-06-01T06:01:34.075Z
+Generated: 2026-06-01T07:16:17.732Z
 
 This queue is generated from field-level provider claims. It compresses recurring work into batches so reviewers do not have to inspect hundreds of near-identical issues one by one.
 
 ## Summary
 
-- Review items: 638
-- Batch groups: 53
-- Auto-accepted low-risk claims in graph: 1449
-- Review-gated claims in graph: 31099
+- Review items: 640
+- Batch groups: 57
+- Auto-accepted low-risk claims in graph: 1446
+- Review-gated claims in graph: 31102
 
 ## Largest Batches
 
@@ -18,8 +18,8 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | 152 | 56 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 126 | 126 | GP source corroboration | sourceQuality | review | third_party_directory | Batch research: corroborate against practice-owned, Healthpoint-approved, HPI/FHIR, or PHO source. |
 | 32 | 32 | sensitive tag or scope evidence | tags | review | third_party_directory | Open source pages and remove unsupported tags or add short excerpts. |
-| 24 | 24 | availability review | availabilityEvidence | review | official_register | Review representative items first, then apply safe decisions individually. |
-| 24 | 24 | availability review | availabilityStatus | review | official_register | Review representative items first, then apply safe decisions individually. |
+| 23 | 23 | availability review | availabilityEvidence | review | official_register | Review representative items first, then apply safe decisions individually. |
+| 23 | 23 | availability review | availabilityStatus | review | official_register | Review representative items first, then apply safe decisions individually. |
 | 18 | 18 | referral pathway review | requiresReferral | review | healthpoint | Review representative items first, then apply safe decisions individually. |
 | 18 | 18 | referral pathway review | referralType | review | healthpoint | Review representative items first, then apply safe decisions individually. |
 | 18 | 18 | referral pathway review | referralSourceExcerpt | review | healthpoint | Review representative items first, then apply safe decisions individually. |
@@ -35,12 +35,13 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | 9 | 4 | sensitive tag or scope evidence | tags | review | professional_directory | Open source pages and remove unsupported tags or add short excerpts. |
 | 8 | 3 | sensitive tag or scope evidence | tags | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
 | 6 | 4 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
-| 5 | 5 | availability review | availabilityEvidence | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 5 | 5 | availability review | availabilityStatus | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 5 | 1 | directory/direct-contact confusion | tags | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 5 | 1 | directory/direct-contact confusion | tags | review | healthpoint | Review representative items first, then apply safe decisions individually. |
+| 4 | 4 | availability review | availabilityEvidence | review | provider_owned | Review representative items first, then apply safe decisions individually. |
+| 4 | 4 | availability review | availabilityStatus | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 3 | 3 | location or distance evidence | website | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 3 | 3 | location or distance evidence | sourceQuality | review | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 3 | 3 | referral pathway review | phone | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 3 | 3 | sensitive tag or scope evidence | tags | review | provider_owned | Open source pages and remove unsupported tags or add short excerpts. |
 | 3 | 3 | sensitive tag or scope evidence | tags | review | healthpoint | Open source pages and remove unsupported tags or add short excerpts. |
 | 2 | 2 | referral pathway review | requiresReferral | review | ngo_directory | Review representative items first, then apply safe decisions individually. |
@@ -52,9 +53,8 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | 2 | 2 | sensitive/scope evidence | website | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 2 | 2 | sensitive/scope evidence | sourceQuality | review | professional_directory | Review representative items first, then apply safe decisions individually. |
 | 1 | 1 | availability review | availabilityEvidence | review | professional_directory | Review representative items first, then apply safe decisions individually. |
+| 1 | 1 | availability review | availabilityEvidence | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 | 1 | 1 | availability review | availabilityStatus | review | professional_directory | Review representative items first, then apply safe decisions individually. |
-| 1 | 1 | directory/direct-contact confusion | phone | review | provider_owned | Review representative items first, then apply safe decisions individually. |
-| 1 | 1 | directory/direct-contact confusion | firstStep | review | provider_owned | Review representative items first, then apply safe decisions individually. |
 
 ## Top Claim Items
 
@@ -98,10 +98,6 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | high | waikato-healthnz-mental-health-triage - Waikato Mental Health Triage Service | requiresReferral | false | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | wairarapa-mhaids-camhs - Wairarapa CAMHS \| MHAIDS | requiresReferral | false | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | northland-maria-rotella-clinical-psychologist - Dr Maria Rotella | availabilityEvidence | Psychology Today profile says waitlist for new clients; provider-owned site does | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-christmas-seu - Dr Christmas Seu | availabilityEvidence | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-han-chung-lim - Dr Han Chung Lim | availabilityEvidence | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-jimi-macmillan - Dr Jimi MacMillan | availabilityEvidence | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-staverton-kautoke - Dr Staverton (Tony) Kautoke | availabilityEvidence | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | wellington-clinical-psychology-practice - Wellington Clinical Psychology Practice | availabilityEvidence | very limited | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | dunedin-ashburn-clinic-psychiatry - Ashburn Clinic Psychiatry | requiresReferral | false | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | dunedin-blue-harbour-mental-health - Blue Harbour Mental Health | requiresReferral | false | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
@@ -129,16 +125,20 @@ This queue is generated from field-level provider claims. It compresses recurrin
 | high | wairarapa-mhaids-camhs - Wairarapa CAMHS \| MHAIDS | referralType | unknown | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | wairarapa-mhaids-community-mental-health - Wairarapa Community Mental Health Team \| MHAIDS | requiresReferral | false | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | northland-maria-rotella-clinical-psychologist - Dr Maria Rotella | availabilityStatus | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-christmas-seu - Dr Christmas Seu | availabilityStatus | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-han-chung-lim - Dr Han Chung Lim | availabilityStatus | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-jimi-macmillan - Dr Jimi MacMillan | availabilityStatus | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
-| high | psychiatry-nz-staverton-kautoke - Dr Staverton (Tony) Kautoke | availabilityStatus | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | wellington-clinical-psychology-practice - Wellington Clinical Psychology Practice | availabilityStatus | waitlist | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
+| high | otago-psychiatry-down-south - Psychiatry Down South | phone | 03 477 9053 | field is linked to audit rule(s): conflict-phone |
+| high | bay-of-plenty-ancora-adult-adhd-psychiatry - AncorA Adult ADHD Clinic | phone | 021 222 0993 | field is linked to audit rule(s): conflict-phone |
 | high | dunedin-ashburn-clinic-psychiatry - Ashburn Clinic Psychiatry | referralType | unknown | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | dunedin-blue-harbour-mental-health - Blue Harbour Mental Health | referralType | unknown | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | psychiatry-nz-christmas-seu - Dr Christmas Seu | referralType | unknown | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | psychiatry-nz-han-chung-lim - Dr Han Chung Lim | referralType | unknown | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | psychiatry-nz-jimi-macmillan - Dr Jimi MacMillan | referralType | unknown | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
 | high | psychiatry-nz-staverton-kautoke - Dr Staverton (Tony) Kautoke | referralType | unknown | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
+| high | manawatu-eye-openers-psychiatry - Eye-Openers Psychiatry | phone | 06 353 0300 | field is linked to audit rule(s): conflict-phone |
+| high | hawkes-bay-nova-mentem-mind-health-specialists - Nova Mentem Mind Health Specialists | requiresReferral | false | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
+| high | national-positive-mind-works-psychiatry - Positive Mind Works Psychiatry | phone | 0800 327 477 | field is linked to audit rule(s): conflict-phone |
+| high | northland-healthnz-adult-community-mha - Te Tai Tokerau Adult Community Mental Health & Addiction Service | requiresReferral | false | high-risk claim affects safety, suitability, availability, referral, or sensitive matching |
+| high | nzccp-alex-richards - Alex Richards | fit | Manawa Psychology clinical psychologist in Woolston, Christchurch. Alex lists ex | field is linked to audit rule(s): broad-tag-without-source-support |
+| high | hawkes-bay-crisp-counselling - CRISP Counselling | phoneSupport | true | field is linked to audit rule(s): weak-telehealth-evidence, weak-telehealth-evidence |
 
 Auto-accept claims are advisory only. Apply live changes only through reviewed decisions and validation.

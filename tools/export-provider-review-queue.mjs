@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
+import { isNewZealandCoordinate } from "./lib/provider-geocoder.mjs";
 
 const DEFAULTS = {
   providers: "providers.json",
@@ -216,7 +217,7 @@ function addressFindings(providers) {
     if (hasLat && hasLon) {
       const lat = Number(provider.lat);
       const lon = Number(provider.lon);
-      if (!Number.isFinite(lat) || !Number.isFinite(lon) || lat < -48 || lat > -33 || lon < 165 || lon > 180) {
+      if (!isNewZealandCoordinate(lat, lon)) {
         findings.push({
           providerId: provider.id,
           providerName: provider.name,

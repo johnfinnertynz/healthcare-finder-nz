@@ -77,6 +77,23 @@ Current schema aliases:
 - `sourceQuality` describes the kind of source, such as provider-owned page,
   trusted health directory, official agency page, professional directory, or
   third-party GP listing.
+- `coordinateSource` records where stored `lat` / `lon` values came from, such
+  as DoctorPricer, Google Places, OpenStreetMap Nominatim, a professional
+  directory, or an official provider export. Use `not recorded - needs manual
+  review` only when historical coordinates exist but the original coordinate
+  source is unknown.
+- `coordinatePrecision` should describe how exact the coordinates are, for
+  example `business listing`, `address geocode`, `street/locality geocode`,
+  `locality geocode`, `professional directory listing`, or `official provider
+  export`.
+- `coordinateConfidence` is field-level confidence for distance ranking. Use
+  `medium` for a public business listing, official export, professional
+  directory coordinate, or address-level geocode; use `low` for locality-level
+  or unrecorded coordinate sources.
+- `geocodeNeedsManualReview` should stay `true` for automated or historical
+  coordinates until a reviewer confirms the professional address and coordinate
+  source. Do not use geocoding metadata as proof that the provider is available
+  or suitable.
 - `needsManualVerification` is `true` when a listing should be checked by a
   person before stronger claims are made.
 - `needScope` is always present. Use `[]` for broad services, or a narrow list
@@ -126,6 +143,10 @@ Current schema aliases:
   provider when needed, but do not treat a broad directory as a direct provider.
 - A direct provider must have at least one usable public contact route: phone,
   text, email, or official website/contact page.
+- Coordinates are routing aids, not verification. Automated geocodes must be
+  review-gated, must stay within New Zealand bounds, and must not be used to
+  infer availability, direct contact suitability, telehealth, cultural support,
+  or clinical scope.
 - Directory records must be marked `type: "directory"` or tagged `directory`.
   They must not show "Use this contact" in the UI.
 - Directory records must not be tagged `direct-contact`. If a navigation phone

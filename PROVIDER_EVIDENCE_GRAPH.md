@@ -1,6 +1,6 @@
 # Provider Evidence Graph
 
-Generated: 2026-05-31T20:46:18.341Z
+Generated: 2026-06-01T07:16:07.388Z
 
 This graph splits provider rows into field-level claims. It is advisory and does not change public provider data.
 
@@ -8,8 +8,8 @@ This graph splits provider rows into field-level claims. It is advisory and does
 
 - Providers: 1214
 - Claims: 32548
-- Auto-accepted low-risk claims: 1449
-- Claims needing review: 31099
+- Auto-accepted low-risk claims: 1446
+- Claims needing review: 31102
 - Watchlist claims: 0
 - Reject/discovery-only claims: 0
 
@@ -17,12 +17,13 @@ This graph splits provider rows into field-level claims. It is advisory and does
 
 | Category | Providers |
 | --- | --- |
-| needs quick human check | 769 |
-| sensitive/scope evidence | 150 |
+| needs quick human check | 761 |
+| sensitive/scope evidence | 135 |
 | GP source corroboration | 120 |
 | location or distance evidence | 96 |
 | ready to auto-apply low-risk claims | 58 |
-| referral pathway review | 19 |
+| availability watchlist | 27 |
+| referral pathway review | 15 |
 | directory/direct-contact confusion | 2 |
 
 ## Safety

@@ -390,6 +390,21 @@ Provider importers geocode newly added or updated records automatically when a
 public physical address is present and `lat` / `lon` are missing. Add
 `--no-geocode` to an import command when running offline or when an import source
 must not be sent to OpenStreetMap Nominatim.
+Nominatim geocodes are now accepted only when the returned coordinates sit
+inside a broad New Zealand coordinate range. Accepted geocodes are marked with
+`coordinateSource`, `coordinatePrecision`, `coordinateConfidence`, and
+`geocodeNeedsManualReview: true` so distance ranking can use them without
+pretending the address has been manually verified.
+
+Backfill coordinate metadata for older records that already have coordinates:
+
+```sh
+npm run backfill:coordinate-metadata
+```
+
+This does not verify addresses. It records the known coordinate source where it
+can be inferred, marks weak/unknown coordinate sources honestly, and keeps
+manual review required.
 When a user has entered a resolved address/suburb, normal in-person GP,
 counsellor, psychologist, psychiatrist, and men's-centre matches are capped at
 30 km. Confirmed telehealth, national services, helplines, directories, and

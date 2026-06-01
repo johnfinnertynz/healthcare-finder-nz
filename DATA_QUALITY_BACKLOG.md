@@ -149,6 +149,11 @@ manual review burden.
   decisions; failed source captures can be drafted as `needs_more_info`.
   Availability, enrolment, scope, cultural support, funding, and referral claims
   remain out of scope.
+- Hardened coordinate metadata. Existing coordinate records now carry
+  `coordinateSource`, `coordinatePrecision`, `coordinateConfidence`, and
+  `geocodeNeedsManualReview`; automated Nominatim results are rejected if they
+  fall outside New Zealand bounds, and historical unknown coordinate sources are
+  labelled honestly for manual review.
 
 ## Next Backlog Items
 
@@ -175,10 +180,14 @@ manual review burden.
 8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-9. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
+9. Run the hardened geocoder on small missing-coordinate batches with
+   `--provider-id` or `--provider-ids`, then review low-confidence and
+   `not recorded - needs manual review` coordinate records before relying on
+   local distance ranking.
+10. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.
-10. Review the psychiatry discovery suggestions through the auditor's
+11. Review the psychiatry discovery suggestions through the auditor's
     **Discovery suggestions** queue, starting with the add-new Northland
     Psychiatry lead. Capture a human source excerpt before using the controlled
     new-provider import path.
