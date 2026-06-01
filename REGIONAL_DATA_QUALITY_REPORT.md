@@ -1,6 +1,6 @@
 # Regional Data Quality Priority Report
 
-Generated: 2026-06-01T07:16:06.895Z
+Generated: 2026-06-01T07:27:49.673Z
 
 This is a reviewer triage report only. It highlights where the database looks thin, weakly sourced, stale, or risky; it does not prove provider availability and it does not update live recommendations.
 
@@ -17,23 +17,23 @@ This is a reviewer triage report only. It highlights where the database looks th
 | Priority | Score | Region | Local direct | GP | Therapy | Psychologist | Psychiatrist | Youth | Addiction | Weak GP | Source-fit | Address gaps | First action |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | high | 211 | Auckland | 349 | 333 | 3 | 2 | 5 | 1 | 1 | 53 | 78 | 4 | Corroborate 53 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 140 | Northland | 46 | 34 | 4 | 2 | 0 | 1 | 2 | 16 | 25 | 6 | Corroborate 16 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 138 | Canterbury | 123 | 101 | 5 | 4 | 5 | 4 | 3 | 3 | 21 | 12 | Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 130 | Taranaki | 35 | 26 | 4 | 3 | 0 | 0 | 1 | 8 | 20 | 6 | Corroborate 8 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 128 | Wellington | 84 | 74 | 2 | 1 | 2 | 3 | 1 | 3 | 25 | 6 | Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 126 | Manawatu-Whanganui | 48 | 37 | 3 | 2 | 0 | 2 | 0 | 10 | 25 | 7 | Corroborate 10 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 125 | Nelson Marlborough Tasman | 32 | 23 | 3 | 2 | 0 | 1 | 0 | 1 | 16 | 7 | Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 138 | Northland | 46 | 34 | 4 | 2 | 0 | 1 | 2 | 16 | 25 | 5 | Corroborate 16 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 134 | Canterbury | 123 | 101 | 5 | 4 | 5 | 4 | 3 | 3 | 21 | 10 | Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 128 | Taranaki | 35 | 26 | 4 | 3 | 0 | 0 | 1 | 8 | 20 | 5 | Corroborate 8 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 126 | Wellington | 84 | 74 | 2 | 1 | 2 | 3 | 1 | 3 | 25 | 5 | Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 124 | Manawatu-Whanganui | 48 | 37 | 3 | 2 | 0 | 2 | 0 | 10 | 25 | 6 | Corroborate 10 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 121 | Nelson Marlborough Tasman | 32 | 23 | 3 | 2 | 0 | 1 | 0 | 1 | 16 | 5 | Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
 | high | 113 | National | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 10 | 0 | Review national fallback records for overbroad tags, weak source evidence, or directory/direct-contact confusion. |
 | high | 109 | Southland | 33 | 22 | 6 | 2 | 0 | 2 | 0 | 7 | 22 | 4 | Corroborate 7 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 101 | South Canterbury | 25 | 16 | 6 | 2 | 0 | 0 | 0 | 2 | 15 | 7 | Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 98 | Waikato | 67 | 56 | 5 | 4 | 0 | 1 | 1 | 4 | 18 | 5 | Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| high | 96 | Bay of Plenty | 57 | 48 | 4 | 2 | 0 | 1 | 1 | 2 | 19 | 3 | Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| medium | 87 | Rotorua and Taupo | 34 | 24 | 3 | 2 | 0 | 0 | 2 | 2 | 13 | 7 | Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 96 | Waikato | 67 | 56 | 5 | 4 | 0 | 1 | 1 | 4 | 18 | 4 | Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 95 | South Canterbury | 25 | 16 | 6 | 2 | 0 | 0 | 0 | 2 | 15 | 4 | Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| high | 94 | Bay of Plenty | 57 | 48 | 4 | 2 | 0 | 1 | 1 | 2 | 19 | 2 | Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| medium | 83 | Rotorua and Taupo | 34 | 24 | 3 | 2 | 0 | 0 | 2 | 2 | 13 | 5 | Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
 | medium | 82 | Otago | 42 | 29 | 7 | 5 | 3 | 2 | 0 | 9 | 19 | 4 | Corroborate 9 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| medium | 74 | Tairawhiti | 16 | 7 | 4 | 2 | 0 | 0 | 2 | 4 | 11 | 2 | Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
 | medium | 73 | West Coast | 12 | 4 | 1 | 1 | 0 | 0 | 1 | 1 | 9 | 5 | Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
-| medium | 58 | Hawke's Bay | 31 | 20 | 4 | 2 | 1 | 1 | 1 | 0 | 12 | 6 | Review 12 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence. |
-| medium | 54 | Wairarapa | 20 | 11 | 4 | 2 | 0 | 1 | 1 | 1 | 3 | 9 | Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| medium | 72 | Tairawhiti | 16 | 7 | 4 | 2 | 0 | 0 | 2 | 4 | 11 | 1 | Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
+| medium | 54 | Hawke's Bay | 31 | 20 | 4 | 2 | 1 | 1 | 1 | 0 | 12 | 4 | Review 12 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence. |
+| medium | 48 | Wairarapa | 20 | 11 | 4 | 2 | 0 | 1 | 1 | 1 | 3 | 6 | Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources. |
 
 ## Region Detail
 
@@ -63,11 +63,11 @@ Sample records to inspect:
 
 ### Northland
 
-Priority: high (140)
+Priority: high (138)
 
 Coverage: 46 local direct-care contacts, 34 GP, 4 counselling/psychology, 2 psychologist, 0 psychiatrist, 1 youth, 2 addiction.
 
-Quality signals: 25 source-fit findings (0 unallowlisted high), 16 GP corroboration tasks, 0 availability findings, 0 referral findings, 6 address/coordinate gaps.
+Quality signals: 25 source-fit findings (0 unallowlisted high), 16 GP corroboration tasks, 0 availability findings, 0 referral findings, 5 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 16 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -90,11 +90,11 @@ Sample records to inspect:
 
 ### Canterbury
 
-Priority: high (138)
+Priority: high (134)
 
 Coverage: 123 local direct-care contacts, 101 GP, 5 counselling/psychology, 4 psychologist, 5 psychiatrist, 4 youth, 3 addiction.
 
-Quality signals: 21 source-fit findings (0 unallowlisted high), 3 GP corroboration tasks, 3 availability findings, 0 referral findings, 12 address/coordinate gaps.
+Quality signals: 21 source-fit findings (0 unallowlisted high), 3 GP corroboration tasks, 3 availability findings, 0 referral findings, 10 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -114,11 +114,11 @@ Sample records to inspect:
 
 ### Taranaki
 
-Priority: high (130)
+Priority: high (128)
 
 Coverage: 35 local direct-care contacts, 26 GP, 4 counselling/psychology, 3 psychologist, 0 psychiatrist, 0 youth, 1 addiction.
 
-Quality signals: 20 source-fit findings (0 unallowlisted high), 8 GP corroboration tasks, 1 availability findings, 0 referral findings, 6 address/coordinate gaps.
+Quality signals: 20 source-fit findings (0 unallowlisted high), 8 GP corroboration tasks, 1 availability findings, 0 referral findings, 5 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 8 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -142,11 +142,11 @@ Sample records to inspect:
 
 ### Wellington
 
-Priority: high (128)
+Priority: high (126)
 
 Coverage: 84 local direct-care contacts, 74 GP, 2 counselling/psychology, 1 psychologist, 2 psychiatrist, 3 youth, 1 addiction.
 
-Quality signals: 25 source-fit findings (0 unallowlisted high), 3 GP corroboration tasks, 6 availability findings, 0 referral findings, 6 address/coordinate gaps.
+Quality signals: 25 source-fit findings (0 unallowlisted high), 3 GP corroboration tasks, 6 availability findings, 0 referral findings, 5 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 3 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -166,11 +166,11 @@ Sample records to inspect:
 
 ### Manawatu-Whanganui
 
-Priority: high (126)
+Priority: high (124)
 
 Coverage: 48 local direct-care contacts, 37 GP, 3 counselling/psychology, 2 psychologist, 0 psychiatrist, 2 youth, 0 addiction.
 
-Quality signals: 25 source-fit findings (0 unallowlisted high), 10 GP corroboration tasks, 0 availability findings, 0 referral findings, 7 address/coordinate gaps.
+Quality signals: 25 source-fit findings (0 unallowlisted high), 10 GP corroboration tasks, 0 availability findings, 0 referral findings, 6 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 10 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -193,11 +193,11 @@ Sample records to inspect:
 
 ### Nelson Marlborough Tasman
 
-Priority: high (125)
+Priority: high (121)
 
 Coverage: 32 local direct-care contacts, 23 GP, 3 counselling/psychology, 2 psychologist, 0 psychiatrist, 1 youth, 0 addiction.
 
-Quality signals: 16 source-fit findings (0 unallowlisted high), 1 GP corroboration tasks, 3 availability findings, 0 referral findings, 7 address/coordinate gaps.
+Quality signals: 16 source-fit findings (0 unallowlisted high), 1 GP corroboration tasks, 3 availability findings, 0 referral findings, 5 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -265,41 +265,13 @@ Sample records to inspect:
 - southland-adventure-development | youth | Adventure Development Southland | missing address
 - southland-nga-kete-matauranga-pounamu | public-service | Nga Kete Matauranga Pounamu | missing address
 
-### South Canterbury
-
-Priority: high (101)
-
-Coverage: 25 local direct-care contacts, 16 GP, 6 counselling/psychology, 2 psychologist, 0 psychiatrist, 0 youth, 0 addiction.
-
-Quality signals: 15 source-fit findings (0 unallowlisted high), 2 GP corroboration tasks, 0 availability findings, 0 referral findings, 7 address/coordinate gaps.
-
-Recommended next actions:
-- Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
-- Find the clearest local psychiatry referral pathway and capture whether GP referral is required.
-- Add or verify a youth/rangatahi support pathway for this region.
-- Add or verify alcohol, drug, or gambling support options for this region.
-- Review 13 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.
-- Resolve address and coordinate gaps that affect distance ranking.
-
-Missing coverage signals: local psychiatrist or psychiatry pathway; local youth/rangatahi support; local addiction support.
-
-Sample records to inspect:
-- gp-temuka-family-practice-44-2416-171-2772 | gp | Temuka Family Practice | GP source corroboration
-- gp-hirsch-ford-medical-44-3949-171-2480 | gp | Hirsch-Ford Medical | GP source corroboration
-- south-canterbury-a-time-to-talk | counsellor | A Time to Talk | broad-tag-without-source-support
-- south-canterbury-aod-service | addiction | Alcohol & Other Drugs (A&OD) South Canterbury | weak-telehealth-evidence
-- south-canterbury-black-dog-therapy | counsellor | Black Dog Therapy | broad-tag-without-source-support
-- crisis-south-canterbury | public-service | South Canterbury Mental Health Crisis Team | missing address
-- south-canterbury-alice-mcclintock | psychologist | Alice McClintock - South Coast Psychology | missing coordinates
-- south-canterbury-arowhenua-whanau-services | public-service | Arowhenua Whanau Services | missing coordinates
-
 ### Waikato
 
-Priority: high (98)
+Priority: high (96)
 
 Coverage: 67 local direct-care contacts, 56 GP, 5 counselling/psychology, 4 psychologist, 0 psychiatrist, 1 youth, 1 addiction.
 
-Quality signals: 18 source-fit findings (0 unallowlisted high), 4 GP corroboration tasks, 0 availability findings, 0 referral findings, 5 address/coordinate gaps.
+Quality signals: 18 source-fit findings (0 unallowlisted high), 4 GP corroboration tasks, 0 availability findings, 0 referral findings, 4 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -320,13 +292,41 @@ Sample records to inspect:
 - gp-raukura-hauora-o-tainui-te-rengarenga-37-7955-175-2457 | gp | Raukura Hauora O Tainui - Te Rengarenga | weak-maori-evidence
 - gp-raukura-hauora-o-tainui-waahi-37-5583-175-1537 | gp | Raukura Hauora O Tainui - Waahi | weak-maori-evidence
 
+### South Canterbury
+
+Priority: high (95)
+
+Coverage: 25 local direct-care contacts, 16 GP, 6 counselling/psychology, 2 psychologist, 0 psychiatrist, 0 youth, 0 addiction.
+
+Quality signals: 15 source-fit findings (0 unallowlisted high), 2 GP corroboration tasks, 0 availability findings, 0 referral findings, 4 address/coordinate gaps.
+
+Recommended next actions:
+- Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
+- Find the clearest local psychiatry referral pathway and capture whether GP referral is required.
+- Add or verify a youth/rangatahi support pathway for this region.
+- Add or verify alcohol, drug, or gambling support options for this region.
+- Review 13 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.
+- Resolve address and coordinate gaps that affect distance ranking.
+
+Missing coverage signals: local psychiatrist or psychiatry pathway; local youth/rangatahi support; local addiction support.
+
+Sample records to inspect:
+- gp-temuka-family-practice-44-2416-171-2772 | gp | Temuka Family Practice | GP source corroboration
+- gp-hirsch-ford-medical-44-3949-171-2480 | gp | Hirsch-Ford Medical | GP source corroboration
+- south-canterbury-a-time-to-talk | counsellor | A Time to Talk | broad-tag-without-source-support
+- south-canterbury-aod-service | addiction | Alcohol & Other Drugs (A&OD) South Canterbury | weak-telehealth-evidence
+- south-canterbury-black-dog-therapy | counsellor | Black Dog Therapy | broad-tag-without-source-support
+- crisis-south-canterbury | public-service | South Canterbury Mental Health Crisis Team | missing address
+- south-canterbury-alice-mcclintock | psychologist | Alice McClintock - South Coast Psychology | missing coordinates
+- south-canterbury-reihana-psychology | psychologist | Reihana Psychology | missing coordinates
+
 ### Bay of Plenty
 
-Priority: high (96)
+Priority: high (94)
 
 Coverage: 57 local direct-care contacts, 48 GP, 4 counselling/psychology, 2 psychologist, 0 psychiatrist, 1 youth, 1 addiction.
 
-Quality signals: 19 source-fit findings (0 unallowlisted high), 2 GP corroboration tasks, 1 availability findings, 0 referral findings, 3 address/coordinate gaps.
+Quality signals: 19 source-fit findings (0 unallowlisted high), 2 GP corroboration tasks, 1 availability findings, 0 referral findings, 2 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -345,15 +345,14 @@ Sample records to inspect:
 - bay-of-plenty-psychology-group-tauranga | psychologist | The Psychology Group - Tauranga | broad-tag-without-source-support
 - crisis-bay-of-plenty | public-service | Bay of Plenty Mental Health Crisis Teams | missing address
 - bay-of-plenty-get-smart-tauranga | youth | Get Smart Tauranga | missing address
-- bay-of-plenty-turning-point-trust | public-service | Turning Point Trust | missing coordinates
 
 ### Rotorua and Taupo
 
-Priority: medium (87)
+Priority: medium (83)
 
 Coverage: 34 local direct-care contacts, 24 GP, 3 counselling/psychology, 2 psychologist, 0 psychiatrist, 0 youth, 2 addiction.
 
-Quality signals: 13 source-fit findings (0 unallowlisted high), 2 GP corroboration tasks, 0 availability findings, 0 referral findings, 7 address/coordinate gaps.
+Quality signals: 13 source-fit findings (0 unallowlisted high), 2 GP corroboration tasks, 0 availability findings, 0 referral findings, 5 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 2 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -400,34 +399,6 @@ Sample records to inspect:
 - gp-m-ori-hill-clinic-45-8581-170-5008 | gp | Māori Hill Clinic | weak-maori-evidence
 - otago-adventure-development | youth | Adventure Development Otago | missing address
 
-### Tairawhiti
-
-Priority: medium (74)
-
-Coverage: 16 local direct-care contacts, 7 GP, 4 counselling/psychology, 2 psychologist, 0 psychiatrist, 0 youth, 2 addiction.
-
-Quality signals: 11 source-fit findings (0 unallowlisted high), 4 GP corroboration tasks, 0 availability findings, 0 referral findings, 2 address/coordinate gaps.
-
-Recommended next actions:
-- Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
-- Find the clearest local psychiatry referral pathway and capture whether GP referral is required.
-- Add or verify a youth/rangatahi support pathway for this region.
-- Review 7 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.
-- Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.
-- Resolve address and coordinate gaps that affect distance ranking.
-
-Missing coverage signals: local psychiatrist or psychiatry pathway; local youth/rangatahi support.
-
-Sample records to inspect:
-- gp-city-medical-centre-gisborne-38-6645-178-0226 | gp | City Medical Centre Gisborne | GP source corroboration
-- gp-de-lautour-medical-38-6683-178-0475 | gp | De Lautour Medical | GP source corroboration
-- gp-te-puhi-kai-ti-community-health-centre-38-6741-178-0511 | gp | Te Puhi Kai-ti Community Health Centre | GP source corroboration
-- tairawhiti-atawhai-counselling | counsellor | Atawhai Counselling and Supervision | broad-tag-without-source-support
-- tairawhiti-icamhs-te-whare-o-te-rito | youth | ICAMHS Te Whare o te Rito | weak-telehealth-evidence
-- tairawhiti-older-persons-mental-health-services | public-service | Older Persons Mental Health Services | Tairawhiti | weak-telehealth-evidence
-- tairawhiti-te-whare-oranga | public-service | Te Whare Oranga Adult Community Mental Health & Addiction Services | weak-telehealth-evidence
-- crisis-tairawhiti | public-service | Tairawhiti Mental Health Crisis Team | missing address
-
 ### West Coast
 
 Priority: medium (73)
@@ -456,13 +427,41 @@ Sample records to inspect:
 - crisis-west-coast | public-service | West Coast Mental Health Crisis Team | missing address
 - west-coast-proactive-greymouth-psychology | psychologist | Proactive Greymouth | missing coordinates
 
+### Tairawhiti
+
+Priority: medium (72)
+
+Coverage: 16 local direct-care contacts, 7 GP, 4 counselling/psychology, 2 psychologist, 0 psychiatrist, 0 youth, 2 addiction.
+
+Quality signals: 11 source-fit findings (0 unallowlisted high), 4 GP corroboration tasks, 0 availability findings, 0 referral findings, 1 address/coordinate gaps.
+
+Recommended next actions:
+- Corroborate 4 GP records against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
+- Find the clearest local psychiatry referral pathway and capture whether GP referral is required.
+- Add or verify a youth/rangatahi support pathway for this region.
+- Review 7 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.
+- Check availability/referral/watchlist items so unavailable or GP-referral services do not lead first recommendations.
+- Resolve address and coordinate gaps that affect distance ranking.
+
+Missing coverage signals: local psychiatrist or psychiatry pathway; local youth/rangatahi support.
+
+Sample records to inspect:
+- gp-city-medical-centre-gisborne-38-6645-178-0226 | gp | City Medical Centre Gisborne | GP source corroboration
+- gp-de-lautour-medical-38-6683-178-0475 | gp | De Lautour Medical | GP source corroboration
+- gp-te-puhi-kai-ti-community-health-centre-38-6741-178-0511 | gp | Te Puhi Kai-ti Community Health Centre | GP source corroboration
+- tairawhiti-atawhai-counselling | counsellor | Atawhai Counselling and Supervision | broad-tag-without-source-support
+- tairawhiti-icamhs-te-whare-o-te-rito | youth | ICAMHS Te Whare o te Rito | weak-telehealth-evidence
+- tairawhiti-older-persons-mental-health-services | public-service | Older Persons Mental Health Services | Tairawhiti | weak-telehealth-evidence
+- tairawhiti-te-whare-oranga | public-service | Te Whare Oranga Adult Community Mental Health & Addiction Services | weak-telehealth-evidence
+- crisis-tairawhiti | public-service | Tairawhiti Mental Health Crisis Team | missing address
+
 ### Hawke's Bay
 
-Priority: medium (58)
+Priority: medium (54)
 
 Coverage: 31 local direct-care contacts, 20 GP, 4 counselling/psychology, 2 psychologist, 1 psychiatrist, 1 youth, 1 addiction.
 
-Quality signals: 12 source-fit findings (0 unallowlisted high), 0 GP corroboration tasks, 1 availability findings, 0 referral findings, 6 address/coordinate gaps.
+Quality signals: 12 source-fit findings (0 unallowlisted high), 0 GP corroboration tasks, 1 availability findings, 0 referral findings, 4 address/coordinate gaps.
 
 Recommended next actions:
 - Review 12 medium source-fit findings for overbroad tags, directories, or weak support-preference evidence.
@@ -477,15 +476,14 @@ Sample records to inspect:
 - crisis-hawkes-bay | public-service | Hawke's Bay Mental Health Crisis Team | missing address
 - hawkes-bay-te-taiwhenua-o-heretaunga | public-service | Te Taiwhenua o Heretaunga | missing address
 - hawkes-bay-whakiao-taurima-counselling | counsellor | Whakiao Taurima Counselling | missing address
-- hawkes-bay-healthnz-community-mhas | public-service | Hawke's Bay Community Mental Health and Addiction Services | missing coordinates
 
 ### Wairarapa
 
-Priority: medium (54)
+Priority: medium (48)
 
 Coverage: 20 local direct-care contacts, 11 GP, 4 counselling/psychology, 2 psychologist, 0 psychiatrist, 1 youth, 1 addiction.
 
-Quality signals: 3 source-fit findings (0 unallowlisted high), 1 GP corroboration tasks, 0 availability findings, 0 referral findings, 9 address/coordinate gaps.
+Quality signals: 3 source-fit findings (0 unallowlisted high), 1 GP corroboration tasks, 0 availability findings, 0 referral findings, 6 address/coordinate gaps.
 
 Recommended next actions:
 - Corroborate 1 GP record against practice-owned, Healthpoint, PHO, HPI, or approved FHIR sources.
@@ -503,5 +501,5 @@ Sample records to inspect:
 - wairarapa-nic-allan-psychology | psychologist | Nicholas Allan Psychology | missing address
 - wairarapa-piki-youth-support | youth | Piki Wellington and Wairarapa | missing address
 - wairarapa-briar-nicol-counselling | counsellor | Briar Nicol Counselling | missing coordinates
-- wairarapa-changeability-counselling | counsellor | ChangeAbility Counselling & Family Violence Services | missing coordinates
+- wairarapa-pathways-masterton | public-service | Pathways Masterton | missing coordinates
 

@@ -395,6 +395,10 @@ inside a broad New Zealand coordinate range. Accepted geocodes are marked with
 `coordinateSource`, `coordinatePrecision`, `coordinateConfidence`, and
 `geocodeNeedsManualReview: true` so distance ranking can use them without
 pretending the address has been manually verified.
+The geocoder tries conservative fallback queries for specific public addresses,
+but skips vague locality-only entries such as `Timaru`, `Blenheim`, or
+`Various venues` so city-centre coordinates are not mistaken for a real clinic
+point.
 
 Backfill coordinate metadata for older records that already have coordinates:
 

@@ -19511,7 +19511,13 @@
     "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/wingspan-formerly-home-and-family-counselling/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -36.8616736,
+    "lon": 174.7597866,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-wiri-family-doctors-37-0009-174-8893",
@@ -22761,7 +22767,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://turningpoint.org.nz/turning-point",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -37.7044892,
+    "lon": 176.1491524,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-waihi-beach-medical-centre-37-4112-175-9403",
@@ -24178,7 +24190,13 @@
     "availabilityCheckedAt": "2026-06",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.chchaod.org.nz/contact",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -43.5413333,
+    "lon": 172.6434793,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-darfield-medical-centre-43-5225-172-3705",
@@ -25617,7 +25635,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/he-waka-tapu/at/161-pages-road-wainoni-christchurch/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -43.5204409,
+    "lon": 172.6963344,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-health-and-sport-central-43-5365-172-6364",
@@ -26781,7 +26805,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-education-and-resource-centre/",
-    "availabilityNeedsManualReview": false
+    "availabilityNeedsManualReview": false,
+    "lat": -43.5416742,
+    "lon": 172.6168963,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-menz-medical-43-5214-172-6369",
@@ -30625,7 +30655,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthnz.govt.nz/hospitals-services/hospitals/hawkes-bay/mental-health-and-addiction-services-in-hawkes-bay",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -39.6269054,
+    "lon": 176.8254695,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "76 Wellesley Road, Napier South, Napier",
@@ -30692,7 +30728,13 @@
     "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
     "referralConfidence": "medium",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "lat": -39.4955001,
+    "lon": 176.9132697,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "hawkes-bay-healthpoint-gp-directory",
@@ -31023,7 +31065,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthnz.govt.nz/hospitals-services/hospitals/hawkes-bay/mental-health-and-addiction-services-in-hawkes-bay",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -39.641992,
+    "lon": 176.8472176,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "353 Gloucester Street, Taradale, Napier 4112",
@@ -33339,7 +33387,13 @@
     "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://manawatusf.org.nz/anxiety-group",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -40.3526302,
+    "lon": 175.6155272,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "manawatu-whanganui-healthpoint-gp-directory",
@@ -33452,7 +33506,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.mashtrust.org.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -40.357778,
+    "lon": 175.6026499,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "street/locality geocode",
+    "coordinateConfidence": "low",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-orbit-medical-centre-40-3472-175-6209",
@@ -36698,7 +36758,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://youthline.co.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -36.8780764,
+    "lon": 174.7736695,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "nelson-marlborough-tasman-care-marlborough",
@@ -37452,7 +37518,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthaction.org.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -41.2753845,
+    "lon": 173.2859523,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-m-pua-health-centre-41-2534-173-0959",
@@ -38302,7 +38374,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.tpo.org.nz/contact-us",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -41.3082074,
+    "lon": 173.2334384,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "nelson-marlborough-tasman-te-whare-mahana",
@@ -40148,7 +40226,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.nhht.co.nz/mental-health-addictions",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -35.3790848,
+    "lon": 174.063679,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "street/locality geocode",
+    "coordinateConfidence": "low",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-ngunguru-medical-centre-35-6269-174-5097",
@@ -41231,7 +41315,13 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "lat": -35.7365625,
+    "lon": 174.3036854,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "73 Water Street, Whangarei",
@@ -44857,7 +44947,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/addiction/manaaki-ora-trust-3/at/1-brookland-road-western-heights-rotorua/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -38.1384516,
+    "lon": 176.2540821,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-mangakino-health-centre-38-3701-175-7744",
@@ -45624,7 +45720,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://info.health.nz/locations/rotorua-taupo-lakes/mental-health-addiction/adult-mhas-taupo",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -38.6991471,
+    "lon": 176.0993284,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "",
@@ -45917,7 +46019,13 @@
     "referralSourceExcerpt": "Public information suggests self-referral, online booking, or direct patient enquiry is available.",
     "referralConfidence": "medium",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "lat": -38.1340608,
+    "lon": 176.2523849,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-te-r-nanga-o-ng-ti-pikiao-general-practice-38-1365-176-2492",
@@ -46502,7 +46610,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/arowhenua-whanau-services/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -44.2413051,
+    "lon": 171.2771242,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "south-canterbury-black-dog-therapy",
@@ -46638,7 +46752,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.futureready.org.nz/listing/centrecare-waimate/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -44.7310491,
+    "lon": 171.0502944,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "Kensington Centre, Corner High and Queen Streets, Timaru",
@@ -47006,7 +47126,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://southcanterbury.org.nz/business-listing/health-point-timaru-ampss101/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -44.3967693,
+    "lon": 171.2504254,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-hirsch-ford-medical-44-3949-171-2480",
@@ -47863,7 +47989,13 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "lat": -46.4371744,
+    "lon": 168.3593705,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "southland-adventure-development",
@@ -50114,7 +50246,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/ngati-porou-oranga-mental-health-services/at/66-customhouse-street-gisborne/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -38.669663,
+    "lon": 178.0263876,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "Gisborne Hospital, 421 Ormond Road, Gisborne",
@@ -52691,7 +52829,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.tutamawahine.org.nz/contact",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -39.0591855,
+    "lon": 174.0722415,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-tui-ora-hauora-wh-nau-ng-motu-39-0687-174-0679",
@@ -56065,7 +56209,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/te-korowai-hauora-o-hauraki-hinengaro-mental/at/15-princes-street-paeroa/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -37.3816869,
+    "lon": 175.6706433,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-the-good-doctor-commerce-street-37-7871-175-2656",
@@ -56558,7 +56708,13 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "lat": -37.7857403,
+    "lon": 175.2753126,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "waikato-youth-intact",
@@ -56879,7 +57035,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://waisct.org.nz/changeability/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -40.9471422,
+    "lon": 175.6615203,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "wairarapa-king-street-artworks",
@@ -56916,7 +57078,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://waisct.org.nz/king-street-artworks/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -40.9394195,
+    "lon": 175.6680542,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-kuripuni-medical-centre-40-9584-175-6494",
@@ -57328,7 +57496,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://healthpoint.co.nz/mental-health-addictions/mental-health/te-hauora-runanga-o-wairarapa/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -40.9470703,
+    "lon": 175.6777371,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "gp-te-puna-oranga-o-taki-charitable-trust-40-7527-175-1393",
@@ -57504,7 +57678,13 @@
     "referralSourceExcerpt": "Referral requirements are not clearly published in the stored source fields.",
     "referralConfidence": "low",
     "referralLastChecked": "2026-05",
-    "referralNeedsManualReview": true
+    "referralNeedsManualReview": true,
+    "lat": -40.9415805,
+    "lon": 175.6572694,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "street/locality geocode",
+    "coordinateConfidence": "low",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "Wairarapa Hospital Campus, Te Ore Ore Road, Masterton",
@@ -62681,7 +62861,13 @@
     "availabilityCheckedAt": "2026-05",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.vibe.org.nz/contact-us",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -41.2084837,
+    "lon": 174.9061433,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "address": "Willis St Village, 5/148 Willis Street, Wellington",
@@ -63013,7 +63199,13 @@
     "availabilityCheckedAt": "2026-05-24",
     "availabilityEvidence": "",
     "availabilitySource": "https://www.wwhc.org.nz/",
-    "availabilityNeedsManualReview": true
+    "availabilityNeedsManualReview": true,
+    "lat": -41.2921687,
+    "lon": 174.7747796,
+    "coordinateSource": "OpenStreetMap Nominatim 2026-06-01",
+    "coordinatePrecision": "address geocode",
+    "coordinateConfidence": "medium",
+    "geocodeNeedsManualReview": true
   },
   {
     "id": "crisis-wellington",

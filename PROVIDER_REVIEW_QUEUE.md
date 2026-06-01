@@ -1,6 +1,6 @@
 # Provider Review Queue
 
-Generated: 2026-06-01T07:16:07.037Z
+Generated: 2026-06-01T07:27:49.823Z
 
 Focused queue: yes.
 
@@ -8,8 +8,8 @@ Focused queue: yes.
 
 - Review items: 775
 - Critical: 14
-- High: 471
-- Medium: 144
+- High: 451
+- Medium: 164
 - Low: 146
 
 ## By Review Category
@@ -17,19 +17,19 @@ Focused queue: yes.
 | Category | Items |
 | --- | --- |
 | GP source corroboration | 251 |
-| Location and distance evidence | 130 |
-| Sensitive tag or scope evidence | 111 |
+| Sensitive tag or scope evidence | 124 |
+| Location and distance evidence | 99 |
 | Referral pathway review | 81 |
 | Availability review | 77 |
+| Needs quick human check | 59 |
 | Google Places discovery | 50 |
-| Needs quick human check | 41 |
 | Directory/direct-contact confusion | 34 |
 
 ## Top Queue Items
 
 | Priority | Severity | Category | Provider | Type | Region / City | Rules | Reasons |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| critical | high | Directory/direct-contact confusion | canterbury-mherc - Mental Health Education and Resource Centre | directory | Canterbury / Christchurch | directory-treated-direct | high: directory-treated-direct; provider details need manual verification; address missing coordinates |
+| critical | high | Directory/direct-contact confusion | canterbury-mherc - Mental Health Education and Resource Centre | directory | Canterbury / Christchurch | directory-treated-direct | high: directory-treated-direct; provider details need manual verification |
 | critical | high | Directory/direct-contact confusion | national-family-services-directory - Family Services Directory / 211 Helpline | directory | National / Aotearoa New Zealand | directory-treated-direct | high: directory-treated-direct; provider details need manual verification |
 | critical | high | Referral pathway review | bay-of-plenty-ancora-adult-adhd-psychiatry - AncorA Adult ADHD Clinic | psychiatrist | Bay of Plenty / Tauranga and nationwide telehealth | discovery-suggestion, needs_manual_research, conflict-phone, conflict-tags, conflict-advertisedSpecialties | provider discovery suggestion; conflicting phone, tags, advertisedSpecialties values; extracted from seed source provider_owned; conflicting fields: phone, tags, advertisedSpecialties |
 | critical | high | Referral pathway review | manawatu-eye-openers-psychiatry - Eye-Openers Psychiatry | psychiatrist | Manawatu-Whanganui / Palmerston North | discovery-suggestion, needs_manual_research, conflict-address, conflict-phone, conflict-website, conflict-source, conflict-bookingUrl | provider discovery suggestion; conflicting address, phone, website, source, bookingUrl values; extracted from seed source provider_owned; conflicting fields: address, phone, website, source, bookingUrl |
@@ -44,7 +44,7 @@ Focused queue: yes.
 | critical | high | Referral pathway review | national-tom-oflynn-psychiatrist - Tom O'Flynn Psychiatrist | psychiatrist | National / Telehealth | discovery-suggestion, needs_manual_research, conflict-tags, conflict-advertisedSpecialties | provider discovery suggestion; conflicting tags, advertisedSpecialties values; extracted from seed source healthpoint; conflicting fields: tags, advertisedSpecialties |
 | critical | high | Referral pathway review | candidate-tms-ketamine-therapy - TMS & Ketamine Therapy | psychiatrist | Auckland / Auckland | discovery-suggestion, needs_manual_research, conflict-address, conflict-tags, conflict-advertisedSpecialties | provider discovery suggestion; conflicting address, tags, advertisedSpecialties values; extracted from seed source provider_owned; conflicting fields: address, tags, advertisedSpecialties |
 | high | medium | Availability review | psychiatry-nz-jimi-macmillan - Dr Jimi MacMillan | psychiatrist | National / Telehealth across New Zealand | weak-maori-evidence, stale-availability | medium: weak-maori-evidence; medium: stale-availability; provider details need manual verification; availability needs manual review; referral pathway needs manual review; psychiatrist referral pathway unknown; availability status is waitlist; address missing coordinates |
-| high | medium | Location and distance evidence | wellington-womens-health-collective - Wellington Women's Health Collective | counsellor | Wellington / Wellington | broad-tag-without-source-support, weak-rainbow-evidence, weak-telehealth-evidence | medium: broad-tag-without-source-support; medium: weak-rainbow-evidence; medium: weak-telehealth-evidence; availability needs manual review; address missing coordinates |
+| high | medium | Sensitive tag or scope evidence | wellington-womens-health-collective - Wellington Women's Health Collective | counsellor | Wellington / Wellington | broad-tag-without-source-support, weak-rainbow-evidence, weak-telehealth-evidence | medium: broad-tag-without-source-support; medium: weak-rainbow-evidence; medium: weak-telehealth-evidence; availability needs manual review |
 | high | medium | Availability review | psychiatry-nz-christmas-seu - Dr Christmas Seu | psychiatrist | National / Telehealth across New Zealand | stale-availability | medium: stale-availability; provider details need manual verification; availability needs manual review; referral pathway needs manual review; psychiatrist referral pathway unknown; availability status is waitlist; address missing coordinates |
 | high | medium | Availability review | psychiatry-nz-han-chung-lim - Dr Han Chung Lim | psychiatrist | National / Telehealth across New Zealand | stale-availability | medium: stale-availability; provider details need manual verification; availability needs manual review; referral pathway needs manual review; psychiatrist referral pathway unknown; availability status is waitlist; address missing coordinates |
 | high | medium | Availability review | psychiatry-nz-staverton-kautoke - Dr Staverton (Tony) Kautoke | psychiatrist | National / Telehealth across New Zealand | stale-availability | medium: stale-availability; provider details need manual verification; availability needs manual review; referral pathway needs manual review; psychiatrist referral pathway unknown; availability status is waitlist; address missing coordinates |
@@ -86,7 +86,6 @@ Focused queue: yes.
 | high | medium | Location and distance evidence | canterbury-lucid-psychotherapy - Lucid Psychotherapy and Counselling | counsellor | Canterbury / Christchurch | broad-tag-without-source-support, missing-address | medium: broad-tag-without-source-support; medium: missing-address; provider details need manual verification; availability needs manual review |
 | high | medium | Location and distance evidence | otago-ocasa - OCASA | counsellor | Otago / Dunedin / Otago | broad-tag-without-source-support, missing-address | medium: broad-tag-without-source-support; medium: missing-address; provider details need manual verification; availability needs manual review |
 | high | medium | Location and distance evidence | south-canterbury-a-time-to-talk - A Time to Talk | counsellor | South Canterbury / Timaru | broad-tag-without-source-support, missing-coordinates | medium: broad-tag-without-source-support; medium: missing-coordinates; availability needs manual review; address missing coordinates |
-| high | medium | Location and distance evidence | taranaki-tu-tama-wahine - Tu Tama Wahine o Taranaki | counsellor | Taranaki / New Plymouth / Waitara | broad-tag-without-source-support, missing-coordinates | medium: broad-tag-without-source-support; medium: missing-coordinates; availability needs manual review; address missing coordinates |
 | high | medium | Directory/direct-contact confusion | nzccp-alexandra-hayns - Alex Hayns | psychologist | Auckland / Auckland | register-only-public-contact, missing-address | medium: register-only-public-contact; medium: missing-address; provider details need manual verification; availability needs manual review |
 | high | medium | Directory/direct-contact confusion | nzccp-alana-bishop-mem-cm4xksg8h - Alana Bishop | psychologist | Canterbury / Christchurch | register-only-public-contact, missing-address | medium: register-only-public-contact; medium: missing-address; provider details need manual verification; availability needs manual review |
 | high | medium | Directory/direct-contact confusion | nzccp-alan-hackney - Alan Hackney | psychologist | Wellington / Wellington | register-only-public-contact, missing-address | medium: register-only-public-contact; medium: missing-address; provider details need manual verification; availability needs manual review |
@@ -109,5 +108,6 @@ Focused queue: yes.
 | high | medium | Availability review | marlborough-durkin-zintl-psychology - Durkin Zintl Psychology | psychologist | Nelson Marlborough Tasman / Blenheim and telehealth | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
 | high | medium | Availability review | northland-mindme-clinical-psychology - MindMe Clinical Psychology | psychologist | Northland / Mid-North and Whangarei | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
 | high | medium | Availability review | northland-wayfinder-psychology - Wayfinder Psychology | psychologist | Northland / Whangarei | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
+| high | medium | Availability review | tairawhiti-mauri-psychology - Mauri Psychology | psychologist | Tairawhiti / Gisborne | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
 
 Review decisions must be applied with `npm run apply:review`; the public app does not write provider data from the browser.

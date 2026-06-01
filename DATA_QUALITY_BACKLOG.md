@@ -154,6 +154,11 @@ manual review burden.
   `geocodeNeedsManualReview`; automated Nominatim results are rejected if they
   fall outside New Zealand bounds, and historical unknown coordinate sources are
   labelled honestly for manual review.
+- Added conservative geocoder fallback queries and skipped vague locality-only
+  addresses. A bounded run filled 32 OpenStreetMap Nominatim coordinate records
+  in total and reduced distance-weighted records with a public address but no
+  coordinates from 55 to 24 without treating town names or "various venues" as
+  exact clinic points.
 
 ## Next Backlog Items
 
@@ -180,10 +185,9 @@ manual review burden.
 8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-9. Run the hardened geocoder on small missing-coordinate batches with
-   `--provider-id` or `--provider-ids`, then review low-confidence and
-   `not recorded - needs manual review` coordinate records before relying on
-   local distance ranking.
+9. Review the 24 remaining public-address/no-coordinate records. Use provider
+   source pages or a review-gated Google Places check for specific unresolved
+   addresses; do not geocode vague town-only or "various venues" records.
 10. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.

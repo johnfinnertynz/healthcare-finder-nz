@@ -44,18 +44,93 @@ function addressParts(provider) {
     .filter(Boolean);
 }
 
+function uniqueQueries(values) {
+  const seen = new Set();
+  const queries = [];
+  for (const value of values) {
+    const query = String(value || "").replace(/\s+/g, " ").replace(/\s+,/g, ",").trim();
+    if (!query) continue;
+    const withCountry = /new zealand|aotearoa/i.test(query) ? query : `${query}, New Zealand`;
+    const key = cacheKey(withCountry);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    queries.push(withCountry);
+  }
+  return queries;
+}
+
+function firstPlace(value) {
+  return String(value || "").split(/[\/;|]/)[0].split(/\band\b/i)[0].trim();
+}
+
+function simplifyAddressForGeocoding(address) {
+  return String(address || "")
+    .replace(/\b(l|lvl|level|floor)\s*\d+[a-z]?\b\s*,?/gi, "")
+    .replace(/\b(unit|suite|room)\s*\d+[a-z]?\b\s*,?/gi, "")
+    .replace(/\s+/g, " ")
+    .replace(/^\s*,\s*/, "")
+    .trim();
+}
+
+function compactAddress(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/\baotearoa\b|\bnew zealand\b/g, "")
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function isVagueGeocodingAddress(provider) {
+  const address = String(provider.address || "").trim();
+  if (!address) return true;
+  const normalised = compactAddress(address);
+  if (!normalised) return true;
+  if (/\b(various venues|multiple venues|by arrangement|not listed|ask provider|online only|telehealth)\b/i.test(address)) {
+    return true;
+  }
+
+  const hasDigit = /\d/.test(address);
+  const specificPlaceCue = /\b(street|st|road|rd|avenue|ave|drive|dr|lane|ln|terrace|tce|place|pl|quay|building|centre|center|clinic|hospital|hub|campus|village|house|plaza|level|floor|suite|unit)\b/i.test(address);
+  if (hasDigit || specificPlaceCue) return false;
+
+  const city = compactAddress(provider.city);
+  const region = compactAddress(provider.region);
+  const tokens = normalised.split(" ").filter(Boolean);
+  return tokens.length <= 3
+    || normalised === city
+    || normalised === region
+    || city.split(" ").filter(Boolean).includes(normalised);
+}
+
 export function geocodableAddress(provider) {
-  if (hasCoords(provider) || isRemote(provider)) return "";
+  return geocodingQueries(provider)[0] || "";
+}
+
+export function geocodingQueries(provider) {
+  if (hasCoords(provider) || isRemote(provider)) return [];
 
   const address = String(provider.address || "").trim();
-  if (!address) return "";
+  if (!address) return [];
+  if (isVagueGeocodingAddress(provider)) return [];
 
   const enoughDetail = address.split(/\s+/).length >= 2 || provider.city || provider.region;
-  if (!enoughDetail) return "";
+  if (!enoughDetail) return [];
 
   const parts = addressParts(provider);
-  const query = [...new Set(parts)].join(", ");
-  return /new zealand|aotearoa/i.test(query) ? query : `${query}, New Zealand`;
+  const fullQuery = [...new Set(parts)].join(", ");
+  const simpleAddress = simplifyAddressForGeocoding(address);
+  const primaryCity = firstPlace(provider.city);
+  const region = provider.region && provider.region !== "National" ? provider.region : "";
+
+  return uniqueQueries([
+    fullQuery,
+    [simpleAddress, primaryCity].filter(Boolean).join(", "),
+    [address, primaryCity].filter(Boolean).join(", "),
+    [simpleAddress, region].filter(Boolean).join(", "),
+    simpleAddress,
+    address
+  ]);
 }
 
 export function loadGeocodeConfig(configPath = "provider-sources.json") {
@@ -178,8 +253,8 @@ export async function geocodeProviderRecords(providers, options = {}) {
   for (const provider of providers) {
     if (providerIds && !providerIds.has(provider.id)) continue;
 
-    const query = geocodableAddress(provider);
-    if (!query) {
+    const queries = geocodingQueries(provider);
+    if (!queries.length) {
       summary.skipped += 1;
       continue;
     }
@@ -188,14 +263,23 @@ export async function geocodeProviderRecords(providers, options = {}) {
     summary.checked += 1;
 
     try {
-      const key = cacheKey(query);
-      let result = cache[key];
+      let result = null;
+      let matchedQuery = "";
+      for (const query of queries) {
+        const key = cacheKey(query);
+        result = cache[key];
 
-      if (!result) {
-        result = await geocodeFetcher(query, config.userAgent);
-        result.fetched = today;
-        cache[key] = result;
-        await sleep(config.rateLimitMs);
+        if (!result) {
+          result = await geocodeFetcher(query, config.userAgent);
+          result.fetched = today;
+          cache[key] = result;
+          await sleep(config.rateLimitMs);
+        }
+
+        if (Number.isFinite(result.lat) && Number.isFinite(result.lon)) {
+          matchedQuery = query;
+          break;
+        }
       }
 
       if (Number.isFinite(result.lat) && Number.isFinite(result.lon)) {
@@ -209,7 +293,7 @@ export async function geocodeProviderRecords(providers, options = {}) {
         provider.lon = result.lon;
         Object.assign(provider, coordinateMetadataForNominatim(result, result.fetched || today));
         summary.updated += 1;
-        logs.push(`GEOCODED ${provider.id} ${provider.name} -> ${Math.round(result.lat * 10000) / 10000},${Math.round(result.lon * 10000) / 10000}`);
+        logs.push(`GEOCODED ${provider.id} ${provider.name} -> ${Math.round(result.lat * 10000) / 10000},${Math.round(result.lon * 10000) / 10000} (${matchedQuery})`);
       } else {
         summary.noMatch += 1;
         logs.push(`NO_MATCH ${provider.id} ${provider.name}`);

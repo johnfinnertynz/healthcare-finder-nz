@@ -147,6 +147,10 @@ Current schema aliases:
   review-gated, must stay within New Zealand bounds, and must not be used to
   infer availability, direct contact suitability, telehealth, cultural support,
   or clinical scope.
+- Do not geocode vague locality-only addresses such as a town name, region
+  name, or "various venues" into a precise local point. Either find a public
+  professional address, mark the provider as remote/phone/telehealth with
+  evidence, or leave coordinates empty for manual review.
 - Directory records must be marked `type: "directory"` or tagged `directory`.
   They must not show "Use this contact" in the UI.
 - Directory records must not be tagged `direct-contact`. If a navigation phone

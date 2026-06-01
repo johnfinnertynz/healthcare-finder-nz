@@ -99,6 +99,10 @@
   source, precision, confidence, and manual-review fields; out-of-NZ Nominatim
   results are rejected; and existing coordinate records were backfilled with
   honest coordinate metadata without marking any address as manually verified.
+- Added conservative geocoder fallback queries for specific public addresses and
+  skipped vague locality-only locations. A bounded address batch filled 32
+  Nominatim coordinate records in total and reduced public-address records
+  missing coordinates from 55 to 24.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

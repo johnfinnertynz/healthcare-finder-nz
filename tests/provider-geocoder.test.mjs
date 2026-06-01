@@ -5,8 +5,11 @@ import path from "node:path";
 import test from "node:test";
 import {
   coordinateMetadataFromSource,
+  geocodableAddress,
+  geocodingQueries,
   geocodeProviderRecords,
-  isNewZealandCoordinate
+  isNewZealandCoordinate,
+  isVagueGeocodingAddress
 } from "../tools/lib/provider-geocoder.mjs";
 
 function tempConfig() {
@@ -103,4 +106,55 @@ test("NZ coordinate guard accepts main NZ and Chatham Islands ranges only", () =
   assert.equal(isNewZealandCoordinate(-36.8485, 174.7633), true);
   assert.equal(isNewZealandCoordinate(-43.95, -176.56), true);
   assert.equal(isNewZealandCoordinate(40.7128, -74.006), false);
+});
+
+test("geocoder skips vague locality-only addresses for distance ranking", () => {
+  const cityOnly = {
+    id: "timaru-only",
+    name: "Timaru Provider",
+    type: "psychologist",
+    region: "South Canterbury",
+    city: "Timaru",
+    address: "Timaru"
+  };
+  const variousVenues = {
+    id: "venues",
+    name: "Various Venues",
+    type: "counsellor",
+    region: "Wairarapa",
+    city: "Wairarapa",
+    address: "Various venues, Wairarapa"
+  };
+  const hospital = {
+    id: "hospital",
+    name: "Hospital Service",
+    type: "public-service",
+    region: "Northland",
+    city: "Whangarei",
+    address: "Whangarei Hospital, Maunu Road, Whangarei"
+  };
+
+  assert.equal(isVagueGeocodingAddress(cityOnly), true);
+  assert.equal(isVagueGeocodingAddress(variousVenues), true);
+  assert.equal(geocodableAddress(cityOnly), "");
+  assert.equal(geocodableAddress(variousVenues), "");
+  assert.equal(isVagueGeocodingAddress(hospital), false);
+  assert.match(geocodableAddress(hospital), /Whangarei Hospital/);
+});
+
+test("geocoder builds conservative fallback queries for public addresses", () => {
+  const provider = {
+    id: "wingspan",
+    name: "Wingspan Counselling",
+    type: "counsellor",
+    region: "Auckland",
+    city: "Eden Terrace",
+    address: "L2, 60-64 Upper Queen Street, Eden Terrace, Auckland 1002"
+  };
+
+  const queries = geocodingQueries(provider);
+  assert.ok(queries.length >= 3);
+  assert.match(queries[0], /Upper Queen Street/);
+  assert.ok(queries.some((query) => query.startsWith("60-64 Upper Queen Street")));
+  assert.ok(queries.every((query) => /New Zealand/.test(query)));
 });
