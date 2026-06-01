@@ -174,6 +174,18 @@ Captured excerpts are review aids; they are not automatic approval for
 specialties, support-preference tags, telehealth, availability, or referral
 pathways.
 
+For reviewed safe-removal candidates, prefer the source-fit draft helper over
+hand-editing several individual decisions:
+
+```bash
+npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."
+```
+
+The helper groups rows by provider before drafting `adjust` decisions. This
+prevents one tag-removal row from re-adding another unsupported tag on the same
+provider. Inspect the generated JSON/Markdown, then apply through
+`npm run apply:review` only after the corrections are correct.
+
 ## Google Places Candidates
 
 Run the Google Places exporter when the regional report shows thin local

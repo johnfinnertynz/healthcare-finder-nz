@@ -570,6 +570,16 @@ excerpt or notes. Adjustment drafts only remove values from existing array
 fields; they must not add support tags, telehealth, scope, availability, or
 referral claims.
 
+`npm run draft:source-fit-capture` can prepare reviewed decisions from
+`data/provider-source-fit-evidence-capture.json`. Use it only after a human has
+checked the source-fit capture rows and confirmed that the claim should be
+removed or left unsupported. It groups rows by provider so several removals from
+one record become one merged `adjust` decision and cannot re-add tags removed by
+another row. The helper may remove `tags`, `needScope`, or
+`advertisedSpecialties` values and may turn unsupported `onlineAvailable` /
+`phoneSupport` booleans off. It must not add capabilities, availability,
+referral, support-preference, telehealth, or specialty claims.
+
 Never guess:
 
 - accepting-new-client status
@@ -627,6 +637,15 @@ The export writes `data/provider-source-fit-evidence-capture.json`,
 This capture layer is designed to reduce review effort, not to bypass review.
 Never use it to approve sensitive tags, telehealth, advertised specialties, or
 availability without a reviewer checking the excerpt.
+
+After reviewing safe-removal candidates, draft controlled decisions with:
+
+```sh
+npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."
+```
+
+Then inspect the draft JSON/Markdown, run `npm run apply:review` only when the
+decision file is correct, and rerun validation/audits/tests before committing.
 
 Some official health and provider sites block automated link checks or rate-limit
 them. Treat `401`, `403`, `429`, and Cloudflare-style `520`-`524` results as

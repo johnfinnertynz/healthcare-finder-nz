@@ -588,6 +588,7 @@ npm run export:gp-corroboration
 npm run export:source-fit-capture -- --limit 30
 npm run export:auto-resolution
 npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
+npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."
 ```
 
 This writes:
@@ -651,6 +652,14 @@ queue and writes `data/provider-claim-batch-decision-draft.json` plus
 Adjustment drafts for high-risk batches require `--confirmed-human-review`, a
 reviewer, and source excerpt or notes, and currently only support removing
 values from array fields such as `tags`, `needScope`, and `specialties`.
+
+`draft:source-fit-capture` is the matching helper for
+`data/provider-source-fit-evidence-capture.json`. Use it only after checking the
+captured source-fit rows. It groups safe-removal candidates by provider before
+drafting `adjust` decisions, so removing several unsupported tags from one
+provider cannot accidentally re-add another removed tag. The helper only
+removes array values or turns unsupported telehealth booleans off; it cannot add
+provider capabilities.
 
 This writes:
 
@@ -716,6 +725,12 @@ true`, include allowlisted provider fields in `correctedFields`, and include a
 human-captured `sourceExcerpt` from a provider-owned, Healthpoint, official, or
 professional source. Google Places seed text, search snippets, LinkedIn-only
 signals, blocked pages, or silence are not enough to import a provider.
+
+Reviewed source-fit capture removals should also go through `apply:review`.
+Those drafts are conservative downgrades only: removing unsupported tags,
+`needScope` values, advertised specialties, or telehealth flags. Do not use them
+to approve sensitive tags, advertised specialties, telehealth, availability, or
+referral pathways.
 
 After applying decisions, run:
 

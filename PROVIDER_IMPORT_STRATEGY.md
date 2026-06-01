@@ -99,6 +99,9 @@ mark the claim as review-needed. It must not fake evidence text.
   source-fit findings and turns unsupported broad/support/telehealth issues into
   captured evidence excerpts or review-gated safe-removal candidates. It never
   mutates live provider data.
+- `npm run draft:source-fit-capture` turns human-reviewed source-fit
+  safe-removal candidates into merged decision drafts. It groups removals by
+  provider and only removes unsupported claims or telehealth flags.
 - `npm run export:review` creates the provider-level review queue.
 - `npm run apply:review` applies only reviewed decisions through the controlled
   script.

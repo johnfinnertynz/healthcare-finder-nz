@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-01T05:41:58.571Z",
+  "generatedAt": "2026-06-01T06:02:01.922Z",
   "safety": {
     "noLiveProviderMutation": true,
     "reviewGatedCorrectionsOnly": true,
@@ -98,7 +98,7 @@
         "Broad tag \"depression\" is present but source fields do not clearly support it.",
         "Remove \"depression\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:44.783Z",
+      "sourceCheckedAt": "2026-06-01T06:01:47.055Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -265,7 +265,7 @@
         "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
         "Remove \"anxiety\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:44.783Z",
+      "sourceCheckedAt": "2026-06-01T06:01:47.055Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -432,7 +432,7 @@
         "Telehealth or online availability is set but source fields do not clearly support remote care.",
         "Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:45.508Z",
+      "sourceCheckedAt": "2026-06-01T06:01:47.620Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -594,7 +594,7 @@
         "Broad tag \"depression\" is present but source fields do not clearly support it.",
         "Remove \"depression\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:46.649Z",
+      "sourceCheckedAt": "2026-06-01T06:01:48.742Z",
       "fetchStatus": {
         "ok": false,
         "blocked": false,
@@ -736,7 +736,7 @@
         "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
         "Remove \"anxiety\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:46.649Z",
+      "sourceCheckedAt": "2026-06-01T06:01:48.742Z",
       "fetchStatus": {
         "ok": false,
         "blocked": false,
@@ -878,7 +878,7 @@
         "Broad tag \"trauma\" is present but source fields do not clearly support it.",
         "Remove \"trauma\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:46.649Z",
+      "sourceCheckedAt": "2026-06-01T06:01:48.742Z",
       "fetchStatus": {
         "ok": false,
         "blocked": false,
@@ -1023,7 +1023,7 @@
         "Broad tag \"depression\" is present but source fields do not clearly support it.",
         "Remove \"depression\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:47.697Z",
+      "sourceCheckedAt": "2026-06-01T06:01:49.787Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -1031,7 +1031,7 @@
         "status": 200,
         "error": "login-or-captcha-required",
         "finalUrl": "https://visionwest.org.nz/wellbeing-centre/contact-us/",
-        "sourceHash": "14d9f7acae098cc14052810990abdd47f7f8dac18c0ba9e9134b026640899d2b"
+        "sourceHash": "784346d4117bb08fa07dea56c9ba418469749c330993fffdcca2294bd9f03d71"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -1185,7 +1185,7 @@
         "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
         "Remove \"anxiety\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:47.697Z",
+      "sourceCheckedAt": "2026-06-01T06:01:49.787Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -1193,7 +1193,7 @@
         "status": 200,
         "error": "login-or-captcha-required",
         "finalUrl": "https://visionwest.org.nz/wellbeing-centre/contact-us/",
-        "sourceHash": "14d9f7acae098cc14052810990abdd47f7f8dac18c0ba9e9134b026640899d2b"
+        "sourceHash": "784346d4117bb08fa07dea56c9ba418469749c330993fffdcca2294bd9f03d71"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -1347,7 +1347,7 @@
         "Broad tag \"trauma\" is present but source fields do not clearly support it.",
         "Remove \"trauma\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:47.697Z",
+      "sourceCheckedAt": "2026-06-01T06:01:49.787Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -1355,7 +1355,7 @@
         "status": 200,
         "error": "login-or-captcha-required",
         "finalUrl": "https://visionwest.org.nz/wellbeing-centre/contact-us/",
-        "sourceHash": "14d9f7acae098cc14052810990abdd47f7f8dac18c0ba9e9134b026640899d2b"
+        "sourceHash": "784346d4117bb08fa07dea56c9ba418469749c330993fffdcca2294bd9f03d71"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -1509,7 +1509,7 @@
         "Telehealth or online availability is set but source fields do not clearly support remote care.",
         "Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:47.697Z",
+      "sourceCheckedAt": "2026-06-01T06:01:49.787Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -1517,7 +1517,7 @@
         "status": 200,
         "error": "login-or-captcha-required",
         "finalUrl": "https://visionwest.org.nz/wellbeing-centre/contact-us/",
-        "sourceHash": "14d9f7acae098cc14052810990abdd47f7f8dac18c0ba9e9134b026640899d2b"
+        "sourceHash": "784346d4117bb08fa07dea56c9ba418469749c330993fffdcca2294bd9f03d71"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -1669,7 +1669,7 @@
         "Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments.",
         "Reachable source did not show wording for the flagged claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:48.411Z",
+      "sourceCheckedAt": "2026-06-01T06:01:50.496Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -1677,7 +1677,7 @@
         "status": 200,
         "error": "",
         "finalUrl": "https://www.healthpoint.co.nz/public/psychiatry/adult-community-mental-health-service-bay/",
-        "sourceHash": "e753e80974b51a766f8adcb57e49f972674f16f8dadb64ae5141c68c39889adb"
+        "sourceHash": "4fab40a76587eb2e340defabf8553ac469a9cf58ca55f0f03b1c5a8c4b565b42"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -1826,7 +1826,7 @@
         "Remove \"depression\" or add source-backed specialties/services evidence.",
         "Reachable source did not show wording for the flagged claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:48.876Z",
+      "sourceCheckedAt": "2026-06-01T06:01:51.005Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -1834,7 +1834,7 @@
         "status": 200,
         "error": "",
         "finalUrl": "https://baycounselling.co.nz/contact/",
-        "sourceHash": "c271d4b0ddb5036fdbb7321b7d88a2f0606cd5af4c7072c057541530744e12f0"
+        "sourceHash": "e3ecf1177323ed8c6352682f88fc0f54d058e2e6ef971412b7b72876604dce2c"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -1980,7 +1980,7 @@
         "Remove \"anxiety\" or add source-backed specialties/services evidence.",
         "Reachable source did not show wording for the flagged claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:48.876Z",
+      "sourceCheckedAt": "2026-06-01T06:01:51.005Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -1988,7 +1988,7 @@
         "status": 200,
         "error": "",
         "finalUrl": "https://baycounselling.co.nz/contact/",
-        "sourceHash": "c271d4b0ddb5036fdbb7321b7d88a2f0606cd5af4c7072c057541530744e12f0"
+        "sourceHash": "e3ecf1177323ed8c6352682f88fc0f54d058e2e6ef971412b7b72876604dce2c"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -2133,7 +2133,7 @@
         "Broad tag \"depression\" is present but source fields do not clearly support it.",
         "Remove \"depression\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:49.473Z",
+      "sourceCheckedAt": "2026-06-01T06:01:51.545Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -2264,7 +2264,7 @@
         "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
         "Remove \"anxiety\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:49.473Z",
+      "sourceCheckedAt": "2026-06-01T06:01:51.545Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -2400,7 +2400,7 @@
         "Remove \"depression\" or add source-backed specialties/services evidence.",
         "Source wording was captured; human reviewer still needs to confirm this claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:50.637Z",
+      "sourceCheckedAt": "2026-06-01T06:01:52.547Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -2408,7 +2408,7 @@
         "status": 200,
         "error": "",
         "finalUrl": "https://www.tpoom.co.nz/service/counselling",
-        "sourceHash": "72f37720bf844b083a627c37460e9991268491dcdc731b8166a3668c8ba5dcff"
+        "sourceHash": "db1eb7516e1a377a73674d205d09ffc824f0c833314f5db23c7456a4f972af1d"
       },
       "evidence": [
         {
@@ -2417,7 +2417,7 @@
           "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
           "sourceType": "provider_owned",
           "excerpt": "ngs, indoors at our therapy space, or outdoors in our taiao – it’s all about what works for you. Our counselling covers: Mental health Alcohol & Addictions Trauma LGBQT+ Depression Anxiety Bullying Eating Disorders Sexual Violence Racism & Discrimination Our ratonga include: Creating goals for success Māori Narratives Building resilience,",
-          "capturedAt": "2026-06-01T05:41:50.637Z",
+          "capturedAt": "2026-06-01T06:01:52.547Z",
           "confidence": "medium",
           "extractor": "source-fit-evidence-capture",
           "needsManualReview": true
@@ -2431,7 +2431,7 @@
             "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
             "sourceType": "provider_owned",
             "excerpt": "ngs, indoors at our therapy space, or outdoors in our taiao – it’s all about what works for you. Our counselling covers: Mental health Alcohol & Addictions Trauma LGBQT+ Depression Anxiety Bullying Eating Disorders Sexual Violence Racism & Discrimination Our ratonga include: Creating goals for success Māori Narratives Building resilience,",
-            "capturedAt": "2026-06-01T05:41:50.637Z",
+            "capturedAt": "2026-06-01T06:01:52.547Z",
             "confidence": "medium",
             "extractor": "source-fit-evidence-capture",
             "needsManualReview": true
@@ -2564,7 +2564,7 @@
         "Remove \"anxiety\" or add source-backed specialties/services evidence.",
         "Source wording was captured; human reviewer still needs to confirm this claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:50.637Z",
+      "sourceCheckedAt": "2026-06-01T06:01:52.547Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -2572,7 +2572,7 @@
         "status": 200,
         "error": "",
         "finalUrl": "https://www.tpoom.co.nz/service/counselling",
-        "sourceHash": "72f37720bf844b083a627c37460e9991268491dcdc731b8166a3668c8ba5dcff"
+        "sourceHash": "db1eb7516e1a377a73674d205d09ffc824f0c833314f5db23c7456a4f972af1d"
       },
       "evidence": [
         {
@@ -2581,7 +2581,7 @@
           "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
           "sourceType": "provider_owned",
           "excerpt": "s at our therapy space, or outdoors in our taiao – it’s all about what works for you. Our counselling covers: Mental health Alcohol & Addictions Trauma LGBQT+ Depression Anxiety Bullying Eating Disorders Sexual Violence Racism & Discrimination Our ratonga include: Creating goals for success Māori Narratives Building resilience, confidence",
-          "capturedAt": "2026-06-01T05:41:50.637Z",
+          "capturedAt": "2026-06-01T06:01:52.547Z",
           "confidence": "medium",
           "extractor": "source-fit-evidence-capture",
           "needsManualReview": true
@@ -2595,7 +2595,7 @@
             "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
             "sourceType": "provider_owned",
             "excerpt": "s at our therapy space, or outdoors in our taiao – it’s all about what works for you. Our counselling covers: Mental health Alcohol & Addictions Trauma LGBQT+ Depression Anxiety Bullying Eating Disorders Sexual Violence Racism & Discrimination Our ratonga include: Creating goals for success Māori Narratives Building resilience, confidence",
-            "capturedAt": "2026-06-01T05:41:50.637Z",
+            "capturedAt": "2026-06-01T06:01:52.547Z",
             "confidence": "medium",
             "extractor": "source-fit-evidence-capture",
             "needsManualReview": true
@@ -2728,7 +2728,7 @@
         "Remove \"trauma\" or add source-backed specialties/services evidence.",
         "Source wording was captured; human reviewer still needs to confirm this claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:50.637Z",
+      "sourceCheckedAt": "2026-06-01T06:01:52.547Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -2736,7 +2736,7 @@
         "status": 200,
         "error": "",
         "finalUrl": "https://www.tpoom.co.nz/service/counselling",
-        "sourceHash": "72f37720bf844b083a627c37460e9991268491dcdc731b8166a3668c8ba5dcff"
+        "sourceHash": "db1eb7516e1a377a73674d205d09ffc824f0c833314f5db23c7456a4f972af1d"
       },
       "evidence": [
         {
@@ -2745,7 +2745,7 @@
           "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
           "sourceType": "provider_owned",
           "excerpt": "pa Māori and Clinical Frameworks, our team is dedicated to working alongside individuals and whānau to change from a cycle of constant hurt, blaming, denial and reliving trauma. Our full range of mental health and addiction services are community-based, helping you to heal with a whānau ora approach. We can wānanga one-on-one or in group",
-          "capturedAt": "2026-06-01T05:41:50.637Z",
+          "capturedAt": "2026-06-01T06:01:52.547Z",
           "confidence": "medium",
           "extractor": "source-fit-evidence-capture",
           "needsManualReview": true
@@ -2759,7 +2759,7 @@
             "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
             "sourceType": "provider_owned",
             "excerpt": "pa Māori and Clinical Frameworks, our team is dedicated to working alongside individuals and whānau to change from a cycle of constant hurt, blaming, denial and reliving trauma. Our full range of mental health and addiction services are community-based, helping you to heal with a whānau ora approach. We can wānanga one-on-one or in group",
-            "capturedAt": "2026-06-01T05:41:50.637Z",
+            "capturedAt": "2026-06-01T06:01:52.547Z",
             "confidence": "medium",
             "extractor": "source-fit-evidence-capture",
             "needsManualReview": true
@@ -2892,7 +2892,7 @@
         "Remove \"addiction\" or add source-backed specialties/services evidence.",
         "Source wording was captured; human reviewer still needs to confirm this claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:50.637Z",
+      "sourceCheckedAt": "2026-06-01T06:01:52.547Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -2900,7 +2900,7 @@
         "status": 200,
         "error": "",
         "finalUrl": "https://www.tpoom.co.nz/service/counselling",
-        "sourceHash": "72f37720bf844b083a627c37460e9991268491dcdc731b8166a3668c8ba5dcff"
+        "sourceHash": "db1eb7516e1a377a73674d205d09ffc824f0c833314f5db23c7456a4f972af1d"
       },
       "evidence": [
         {
@@ -2909,7 +2909,7 @@
           "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
           "sourceType": "provider_owned",
           "excerpt": "s dedicated to working alongside individuals and whānau to change from a cycle of constant hurt, blaming, denial and reliving trauma. Our full range of mental health and addiction services are community-based, helping you to heal with a whānau ora approach. We can wānanga one-on-one or in group settings, indoors at our therapy space, or o",
-          "capturedAt": "2026-06-01T05:41:50.637Z",
+          "capturedAt": "2026-06-01T06:01:52.547Z",
           "confidence": "medium",
           "extractor": "source-fit-evidence-capture",
           "needsManualReview": true
@@ -2923,7 +2923,7 @@
             "sourceUrl": "https://www.tpoom.co.nz/service/counselling",
             "sourceType": "provider_owned",
             "excerpt": "s dedicated to working alongside individuals and whānau to change from a cycle of constant hurt, blaming, denial and reliving trauma. Our full range of mental health and addiction services are community-based, helping you to heal with a whānau ora approach. We can wānanga one-on-one or in group settings, indoors at our therapy space, or o",
-            "capturedAt": "2026-06-01T05:41:50.637Z",
+            "capturedAt": "2026-06-01T06:01:52.547Z",
             "confidence": "medium",
             "extractor": "source-fit-evidence-capture",
             "needsManualReview": true
@@ -3052,7 +3052,7 @@
         "Broad tag \"depression\" is present but source fields do not clearly support it.",
         "Remove \"depression\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:51.206Z",
+      "sourceCheckedAt": "2026-06-01T06:01:53.081Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -3198,7 +3198,7 @@
         "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
         "Remove \"anxiety\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:51.206Z",
+      "sourceCheckedAt": "2026-06-01T06:01:53.081Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -3344,7 +3344,7 @@
         "Broad tag \"trauma\" is present but source fields do not clearly support it.",
         "Remove \"trauma\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:51.206Z",
+      "sourceCheckedAt": "2026-06-01T06:01:53.081Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -3493,7 +3493,7 @@
         "Remove \"depression\" or add source-backed specialties/services evidence.",
         "Source wording was captured; human reviewer still needs to confirm this claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:51.799Z",
+      "sourceCheckedAt": "2026-06-01T06:01:53.762Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -3510,7 +3510,7 @@
           "sourceUrl": "https://talkingtherapy.co.nz/",
           "sourceType": "provider_owned",
           "excerpt": "Deliefde Ursula Klein Ingrid Gunby Twane Cheze-Gower Emily Cathro Explore Therapy Counselling Professional Supervision Psychotherapy Issues Treated Anxiety Codependency Depression Grief & Loss Self Esteem Shame Trauma & PTSD Online Therapy Info for Clients Confidentiality Fees & Subsidies Mental Health & Support Organisations Professiona",
-          "capturedAt": "2026-06-01T05:41:51.799Z",
+          "capturedAt": "2026-06-01T06:01:53.762Z",
           "confidence": "medium",
           "extractor": "source-fit-evidence-capture",
           "needsManualReview": true
@@ -3524,7 +3524,7 @@
             "sourceUrl": "https://talkingtherapy.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Deliefde Ursula Klein Ingrid Gunby Twane Cheze-Gower Emily Cathro Explore Therapy Counselling Professional Supervision Psychotherapy Issues Treated Anxiety Codependency Depression Grief & Loss Self Esteem Shame Trauma & PTSD Online Therapy Info for Clients Confidentiality Fees & Subsidies Mental Health & Support Organisations Professiona",
-            "capturedAt": "2026-06-01T05:41:51.799Z",
+            "capturedAt": "2026-06-01T06:01:53.762Z",
             "confidence": "medium",
             "extractor": "source-fit-evidence-capture",
             "needsManualReview": true
@@ -3673,7 +3673,7 @@
         "Remove \"anxiety\" or add source-backed specialties/services evidence.",
         "Source wording was captured; human reviewer still needs to confirm this claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:51.799Z",
+      "sourceCheckedAt": "2026-06-01T06:01:53.762Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -3690,7 +3690,7 @@
           "sourceUrl": "https://talkingtherapy.co.nz/",
           "sourceType": "provider_owned",
           "excerpt": "Home Therapists Irene Deliefde Ursula Klein Ingrid Gunby Twane Cheze-Gower Emily Cathro Explore Therapy Counselling Professional Supervision Psychotherapy Issues Treated Anxiety Codependency Depression Grief & Loss Self Esteem Shame Trauma & PTSD Online Therapy Info for Clients Confidentiality Fees & Subsidies Mental Health & Support Orga",
-          "capturedAt": "2026-06-01T05:41:51.799Z",
+          "capturedAt": "2026-06-01T06:01:53.762Z",
           "confidence": "medium",
           "extractor": "source-fit-evidence-capture",
           "needsManualReview": true
@@ -3704,7 +3704,7 @@
             "sourceUrl": "https://talkingtherapy.co.nz/",
             "sourceType": "provider_owned",
             "excerpt": "Home Therapists Irene Deliefde Ursula Klein Ingrid Gunby Twane Cheze-Gower Emily Cathro Explore Therapy Counselling Professional Supervision Psychotherapy Issues Treated Anxiety Codependency Depression Grief & Loss Self Esteem Shame Trauma & PTSD Online Therapy Info for Clients Confidentiality Fees & Subsidies Mental Health & Support Orga",
-            "capturedAt": "2026-06-01T05:41:51.799Z",
+            "capturedAt": "2026-06-01T06:01:53.762Z",
             "confidence": "medium",
             "extractor": "source-fit-evidence-capture",
             "needsManualReview": true
@@ -3848,7 +3848,7 @@
         "rainbow support tag is present but source fields do not clearly support it.",
         "Remove the tag or add a stronger public source/structured patientGroups/languages evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:52.560Z",
+      "sourceCheckedAt": "2026-06-01T06:01:55.906Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -3856,7 +3856,7 @@
         "status": 200,
         "error": "login-or-captcha-required",
         "finalUrl": "https://tetahiyouth.org.nz/",
-        "sourceHash": "0f05a782a4bc6024dfd41b572f9dcb511ba008d0c10d1725c762bc609b4291f1"
+        "sourceHash": "af4e1f85d1e32192d09836cef122d0ac8658a50b5981ea808a0009d863f2bd61"
       },
       "evidence": [],
       "sourceEvidence": {
@@ -3973,7 +3973,7 @@
         "Broad tag \"work\" is present but source fields do not clearly support it.",
         "Remove \"work\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:56.959Z",
+      "sourceCheckedAt": "2026-06-01T06:02:00.266Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -4100,7 +4100,7 @@
         "Broad tag \"work\" is present but source fields do not clearly support it.",
         "Remove \"work\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:56.959Z",
+      "sourceCheckedAt": "2026-06-01T06:02:00.266Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -4232,7 +4232,7 @@
         "Broad tag \"depression\" is present but source fields do not clearly support it.",
         "Remove \"depression\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:56.959Z",
+      "sourceCheckedAt": "2026-06-01T06:02:00.266Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,
@@ -4372,7 +4372,7 @@
         "Remove \"anxiety\" or add source-backed specialties/services evidence.",
         "Reachable source did not show wording for the flagged claim."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:57.737Z",
+      "sourceCheckedAt": "2026-06-01T06:02:00.972Z",
       "fetchStatus": {
         "ok": true,
         "blocked": false,
@@ -4550,7 +4550,7 @@
         "Broad tag \"trauma\" is present but source fields do not clearly support it.",
         "Remove \"trauma\" or add source-backed specialties/services evidence."
       ],
-      "sourceCheckedAt": "2026-06-01T05:41:58.183Z",
+      "sourceCheckedAt": "2026-06-01T06:02:01.500Z",
       "fetchStatus": {
         "ok": false,
         "blocked": true,

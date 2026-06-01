@@ -75,6 +75,10 @@
   capture** queue. The first bounded batch checked 30 unsupported
   tag/telehealth findings, captured 6 source-support excerpts, and produced 4
   review-gated safe-removal candidates without mutating live data.
+- Added `npm run draft:source-fit-capture`, a confirmed-human-review helper
+  that merges safe-removal candidates by provider before drafting `adjust`
+  decisions. This prevents one tag-removal decision from re-adding another
+  unsupported tag on the same provider.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

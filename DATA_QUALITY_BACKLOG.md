@@ -130,6 +130,9 @@ manual review burden.
   first 30 unsupported tag/telehealth findings produced 6 captured support
   excerpts, 4 review-gated safe-removal candidates, 17 human-browser-review
   items, and 3 skipped/too-large source checks without mutating live data.
+- Added a source-fit capture decision draft helper. It requires confirmed human
+  review and merges removals by provider so multiple unsupported-tag removals
+  cannot overwrite each other and re-add a claim.
 
 ## Next Backlog Items
 

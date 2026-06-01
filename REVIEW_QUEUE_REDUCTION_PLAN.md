@@ -160,6 +160,10 @@ This cycle added a separate claim review queue:
   claim, and pre-fills conservative removal corrections where a reachable
   source does not support the claim. The auditor can load this as **Source-fit
   evidence capture**; all outcomes remain review-gated.
+- `npm run draft:source-fit-capture` now converts human-reviewed safe-removal
+  capture rows into merged draft decisions. It groups removals by provider so
+  several unsupported tag removals cannot overwrite each other and re-add a
+  removed tag.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -235,7 +239,10 @@ Auto-accept is allowed only when all are true:
     **Source-fit evidence capture** queue before manually opening every
     unsupported-tag item. Confirm source-support excerpts or apply conservative
     tag/telehealth removals through reviewed decisions only.
-13. Use the **Filtered batch** helper only for conservative `needs_more_info`
+13. After checking safe-removal candidates, use
+    `npm run draft:source-fit-capture -- --confirmed-human-review ...` to create
+    merged draft decisions, inspect them, then run the controlled apply path.
+14. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
-14. Run `npm run export:regional-quality` after each review/apply cycle and use
+15. Run `npm run export:regional-quality` after each review/apply cycle and use
     the high-priority regions to choose the next focused source research pass.

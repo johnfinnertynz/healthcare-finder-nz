@@ -9,6 +9,7 @@ import { buildClaimBatchDecisionDraft } from "../tools/draft-claim-batch-review-
 import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
 import { buildSourceFitEvidenceCapture } from "../tools/export-source-fit-evidence-capture.mjs";
+import { buildSourceFitCaptureDecisionDraft } from "../tools/draft-source-fit-capture-decisions.mjs";
 import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
 import {
   buildGpCorroborationReviewPack,
@@ -616,6 +617,83 @@ test("source-fit evidence capture separates supported claims from safe removal c
   assert.equal(byId.get("blocked-rainbow").status, "needs_human_browser_review");
 });
 
+test("source-fit capture decision drafts merge removals per provider", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const capturePath = path.join(dir, "capture.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "multi-remove",
+      name: "Multi Remove",
+      tags: ["psychologist", "depression", "anxiety", "telehealth", "fit"],
+      onlineAvailable: true,
+      phoneSupport: true
+    })
+  ]);
+  writeJson(capturePath, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    items: [
+      {
+        providerId: "multi-remove",
+        status: "safe_removal_candidate",
+        rule: "broad-tag-without-source-support",
+        target: "depression",
+        sourceUrl: "https://example.org",
+        auditRules: ["broad-tag-without-source-support"],
+        correctedFields: {
+          tags: ["psychologist", "anxiety", "telehealth", "fit"]
+        }
+      },
+      {
+        providerId: "multi-remove",
+        status: "safe_removal_candidate",
+        rule: "broad-tag-without-source-support",
+        target: "anxiety",
+        sourceUrl: "https://example.org",
+        auditRules: ["broad-tag-without-source-support"],
+        correctedFields: {
+          tags: ["psychologist", "depression", "telehealth", "fit"]
+        }
+      },
+      {
+        providerId: "multi-remove",
+        status: "safe_removal_candidate",
+        rule: "weak-telehealth-evidence",
+        target: "telehealth",
+        sourceUrl: "https://example.org",
+        auditRules: ["weak-telehealth-evidence"],
+        correctedFields: {
+          tags: ["psychologist", "depression", "anxiety", "fit"],
+          onlineAvailable: false,
+          phoneSupport: false
+        }
+      }
+    ]
+  });
+
+  assert.throws(() => buildSourceFitCaptureDecisionDraft({
+    capture: capturePath,
+    providers: providersPath
+  }), /confirmed-human-review/);
+
+  const draft = buildSourceFitCaptureDecisionDraft({
+    capture: capturePath,
+    providers: providersPath,
+    reviewer: "tester",
+    reviewedDate: "2026-06-01",
+    notes: "Reviewer checked the source page and confirmed these claims are unsupported.",
+    confirmedHumanReview: true
+  });
+
+  assert.equal(draft.summary.captureRowsMatched, 3);
+  assert.equal(draft.summary.decisionsDrafted, 1);
+  assert.deepEqual(draft.decisions[0].correctedFields.tags, ["psychologist", "fit"]);
+  assert.equal(draft.decisions[0].correctedFields.onlineAvailable, false);
+  assert.equal(draft.decisions[0].correctedFields.phoneSupport, false);
+  assert.match(draft.decisions[0].reviewNotes, /Targets removed: depression, anxiety, telehealth/);
+  assert.equal(draft.safety.groupedByProviderToAvoidTagReadd, true);
+});
+
 test("admin UI contains no tokens, opens sources externally, and keeps iframe sandboxed", () => {
   const html = fs.readFileSync("admin/index.html", "utf8");
   const js = fs.readFileSync("admin/admin.js", "utf8");
@@ -665,6 +743,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /noClinicalClaimsFromPlacesAlone/);
   assert.match(js, /provider-suggestions\.json/);
   assert.match(js, /provider-source-fit-evidence-capture\.json/);
+  assert.match(js, /Source-fit evidence capture/);
   assert.match(js, /providerSuggestionToItem/);
   assert.match(js, /Array\.isArray\(queue\.suggestions\) && queue\.safety\?\.reviewGateRequired/);
   assert.match(js, /Discovery suggestions are proposed records or patches only/);

@@ -1,6 +1,6 @@
 # Provider Source-Fit Evidence Capture
 
-Generated: 2026-06-01T05:41:58.571Z
+Generated: 2026-06-01T06:02:01.922Z
 
 This report fetches public source pages for selected source-fit findings and captures short evidence excerpts. It does not change `providers.json`.
 

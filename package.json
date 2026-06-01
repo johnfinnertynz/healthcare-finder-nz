@@ -32,6 +32,7 @@
     "export:monitor": "node tools/export-provider-monitor-queue.mjs",
     "monitor:providers": "node tools/recheck-provider-availability.mjs --include-live && node tools/audit-provider-availability.mjs && node tools/export-provider-monitor-queue.mjs",
     "apply:review": "node tools/apply-provider-review-decisions.mjs",
+    "draft:source-fit-capture": "node tools/draft-source-fit-capture-decisions.mjs",
     "discover:providers": "node tools/build-provider-discovery-queue.mjs",
     "discover:seeds": "node tools/build-provider-discovery-seeds.mjs",
     "discover:enrich": "node tools/enrich-provider-candidates.mjs",
