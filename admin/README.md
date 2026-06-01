@@ -191,6 +191,13 @@ the original source-fit finding, the public source URL, any captured short
 excerpt, and prefilled conservative `correctedFields` when the source was
 reachable but did not support the flagged claim.
 
+Use the **Batch** filter to work repeated source-fit issues together. Batch keys
+use `source-fit:<status>:<rule>:<target>`, for example
+`source-fit:safe_removal_candidate:broad-tag-without-source-support:depression`.
+This lets an auditor check all captured support evidence, all safe-removal
+candidates for one target, or all rows needing manual browser review without
+mixing unrelated claims.
+
 Use **Adjust** only after checking the source and confirming the correction is a
 downgrade, such as removing an unsupported tag or telehealth flag. Use
 `needs_more_info` for blocked, skipped, failed, unclear, or mismatched sources.

@@ -90,6 +90,13 @@
   review file has 14 captured support excerpts, 28 review-gated safe-removal
   candidates, 88 human-browser-review rows, 8 skipped sources, and 2 failed
   fetches.
+- Added source-fit capture batch keys and a batch summary so auditors can filter
+  repeated unsupported tag/support/telehealth issues by
+  `source-fit:<status>:<rule>:<target>` in the console.
+- Ran the next resumable source-fit capture batch. The current review file now
+  covers 220 findings with 33 captured support excerpts, 62 review-gated
+  safe-removal candidates, 109 human-browser-review rows, 13 skipped sources,
+  and 3 failed fetches.
 - Added `npm run draft:gp-corroboration`, a review-gated helper that turns
   human-confirmed GP corroboration review-pack rows into contact/source-only
   `adjust` decision drafts. It can also draft `needs_more_info` decisions for

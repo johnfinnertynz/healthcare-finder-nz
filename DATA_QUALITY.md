@@ -708,6 +708,11 @@ the existing capture file so repeated bounded runs move on to new findings.
 the same output. This is still review-gated; preserving an excerpt does not
 approve the claim.
 
+Each source-fit capture row has a batch key in the form
+`source-fit:<status>:<rule>:<target>`. Use the auditor **Batch** filter to work
+one repeated issue at a time, such as all safe-removal candidates for
+unsupported telehealth flags, without mixing them with unrelated claims.
+
 After reviewing safe-removal candidates, draft controlled decisions with:
 
 ```sh

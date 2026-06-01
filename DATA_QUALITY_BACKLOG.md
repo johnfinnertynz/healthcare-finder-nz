@@ -144,6 +144,13 @@ manual review burden.
   findings. It now contains 14 source-support excerpts, 28 review-gated
   safe-removal candidates, 88 human-browser-review rows, 8 skipped sources, and
   2 failed fetches.
+- Added source-fit capture batch keys and a report summary so repeated
+  unsupported tag/support/telehealth work can be filtered in the auditor by
+  `source-fit:<status>:<rule>:<target>`.
+- Ran the next resumable source-fit capture batch. The export now covers 220
+  findings with 33 source-support excerpts, 62 review-gated safe-removal
+  candidates, 109 human-browser-review rows, 13 skipped sources, and 3 failed
+  fetches.
 - Added a GP corroboration decision draft helper. After a reviewer checks
   captured GP source snippets, it can draft contact/source-only `adjust`
   decisions; failed source captures can be drafted as `needs_more_info`.
@@ -182,8 +189,9 @@ manual review burden.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 4. Continue resumable source-fit capture batches with
-   `--skip-existing --merge-existing`, then confirm excerpts or remove
-   unsupported claims through reviewed decisions.
+   `--skip-existing --merge-existing`, then use the auditor **Batch** filter
+   for `source-fit:<status>:<rule>:<target>` groups before confirming excerpts
+   or removing unsupported claims through reviewed decisions.
 5. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
 6. Keep adding extractor regression tests whenever generated discovery reports

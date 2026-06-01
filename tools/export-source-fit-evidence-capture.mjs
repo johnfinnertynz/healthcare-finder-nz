@@ -143,6 +143,41 @@ function itemIssueKey(item) {
   return [item.providerId, item.rule, item.target].join("|");
 }
 
+function sourceFitBatchKey(item = {}) {
+  return [
+    "source-fit",
+    item.status || "unknown-status",
+    item.rule || "unknown-rule",
+    item.target || "unknown-target"
+  ].join(":");
+}
+
+function sourceFitBatchAction(status) {
+  if (status === "source_support_found") {
+    return "Check captured excerpts, then keep the claim only if it clearly applies to this provider.";
+  }
+  if (status === "safe_removal_candidate") {
+    return "Review the source, then use Adjust or the source-fit draft helper to remove unsupported claims.";
+  }
+  if (status === "needs_human_browser_review") {
+    return "Open the source manually; add evidence or leave the row as needs_more_info.";
+  }
+  if (status === "source_skipped" || status === "fetch_failed") {
+    return "Treat as source lookup work; do not adjust the provider until a stronger source is checked.";
+  }
+  return "Review manually before making any provider-data decision.";
+}
+
+function withBatchMetadata(item) {
+  const batchKey = item.batchKey || sourceFitBatchKey(item);
+  return {
+    ...item,
+    batchKey,
+    batchLabel: item.batchLabel || `${item.status || "unknown"} / ${item.rule || "unknown"} / ${item.target || "unknown"}`,
+    batchSuggestedAction: item.batchSuggestedAction || sourceFitBatchAction(item.status)
+  };
+}
+
 function readExistingCapture(config) {
   const existingPath = config.existingCapture || config.jsonOut;
   if (!existingPath || !fs.existsSync(existingPath)) return null;
@@ -258,6 +293,40 @@ function mergeCaptureItems(existingItems, newItems) {
   for (const item of existingItems) merged.set(itemIssueKey(item), item);
   for (const item of newItems) merged.set(itemIssueKey(item), item);
   return [...merged.values()];
+}
+
+function summarizeBatches(items) {
+  const byKey = new Map();
+  for (const item of items) {
+    const key = item.batchKey || sourceFitBatchKey(item);
+    if (!byKey.has(key)) {
+      byKey.set(key, {
+        batchKey: key,
+        label: item.batchLabel || `${item.status || "unknown"} / ${item.rule || "unknown"} / ${item.target || "unknown"}`,
+        status: item.status || "",
+        rule: item.rule || "",
+        target: item.target || "",
+        count: 0,
+        providerIds: new Set(),
+        suggestedAction: item.batchSuggestedAction || sourceFitBatchAction(item.status)
+      });
+    }
+    const batch = byKey.get(key);
+    batch.count += 1;
+    if (item.providerId) batch.providerIds.add(item.providerId);
+  }
+  return [...byKey.values()]
+    .map((batch) => ({
+      batchKey: batch.batchKey,
+      label: batch.label,
+      status: batch.status,
+      rule: batch.rule,
+      target: batch.target,
+      count: batch.count,
+      providerCount: batch.providerIds.size,
+      suggestedAction: batch.suggestedAction
+    }))
+    .sort((a, b) => b.count - a.count || a.batchKey.localeCompare(b.batchKey));
 }
 
 async function fetchOnce(cache, url, options) {
@@ -437,14 +506,18 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
     });
   }
 
-  const outputItems = merged.mergeExisting ? mergeCaptureItems(existingItems, items) : items;
+  const outputItems = (merged.mergeExisting ? mergeCaptureItems(existingItems, items) : items)
+    .map((item) => withBatchMetadata(item));
+  const batches = summarizeBatches(outputItems);
   const summary = summarizeItems(outputItems, {
     newFindingsConsidered: findings.length,
     existingItemsAvailable: existingItems.length,
     existingItemsSkipped: existingKeys.size,
     existingItemsMerged: merged.mergeExisting ? existingItems.length : 0,
     newItemsCaptured: items.length,
-    totalItems: outputItems.length
+    totalItems: outputItems.length,
+    batchCount: batches.length,
+    batches
   });
 
   return {
@@ -486,6 +559,7 @@ function writeCsv(filePath, items) {
     "rule",
     "target",
     "status",
+    "batchKey",
     "sourceUrl",
     "evidenceSummary",
     "suggestedDecision",
@@ -525,6 +599,10 @@ function writeMarkdown(filePath, output) {
   ];
   for (const [status, count] of Object.entries(output.summary.byStatus)) {
     lines.push(`| ${status} | ${count} |`);
+  }
+  lines.push("", "## Review Batches", "", "| Items | Providers | Batch | Suggested action |", "| ---: | ---: | --- | --- |");
+  for (const batch of (output.summary.batches || []).slice(0, 40)) {
+    lines.push(`| ${batch.count} | ${batch.providerCount} | ${batch.batchKey.replace(/\|/g, "\\|")} | ${compact(batch.suggestedAction, 180).replace(/\|/g, "\\|")} |`);
   }
   lines.push("", "## Review Items", "", "| Status | Provider | Rule | Target | Evidence / action |", "| --- | --- | --- | --- | --- |");
   for (const item of output.items.slice(0, 80)) {

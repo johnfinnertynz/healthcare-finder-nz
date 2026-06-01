@@ -241,6 +241,10 @@ data; the auditor must confirm excerpts or corrections before `apply:review`.
 For Māori, Pasifika, Asian, and Rainbow support-preference rows, public identity
 cues push the item to human browser review instead of a safe-removal candidate
 when automated capture cannot find explicit wording.
+Each capture item also has a batch key in the form
+`source-fit:<status>:<rule>:<target>`, so auditors can filter repeated issues
+such as safe-removal candidates for unsupported depression tags without mixing
+them with unrelated claims.
 
 Export regional review priorities:
 

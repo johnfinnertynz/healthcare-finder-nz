@@ -609,9 +609,18 @@ test("source-fit evidence capture separates supported claims from safe removal c
   assert.equal(output.summary.sourceSupportFound, 1);
   assert.equal(output.summary.safeRemovalCandidates, 1);
   assert.equal(output.summary.needsHumanBrowserReview, 1);
+  assert.equal(output.summary.batchCount, 3);
   assert.equal(byId.get("supported-anxiety").status, "source_support_found");
+  assert.equal(
+    byId.get("supported-anxiety").batchKey,
+    "source-fit:source_support_found:broad-tag-without-source-support:anxiety"
+  );
   assert.match(byId.get("supported-anxiety").evidenceSummary, /anxiety/i);
   assert.equal(byId.get("unsupported-telehealth").status, "safe_removal_candidate");
+  assert.equal(
+    byId.get("unsupported-telehealth").batchKey,
+    "source-fit:safe_removal_candidate:weak-telehealth-evidence:telehealth"
+  );
   assert.deepEqual(byId.get("unsupported-telehealth").correctedFields.tags, ["psychologist"]);
   assert.equal(byId.get("unsupported-telehealth").correctedFields.onlineAvailable, false);
   assert.equal(byId.get("unsupported-telehealth").correctedFields.phoneSupport, false);
@@ -796,7 +805,12 @@ test("source-fit evidence capture can skip and merge existing batches", async ()
   assert.equal(output.summary.totalItems, 2);
   assert.equal(output.items.map((item) => item.providerId).join(","), "already-checked,next-checked");
   assert.equal(output.items.find((item) => item.providerId === "already-checked").evidenceSummary, "Existing reviewer-checkable anxiety excerpt");
+  assert.equal(
+    output.items.find((item) => item.providerId === "already-checked").batchKey,
+    "source-fit:source_support_found:broad-tag-without-source-support:anxiety"
+  );
   assert.equal(output.items.find((item) => item.providerId === "next-checked").status, "safe_removal_candidate");
+  assert.ok(output.summary.batches.some((batch) => batch.batchKey === "source-fit:safe_removal_candidate:broad-tag-without-source-support:depression"));
 });
 
 test("source-fit capture decision drafts merge removals per provider", () => {
