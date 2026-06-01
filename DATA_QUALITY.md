@@ -621,6 +621,12 @@ capture pass before asking a human to inspect every row:
 npm run export:source-fit-capture -- --limit 30 --rate-limit-ms 1000
 ```
 
+Use resumable batches after the first run:
+
+```sh
+npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing --rate-limit-ms 1000
+```
+
 The export writes `data/provider-source-fit-evidence-capture.json`,
 `data/provider-source-fit-evidence-capture.csv`, and
 `PROVIDER_SOURCE_FIT_EVIDENCE_CAPTURE.md`. It may mark a row as:
@@ -637,6 +643,12 @@ The export writes `data/provider-source-fit-evidence-capture.json`,
 This capture layer is designed to reduce review effort, not to bypass review.
 Never use it to approve sensitive tags, telehealth, advertised specialties, or
 availability without a reviewer checking the excerpt.
+
+`--skip-existing` compares provider ID, audit rule, and target value against
+the existing capture file so repeated bounded runs move on to new findings.
+`--merge-existing` keeps previously captured excerpts and adds the new batch to
+the same output. This is still review-gated; preserving an excerpt does not
+approve the claim.
 
 After reviewing safe-removal candidates, draft controlled decisions with:
 

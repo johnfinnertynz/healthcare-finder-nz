@@ -164,6 +164,10 @@ This cycle added a separate claim review queue:
   capture rows into merged draft decisions. It groups removals by provider so
   several unsupported tag removals cannot overwrite each other and re-add a
   removed tag.
+- `npm run export:source-fit-capture -- --skip-existing --merge-existing` now
+  supports resumable bounded capture. The next pass can keep earlier excerpts
+  while checking new provider/rule/target rows instead of re-fetching the same
+  first batch.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -235,9 +239,9 @@ Auto-accept is allowed only when all are true:
     review-gated provider suggestions directly after `npm run discover:suggest`.
     Only import a new provider after capturing a provider-owned, Healthpoint,
     official, or professional source excerpt.
-12. Use `npm run export:source-fit-capture -- --limit 30` and the auditor's
-    **Source-fit evidence capture** queue before manually opening every
-    unsupported-tag item. Confirm source-support excerpts or apply conservative
+12. Use `npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing`
+    and the auditor's **Source-fit evidence capture** queue before manually
+    opening every unsupported-tag item. Confirm source-support excerpts or apply conservative
     tag/telehealth removals through reviewed decisions only.
 13. After checking safe-removal candidates, use
     `npm run draft:source-fit-capture -- --confirmed-human-review ...` to create

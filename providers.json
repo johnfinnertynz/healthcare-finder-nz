@@ -22854,11 +22854,11 @@
     "type": "addiction",
     "region": "Canterbury",
     "city": "Christchurch",
-    "address": "Level 1, 55-59 Ferry Road, Christchurch Central",
+    "address": "49 Carlyle Street, Sydenham, Christchurch",
     "phone": "033384437",
     "text": "",
     "email": "chchaod@odysseychch.org.nz",
-    "website": "https://www.cinch.org.nz/mobile/1638/entry/892",
+    "website": "https://www.chchaod.org.nz/contact",
     "hours": "Monday-Friday, 8:30am-5pm.",
     "cost": "Free central screening and coordination pathway for Canterbury AOD services.",
     "tags": [
@@ -22873,19 +22873,19 @@
     ],
     "fit": "One-stop-shop style screening and coordination service that helps connect people with the right Canterbury alcohol and other drug support.",
     "firstStep": "Call or email and ask for alcohol or drug support screening and referral.",
-    "source": "https://www.cinch.org.nz/mobile/1638/entry/892",
-    "verified": "2026-05",
+    "source": "https://www.chchaod.org.nz/contact",
+    "verified": "2026-06",
     "confidence": "high",
     "sourceQuality": "provider-owned or NGO public page",
-    "lastVerified": "2026-05",
+    "lastVerified": "2026-06",
     "needsManualVerification": false,
     "needScope": [
       "addiction"
     ],
     "availabilityStatus": "not_published",
-    "availabilityCheckedAt": "2026-05",
+    "availabilityCheckedAt": "2026-06",
     "availabilityEvidence": "",
-    "availabilitySource": "https://www.cinch.org.nz/mobile/1638/entry/892",
+    "availabilitySource": "https://www.chchaod.org.nz/contact",
     "availabilityNeedsManualReview": true
   },
   {

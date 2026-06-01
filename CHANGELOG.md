@@ -79,6 +79,9 @@
   that merges safe-removal candidates by provider before drafting `adjust`
   decisions. This prevents one tag-removal decision from re-adding another
   unsupported tag on the same provider.
+- Made source-fit evidence capture resumable with `--skip-existing` and
+  `--merge-existing`, so bounded runs can preserve earlier excerpts and move on
+  to new unsupported tag/support/telehealth findings without live data changes.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

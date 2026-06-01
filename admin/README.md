@@ -156,6 +156,13 @@ support-preference tags, or telehealth flags create repetitive review work:
 npm run export:source-fit-capture -- --limit 30 --rate-limit-ms 1000
 ```
 
+After the first batch, use the resumable form so the next bounded run keeps the
+old excerpts and checks new rows:
+
+```bash
+npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing --rate-limit-ms 1000
+```
+
 This writes:
 
 - `data/provider-source-fit-evidence-capture.json`

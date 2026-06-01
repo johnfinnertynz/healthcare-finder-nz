@@ -133,6 +133,9 @@ manual review burden.
 - Added a source-fit capture decision draft helper. It requires confirmed human
   review and merges removals by provider so multiple unsupported-tag removals
   cannot overwrite each other and re-add a claim.
+- Made source-fit evidence capture resumable. Repeated bounded runs can now use
+  `--skip-existing --merge-existing` to keep earlier excerpts and move on to new
+  unsupported tag/support/telehealth findings without mutating live data.
 
 ## Next Backlog Items
 
@@ -144,9 +147,9 @@ manual review burden.
    captures, and the two high-confidence update-existing GP suggestions.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
-4. Continue bounded source-fit capture batches for the largest unsupported tag
-   groups, then confirm excerpts or remove unsupported claims through reviewed
-   decisions.
+4. Continue resumable source-fit capture batches with
+   `--skip-existing --merge-existing`, then confirm excerpts or remove
+   unsupported claims through reviewed decisions.
 5. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
 6. Keep adding extractor regression tests whenever generated discovery reports

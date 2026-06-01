@@ -209,6 +209,13 @@ telehealth findings:
 npm run export:source-fit-capture -- --limit 30 --rate-limit-ms 1000
 ```
 
+For repeated bounded passes, skip rows already captured and keep the earlier
+review items in the output:
+
+```sh
+npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing --rate-limit-ms 1000
+```
+
 This writes `data/provider-source-fit-evidence-capture.json`,
 `data/provider-source-fit-evidence-capture.csv`, and
 `PROVIDER_SOURCE_FIT_EVIDENCE_CAPTURE.md`. It fetches a bounded set of public
@@ -216,6 +223,8 @@ source pages, captures short excerpts when a flagged claim is supported, and
 creates review-gated safe-removal candidates when a reachable source does not
 support a broad/sensitive tag or telehealth flag. It never updates live provider
 data; the auditor must confirm excerpts or corrections before `apply:review`.
+`--skip-existing` prevents re-fetching the same provider/rule/target row, while
+`--merge-existing` preserves previous excerpts and appends the new batch.
 
 Export regional review priorities:
 
@@ -585,7 +594,7 @@ npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
 npm run export:gp-corroboration
-npm run export:source-fit-capture -- --limit 30
+npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing
 npm run export:auto-resolution
 npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
 npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."

@@ -23,7 +23,10 @@ const DEFAULTS = {
   rateLimitMs: 1500,
   maxBytes: 750_000,
   noNetwork: false,
-  rule: ""
+  rule: "",
+  existingCapture: "",
+  skipExisting: false,
+  mergeExisting: false
 };
 
 const CAPTURE_RULES = new Set([
@@ -62,6 +65,9 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--max-bytes") config.maxBytes = Number(argv[++index]);
     else if (arg === "--rule") config.rule = argv[++index];
     else if (arg === "--no-network") config.noNetwork = true;
+    else if (arg === "--existing-capture") config.existingCapture = argv[++index];
+    else if (arg === "--skip-existing") config.skipExisting = true;
+    else if (arg === "--merge-existing") config.mergeExisting = true;
   }
   return config;
 }
@@ -106,7 +112,23 @@ function issueKey(finding) {
   return [finding.providerId, finding.rule, targetFromFinding(finding)].join("|");
 }
 
-function relevantFindings(findings, config) {
+function itemIssueKey(item) {
+  return [item.providerId, item.rule, item.target].join("|");
+}
+
+function readExistingCapture(config) {
+  const existingPath = config.existingCapture || config.jsonOut;
+  if (!existingPath || !fs.existsSync(existingPath)) return null;
+  try {
+    const existing = readJson(existingPath);
+    if (!Array.isArray(existing.items)) return null;
+    return existing;
+  } catch {
+    return null;
+  }
+}
+
+function relevantFindings(findings, config, skipKeys = new Set()) {
   const seen = new Set();
   const filtered = [];
   for (const finding of findings) {
@@ -116,6 +138,7 @@ function relevantFindings(findings, config) {
     if (!target) continue;
     const key = issueKey(finding);
     if (seen.has(key)) continue;
+    if (skipKeys.has(key)) continue;
     seen.add(key);
     filtered.push(finding);
   }
@@ -174,6 +197,35 @@ function captureStatus({ fetchResult, evidence }) {
   return "fetch_failed";
 }
 
+function summarizeItems(items, extra = {}) {
+  return {
+    findingsConsidered: items.length,
+    sourceSupportFound: items.filter((item) => item.status === "source_support_found").length,
+    safeRemovalCandidates: items.filter((item) => item.status === "safe_removal_candidate").length,
+    needsHumanBrowserReview: items.filter((item) => item.status === "needs_human_browser_review").length,
+    fetchFailed: items.filter((item) => item.status === "fetch_failed").length,
+    sourceSkipped: items.filter((item) => item.status === "source_skipped").length,
+    notFetched: items.filter((item) => item.status === "not_fetched").length,
+    providerMissing: items.filter((item) => item.status === "provider_missing").length,
+    byRule: items.reduce((counts, item) => {
+      counts[item.rule] = (counts[item.rule] || 0) + 1;
+      return counts;
+    }, {}),
+    byStatus: items.reduce((counts, item) => {
+      counts[item.status] = (counts[item.status] || 0) + 1;
+      return counts;
+    }, {}),
+    ...extra
+  };
+}
+
+function mergeCaptureItems(existingItems, newItems) {
+  const merged = new Map();
+  for (const item of existingItems) merged.set(itemIssueKey(item), item);
+  for (const item of newItems) merged.set(itemIssueKey(item), item);
+  return [...merged.values()];
+}
+
 async function fetchOnce(cache, url, options) {
   if (cache.has(url)) return cache.get(url);
   const result = await options.fetcher(url, options);
@@ -187,7 +239,12 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
   const providers = readJson(merged.providers);
   const providerById = new Map(providers.map((provider) => [provider.id, provider]));
   const audit = readJson(merged.sourceFitAudit);
-  const findings = relevantFindings(asArray(audit.findings || audit), merged);
+  const existingCapture = readExistingCapture(merged);
+  const existingItems = asArray(existingCapture?.items);
+  const existingKeys = merged.skipExisting
+    ? new Set(existingItems.map(itemIssueKey).filter((key) => key !== "||"))
+    : new Set();
+  const findings = relevantFindings(asArray(audit.findings || audit), merged, existingKeys);
   const fetcher = merged.fetcher || fetchPublicSource;
   const fetchCache = new Map();
   const items = [];
@@ -343,23 +400,15 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
     });
   }
 
-  const summary = {
-    findingsConsidered: findings.length,
-    sourceSupportFound: items.filter((item) => item.status === "source_support_found").length,
-    safeRemovalCandidates: items.filter((item) => item.status === "safe_removal_candidate").length,
-    needsHumanBrowserReview: items.filter((item) => item.status === "needs_human_browser_review").length,
-    fetchFailed: items.filter((item) => item.status === "fetch_failed").length,
-    sourceSkipped: items.filter((item) => item.status === "source_skipped").length,
-    notFetched: items.filter((item) => item.status === "not_fetched").length,
-    byRule: items.reduce((counts, item) => {
-      counts[item.rule] = (counts[item.rule] || 0) + 1;
-      return counts;
-    }, {}),
-    byStatus: items.reduce((counts, item) => {
-      counts[item.status] = (counts[item.status] || 0) + 1;
-      return counts;
-    }, {})
-  };
+  const outputItems = merged.mergeExisting ? mergeCaptureItems(existingItems, items) : items;
+  const summary = summarizeItems(outputItems, {
+    newFindingsConsidered: findings.length,
+    existingItemsAvailable: existingItems.length,
+    existingItemsSkipped: existingKeys.size,
+    existingItemsMerged: merged.mergeExisting ? existingItems.length : 0,
+    newItemsCaptured: items.length,
+    totalItems: outputItems.length
+  });
 
   return {
     version: 1,
@@ -375,10 +424,13 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
       sourceFitAudit: merged.sourceFitAudit,
       limit: merged.limit,
       rule: merged.rule || "",
-      noNetwork: merged.noNetwork
+      noNetwork: merged.noNetwork,
+      existingCapture: merged.existingCapture || merged.jsonOut,
+      skipExisting: Boolean(merged.skipExisting),
+      mergeExisting: Boolean(merged.mergeExisting)
     },
     summary,
-    items
+    items: outputItems
   };
 }
 
@@ -420,6 +472,9 @@ function writeMarkdown(filePath, output) {
     "## Summary",
     "",
     `- Findings considered: ${output.summary.findingsConsidered}`,
+    `- New findings checked this run: ${output.summary.newFindingsConsidered ?? output.summary.findingsConsidered}`,
+    `- Existing items merged: ${output.summary.existingItemsMerged ?? 0}`,
+    `- Total items in output: ${output.summary.totalItems ?? output.items.length}`,
     `- Source support found: ${output.summary.sourceSupportFound}`,
     `- Safe removal candidates: ${output.summary.safeRemovalCandidates}`,
     `- Needs human browser review: ${output.summary.needsHumanBrowserReview}`,

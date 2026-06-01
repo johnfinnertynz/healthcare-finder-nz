@@ -617,6 +617,117 @@ test("source-fit evidence capture separates supported claims from safe removal c
   assert.equal(byId.get("blocked-rainbow").status, "needs_human_browser_review");
 });
 
+test("source-fit evidence capture can skip and merge existing batches", async () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const auditPath = path.join(dir, "source-fit.json");
+  const existingPath = path.join(dir, "existing-capture.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "already-checked",
+      name: "Already Checked",
+      source: "https://already.example.nz",
+      website: "https://already.example.nz",
+      tags: ["psychologist", "anxiety"]
+    }),
+    baseProvider({
+      id: "next-checked",
+      name: "Next Checked",
+      source: "https://next.example.nz",
+      website: "https://next.example.nz",
+      tags: ["psychologist", "depression"]
+    }),
+    baseProvider({
+      id: "later-checked",
+      name: "Later Checked",
+      source: "https://later.example.nz",
+      website: "https://later.example.nz",
+      tags: ["psychologist", "trauma"]
+    })
+  ]);
+  writeJson(auditPath, {
+    findings: [
+      {
+        providerId: "already-checked",
+        providerName: "Already Checked",
+        source: "https://already.example.nz",
+        rule: "broad-tag-without-source-support",
+        severity: "medium",
+        issue: "Broad tag \"anxiety\" is present but source fields do not clearly support it."
+      },
+      {
+        providerId: "next-checked",
+        providerName: "Next Checked",
+        source: "https://next.example.nz",
+        rule: "broad-tag-without-source-support",
+        severity: "medium",
+        issue: "Broad tag \"depression\" is present but source fields do not clearly support it."
+      },
+      {
+        providerId: "later-checked",
+        providerName: "Later Checked",
+        source: "https://later.example.nz",
+        rule: "broad-tag-without-source-support",
+        severity: "medium",
+        issue: "Broad tag \"trauma\" is present but source fields do not clearly support it."
+      }
+    ]
+  });
+  writeJson(existingPath, {
+    version: 1,
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    summary: {},
+    items: [
+      {
+        reviewId: "source-fit-capture:already-checked:broad-tag-without-source-support:anxiety",
+        providerId: "already-checked",
+        providerName: "Already Checked",
+        rule: "broad-tag-without-source-support",
+        target: "anxiety",
+        status: "source_support_found",
+        evidenceSummary: "Existing reviewer-checkable anxiety excerpt"
+      }
+    ]
+  });
+
+  const fetched = [];
+  const output = await buildSourceFitEvidenceCapture({
+    providers: providersPath,
+    sourceFitAudit: auditPath,
+    jsonOut: existingPath,
+    existingCapture: existingPath,
+    skipExisting: true,
+    mergeExisting: true,
+    limit: 1,
+    rateLimitMs: 0,
+    fetcher: async (url) => {
+      fetched.push(url);
+      return {
+        url,
+        finalUrl: url,
+        capturedAt: "2026-06-01T00:05:00.000Z",
+        ok: true,
+        blocked: false,
+        skipped: false,
+        status: 200,
+        contentType: "text/html",
+        error: "",
+        text: "<html><body>We provide in-person counselling only.</body></html>",
+        sourceHash: "next"
+      };
+    }
+  });
+
+  assert.deepEqual(fetched, ["https://next.example.nz"]);
+  assert.equal(output.summary.newFindingsConsidered, 1);
+  assert.equal(output.summary.existingItemsSkipped, 1);
+  assert.equal(output.summary.existingItemsMerged, 1);
+  assert.equal(output.summary.totalItems, 2);
+  assert.equal(output.items.map((item) => item.providerId).join(","), "already-checked,next-checked");
+  assert.equal(output.items.find((item) => item.providerId === "already-checked").evidenceSummary, "Existing reviewer-checkable anxiety excerpt");
+  assert.equal(output.items.find((item) => item.providerId === "next-checked").status, "safe_removal_candidate");
+});
+
 test("source-fit capture decision drafts merge removals per provider", () => {
   const dir = tempDir();
   const providersPath = path.join(dir, "providers.json");
