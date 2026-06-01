@@ -898,6 +898,88 @@ test("source-fit capture decision drafts merge removals per provider", () => {
   assert.equal(draft.safety.groupedByProviderToAvoidTagReadd, true);
 });
 
+test("source-fit capture decision drafts can target auditor batch keys", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const capturePath = path.join(dir, "capture.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "batch-target",
+      name: "Batch Target",
+      tags: ["psychologist", "depression", "anxiety", "telehealth"],
+      onlineAvailable: true
+    })
+  ]);
+  writeJson(capturePath, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    items: [
+      {
+        providerId: "batch-target",
+        status: "safe_removal_candidate",
+        rule: "broad-tag-without-source-support",
+        target: "depression",
+        batchKey: "source-fit:safe_removal_candidate:broad-tag-without-source-support:depression",
+        sourceUrl: "https://example.org",
+        auditRules: ["broad-tag-without-source-support"],
+        correctedFields: {
+          tags: ["psychologist", "anxiety", "telehealth"]
+        }
+      },
+      {
+        providerId: "batch-target",
+        status: "safe_removal_candidate",
+        rule: "broad-tag-without-source-support",
+        target: "anxiety",
+        batchKey: "source-fit:safe_removal_candidate:broad-tag-without-source-support:anxiety",
+        sourceUrl: "https://example.org",
+        auditRules: ["broad-tag-without-source-support"],
+        correctedFields: {
+          tags: ["psychologist", "depression", "telehealth"]
+        }
+      },
+      {
+        providerId: "batch-target",
+        status: "source_support_found",
+        rule: "weak-telehealth-evidence",
+        target: "telehealth",
+        batchKey: "source-fit:source_support_found:weak-telehealth-evidence:telehealth",
+        sourceUrl: "https://example.org",
+        auditRules: ["weak-telehealth-evidence"],
+        evidenceSummary: "Online appointments are listed.",
+        correctedFields: {}
+      }
+    ]
+  });
+
+  const removalDraft = buildSourceFitCaptureDecisionDraft({
+    capture: capturePath,
+    providers: providersPath,
+    batchKey: "source-fit:safe_removal_candidate:broad-tag-without-source-support:depression",
+    reviewer: "tester",
+    notes: "Reviewer checked this depression batch and confirmed the claim is unsupported.",
+    confirmedHumanReview: true
+  });
+
+  assert.equal(removalDraft.summary.captureRowsMatched, 1);
+  assert.deepEqual(removalDraft.decisions[0].correctedFields.tags, ["psychologist", "anxiety", "telehealth"]);
+  assert.deepEqual(removalDraft.summary.byBatch, {
+    "source-fit:safe_removal_candidate:broad-tag-without-source-support:depression": 1
+  });
+
+  const supportDraft = buildSourceFitCaptureDecisionDraft({
+    capture: capturePath,
+    providers: providersPath,
+    batchKey: "source-fit:source_support_found:weak-telehealth-evidence:telehealth",
+    reviewer: "tester",
+    notes: "Reviewer still needs to confirm the support excerpt belongs to this provider."
+  });
+
+  assert.equal(supportDraft.summary.captureRowsMatched, 1);
+  assert.equal(supportDraft.decisions[0].action, "needs_more_info");
+  assert.deepEqual(supportDraft.decisions[0].correctedFields, {});
+  assert.equal(supportDraft.safety.noAddedTagsOrCapabilities, true);
+});
+
 test("admin UI contains no tokens, opens sources externally, and keeps iframe sandboxed", () => {
   const html = fs.readFileSync("admin/index.html", "utf8");
   const js = fs.readFileSync("admin/admin.js", "utf8");

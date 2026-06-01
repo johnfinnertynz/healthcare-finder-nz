@@ -801,6 +801,17 @@ Those drafts are conservative downgrades only: removing unsupported tags,
 to approve sensitive tags, advertised specialties, telehealth, availability, or
 referral pathways.
 
+When working from the auditor **Batch** filter, pass the same source-fit batch
+key to keep the draft narrow:
+
+```sh
+npm run draft:source-fit-capture -- --batch-key "source-fit:safe_removal_candidate:broad-tag-without-source-support:depression" --confirmed-human-review --reviewer "Your name" --notes "Checked this batch; unsupported claims should be removed."
+```
+
+The helper can also draft `needs_more_info` decisions for non-removal batches
+such as `source_support_found`, blocked, skipped, or failed rows. It will not
+bulk-approve captured excerpts or add new capability claims.
+
 After applying decisions, run:
 
 ```sh

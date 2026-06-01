@@ -219,10 +219,22 @@ hand-editing several individual decisions:
 npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."
 ```
 
+To work only the batch currently selected in the auditor, pass the same batch
+key shown in the **Batch** filter:
+
+```bash
+npm run draft:source-fit-capture -- --batch-key "source-fit:safe_removal_candidate:broad-tag-without-source-support:depression" --confirmed-human-review --reviewer "Your name" --notes "Checked this batch; unsupported depression claims should be removed."
+```
+
 The helper groups rows by provider before drafting `adjust` decisions. This
 prevents one tag-removal row from re-adding another unsupported tag on the same
 provider. Inspect the generated JSON/Markdown, then apply through
 `npm run apply:review` only after the corrections are correct.
+
+For `source_support_found`, blocked, skipped, or failed batches, the helper can
+also create `needs_more_info` decisions with `--batch-key`. It will not approve
+or add tags from captured excerpts; a reviewer still needs to make any positive
+source-backed correction deliberately.
 
 ## Google Places Candidates
 

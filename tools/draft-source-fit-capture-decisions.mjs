@@ -8,6 +8,8 @@ const DEFAULTS = {
   jsonOut: "data/source-fit-capture-decision-draft.json",
   mdOut: "SOURCE_FIT_CAPTURE_DECISION_DRAFT.md",
   status: "safe_removal_candidate",
+  statusExplicit: false,
+  batchKey: "",
   providerId: "",
   rule: "",
   target: "",
@@ -20,7 +22,7 @@ const DEFAULTS = {
   limit: Infinity
 };
 
-const ALLOWED_STATUSES = new Set(["safe_removal_candidate", "needs_human_browser_review", "source_skipped", "fetch_failed"]);
+const ALLOWED_STATUSES = new Set(["safe_removal_candidate", "source_support_found", "needs_human_browser_review", "source_skipped", "fetch_failed"]);
 const APPLYABLE_FIELDS = new Set(["tags", "needScope", "advertisedSpecialties", "onlineAvailable", "phoneSupport"]);
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -31,7 +33,11 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--providers") config.providers = argv[++index];
     else if (arg === "--json-out") config.jsonOut = argv[++index];
     else if (arg === "--md-out") config.mdOut = argv[++index];
-    else if (arg === "--status") config.status = argv[++index];
+    else if (arg === "--status") {
+      config.status = argv[++index];
+      config.statusExplicit = true;
+    }
+    else if (arg === "--batch-key") config.batchKey = argv[++index];
     else if (arg === "--provider-id") config.providerId = argv[++index];
     else if (arg === "--rule") config.rule = argv[++index];
     else if (arg === "--target") config.target = argv[++index];
@@ -73,15 +79,21 @@ function hasUsefulReviewText(config) {
 
 function assertConfig(config) {
   if (!ALLOWED_STATUSES.has(config.status)) throw new Error(`Unsupported --status "${config.status}".`);
-  if (config.status === "safe_removal_candidate") {
-    if (!config.confirmedHumanReview) throw new Error("--confirmed-human-review is required before drafting source-fit removal decisions.");
-    if (!config.reviewer.trim()) throw new Error("--reviewer is required before drafting source-fit removal decisions.");
-    if (!hasUsefulReviewText(config)) throw new Error("--source-excerpt or --notes must explain the reviewer-confirmed source-fit removal.");
-  }
+}
+
+function assertReviewPolicy(items, config) {
+  const hasSafeRemoval = items.some((item) => item.status === "safe_removal_candidate");
+  if (!hasSafeRemoval) return;
+  if (!config.confirmedHumanReview) throw new Error("--confirmed-human-review is required before drafting source-fit removal decisions.");
+  if (!config.reviewer.trim()) throw new Error("--reviewer is required before drafting source-fit removal decisions.");
+  if (!hasUsefulReviewText(config)) throw new Error("--source-excerpt or --notes must explain the reviewer-confirmed source-fit removal.");
 }
 
 function filteredItems(capture, config) {
-  let items = asArray(capture.items).filter((item) => item.status === config.status);
+  let items = asArray(capture.items);
+  if (config.batchKey) items = items.filter((item) => item.batchKey === config.batchKey);
+  const shouldFilterStatus = config.statusExplicit || !config.batchKey || config.status !== DEFAULTS.status;
+  if (shouldFilterStatus) items = items.filter((item) => item.status === config.status);
   if (config.providerId) items = items.filter((item) => item.providerId === config.providerId);
   if (config.rule) items = items.filter((item) => item.rule === config.rule);
   if (config.target) items = items.filter((item) => item.target === config.target);
@@ -97,6 +109,15 @@ function groupByProvider(items) {
     groups.set(item.providerId, bucket);
   }
   return [...groups.entries()];
+}
+
+function countBy(items, keyFn) {
+  const counts = {};
+  for (const item of items) {
+    const key = keyFn(item) || "unknown";
+    counts[key] = (counts[key] || 0) + 1;
+  }
+  return counts;
 }
 
 function removeFromArray(current, values) {
@@ -195,11 +216,14 @@ export function buildSourceFitCaptureDecisionDraft(config = {}) {
   const providers = readJson(merged.providers);
   const providersById = new Map(providers.map((provider) => [provider.id, provider]));
   const items = filteredItems(capture, merged);
+  assertReviewPolicy(items, merged);
   const decisions = [];
   const skipped = [];
+  const safeRemovalItems = items.filter((item) => item.status === "safe_removal_candidate");
+  const needsInfoItems = items.filter((item) => item.status !== "safe_removal_candidate");
 
-  if (merged.status === "safe_removal_candidate") {
-    for (const [providerId, providerItems] of groupByProvider(items)) {
+  if (safeRemovalItems.length) {
+    for (const [providerId, providerItems] of groupByProvider(safeRemovalItems)) {
       const provider = providersById.get(providerId);
       if (!provider) {
         skipped.push({ providerId, reason: "Provider not found in providers.json." });
@@ -209,9 +233,8 @@ export function buildSourceFitCaptureDecisionDraft(config = {}) {
       if (decision) decisions.push(decision);
       else skipped.push({ providerId, reason: "No correction would change live provider fields." });
     }
-  } else {
-    for (const item of items) decisions.push(needsMoreInfoDecision(item, merged));
   }
+  for (const item of needsInfoItems) decisions.push(needsMoreInfoDecision(item, merged));
 
   return {
     version: 1,
@@ -228,6 +251,8 @@ export function buildSourceFitCaptureDecisionDraft(config = {}) {
     },
     input: {
       status: merged.status,
+      statusExplicit: Boolean(merged.statusExplicit),
+      batchKey: merged.batchKey,
       providerId: merged.providerId,
       rule: merged.rule,
       target: merged.target,
@@ -237,7 +262,9 @@ export function buildSourceFitCaptureDecisionDraft(config = {}) {
       captureRowsMatched: items.length,
       uniqueProvidersMatched: groupByProvider(items).length,
       decisionsDrafted: decisions.length,
-      skipped: skipped.length
+      skipped: skipped.length,
+      byStatus: countBy(items, (item) => item.status),
+      byBatch: countBy(items, (item) => item.batchKey)
     },
     decisions,
     skipped
@@ -254,16 +281,40 @@ function writeMarkdown(filePath, draft) {
     "",
     "## Summary",
     "",
+    `- Batch key: ${draft.input.batchKey || "(none)"}`,
+    `- Status filter: ${draft.input.statusExplicit || !draft.input.batchKey || draft.input.status !== DEFAULTS.status ? draft.input.status : "(inferred from batch)"}`,
+    `- Rule filter: ${draft.input.rule || "(none)"}`,
+    `- Target filter: ${draft.input.target || "(none)"}`,
     `- Capture rows matched: ${draft.summary.captureRowsMatched}`,
     `- Unique providers matched: ${draft.summary.uniqueProvidersMatched}`,
     `- Decisions drafted: ${draft.summary.decisionsDrafted}`,
     `- Skipped: ${draft.summary.skipped}`,
     "",
+    "## Rows By Status",
+    "",
+    "| Status | Rows |",
+    "| --- | ---: |"
+  ];
+  for (const [status, count] of Object.entries(draft.summary.byStatus || {}).sort()) {
+    lines.push(`| ${status} | ${count} |`);
+  }
+  lines.push(
+    "",
+    "## Rows By Batch",
+    "",
+    "| Batch | Rows |",
+    "| --- | ---: |"
+  );
+  for (const [batch, count] of Object.entries(draft.summary.byBatch || {}).sort()) {
+    lines.push(`| ${batch.replace(/\|/g, "\\|")} | ${count} |`);
+  }
+  lines.push(
+    "",
     "## Draft Decisions",
     "",
     "| Provider | Action | Corrected fields |",
     "| --- | --- | --- |"
-  ];
+  );
   for (const decision of draft.decisions.slice(0, 80)) {
     lines.push(`| ${decision.providerId} | ${decision.action} | ${JSON.stringify(decision.correctedFields).replace(/\|/g, "\\|")} |`);
   }

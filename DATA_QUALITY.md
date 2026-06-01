@@ -722,6 +722,16 @@ After reviewing safe-removal candidates, draft controlled decisions with:
 npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."
 ```
 
+To keep the draft aligned with one auditor batch, pass the same batch key:
+
+```sh
+npm run draft:source-fit-capture -- --batch-key "source-fit:safe_removal_candidate:weak-telehealth-evidence:telehealth" --confirmed-human-review --reviewer "Your name" --notes "Checked this batch; unsupported telehealth claims should be removed."
+```
+
+The helper also accepts non-removal batch keys, including
+`source_support_found`, but those drafts are `needs_more_info` only. Captured
+support excerpts are review aids, not bulk approvals.
+
 Then inspect the draft JSON/Markdown, run `npm run apply:review` only when the
 decision file is correct, and rerun validation/audits/tests before committing.
 
