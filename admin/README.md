@@ -91,6 +91,12 @@ the ranked review pack:
 npm run export:gp-review-pack
 ```
 
+Optional bounded source capture:
+
+```bash
+npm run export:gp-review-pack -- --fetch-sources --max-source-fetches 10 --rate-limit-ms 1000
+```
+
 This writes:
 
 - `data/gp-corroboration-review-pack.json`
@@ -103,10 +109,12 @@ Healthpoint, practice-site, or clinic-network lead. It labels each item as
 ready for source capture, manual compare conflict, or source lookup needed.
 
 The pack can pre-fill draft public contact/source fields, but it is not an
-approval. Open the source, capture a short excerpt showing the practice name and
-contact details, then export a reviewed decision before applying anything.
-Login portals and Google Maps-only leads are kept in source-lookup/manual
-review, not treated as source evidence.
+approval. When exported with `--fetch-sources`, it may also pre-fill a short
+source excerpt from public Healthpoint or practice pages. Open the source,
+confirm the excerpt shows the same practice name and contact details, then
+export a reviewed decision before applying anything. Login portals and Google
+Maps-only leads are kept in source-lookup/manual review, not treated as source
+evidence.
 
 ## Google Places Candidates
 

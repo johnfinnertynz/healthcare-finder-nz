@@ -53,6 +53,9 @@
   and practice-site leads into ready source-capture, manual compare conflict,
   and source-lookup-needed buckets. The auditor can load it directly, and login
   portals are not treated as source evidence.
+- Added optional bounded source fetching for the GP corroboration review pack.
+  It can prefill short Healthpoint/practice-page excerpts for human auditors,
+  while keeping all changes review-gated and preventing live provider mutation.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

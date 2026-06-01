@@ -120,6 +120,10 @@ This cycle added a separate claim review queue:
   source-excerpt capture, 18 manual compare conflicts, and 40 items still
   needing a source lookup. It also filters login portals out of the ready
   bucket.
+- `npm run export:gp-review-pack -- --fetch-sources --max-source-fetches 10`
+  can now capture a bounded set of short public source excerpts into the review
+  pack. These snippets prefill auditor notes only; they do not approve contact,
+  availability, enrolment, scope, cultural support, or funding claims.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -169,8 +173,8 @@ Auto-accept is allowed only when all are true:
 2. Review the largest unsupported tag batches and remove unsupported tags first.
 3. Run `npm run export:gp-corroboration` and corroborate weak GP records by
    practice-owned or official sources.
-4. Add source excerpts to importers so future claims can move out of manual
-   review faster.
+4. Extend source-excerpt capture beyond the GP review pack so future importer
+   claims can move out of manual review faster.
 5. Add a reviewed batch-decision generator once the first human claim review
    session proves the workflow.
 6. Use `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` to hide low-risk claim noise and
@@ -183,7 +187,8 @@ Auto-accept is allowed only when all are true:
    weak GP records and capture stronger website/contact evidence before any
    live provider update.
 10. Use the auditor console's **GP corroboration review pack** to start with
-   ready-for-source-capture GP items after Places/source enrichment.
+   ready-for-source-capture GP items after Places/source enrichment; rerun it
+   with `--fetch-sources` for a small prefilled-excerpt batch when useful.
 11. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
 12. Run `npm run export:regional-quality` after each review/apply cycle and use

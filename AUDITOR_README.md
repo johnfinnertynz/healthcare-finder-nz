@@ -51,6 +51,12 @@ npm run export:auto-resolution
 npm run export:regional-quality
 ```
 
+Optional GP source-excerpt prefill:
+
+```sh
+npm run export:gp-review-pack -- --fetch-sources --max-source-fetches 10 --rate-limit-ms 1000
+```
+
 Start a local server:
 
 ```sh
@@ -99,8 +105,10 @@ support, or funding eligibility from this queue.
 The GP corroboration review pack is the faster GP pathway after Places/source
 enrichment has already found likely URLs. Use **ready for source capture** items
 first. Open the candidate source, confirm the existing provider is the same
-practice, copy a short excerpt showing the practice name and contact details,
-then use any draft corrected fields as a starting point. Items marked **manual
+practice, then copy or confirm a short excerpt showing the practice name and
+contact details. If the export used `--fetch-sources`, the excerpt field may
+already be prefilled, but you still need to check it before saving a decision.
+Use any draft corrected fields as a starting point. Items marked **manual
 compare conflict** or **source lookup needed** should not be adjusted until the
 identity/source problem is resolved. Login portals and Google Maps-only links
 are leads only.

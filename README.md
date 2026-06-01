@@ -184,13 +184,23 @@ After Google Places or source-enrichment runs, export a ranked GP review pack:
 npm run export:gp-review-pack
 ```
 
+To let the pack fetch a small number of public Healthpoint/practice pages and
+prefill short reviewer excerpts, run a bounded source-capture batch:
+
+```sh
+npm run export:gp-review-pack -- --fetch-sources --max-source-fetches 10 --rate-limit-ms 1000
+```
+
 This writes `data/gp-corroboration-review-pack.json`,
 `data/gp-corroboration-review-pack.csv`, and
 `GP_CORROBORATION_REVIEW_PACK.md`. It matches GP source-corroboration tasks to
 Places/Healthpoint/practice-site leads, separates ready source-capture items
 from conflicts and source-lookup gaps, and pre-fills draft contact fields for
 the auditor. It is still review-only: a human must open the source, capture a
-short excerpt, and apply changes through reviewed decision JSON.
+short excerpt or confirm the prefilled excerpt, and apply changes through
+reviewed decision JSON. Automated source snippets are review aids only; they do
+not prove availability, enrolment, mental-health scope, cultural support,
+funding, or accepting-new-patients status.
 
 Export regional review priorities:
 
@@ -601,8 +611,10 @@ specialty, cultural support, or funding eligibility.
 The console can also load `data/gp-corroboration-review-pack.json` as
 **GP corroboration review pack**. This is a narrower review surface for the GP
 records most likely to have a usable Healthpoint or practice-site lead. It
-pre-fills only draft public contact/source fields and still requires a human
-source excerpt before any adjustment is exported.
+pre-fills only draft public contact/source fields. If the pack was exported
+with `--fetch-sources`, it may also pre-fill a short source excerpt for the
+auditor to check. It still requires human confirmation before any adjustment is
+exported.
 
 For triage, the console has a conservative filtered-batch helper. After a queue
 is narrowed by batch, rule, category, search, region, type, severity,

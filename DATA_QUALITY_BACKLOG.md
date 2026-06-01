@@ -93,28 +93,31 @@ manual review burden.
   queue to Places/Healthpoint/practice-site leads. It currently creates 126
   review-only items, including 68 ready-for-source-capture items, 18 manual
   compare conflicts, and 40 source-lookup-needed items.
+- Added optional bounded source-excerpt capture to the GP corroboration review
+  pack. It can prefill short public Healthpoint/practice-page snippets for the
+  auditor, while keeping every item review-gated and leaving live provider data
+  unchanged.
 
 ## Next Backlog Items
 
-1. Add stronger source-excerpt capture so fewer batch drafts need manual notes.
-2. Add reviewed batch-adjust UI only after the first human review session proves
+1. Add reviewed batch-adjust UI only after the first human review session proves
    the conservative `needs_more_info` batch helper is understandable.
-3. Work through the auditor console's **GP source corroboration** and
+2. Work through the auditor console's **GP source corroboration** and
    **GP corroboration review pack** queues, starting with the ready-for-source
    items and the two high-confidence update-existing GP suggestions.
-4. Tune duplicate/shared-practice false positives, especially shared GP network
+3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
-5. Start manual review with the largest unsupported tag batches.
-6. Add source-excerpt capture to more importers so fewer claims are
+4. Start manual review with the largest unsupported tag batches.
+5. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
-7. Keep adding extractor regression tests whenever generated discovery reports
+6. Keep adding extractor regression tests whenever generated discovery reports
    show obviously misleading provider names, clinician names, or closure text.
-8. Use bounded `discover:places -- --gp-corroboration-queue ...` batches for
+7. Use bounded `discover:places -- --gp-corroboration-queue ...` batches for
    weak GP records, then review the matched websites/Healthpoint links before
    applying any updates.
-9. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
+8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-10. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
+9. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.

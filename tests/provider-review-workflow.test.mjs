@@ -9,7 +9,10 @@ import { buildClaimBatchDecisionDraft } from "../tools/draft-claim-batch-review-
 import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
 import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
-import { buildGpCorroborationReviewPack } from "../tools/export-gp-corroboration-review-pack.mjs";
+import {
+  buildGpCorroborationReviewPack,
+  enrichGpCorroborationReviewPackWithSourceExcerpts
+} from "../tools/export-gp-corroboration-review-pack.mjs";
 import { buildRegionalDataQualityReport } from "../tools/export-regional-data-quality-report.mjs";
 import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
 import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
@@ -772,6 +775,72 @@ test("GP corroboration review pack ranks strong exact leads but keeps source cap
   assert.equal(pack.items[0].liveMutationAllowed, false);
 });
 
+test("GP corroboration review pack can capture source excerpts without approving data", async () => {
+  const provider = baseProvider({
+    id: "gp-ready-review-excerpt",
+    name: "Ready Review Medical",
+    type: "gp",
+    region: "Northland",
+    city: "Whangarei",
+    phone: "09 123 4567",
+    website: "",
+    sourceQuality: "third-party public GP listing",
+    importSource: "doctorpricer",
+    tags: ["gp", "primary-care"]
+  });
+  const pack = buildGpCorroborationReviewPack({
+    providers: [provider],
+    gpCorroborationQueue: {
+      tasks: [{
+        providerId: "gp-ready-review-excerpt",
+        name: "Ready Review Medical",
+        region: "Northland",
+        city: "Whangarei",
+        missingFields: ["website"],
+        reviewReason: "GP record needs stronger corroboration: missing website."
+      }]
+    },
+    googlePlacesCandidates: {
+      candidates: [{
+        candidateId: "places-ready-review-excerpt",
+        action: "corroborate_existing_provider",
+        type: "gp",
+        name: "Ready Review Medical",
+        phone: "09 123 4567",
+        website: "https://readyreviewmedical.example.org",
+        address: "1 Test Street, Whangarei",
+        possibleProviderIds: ["gp-ready-review-excerpt"],
+        duplicateSignals: ["phone", "name", "address"]
+      }]
+    }
+  });
+
+  const enriched = await enrichGpCorroborationReviewPackWithSourceExcerpts(pack, {
+    maxSourceFetches: 1,
+    rateLimitMs: 0,
+    fetchSource: async (url) => ({
+      url,
+      finalUrl: url,
+      capturedAt: "2026-06-01T00:00:00.000Z",
+      ok: true,
+      blocked: false,
+      skipped: false,
+      status: 200,
+      contentType: "text/html",
+      error: "",
+      text: "<html><title>Ready Review Medical</title><body><h1>Ready Review Medical</h1><p>Phone 09 123 4567</p><p>1 Test Street, Whangarei</p></body></html>",
+      sourceHash: "testhash"
+    })
+  });
+
+  assert.equal(enriched.sourceFetch.enabled, true);
+  assert.equal(enriched.summary.sourcePagesFetched, 1);
+  assert.equal(enriched.summary.sourceCaptures, 1);
+  assert.equal(enriched.items[0].sourceCapture.status, "captured");
+  assert.match(enriched.items[0].sourceExcerpt, /Ready Review Medical|09 123 4567/);
+  assert.equal(enriched.items[0].liveMutationAllowed, false);
+});
+
 test("GP corroboration review pack flags multi-provider Places matches as manual compare", () => {
   const provider = baseProvider({
     id: "gp-shared-match",
@@ -854,6 +923,7 @@ test("admin UI can load GP source corroboration tasks as review items", () => {
   assert.match(js, /reviewCategory: "GP source corroboration"/);
   assert.match(js, /gp-corroboration-review-pack\.json/);
   assert.match(js, /item\.prefillCorrectedFields/);
+  assert.match(js, /item\.sourceExcerpt/);
   assert.match(js, /practice-owned, Healthpoint, PHO, HPI\/FHIR, or official source/);
   assert.match(js, /Do not infer availability, enrolment, mental-health specialties, cultural support/);
 });

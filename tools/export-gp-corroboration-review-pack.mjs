@@ -1,6 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
+import { setTimeout as delay } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
+import { extractProviderEvidence } from "./lib/provider-evidence-extractor.mjs";
+import { fetchPublicSource } from "./lib/source-fetcher.mjs";
+import { normaliseComparable, sourceTypeFromUrl } from "./lib/provider-evidence-scorer.mjs";
 
 const DEFAULTS = {
   providers: "providers.json",
@@ -10,7 +14,11 @@ const DEFAULTS = {
   csvOut: "data/gp-corroboration-review-pack.csv",
   mdOut: "GP_CORROBORATION_REVIEW_PACK.md",
   region: "",
-  limit: Infinity
+  limit: Infinity,
+  fetchSources: false,
+  maxSourceFetches: 10,
+  rateLimitMs: 1000,
+  timeoutMs: 12_000
 };
 
 const STRONG_MATCH_SIGNALS = new Set(["name", "phone", "address", "website-domain", "gp-corroboration-target"]);
@@ -28,6 +36,10 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--md-out") config.mdOut = argv[++index];
     else if (arg === "--region") config.region = argv[++index];
     else if (arg === "--limit") config.limit = Number(argv[++index]);
+    else if (arg === "--fetch-sources") config.fetchSources = true;
+    else if (arg === "--max-source-fetches") config.maxSourceFetches = Number(argv[++index]);
+    else if (arg === "--rate-limit-ms") config.rateLimitMs = Number(argv[++index]);
+    else if (arg === "--timeout-ms") config.timeoutMs = Number(argv[++index]);
   }
   return config;
 }
@@ -224,6 +236,7 @@ function addAdminReviewFields(item) {
       suggestedFix: "Open the source, capture an excerpt, then export reviewed decisions before applying provider-data changes."
     }],
     sourceEvidence: {
+      ...(item.sourceEvidence || {}),
       gpCorroborationReview: [{
         field: "candidateSource",
         value: best.website || best.googleMapsUri || "",
@@ -251,7 +264,157 @@ function addAdminReviewFields(item) {
     claimRiskLevel: severity,
     requiredHumanAction: "Open the candidate source and capture an excerpt before using draft corrected fields.",
     correctedFields: item.draftCorrectedFields,
-    prefillCorrectedFields: item.draftCorrectedFields
+    prefillCorrectedFields: item.draftCorrectedFields,
+    ...(item.suggestedSourceExcerpt ? { sourceExcerpt: item.suggestedSourceExcerpt } : {})
+  };
+}
+
+function claimMatchesExpectedProvider(claim, item) {
+  const expected = [
+    item.name,
+    item.currentProvider?.phone,
+    item.currentProvider?.address,
+    item.bestCandidate?.name,
+    item.bestCandidate?.phone,
+    item.bestCandidate?.address,
+    item.bestCandidate?.website
+  ].map(normaliseComparable).filter(Boolean);
+  const value = normaliseComparable(Array.isArray(claim.value) ? claim.value.join(" ") : claim.value);
+  const excerpt = normaliseComparable(claim.excerpt || "");
+  return expected.some((candidate) => {
+    if (!candidate) return false;
+    return (value && (value.includes(candidate) || candidate.includes(value)))
+      || (excerpt && excerpt.includes(candidate));
+  });
+}
+
+function selectSourceClaims(claims, item) {
+  const usefulFields = new Set(["name", "practiceName", "phone", "website", "address"]);
+  const usefulClaims = claims.filter((claim) => usefulFields.has(claim.field));
+  const matching = usefulClaims.filter((claim) => claimMatchesExpectedProvider(claim, item));
+  return (matching.length ? matching : usefulClaims).slice(0, 8);
+}
+
+function sourceCaptureSummary(fetchResult, item, claims = []) {
+  if (!fetchResult.ok) {
+    return {
+      status: fetchResult.blocked ? "blocked" : fetchResult.skipped ? "skipped" : "failed",
+      requestedUrl: fetchResult.url || item.bestCandidate?.sourceUrl || "",
+      finalUrl: fetchResult.finalUrl || fetchResult.url || "",
+      capturedAt: fetchResult.capturedAt || "",
+      statusCode: fetchResult.status || 0,
+      error: fetchResult.error || "",
+      sourceHash: fetchResult.sourceHash || "",
+      claims: [],
+      suggestedSourceExcerpt: ""
+    };
+  }
+
+  const selectedClaims = selectSourceClaims(claims, item);
+  const suggested = selectedClaims.find((claim) => claim.excerpt)?.excerpt || "";
+  return {
+    status: "captured",
+    requestedUrl: fetchResult.url || item.bestCandidate?.sourceUrl || "",
+    finalUrl: fetchResult.finalUrl || fetchResult.url || "",
+    capturedAt: fetchResult.capturedAt || "",
+    statusCode: fetchResult.status || 0,
+    error: "",
+    sourceHash: fetchResult.sourceHash || "",
+    claims: selectedClaims,
+    suggestedSourceExcerpt: suggested
+  };
+}
+
+function attachSourceCapture(item, capture) {
+  const claims = capture.claims || [];
+  return addAdminReviewFields({
+    ...item,
+    sourceCapture: capture,
+    suggestedSourceExcerpt: capture.suggestedSourceExcerpt || item.suggestedSourceExcerpt || "",
+    reviewReasons: unique([
+      ...asArray(item.reviewReasons),
+      capture.status === "captured" ? "Automated source fetch captured reviewable public excerpts; human confirmation is still required." : "",
+      capture.status && capture.status !== "captured" ? `Automated source fetch ${capture.status}: ${capture.error || "no excerpt captured"}.` : ""
+    ]),
+    sourceEvidence: {
+      ...(item.sourceEvidence || {}),
+      sourceCapture: claims
+    }
+  });
+}
+
+export async function enrichGpCorroborationReviewPackWithSourceExcerpts(pack, options = {}) {
+  const fetchSource = options.fetchSource || ((url) => fetchPublicSource(url, {
+    timeoutMs: options.timeoutMs,
+    maxBytes: options.maxBytes
+  }));
+  let fetched = 0;
+  const maxFetches = Number.isFinite(options.maxSourceFetches) ? options.maxSourceFetches : DEFAULTS.maxSourceFetches;
+  const rateLimitMs = options.rateLimitMs ?? DEFAULTS.rateLimitMs;
+  const items = [];
+
+  for (const item of pack.items || []) {
+    const url = item.bestCandidate?.sourceUrl || item.bestCandidate?.website || "";
+    const canFetch = item.priority === "ready_for_source_capture"
+      && USABLE_SOURCE_CATEGORIES.has(item.bestCandidate?.sourceCategory)
+      && url
+      && fetched < maxFetches;
+    if (!canFetch) {
+      items.push(item);
+      continue;
+    }
+
+    let fetchResult;
+    try {
+      fetchResult = await fetchSource(url, item);
+    } catch (error) {
+      fetchResult = {
+        url,
+        finalUrl: url,
+        capturedAt: new Date().toISOString(),
+        ok: false,
+        blocked: false,
+        skipped: false,
+        status: 0,
+        contentType: "",
+        error: error.message,
+        text: "",
+        sourceHash: ""
+      };
+    }
+    fetched += 1;
+    const claims = fetchResult.ok
+      ? extractProviderEvidence({
+        html: fetchResult.text,
+        text: fetchResult.text,
+        url: fetchResult.finalUrl || url,
+        sourceType: sourceTypeFromUrl(fetchResult.finalUrl || url),
+        capturedAt: fetchResult.capturedAt,
+        region: item.region,
+        city: item.city,
+        type: "gp"
+      })
+      : [];
+    items.push(attachSourceCapture(item, sourceCaptureSummary(fetchResult, item, claims)));
+    if (rateLimitMs > 0 && fetched < maxFetches) await delay(rateLimitMs);
+  }
+
+  return {
+    ...pack,
+    sourceFetch: {
+      enabled: true,
+      fetched,
+      maxSourceFetches: maxFetches,
+      rateLimitMs,
+      safety: "Captured snippets are review aids only and do not approve live provider data."
+    },
+    summary: {
+      ...pack.summary,
+      sourcePagesFetched: fetched,
+      sourceCaptures: items.filter((item) => item.sourceCapture?.status === "captured").length,
+      sourceCaptureFailures: items.filter((item) => item.sourceCapture && item.sourceCapture.status !== "captured").length
+    },
+    items
   };
 }
 
@@ -418,6 +581,9 @@ function writeCsv(filePath, items) {
     "sourceCategory",
     "matchSignals",
     "conflictingProviderIds",
+    "sourceCaptureStatus",
+    "sourceCaptureFinalUrl",
+    "suggestedSourceExcerpt",
     "draftCorrectedFields"
   ];
   const rows = items.map((item) => {
@@ -438,6 +604,9 @@ function writeCsv(filePath, items) {
       best.sourceCategory || "",
       best.matchSignals || [],
       best.conflictingProviderIds || [],
+      item.sourceCapture?.status || "",
+      item.sourceCapture?.finalUrl || "",
+      item.suggestedSourceExcerpt || "",
       item.draftCorrectedFields || {}
     ];
   });
@@ -459,6 +628,11 @@ function writeMarkdown(filePath, pack) {
     `- Manual compare conflicts: ${pack.summary.conflicts}`,
     `- Source lookup needed: ${pack.summary.sourceLookupNeeded}`,
     `- Items with draft corrected fields: ${pack.summary.withDraftCorrectedFields}`,
+    ...(pack.sourceFetch?.enabled ? [
+      `- Source pages fetched: ${pack.summary.sourcePagesFetched || 0}`,
+      `- Source captures: ${pack.summary.sourceCaptures || 0}`,
+      `- Source capture failures: ${pack.summary.sourceCaptureFailures || 0}`
+    ] : []),
     "",
     "## How To Use",
     "",
@@ -469,8 +643,8 @@ function writeMarkdown(filePath, pack) {
     "",
     "## Top Items",
     "",
-    "| Priority | Provider | Region / city | Candidate | Source | Signals | Draft fields |",
-    "| --- | --- | --- | --- | --- | --- | --- |"
+    "| Priority | Provider | Region / city | Candidate | Source | Signals | Capture | Draft fields |",
+    "| --- | --- | --- | --- | --- | --- | --- | --- |"
   ];
 
   for (const item of pack.items.slice(0, 120)) {
@@ -482,6 +656,7 @@ function writeMarkdown(filePath, pack) {
       best.name || "",
       best.website || best.googleMapsUri || "",
       asArray(best.matchSignals).join(", "),
+      item.sourceCapture?.status || "",
       Object.keys(item.draftCorrectedFields || {}).join(", ")
     ].map((cell) => compact(cell, 360).replace(/\|/g, "\\|")).join(" | ").replace(/^/, "| ").replace(/$/, " |"));
   }
@@ -497,11 +672,17 @@ export function writeGpCorroborationReviewPack(pack, config = {}) {
   writeMarkdown(merged.mdOut, pack);
 }
 
-export function runCli(argv = process.argv.slice(2)) {
+export async function runCli(argv = process.argv.slice(2)) {
   const config = parseArgs(argv);
-  const pack = buildGpCorroborationReviewPack(config);
+  let pack = buildGpCorroborationReviewPack(config);
+  if (config.fetchSources) {
+    pack = await enrichGpCorroborationReviewPackWithSourceExcerpts(pack, config);
+  }
   writeGpCorroborationReviewPack(pack, config);
   console.log(`GP corroboration review pack: ${pack.summary.total} item(s), ${pack.summary.readyForSourceCapture} ready for source capture.`);
+  if (pack.sourceFetch?.enabled) {
+    console.log(`Source captures: ${pack.summary.sourceCaptures || 0}/${pack.summary.sourcePagesFetched || 0} fetched.`);
+  }
   console.log(`JSON: ${path.resolve(config.jsonOut)}`);
   console.log(`CSV: ${path.resolve(config.csvOut)}`);
   console.log(`Markdown: ${path.resolve(config.mdOut)}`);
@@ -509,5 +690,5 @@ export function runCli(argv = process.argv.slice(2)) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  runCli();
+  await runCli();
 }

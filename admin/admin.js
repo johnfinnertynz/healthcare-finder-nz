@@ -1863,7 +1863,7 @@ function renderDecision(item) {
   els.decisionForm.reviewedDate.value = saved.reviewedDate || today();
   els.decisionForm.sourceUrl.value = saved.sourceUrl || item.sourceUrls?.[0] || "";
   els.decisionForm.keptProviderId.value = saved.keptProviderId || "";
-  els.decisionForm.sourceExcerpt.value = saved.sourceExcerpt || "";
+  els.decisionForm.sourceExcerpt.value = saved.sourceExcerpt || item.sourceExcerpt || "";
   els.decisionForm.correctedFields.value = Object.keys(advanced).length ? JSON.stringify(advanced, null, 2) : "";
   els.decisionForm.reviewNotes.value = saved.reviewNotes || "";
   renderCorrectionBuilder(item, common);
