@@ -13,6 +13,7 @@ import {
   sourceEvidenceShape,
   unique
 } from "./lib/provider-evidence-scorer.mjs";
+import { isVagueGeocodingAddress } from "./lib/provider-geocoder.mjs";
 
 const DEFAULTS = {
   providers: "providers.json",
@@ -20,6 +21,8 @@ const DEFAULTS = {
   gpCorroborationQueue: "",
   apiKeyEnv: "GOOGLE_PLACES_API_KEY",
   apiKeyFile: "",
+  coordinateGapProviders: false,
+  includeVagueCoordinateGaps: false,
   jsonOut: "data/discovery/google-places-provider-candidates.json",
   csvOut: "data/discovery/google-places-provider-candidates.csv",
   mdOut: "GOOGLE_PLACES_PROVIDER_CANDIDATES.md",
@@ -92,6 +95,8 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--gp-corroboration-queue") config.gpCorroborationQueue = argv[++index];
     else if (arg === "--api-key-file") config.apiKeyFile = argv[++index];
     else if (arg === "--api-key-env") config.apiKeyEnv = argv[++index];
+    else if (arg === "--coordinate-gap-providers") config.coordinateGapProviders = true;
+    else if (arg === "--include-vague-coordinate-gaps") config.includeVagueCoordinateGaps = true;
     else if (arg === "--region") config.region = argv[++index];
     else if (arg === "--type") config.type = argv[++index];
     else if (arg === "--limit-regions") config.limitRegions = Number(argv[++index]);
@@ -319,6 +324,76 @@ function buildTextQueryFromGpTask(task = {}) {
     .join(" ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function hasCoords(provider = {}) {
+  return provider.lat !== undefined && provider.lat !== "" && provider.lon !== undefined && provider.lon !== "";
+}
+
+function isRemoteProvider(provider = {}) {
+  const text = `${provider.name || ""} ${provider.address || ""} ${(provider.tags || []).join(" ")}`.toLowerCase();
+  return /telehealth|online|phone|video|national/.test(text);
+}
+
+function buildTextQueryFromCoordinateGap(provider = {}) {
+  return [
+    provider.name,
+    provider.practiceName,
+    provider.address,
+    provider.city,
+    provider.region,
+    "New Zealand"
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function buildGooglePlacesPlanFromCoordinateGaps(options = {}) {
+  const config = { ...DEFAULTS, ...options };
+  const providers = readJsonIfExists(config.providers, []);
+  const regionFilter = String(config.region || "").toLowerCase();
+  const typeFilter = String(config.type || "").toLowerCase();
+  const distanceWeightedTypes = new Set(["gp", "counsellor", "psychologist", "psychiatrist", "mens-centre", "youth", "addiction", "public-service"]);
+
+  let targets = providers
+    .filter((provider) => distanceWeightedTypes.has(provider.type))
+    .filter((provider) => provider.address && !hasCoords(provider) && !isRemoteProvider(provider))
+    .filter((provider) => config.includeVagueCoordinateGaps || !isVagueGeocodingAddress(provider));
+  if (regionFilter) targets = targets.filter((provider) => String(provider.region || "").toLowerCase() === regionFilter);
+  if (typeFilter) targets = targets.filter((provider) => String(provider.type || "").toLowerCase() === typeFilter);
+  targets = targets.sort((a, b) =>
+    (a.region || "").localeCompare(b.region || "")
+    || (a.type || "").localeCompare(b.type || "")
+    || (a.city || "").localeCompare(b.city || "")
+    || (a.name || "").localeCompare(b.name || "")
+  );
+  if (Number.isFinite(config.limitQueries) && config.limitQueries > 0) targets = targets.slice(0, config.limitQueries);
+
+  return targets.map((provider) => {
+    const centre = regionCentre(provider.region);
+    return {
+      queryId: `places-coordinate-gap:${slugify(provider.id)}`,
+      region: provider.region || "",
+      city: provider.city || centre.city || "",
+      type: provider.type || "",
+      textQuery: buildTextQueryFromCoordinateGap(provider),
+      center: { latitude: centre.lat, longitude: centre.lon },
+      radiusMeters: Math.min(config.radiusMeters, 12_000),
+      priorityScore: provider.type === "psychologist" || provider.type === "psychiatrist" ? 700 : 500,
+      regionPriorityLevel: "medium",
+      targetProviderId: provider.id || "",
+      targetProviderName: provider.name || "",
+      reviewPurpose: "coordinate-gap",
+      reason: [
+        "Known provider has a public address but no coordinates",
+        "Use Google Places only to suggest address/location corroboration",
+        isVagueGeocodingAddress(provider) ? "vague address included by explicit option" : "",
+        "Google Places discovery/corroboration only"
+      ].filter(Boolean).join(" | ")
+    };
+  });
 }
 
 export function buildGooglePlacesPlanFromGpCorroborationQueue(options = {}) {
@@ -578,10 +653,19 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
           type: targetProvider.type || "",
           region: targetProvider.region || "",
           city: targetProvider.city || "",
-          signals: unique(["gp-corroboration-target", ...signals])
+          signals: unique([queryItem.reviewPurpose === "coordinate-gap" ? "coordinate-gap-target" : "gp-corroboration-target", ...signals])
+        });
+      } else if (queryItem.reviewPurpose === "coordinate-gap") {
+        existingMatches.unshift({
+          providerId: targetProvider.id,
+          name: targetProvider.name || "",
+          type: targetProvider.type || "",
+          region: targetProvider.region || "",
+          city: targetProvider.city || "",
+          signals: ["coordinate-gap-address-search-needs-review"]
         });
       } else {
-        discardReason = "uncorroborated exact GP Places result: no target name, phone, or address match";
+        discardReason = "uncorroborated exact Places result: no target name, phone, or address match";
       }
     }
   }
@@ -695,7 +779,9 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
       "Confirm provider type, services, availability, cost, referral pathway, and support-preference tags from stronger public sources.",
       typeResolution.reason,
       queryItem.reason || "",
-      queryItem.targetProviderId ? `target GP source-corroboration provider: ${queryItem.targetProviderId}` : "",
+      queryItem.targetProviderId && queryItem.reviewPurpose !== "coordinate-gap" ? `target GP source-corroboration provider: ${queryItem.targetProviderId}` : "",
+      queryItem.reviewPurpose === "coordinate-gap" ? `target coordinate-gap provider: ${queryItem.targetProviderId}` : "",
+      queryItem.reviewPurpose === "coordinate-gap" ? "Confirm the Places result matches the stored provider before applying coordinates." : "",
       distanceFromQueryKm !== "" ? `Google Places result is ${distanceFromQueryKm} km from the query centre.` : "",
       discardReason,
       existingMatches.length ? `possible existing provider match: ${existingMatches.map((match) => match.providerId).join(", ")}` : "new candidate needs corroboration"
@@ -923,6 +1009,7 @@ function writeMarkdown(filePath, output) {
     `- New candidates in this run: ${output.stats.newCandidates}`,
     `- Candidates found: ${output.candidates.length}`,
     `- Existing candidates merged: ${output.inputs.mergeExisting ? output.inputs.existingCandidates : 0}`,
+    `- Coordinate gap mode: ${output.inputs.coordinateGapProviders ? "yes" : "no"}`,
     `- GP corroboration queue source: ${output.inputs.gpCorroborationQueue || "not used"}`,
     `- API errors: ${output.errors.length}`,
     `- API key stored in output: no`,
@@ -956,7 +1043,9 @@ export async function discoverGooglePlacesProviders(options = {}) {
   const config = { ...DEFAULTS, ...options };
   const providers = readJsonIfExists(config.providers, []);
   const apiKey = readApiKey(config);
-  const searchPlan = config.gpCorroborationQueue
+  const searchPlan = config.coordinateGapProviders
+    ? buildGooglePlacesPlanFromCoordinateGaps(config)
+    : config.gpCorroborationQueue
     ? buildGooglePlacesPlanFromGpCorroborationQueue(config)
     : buildGooglePlacesDiscoveryPlan(config);
   const results = [];
@@ -995,6 +1084,8 @@ export async function discoverGooglePlacesProviders(options = {}) {
       regionalReport: config.regionalReport,
       apiKeyPresent: Boolean(apiKey),
       apiKeySource: apiKey ? (config.apiKeyFile ? "file" : "environment") : "none",
+      coordinateGapProviders: Boolean(config.coordinateGapProviders),
+      includeVagueCoordinateGaps: Boolean(config.includeVagueCoordinateGaps),
       region: config.region || "",
       type: config.type || "",
       gpCorroborationQueue: config.gpCorroborationQueue || "",

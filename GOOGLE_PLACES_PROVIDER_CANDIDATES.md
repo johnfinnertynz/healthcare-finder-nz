@@ -1,18 +1,19 @@
 # Google Places Provider Candidates
 
-Generated: 2026-06-01T04:31:25.187Z
+Generated: 2026-06-01T07:36:21.033Z
 
 This report uses the official Google Places Text Search API, where configured, as a discovery and corroboration aid. It does not update `providers.json` and it must not be treated as proof of services, availability, referral pathway, cost, telehealth, or cultural safety.
 
 ## Summary
 
 - Mode: official-google-places-api
-- Search queries planned: 16
-- Search queries run: 16
-- Places returned: 77
-- New candidates in this run: 54
-- Candidates found: 181
-- Existing candidates merged: 179
+- Search queries planned: 18
+- Search queries run: 18
+- Places returned: 29
+- New candidates in this run: 26
+- Candidates found: 204
+- Existing candidates merged: 181
+- Coordinate gap mode: yes
 - GP corroboration queue source: not used
 - API errors: 0
 - API key stored in output: no
@@ -55,7 +56,6 @@ This report uses the official Google Places Text Search API, where configured, a
 | research_new_provider | Southern Trauma Centre | unknown | Southland / Invercargill | phone, website, maps |  |
 | research_new_provider | Thrive! Te Pae Ora - Southland | unknown | Southland / Invercargill | phone, website, maps |  |
 | research_new_provider | Julia Darling Therapy | unknown | Taranaki / New Plymouth | phone, website, maps |  |
-| research_new_provider | Mental Health Outpatients | unknown | Taranaki / New Plymouth | phone, maps |  |
 | research_new_provider | NZ Psychology Clinic | unknown | Taranaki / New Plymouth | website, maps |  |
 | research_new_provider | Renew Your Mind Limited | unknown | Taranaki / New Plymouth | phone, website, maps |  |
 | corroborate_existing_provider | Auckland Psychiatrist | psychiatrist | Auckland / Auckland | phone, website, maps | ranzcp-7046 |
@@ -65,6 +65,10 @@ This report uses the official Google Places Text Search API, where configured, a
 | corroborate_existing_provider | The Nelson clinic | psychologist | Nelson Marlborough Tasman / Nelson Marlborough Tasman | website, maps | nelson-marlborough-the-nelson-clinic, tairawhiti-nelson-clinic-nadine-von-rothkirch |
 | corroborate_existing_provider | Dr. Maria Rotella | psychologist | Northland / Whangarei | phone, website, maps | northland-maria-rotella-clinical-psychologist |
 | corroborate_existing_provider | TalkingPoint | psychologist | Taranaki / New Plymouth | phone, website, maps | taranaki-talkingpoint-new-plymouth, waikato-talkingpoint-cambridge |
+| corroborate_existing_provider | ClinicalSpaces | psychologist | Wellington / Te Aro | website, maps | wellington-rebecca-webster-clinical-psychologist |
+| corroborate_existing_provider | Cognitive Behaviour Therapy Clinic | psychologist | Wellington / Wellington CBD | website, maps | wellington-cbt-clinic |
+| corroborate_existing_provider | Psych Clinic | psychologist | Wellington / Te Aro | phone, website, maps | wellington-rebecca-webster-clinical-psychologist |
+| corroborate_existing_provider | Proactive Healthcare Greymouth - Physio, Health & Wellbeing & Occupational Health | psychologist | West Coast / Greymouth | phone, website, maps | west-coast-proactive-greymouth-psychology |
 | corroborate_existing_provider | Black Dog Counseling and Psychotherapy | counsellor | South Canterbury / Timaru | phone, website, maps | south-canterbury-black-dog-therapy |
 | corroborate_existing_provider | Future 4u - Yvonne Cunningham | counsellor | Taranaki / New Plymouth | phone, website, maps | taranaki-future-4u-counselling |
 | corroborate_existing_provider | 168 Health & Medical Centre | gp | Auckland / Sandringham | phone, maps | gp-168-medical-centre-36-8780-174-7410 |
@@ -118,30 +122,29 @@ This report uses the official Google Places Text Search API, where configured, a
 | corroborate_existing_provider | Teo Medical Care | gp | Auckland / Te Atatū South | phone, maps | gp-teo-medical-care-36-8624-174-6488 |
 | corroborate_existing_provider | The Airport Doctors | gp | Auckland / Auckland Airport | phone, website, maps | gp-airport-doctors-36-9962-174-7882 |
 | corroborate_existing_provider | The Auckland City Doctors | gp | Auckland / Auckland | phone, website, maps | gp-the-auckland-city-doctors-36-8570-174-7616 |
-| corroborate_existing_provider | The Wood Street Doctors | gp | Auckland / Papakura | phone, website, maps | gp-the-wood-street-doctors-37-0648-174-9415 |
-| corroborate_existing_provider | Waiake Medical Centre | gp | Auckland / Waiake | phone, website, maps | gp-waiake-medical-centre-36-7084-174-7477 |
-| corroborate_existing_provider | Waiake Medical Centre | gp | Auckland / Waiake | maps | gp-waiake-medical-centre-36-7084-174-7477 |
 
 ## Planned Searches
 
 | Priority | Region | Type | Query |
 | --- | --- | --- | --- |
-| 1590 | Northland | psychiatrist | private psychiatrist Whangarei Northland New Zealand |
-| 1590 | Northland | psychiatrist | psychiatrist Whangarei Northland New Zealand |
-| 1580 | Taranaki | psychiatrist | private psychiatrist New Plymouth Taranaki New Zealand |
-| 1580 | Taranaki | psychiatrist | psychiatrist New Plymouth Taranaki New Zealand |
-| 1576 | Manawatu-Whanganui | psychiatrist | private psychiatrist Palmerston North Manawatu-Whanganui New Zealand |
-| 1576 | Manawatu-Whanganui | psychiatrist | psychiatrist Palmerston North Manawatu-Whanganui New Zealand |
-| 1559 | Southland | psychiatrist | private psychiatrist Invercargill Southland New Zealand |
-| 1559 | Southland | psychiatrist | psychiatrist Invercargill Southland New Zealand |
-| 1555 | Nelson Marlborough Tasman | psychiatrist | private psychiatrist Nelson Marlborough Tasman Nelson Marlborough Tasman New Zealand |
-| 1555 | Nelson Marlborough Tasman | psychiatrist | psychiatrist Nelson Marlborough Tasman Nelson Marlborough Tasman New Zealand |
-| 1551 | South Canterbury | psychiatrist | private psychiatrist Timaru South Canterbury New Zealand |
-| 1551 | South Canterbury | psychiatrist | psychiatrist Timaru South Canterbury New Zealand |
-| 1171 | Auckland | psychiatrist | private psychiatrist Auckland Auckland New Zealand |
-| 1171 | Auckland | psychiatrist | psychiatrist Auckland Auckland New Zealand |
-| 1108 | Canterbury | psychiatrist | private psychiatrist Christchurch Canterbury New Zealand |
-| 1108 | Canterbury | psychiatrist | psychiatrist Christchurch Canterbury New Zealand |
+| 500 | Manawatu-Whanganui | public-service | Whanganui Community Mental Health & Addiction Service Te Kopae Building, Whanganui Hospital Whanganui / Marton / Taihape Manawatu-Whanganui New Zealand |
+| 500 | National | public-service | Pathways Primary Mental Health Services Salmond House, 57 Vivian Street, Te Aro, Wellington 6011 Auckland, Hauraki, Hamilton, Tauranga, Rotorua, Taupo, Wairarapa, Wellington, Nelson, Christchurch National New Zealand |
+| 500 | Rotorua and Taupo | youth | Infant, Child and Adolescent Mental Health Service \| Lakes Children's Health Hub, 1127 Haupapa Street, Rotorua Rotorua and Taupo Rotorua and Taupo New Zealand |
+| 500 | South Canterbury | public-service | Community Mental Health \| South Canterbury Kensington Centre, Corner High and Queen Streets, Timaru Timaru South Canterbury New Zealand |
+| 500 | South Canterbury | public-service | Mental Health of Older People \| South Canterbury Kensington Centre, 7 Queen Street, Parkside, Timaru Timaru South Canterbury New Zealand |
+| 500 | Taranaki | public-service | Mental Health Services for Older People \| Taranaki Te Puna Waiora, Taranaki Base Hospital, David Street, New Plymouth New Plymouth and Hawera Taranaki New Zealand |
+| 500 | Wairarapa | addiction | Oasis Wairarapa Wairarapa Community Centre, 41 Perry Street, Masterton Masterton Wairarapa New Zealand |
+| 500 | Wairarapa | public-service | Pathways Masterton Level 1, Departmental Building, 35-37 Chapel Street, Masterton Masterton Wairarapa New Zealand |
+| 500 | Wairarapa | public-service | Wairarapa Community Mental Health Team \| MHAIDS Wairarapa Hospital Campus, Te Ore Ore Road, Masterton Masterton Wairarapa New Zealand |
+| 700 | Wellington | psychologist | Rebecca Webster Clinical Psychologist ClinicalSpaces, Level 9, 2 Manners Street, Te Aro, Wellington Te Aro Wellington New Zealand |
+| 700 | Wellington | psychologist | CBT Clinic Level 6, AMI Plaza, 342-352 Lambton Quay, Wellington Wellington CBD Wellington New Zealand |
+| 500 | Wellington | public-service | Vincents Art Workshop Willis St Village, 5/148 Willis Street, Wellington Wellington Wellington New Zealand |
+| 500 | Wellington | youth | Evolve Wellington Youth Service Level 2, James Smith Building, Corner Cuba and Manners Streets, Wellington Wellington Wellington New Zealand |
+| 500 | Wellington | youth | Youthline Wellington PO Box 1059, Wellington 6140 Wellington Wellington New Zealand |
+| 500 | West Coast | addiction | Rata Alcohol and Other Drugs Service Buller Health Hospital, Westport Westport / Greymouth / West Coast West Coast New Zealand |
+| 700 | West Coast | psychologist | Proactive Greymouth Unit D/64 High Street, Greymouth 7805 Greymouth West Coast New Zealand |
+| 500 | West Coast | public-service | Adult Community Mental Health Services \| West Coast Te Nikau Grey Hospital, 71 Water Walk Road, Greymouth Greymouth, Hokitika, and Westport West Coast New Zealand |
+| 500 | West Coast | youth | Child and Adolescent Mental Health Services \| West Coast Te Nikau Grey Hospital, 71 Water Walk Road, Greymouth Greymouth and wider West Coast West Coast New Zealand |
 
 ## Safety Notes
 

@@ -290,6 +290,17 @@ This creates exact-practice Places candidates tied back to the queued GP
 provider IDs. They still need practice-owned, Healthpoint, PHO/HPI/FHIR, or
 other stronger evidence before any provider row is updated.
 
+To use Places as a review-gated helper for known providers with public addresses
+but missing coordinates:
+
+```sh
+npm run discover:places -- --coordinate-gap-providers --limit-queries 24 --max-results-per-query 3 --merge-existing
+```
+
+This mode skips vague locality-only addresses by default and ties candidates
+back to the target provider ID for auditor review. It must not be used to write
+coordinates directly into `providers.json` without a reviewed decision.
+
 Places candidates are also included in `npm run discover:seeds`, so the normal
 evidence pipeline can use their provider-owned websites as review-gated
 corroboration leads. To fetch only known seed websites, without search-engine

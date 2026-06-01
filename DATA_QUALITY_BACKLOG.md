@@ -159,6 +159,10 @@ manual review burden.
   in total and reduced distance-weighted records with a public address but no
   coordinates from 55 to 24 without treating town names or "various venues" as
   exact clinic points.
+- Added a Google Places coordinate-gap mode. A bounded official-API run checked
+  the specific unresolved address records, skipped vague coordinate gaps by
+  default, produced 26 review-gated coordinate candidates, and merged them into
+  the auditor/provider review queue without mutating live provider rows.
 
 ## Next Backlog Items
 
@@ -185,9 +189,10 @@ manual review burden.
 8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-9. Review the 24 remaining public-address/no-coordinate records. Use provider
-   source pages or a review-gated Google Places check for specific unresolved
-   addresses; do not geocode vague town-only or "various venues" records.
+9. Review the 26 coordinate-gap Google Places candidates in the auditor. Apply
+   coordinate/source updates only when the reviewer confirms the Places result
+   is the same provider or same public clinic location; leave vague town-only
+   and "various venues" records without coordinates.
 10. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.

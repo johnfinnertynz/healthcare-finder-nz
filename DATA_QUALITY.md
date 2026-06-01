@@ -434,6 +434,19 @@ queued provider; proximity or the fact that the result came from the target
 query is not enough. If a stale merged result only matches a different provider,
 the Places export drops it rather than showing it as GP corroboration.
 
+Google Places can also create coordinate-gap review candidates for known
+providers that have a public address but no coordinates:
+
+```sh
+npm run discover:places -- --coordinate-gap-providers --limit-queries 24 --max-results-per-query 3 --merge-existing
+```
+
+This mode skips vague locality-only addresses unless
+`--include-vague-coordinate-gaps` is explicitly supplied. Places coordinate
+candidates stay tied to the target provider ID, but they are still review
+items. A reviewer must confirm that the Places result is the same professional
+provider or same public clinic location before applying coordinates.
+
 After exporting `data/gp-corroboration-review-pack.json` and checking captured
 source excerpts, draft controlled GP contact/source decisions with:
 

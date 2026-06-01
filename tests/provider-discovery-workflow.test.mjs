@@ -8,7 +8,14 @@ import { buildProviderDiscoverySeeds } from "../tools/build-provider-discovery-s
 import { buildProviderReviewQueue } from "../tools/export-provider-review-queue.mjs";
 import { buildProviderSuggestions } from "../tools/build-provider-suggestions.mjs";
 import { buildRoundOneQueries, buildSnowballQueries, enrichProviderCandidates } from "../tools/enrich-provider-candidates.mjs";
-import { buildGooglePlacesCandidatesFromResults, buildGooglePlacesDiscoveryPlan, buildGooglePlacesPlanFromGpCorroborationQueue, candidateFromGooglePlace, mergeGooglePlacesCandidates } from "../tools/discover-google-places-providers.mjs";
+import {
+  buildGooglePlacesCandidatesFromResults,
+  buildGooglePlacesDiscoveryPlan,
+  buildGooglePlacesPlanFromCoordinateGaps,
+  buildGooglePlacesPlanFromGpCorroborationQueue,
+  candidateFromGooglePlace,
+  mergeGooglePlacesCandidates
+} from "../tools/discover-google-places-providers.mjs";
 import { extractProviderEvidence } from "../tools/lib/provider-evidence-extractor.mjs";
 import { fetchPublicSource, isLikelyLoginPage } from "../tools/lib/source-fetcher.mjs";
 import { withPsychiatristScopeMetadata } from "../tools/lib/provider-scope.mjs";
@@ -588,6 +595,50 @@ test("Google Places can build exact-practice plans from the GP corroboration que
   assert.equal(plan[0].radiusMeters, 8000);
 });
 
+test("Google Places can build review-gated coordinate-gap plans and skip vague addresses", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  writeJson(providersPath, [
+    {
+      id: "specific-address",
+      name: "Specific Address Service",
+      type: "public-service",
+      region: "Wellington",
+      city: "Wellington",
+      address: "Level 2, 10 Example Street, Wellington"
+    },
+    {
+      id: "vague-address",
+      name: "Vague Address Service",
+      type: "psychologist",
+      region: "South Canterbury",
+      city: "Timaru",
+      address: "Timaru"
+    },
+    {
+      id: "already-geocoded",
+      name: "Already Geocoded",
+      type: "counsellor",
+      region: "Auckland",
+      city: "Auckland",
+      address: "1 Queen Street, Auckland",
+      lat: -36.8485,
+      lon: 174.7633
+    }
+  ]);
+
+  const plan = buildGooglePlacesPlanFromCoordinateGaps({
+    providers: providersPath,
+    limitQueries: 10
+  });
+
+  assert.equal(plan.length, 1);
+  assert.equal(plan[0].targetProviderId, "specific-address");
+  assert.equal(plan[0].reviewPurpose, "coordinate-gap");
+  assert.match(plan[0].textQuery, /Specific Address Service/);
+  assert.match(plan[0].reason, /public address but no coordinates/);
+});
+
 test("Google Places result creates a review-gated candidate with no unsupported service claims", () => {
   const candidate = candidateFromGooglePlace({
     id: "places/example",
@@ -613,6 +664,44 @@ test("Google Places result creates a review-gated candidate with no unsupported 
   assert.deepEqual(candidate.suggestedProviderRecord.tags, []);
   assert.deepEqual(candidate.suggestedProviderRecord.advertisedSpecialties, []);
   assert(candidate.sourceEvidence.contact.some((item) => item.field === "phone"));
+});
+
+test("Google Places coordinate-gap candidates remain tied to the target provider but require review", () => {
+  const provider = {
+    id: "coordinate-target",
+    name: "Coordinate Target",
+    type: "public-service",
+    region: "Wellington",
+    city: "Wellington",
+    address: "10 Example Street, Wellington"
+  };
+  const candidate = candidateFromGooglePlace({
+    id: "places/coordinate-target",
+    displayName: { text: "Example Street Building" },
+    formattedAddress: "10 Example Street, Wellington 6011, New Zealand",
+    location: { latitude: -41.2924, longitude: 174.7787 },
+    businessStatus: "OPERATIONAL",
+    googleMapsUri: "https://maps.google.com/?cid=321",
+    types: ["point_of_interest"]
+  }, {
+    queryId: "places-coordinate-gap:coordinate-target",
+    region: "Wellington",
+    city: "Wellington",
+    type: "public-service",
+    textQuery: "Coordinate Target 10 Example Street Wellington New Zealand",
+    center: { latitude: -41.2924, longitude: 174.7787 },
+    radiusMeters: 12000,
+    targetProviderId: "coordinate-target",
+    reviewPurpose: "coordinate-gap",
+    reason: "Known provider has a public address but no coordinates"
+  }, [provider]);
+
+  assert.equal(candidate.action, "corroborate_existing_provider");
+  assert.deepEqual(candidate.possibleProviderIds, ["coordinate-target"]);
+  assert.ok(candidate.duplicateSignals.includes("coordinate-gap-address-search-needs-review"));
+  assert.match(candidate.reviewReasons.join(" "), /Confirm the Places result matches/);
+  assert.equal(candidate.suggestedProviderRecord.coordinateSource, "google_places");
+  assert.equal(candidate.suggestedProviderRecord.geocodeNeedsManualReview, true);
 });
 
 test("Google Places psychiatry query does not label psychology-looking results as psychiatrists", () => {
@@ -728,7 +817,7 @@ test("Google Places GP queue does not link uncorroborated target results", () =>
   }]);
   assert.equal(candidate.action, "research_new_provider");
   assert.deepEqual(candidate.possibleProviderIds, []);
-  assert.match(candidate.discardReason, /uncorroborated exact GP Places result/);
+  assert.match(candidate.discardReason, /uncorroborated exact Places result/);
 });
 
 test("Google Places GP queue filters uncorroborated exact-query results", () => {

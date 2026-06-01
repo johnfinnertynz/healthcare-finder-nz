@@ -1,14 +1,14 @@
 # Provider Review Queue
 
-Generated: 2026-06-01T07:27:49.823Z
+Generated: 2026-06-01T07:36:59.119Z
 
 Focused queue: yes.
 
 ## Summary
 
-- Review items: 775
+- Review items: 798
 - Critical: 14
-- High: 451
+- High: 474
 - Medium: 164
 - Low: 146
 
@@ -21,8 +21,8 @@ Focused queue: yes.
 | Location and distance evidence | 99 |
 | Referral pathway review | 81 |
 | Availability review | 77 |
+| Google Places discovery | 73 |
 | Needs quick human check | 59 |
-| Google Places discovery | 50 |
 | Directory/direct-contact confusion | 34 |
 
 ## Top Queue Items
