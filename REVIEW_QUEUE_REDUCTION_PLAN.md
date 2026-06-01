@@ -148,6 +148,11 @@ This cycle added a separate claim review queue:
 - The auditor now includes a **Source capture** filter and source-capture badges
   so the captured GP snippets can be worked separately from blocked, failed,
   skipped, or not-fetched items.
+- GP corroboration review-pack rows now have batch keys in the form
+  `gp-review:<priority>:<source-capture-status>:<source-category>`. The draft
+  helper accepts the same `--batch-key`, so reviewers can process captured
+  Healthpoint rows separately from captured practice-site rows, blocked rows,
+  and manual-compare conflicts without mixing risk levels.
 - A bounded psychiatry discovery pass added 84 review-gated discovery
   suggestions. This intentionally increased the provider review queue from 675
   to 775 items because thin-region psychiatry leads are now explicit review

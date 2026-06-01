@@ -138,6 +138,10 @@ Healthpoint, practice-site, or clinic-network lead. It labels each item as
 ready for source capture, manual compare conflict, or source lookup needed.
 Use the **Source capture** filter to separate captured snippets from blocked,
 failed, skipped, or not-yet-fetched source checks.
+Use the **Batch** filter to work repeated GP review-pack groups together.
+Batch keys use `gp-review:<priority>:<source-capture-status>:<source-category>`,
+for example
+`gp-review:ready_for_source_capture:captured:healthpoint_gp_listing`.
 
 The pack can pre-fill draft public contact/source fields, but it is not an
 approval. When exported with `--fetch-sources`, it may also pre-fill a short
@@ -152,6 +156,12 @@ contact-only decisions:
 
 ```bash
 npm run draft:gp-corroboration -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; public contact/source fields match."
+```
+
+To draft only the current auditor batch, pass the same batch key:
+
+```bash
+npm run draft:gp-corroboration -- --batch-key "gp-review:ready_for_source_capture:captured:healthpoint_gp_listing" --confirmed-human-review --reviewer "Your name" --notes "Checked captured Healthpoint GP rows; public contact/source fields match."
 ```
 
 For failed source captures that need browser review, use:

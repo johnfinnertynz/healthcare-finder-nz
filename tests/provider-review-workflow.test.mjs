@@ -1361,7 +1361,9 @@ test("GP corroboration review pack ranks strong exact leads but keeps source cap
   assert.equal(pack.safety.noLiveProviderMutation, true);
   assert.equal(pack.safety.sourceExcerptRequiredBeforeApply, true);
   assert.equal(pack.summary.readyForSourceCapture, 1);
+  assert.equal(pack.summary.batchCount, 1);
   assert.equal(pack.items[0].priority, "ready_for_source_capture");
+  assert.equal(pack.items[0].batchKey, "gp-review:ready_for_source_capture:not_fetched:healthpoint_gp_listing");
   assert.equal(pack.items[0].bestCandidate.sourceCategory, "healthpoint_gp_listing");
   assert.equal(pack.items[0].draftCorrectedFields.website, "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/ready-review-medical/");
   assert.equal(pack.items[0].liveMutationAllowed, false);
@@ -1428,7 +1430,9 @@ test("GP corroboration review pack can capture source excerpts without approving
   assert.equal(enriched.sourceFetch.enabled, true);
   assert.equal(enriched.summary.sourcePagesFetched, 1);
   assert.equal(enriched.summary.sourceCaptures, 1);
+  assert.equal(enriched.summary.batches[0].batchKey, "gp-review:ready_for_source_capture:captured:practice_or_network_site");
   assert.equal(enriched.items[0].sourceCapture.status, "captured");
+  assert.equal(enriched.items[0].batchKey, "gp-review:ready_for_source_capture:captured:practice_or_network_site");
   assert.match(enriched.items[0].sourceExcerpt, /Ready Review Medical|09 123 4567/);
   assert.equal(enriched.items[0].liveMutationAllowed, false);
 });
@@ -1578,6 +1582,103 @@ test("GP corroboration decision drafts can mark failed captures needs_more_info"
   assert.equal(draft.decisions[0].action, "needs_more_info");
   assert.deepEqual(draft.decisions[0].correctedFields, {});
   assert.match(draft.decisions[0].reviewNotes, /timeout/);
+});
+
+test("GP corroboration decision drafts can target review-pack batch keys", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const packPath = path.join(dir, "gp-pack.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "gp-batch-captured",
+      name: "Captured Batch GP",
+      type: "gp",
+      tags: ["gp"],
+      website: "",
+      sourceQuality: "third-party public GP listing"
+    }),
+    baseProvider({
+      id: "gp-batch-blocked",
+      name: "Blocked Batch GP",
+      type: "gp",
+      tags: ["gp"],
+      website: "",
+      sourceQuality: "third-party public GP listing"
+    })
+  ]);
+  writeJson(packPath, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    items: [
+      {
+        providerId: "gp-batch-captured",
+        priority: "ready_for_source_capture",
+        batchKey: "gp-review:ready_for_source_capture:captured:healthpoint_gp_listing",
+        bestCandidate: {
+          website: "https://healthpoint.example.nz/gp-batch-captured",
+          sourceCategory: "healthpoint_gp_listing"
+        },
+        draftCorrectedFields: {
+          website: "https://healthpoint.example.nz/gp-batch-captured",
+          source: "https://healthpoint.example.nz/gp-batch-captured",
+          sourceQuality: "Healthpoint GP listing; pending human source-excerpt review"
+        },
+        sourceCapture: {
+          status: "captured",
+          finalUrl: "https://healthpoint.example.nz/gp-batch-captured",
+          suggestedSourceExcerpt: "Captured Batch GP listing shows phone and address."
+        },
+        suggestedSourceExcerpt: "Captured Batch GP listing shows phone and address."
+      },
+      {
+        providerId: "gp-batch-blocked",
+        priority: "ready_for_source_capture",
+        batchKey: "gp-review:ready_for_source_capture:blocked:practice_or_network_site",
+        bestCandidate: {
+          website: "https://blocked.example.nz",
+          sourceCategory: "practice_or_network_site"
+        },
+        draftCorrectedFields: {
+          website: "https://blocked.example.nz",
+          source: "https://blocked.example.nz",
+          sourceQuality: "practice or clinic network website; pending human source-excerpt review"
+        },
+        sourceCapture: {
+          status: "blocked",
+          finalUrl: "https://blocked.example.nz",
+          error: "login-or-captcha-required"
+        }
+      }
+    ]
+  });
+
+  const adjustDraft = buildGpCorroborationDecisionDraft({
+    pack: packPath,
+    providers: providersPath,
+    batchKey: "gp-review:ready_for_source_capture:captured:healthpoint_gp_listing",
+    decision: "adjust",
+    confirmedHumanReview: true,
+    reviewer: "Reviewer",
+    notes: "Checked captured Healthpoint batch."
+  });
+
+  assert.equal(adjustDraft.summary.packRowsMatched, 1);
+  assert.equal(adjustDraft.decisions[0].providerId, "gp-batch-captured");
+  assert.deepEqual(adjustDraft.summary.byBatch, {
+    "gp-review:ready_for_source_capture:captured:healthpoint_gp_listing": 1
+  });
+
+  const needsInfoDraft = buildGpCorroborationDecisionDraft({
+    pack: packPath,
+    providers: providersPath,
+    batchKey: "gp-review:ready_for_source_capture:blocked:practice_or_network_site",
+    decision: "needs_more_info",
+    reviewer: "Reviewer",
+    notes: "Blocked practice-site batch needs browser review."
+  });
+
+  assert.equal(needsInfoDraft.summary.packRowsMatched, 1);
+  assert.equal(needsInfoDraft.decisions[0].providerId, "gp-batch-blocked");
+  assert.equal(needsInfoDraft.decisions[0].action, "needs_more_info");
 });
 
 test("GP corroboration review pack flags multi-provider Places matches as manual compare", () => {

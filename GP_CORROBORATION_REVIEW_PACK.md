@@ -1,6 +1,6 @@
 # GP Corroboration Review Pack
 
-Generated: 2026-06-01T04:01:23.065Z
+Generated: 2026-06-01T08:56:54.423Z
 
 This pack is for human review only. It does not change `providers.json`, and it does not prove availability, enrolment, mental-health scope, cultural support, or funding.
 
@@ -11,9 +11,10 @@ This pack is for human review only. It does not change `providers.json`, and it 
 - Manual compare conflicts: 18
 - Source lookup needed: 40
 - Items with draft corrected fields: 77
+- Review batches: 12
 - Source pages fetched: 68
-- Source captures: 64
-- Source capture failures: 4
+- Source captures: 63
+- Source capture failures: 5
 
 ## How To Use
 
@@ -21,6 +22,23 @@ This pack is for human review only. It does not change `providers.json`, and it 
 2. Confirm the practice name and contact details match the existing provider.
 3. Capture a short source excerpt before using any draft corrected fields.
 4. Apply changes only through reviewed decision JSON and `npm run apply:review`.
+
+## Review Batches
+
+| Items | Providers | Batch | Suggested action |
+| ---: | ---: | --- | --- |
+| 52 | 52 | gp-review:ready_for_source_capture:captured:healthpoint_gp_listing | Open the captured source, confirm the excerpt matches the practice, then draft contact/source-only updates. |
+| 25 | 25 | gp-review:source_lookup_needed:not_fetched:google_places_only | Find a stronger public source or leave this as source lookup work. |
+| 11 | 11 | gp-review:ready_for_source_capture:captured:practice_or_network_site | Open the captured source, confirm the excerpt matches the practice, then draft contact/source-only updates. |
+| 10 | 10 | gp-review:manual_compare_conflict:not_fetched:practice_or_network_site | Compare manually; do not draft contact updates until the correct practice/branch is clear. |
+| 8 | 8 | gp-review:manual_compare_conflict:not_fetched:healthpoint_gp_listing | Compare manually; do not draft contact updates until the correct practice/branch is clear. |
+| 5 | 5 | gp-review:source_lookup_needed:not_fetched:healthpoint_gp_listing | Find a stronger public source or leave this as source lookup work. |
+| 5 | 5 | gp-review:source_lookup_needed:not_fetched:missing_source | Find a stronger public source or leave this as source lookup work. |
+| 4 | 4 | gp-review:source_lookup_needed:not_fetched:practice_or_network_site | Find a stronger public source or leave this as source lookup work. |
+| 3 | 3 | gp-review:ready_for_source_capture:blocked:practice_or_network_site | Use browser review or mark needs_more_info; do not apply draft fields from this row yet. |
+| 1 | 1 | gp-review:ready_for_source_capture:failed:healthpoint_gp_listing | Use browser review or mark needs_more_info; do not apply draft fields from this row yet. |
+| 1 | 1 | gp-review:ready_for_source_capture:failed:practice_or_network_site | Use browser review or mark needs_more_info; do not apply draft fields from this row yet. |
+| 1 | 1 | gp-review:source_lookup_needed:not_fetched:booking_or_login_portal | Find a stronger public source or leave this as source lookup work. |
 
 ## Top Items
 
@@ -74,7 +92,7 @@ This pack is for human review only. It does not change `providers.json`, and it 
 | ready_for_source_capture | gp-rosebank-road-medical-services-ltd-36-8944-174-6968 - Rosebank Road Medical Services Ltd. | Auckland / Avondale | Rosebank Road Medical Services | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/rosebank-road-medical-services-ltd/ | phone, address | captured | website, source, sourceQuality |
 | ready_for_source_capture | gp-waiake-medical-centre-36-7084-174-7477 - Waiake Medical Centre | Auckland / Waiake | Waiake Medical Centre | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/waiake-medical-centre/ | phone, name | captured | website, source, sourceQuality |
 | ready_for_source_capture | gp-te-korowai-hauora-o-hauraki-paeroa-37-3817-175-6707 - Te Korowai Hauora o Hauraki - Paeroa | Bay of Plenty / Paeroa | Te Korowai Hauora O Hauraki - Paeroa | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/te-korowai-hauora-o-hauraki-paeroa/ | phone, name | captured | website, source, sourceQuality |
-| ready_for_source_capture | gp-coast-to-coast-health-care-36-1098-174-3543 - Coast To Coast Health Care | Northland / Maungaturoto | Maungaturoto Medical Centre | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/coast-to-coast-health-care/at/maungaturoto-medical-centre/ | gp-corroboration-target, phone | captured | website, source, sourceQuality |
+| ready_for_source_capture | gp-coast-to-coast-health-care-36-1098-174-3543 - Coast To Coast Health Care | Northland / Maungaturoto | Maungaturoto Medical Centre | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/coast-to-coast-health-care/at/maungaturoto-medical-centre/ | gp-corroboration-target, phone | failed | website, source, sourceQuality |
 | ready_for_source_capture | gp-hikurangi-medical-centre-35-5965-174-2857 - Hikurangi Medical Centre | Northland / Hikurangi | Hikurangi Surgery | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/hikurangi-medical-centre/ | gp-corroboration-target, phone | captured | website, source, sourceQuality |
 | ready_for_source_capture | gp-ngunguru-medical-centre-35-6269-174-5097 - Ngunguru Medical Centre | Northland / Ngunguru | Ngunguru Medical Centre | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/ngunguru-medical-centre/ | phone, name | captured | website, source, sourceQuality |
 | ready_for_source_capture | gp-te-aroha-noa-medical-centre-35-7235-174-3197 - Te Aroha Noa Medical Centre | Northland / Whangārei | Te Aroha Noa Medical Centre | https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/te-aroha-noa-medical-centre/ | phone, name | captured | website, source, sourceQuality |

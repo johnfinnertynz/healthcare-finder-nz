@@ -795,6 +795,16 @@ human-captured `sourceExcerpt` from a provider-owned, Healthpoint, official, or
 professional source. Google Places seed text, search snippets, LinkedIn-only
 signals, blocked pages, or silence are not enough to import a provider.
 
+Reviewed GP corroboration rows can be drafted by exact auditor batch key:
+
+```sh
+npm run draft:gp-corroboration -- --batch-key "gp-review:ready_for_source_capture:captured:healthpoint_gp_listing" --confirmed-human-review --reviewer "Your name" --notes "Checked captured Healthpoint GP rows; public contact/source fields match."
+```
+
+These drafts are contact/source-only. They must not be used to approve
+enrolment, availability, mental-health scope, cultural support, funding, or
+referral claims.
+
 Reviewed source-fit capture removals should also go through `apply:review`.
 Those drafts are conservative downgrades only: removing unsupported tags,
 `needScope` values, advertised specialties, or telehealth flags. Do not use them

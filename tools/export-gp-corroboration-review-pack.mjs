@@ -209,6 +209,37 @@ function adminSeverity(priority) {
   return "low";
 }
 
+function sourceCaptureStatus(item) {
+  return item.sourceCapture?.status || "not_fetched";
+}
+
+function gpBatchSourceCategory(item) {
+  return item.bestCandidate?.sourceCategory || "missing_source";
+}
+
+function gpBatchKey(item) {
+  return [
+    "gp-review",
+    item.priority || "unknown_priority",
+    sourceCaptureStatus(item),
+    gpBatchSourceCategory(item)
+  ].join(":");
+}
+
+function gpBatchAction(item) {
+  const capture = sourceCaptureStatus(item);
+  if (item.priority === "manual_compare_conflict") {
+    return "Compare manually; do not draft contact updates until the correct practice/branch is clear.";
+  }
+  if (capture === "captured") {
+    return "Open the captured source, confirm the excerpt matches the practice, then draft contact/source-only updates.";
+  }
+  if (capture === "blocked" || capture === "failed" || capture === "skipped") {
+    return "Use browser review or mark needs_more_info; do not apply draft fields from this row yet.";
+  }
+  return "Find a stronger public source or leave this as source lookup work.";
+}
+
 function addAdminReviewFields(item) {
   const best = item.bestCandidate || {};
   const sourceUrls = unique([
@@ -218,9 +249,13 @@ function addAdminReviewFields(item) {
     item.currentProvider?.source
   ]);
   const severity = adminSeverity(item.priority);
+  const batchKey = gpBatchKey(item);
   return {
     ...item,
     reviewId: item.packId,
+    batchKey,
+    batchLabel: `${item.priority || "unknown"} / ${sourceCaptureStatus(item)} / ${gpBatchSourceCategory(item)}`,
+    batchSuggestedAction: gpBatchAction(item),
     reviewCategory: "GP source corroboration",
     reviewPriority: item.priority,
     auditSeverity: severity,
@@ -263,6 +298,7 @@ function addAdminReviewFields(item) {
     claimDecision: "review",
     claimRiskLevel: severity,
     requiredHumanAction: "Open the candidate source and capture an excerpt before using draft corrected fields.",
+    sourceEvidenceSummary: item.suggestedSourceExcerpt || item.sourceCapture?.suggestedSourceExcerpt || "",
     correctedFields: item.draftCorrectedFields,
     prefillCorrectedFields: item.draftCorrectedFields,
     ...(item.suggestedSourceExcerpt ? { sourceExcerpt: item.suggestedSourceExcerpt } : {})
@@ -421,7 +457,9 @@ export async function enrichGpCorroborationReviewPackWithSourceExcerpts(pack, op
       ...pack.summary,
       sourcePagesFetched: fetched,
       sourceCaptures: items.filter((item) => item.sourceCapture?.status === "captured").length,
-      sourceCaptureFailures: items.filter((item) => item.sourceCapture && item.sourceCapture.status !== "captured").length
+      sourceCaptureFailures: items.filter((item) => item.sourceCapture && item.sourceCapture.status !== "captured").length,
+      batchCount: summarizeBatches(items).length,
+      batches: summarizeBatches(items)
     },
     items
   };
@@ -518,6 +556,35 @@ function countsBy(items, field) {
   }, {});
 }
 
+function summarizeBatches(items) {
+  const byKey = new Map();
+  for (const item of items) {
+    const key = item.batchKey || gpBatchKey(item);
+    if (!byKey.has(key)) {
+      byKey.set(key, {
+        batchKey: key,
+        label: item.batchLabel || "",
+        priority: item.priority || "",
+        sourceCaptureStatus: sourceCaptureStatus(item),
+        sourceCategory: gpBatchSourceCategory(item),
+        count: 0,
+        providerIds: new Set(),
+        suggestedAction: item.batchSuggestedAction || gpBatchAction(item)
+      });
+    }
+    const batch = byKey.get(key);
+    batch.count += 1;
+    if (item.providerId) batch.providerIds.add(item.providerId);
+  }
+  return [...byKey.values()]
+    .map((batch) => ({
+      ...batch,
+      providerCount: batch.providerIds.size,
+      providerIds: undefined
+    }))
+    .sort((a, b) => b.count - a.count || a.batchKey.localeCompare(b.batchKey));
+}
+
 export function buildGpCorroborationReviewPack(options = {}) {
   const config = { ...DEFAULTS, ...options };
   const providers = readJsonInput(config.providers, []);
@@ -543,6 +610,7 @@ export function buildGpCorroborationReviewPack(options = {}) {
   items = sortItems(items);
   if (Number.isFinite(config.limit) && config.limit > 0) items = items.slice(0, config.limit);
 
+  const batches = summarizeBatches(items);
   return {
     version: 1,
     generatedAt: new Date().toISOString(),
@@ -567,7 +635,9 @@ export function buildGpCorroborationReviewPack(options = {}) {
       readyForSourceCapture: items.filter((item) => item.priority === "ready_for_source_capture").length,
       conflicts: items.filter((item) => item.priority === "manual_compare_conflict").length,
       sourceLookupNeeded: items.filter((item) => item.priority === "source_lookup_needed").length,
-      withDraftCorrectedFields: items.filter((item) => Object.keys(item.draftCorrectedFields || {}).length).length
+      withDraftCorrectedFields: items.filter((item) => Object.keys(item.draftCorrectedFields || {}).length).length,
+      batchCount: batches.length,
+      batches
     },
     items
   };
@@ -581,6 +651,7 @@ function writeCsv(filePath, items) {
     "region",
     "city",
     "priority",
+    "batchKey",
     "recommendedAction",
     "missingFields",
     "currentPhone",
@@ -604,6 +675,7 @@ function writeCsv(filePath, items) {
       item.region,
       item.city,
       item.priority,
+      item.batchKey,
       item.recommendedAction,
       item.missingFields,
       item.currentProvider?.phone || "",
@@ -637,6 +709,7 @@ function writeMarkdown(filePath, pack) {
     `- Manual compare conflicts: ${pack.summary.conflicts}`,
     `- Source lookup needed: ${pack.summary.sourceLookupNeeded}`,
     `- Items with draft corrected fields: ${pack.summary.withDraftCorrectedFields}`,
+    `- Review batches: ${pack.summary.batchCount || 0}`,
     ...(pack.sourceFetch?.enabled ? [
       `- Source pages fetched: ${pack.summary.sourcePagesFetched || 0}`,
       `- Source captures: ${pack.summary.sourceCaptures || 0}`,
@@ -650,11 +723,28 @@ function writeMarkdown(filePath, pack) {
     "3. Capture a short source excerpt before using any draft corrected fields.",
     "4. Apply changes only through reviewed decision JSON and `npm run apply:review`.",
     "",
+    "## Review Batches",
+    "",
+    "| Items | Providers | Batch | Suggested action |",
+    "| ---: | ---: | --- | --- |"
+  ];
+
+  for (const batch of asArray(pack.summary.batches).slice(0, 40)) {
+    lines.push([
+      batch.count,
+      batch.providerCount,
+      batch.batchKey,
+      batch.suggestedAction
+    ].map((cell) => compact(cell, 360).replace(/\|/g, "\\|")).join(" | ").replace(/^/, "| ").replace(/$/, " |"));
+  }
+
+  lines.push(
+    "",
     "## Top Items",
     "",
     "| Priority | Provider | Region / city | Candidate | Source | Signals | Capture | Draft fields |",
     "| --- | --- | --- | --- | --- | --- | --- | --- |"
-  ];
+  );
 
   for (const item of pack.items.slice(0, 120)) {
     const best = item.bestCandidate || {};

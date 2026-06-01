@@ -744,6 +744,14 @@ them. Treat `401`, `403`, `429`, and Cloudflare-style `520`-`524` results as
 uses a browser-like user agent by default; override `LINK_CHECK_USER_AGENT`,
 `LINK_CHECK_RETRIES`, or `LINK_CHECK_CONCURRENCY` for slower manual audits.
 
+GP corroboration review-pack rows use batch keys in the form
+`gp-review:<priority>:<source-capture-status>:<source-category>`. Use these
+with the auditor **Batch** filter or with `npm run draft:gp-corroboration --
+--batch-key "<key>"` so captured Healthpoint rows, captured practice-site rows,
+blocked source rows, and manual conflicts are not mixed together. GP batch
+drafts remain contact/source-only and cannot approve enrolment, availability,
+mental-health scope, cultural support, funding, or referral claims.
+
 ## Known Data Risks
 
 - Many imported GP and directory records are intentionally marked `medium`

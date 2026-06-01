@@ -8,7 +8,10 @@ const DEFAULTS = {
   jsonOut: "data/gp-corroboration-decision-draft.json",
   mdOut: "GP_CORROBORATION_DECISION_DRAFT.md",
   status: "captured",
+  statusExplicit: false,
   priority: "ready_for_source_capture",
+  priorityExplicit: false,
+  batchKey: "",
   region: "",
   providerId: "",
   sourceCategory: "",
@@ -44,8 +47,15 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--providers") config.providers = argv[++index];
     else if (arg === "--json-out") config.jsonOut = argv[++index];
     else if (arg === "--md-out") config.mdOut = argv[++index];
-    else if (arg === "--status") config.status = argv[++index];
-    else if (arg === "--priority") config.priority = argv[++index];
+    else if (arg === "--status") {
+      config.status = argv[++index];
+      config.statusExplicit = true;
+    }
+    else if (arg === "--priority") {
+      config.priority = argv[++index];
+      config.priorityExplicit = true;
+    }
+    else if (arg === "--batch-key") config.batchKey = argv[++index];
     else if (arg === "--region") config.region = argv[++index];
     else if (arg === "--provider-id") config.providerId = argv[++index];
     else if (arg === "--source-category") config.sourceCategory = argv[++index];
@@ -93,6 +103,19 @@ function sourceCategory(item) {
   return item.bestCandidate?.sourceCategory || item.sourceQuality || "";
 }
 
+function sourceCaptureStatus(item) {
+  return item.sourceCapture?.status || "not_fetched";
+}
+
+function countBy(items, keyFn) {
+  const counts = {};
+  for (const item of items) {
+    const key = keyFn(item) || "unknown";
+    counts[key] = (counts[key] || 0) + 1;
+  }
+  return counts;
+}
+
 function itemSourceUrl(item) {
   return item.sourceCapture?.finalUrl
     || item.sourceCapture?.requestedUrl
@@ -135,8 +158,11 @@ function assertConfig(config) {
 
 function filteredItems(pack, config) {
   let items = asArray(pack.items);
-  if (config.status) items = items.filter((item) => (item.sourceCapture?.status || "") === config.status);
-  if (config.priority) items = items.filter((item) => item.priority === config.priority);
+  if (config.batchKey) items = items.filter((item) => item.batchKey === config.batchKey);
+  const shouldFilterStatus = config.statusExplicit || !config.batchKey || config.status !== DEFAULTS.status;
+  const shouldFilterPriority = config.priorityExplicit || !config.batchKey || config.priority !== DEFAULTS.priority;
+  if (config.status && shouldFilterStatus) items = items.filter((item) => sourceCaptureStatus(item) === config.status);
+  if (config.priority && shouldFilterPriority) items = items.filter((item) => item.priority === config.priority);
   if (config.region) items = items.filter((item) => item.region === config.region);
   if (config.providerId) items = items.filter((item) => item.providerId === config.providerId);
   if (config.sourceCategory) items = items.filter((item) => sourceCategory(item) === config.sourceCategory);
@@ -238,7 +264,10 @@ export function buildGpCorroborationDecisionDraft(config = {}) {
     input: {
       decision: merged.decision,
       status: merged.status,
+      statusExplicit: Boolean(merged.statusExplicit),
       priority: merged.priority,
+      priorityExplicit: Boolean(merged.priorityExplicit),
+      batchKey: merged.batchKey,
       region: merged.region,
       providerId: merged.providerId,
       sourceCategory: merged.sourceCategory,
@@ -247,7 +276,10 @@ export function buildGpCorroborationDecisionDraft(config = {}) {
     summary: {
       packRowsMatched: items.length,
       decisionsDrafted: decisions.length,
-      skipped: skipped.length
+      skipped: skipped.length,
+      byBatch: countBy(items, (item) => item.batchKey),
+      byCaptureStatus: countBy(items, sourceCaptureStatus),
+      byPriority: countBy(items, (item) => item.priority)
     },
     decisions,
     skipped
@@ -264,15 +296,38 @@ function writeMarkdown(filePath, draft) {
     "",
     "## Summary",
     "",
+    `- Batch key: ${draft.input.batchKey || "(none)"}`,
+    `- Status filter: ${draft.input.statusExplicit || !draft.input.batchKey || draft.input.status !== DEFAULTS.status ? draft.input.status : "(inferred from batch)"}`,
+    `- Priority filter: ${draft.input.priorityExplicit || !draft.input.batchKey || draft.input.priority !== DEFAULTS.priority ? draft.input.priority : "(inferred from batch)"}`,
     `- Pack rows matched: ${draft.summary.packRowsMatched}`,
     `- Decisions drafted: ${draft.summary.decisionsDrafted}`,
     `- Skipped: ${draft.summary.skipped}`,
+    "",
+    "## Rows By Batch",
+    "",
+    "| Batch | Rows |",
+    "| --- | ---: |"
+  ];
+  for (const [batch, count] of Object.entries(draft.summary.byBatch || {}).sort()) {
+    lines.push(`| ${String(batch).replace(/\|/g, "\\|")} | ${count} |`);
+  }
+  lines.push(
+    "",
+    "## Rows By Source Capture",
+    "",
+    "| Status | Rows |",
+    "| --- | ---: |"
+  );
+  for (const [status, count] of Object.entries(draft.summary.byCaptureStatus || {}).sort()) {
+    lines.push(`| ${status} | ${count} |`);
+  }
+  lines.push(
     "",
     "## Draft Decisions",
     "",
     "| Provider | Action | Source | Corrected fields |",
     "| --- | --- | --- | --- |"
-  ];
+  );
   for (const decision of draft.decisions.slice(0, 100)) {
     lines.push(`| ${decision.providerId} | ${decision.action} | ${decision.sourceUrl || ""} | ${JSON.stringify(decision.correctedFields).replace(/\|/g, "\\|")} |`);
   }
