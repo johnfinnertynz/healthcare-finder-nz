@@ -89,6 +89,10 @@ manual review burden.
   target providers are linked only when the Places result corroborates the
   queued practice by name, phone, or address, and stale results that match a
   different provider are filtered from regenerated reports.
+- Added a GP corroboration review pack that joins the GP source-corroboration
+  queue to Places/Healthpoint/practice-site leads. It currently creates 126
+  review-only items, including 68 ready-for-source-capture items, 18 manual
+  compare conflicts, and 40 source-lookup-needed items.
 
 ## Next Backlog Items
 
@@ -96,9 +100,8 @@ manual review burden.
 2. Add reviewed batch-adjust UI only after the first human review session proves
    the conservative `needs_more_info` batch helper is understandable.
 3. Work through the auditor console's **GP source corroboration** and
-   **discovery suggestions** queues, starting with the two high-confidence
-   update-existing GP suggestions and then Auckland/Northland practice-owned
-   website matches.
+   **GP corroboration review pack** queues, starting with the ready-for-source
+   items and the two high-confidence update-existing GP suggestions.
 4. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 5. Start manual review with the largest unsupported tag batches.

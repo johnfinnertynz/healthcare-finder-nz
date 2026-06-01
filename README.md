@@ -178,6 +178,20 @@ This writes `data/gp-source-corroboration-queue.json`,
 practice/Healthpoint/PHO/HPI/FHIR checks, rejects search snippets or
 DoctorPricer alone as evidence, and does not update `providers.json`.
 
+After Google Places or source-enrichment runs, export a ranked GP review pack:
+
+```sh
+npm run export:gp-review-pack
+```
+
+This writes `data/gp-corroboration-review-pack.json`,
+`data/gp-corroboration-review-pack.csv`, and
+`GP_CORROBORATION_REVIEW_PACK.md`. It matches GP source-corroboration tasks to
+Places/Healthpoint/practice-site leads, separates ready source-capture items
+from conflicts and source-lookup gaps, and pre-fills draft contact fields for
+the auditor. It is still review-only: a human must open the source, capture a
+short excerpt, and apply changes through reviewed decision JSON.
+
 Export regional review priorities:
 
 ```sh
@@ -584,6 +598,12 @@ against practice-owned, Healthpoint, PHO, HPI/FHIR, or official sources. It is a
 review surface only and must not be used to infer availability, enrolment,
 specialty, cultural support, or funding eligibility.
 
+The console can also load `data/gp-corroboration-review-pack.json` as
+**GP corroboration review pack**. This is a narrower review surface for the GP
+records most likely to have a usable Healthpoint or practice-site lead. It
+pre-fills only draft public contact/source fields and still requires a human
+source excerpt before any adjustment is exported.
+
 For triage, the console has a conservative filtered-batch helper. After a queue
 is narrowed by batch, rule, category, search, region, type, severity,
 availability, or referral status, it can save `needs_more_info` decisions for
@@ -611,12 +631,13 @@ it is a focused queue and does not include every low-risk GP record. Use
 
 Open the local prototype at `admin/index.html` after serving the repo locally.
 The admin console can load the manual review queue, the claim review queue, the
-GP source corroboration queue, auto-resolution proposals, or the ongoing monitor
-queue. It can also load **Regional priorities** as a planning-only view from
+GP source corroboration queue, the GP corroboration review pack,
+auto-resolution proposals, or the ongoing monitor queue. It can also load
+**Regional priorities** as a planning-only view from
 `data/regional-data-quality-report.json`; that view disables provider-decision
-export and is used to choose the next region or queue to review. The console lets
-a reviewer inspect evidence and exports review decisions. It does not write to
-production data.
+export and is used to choose the next region or queue to review. The console
+lets a reviewer inspect evidence and exports review decisions. It does not
+write to production data.
 
 For future checks after the initial audit, run:
 

@@ -9,6 +9,7 @@ import { buildClaimBatchDecisionDraft } from "../tools/draft-claim-batch-review-
 import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
 import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
+import { buildGpCorroborationReviewPack } from "../tools/export-gp-corroboration-review-pack.mjs";
 import { buildRegionalDataQualityReport } from "../tools/export-regional-data-quality-report.mjs";
 import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
 import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
@@ -719,13 +720,140 @@ test("GP source corroboration queue isolates weak GP records without live mutati
   assert.equal(JSON.stringify(providers), original);
 });
 
+test("GP corroboration review pack ranks strong exact leads but keeps source capture gated", () => {
+  const provider = baseProvider({
+    id: "gp-ready-review",
+    name: "Ready Review Medical",
+    type: "gp",
+    region: "Northland",
+    city: "Whangarei",
+    phone: "09 123 4567",
+    website: "",
+    sourceQuality: "third-party public GP listing",
+    importSource: "doctorpricer",
+    tags: ["gp", "primary-care"]
+  });
+  const pack = buildGpCorroborationReviewPack({
+    providers: [provider],
+    gpCorroborationQueue: {
+      tasks: [{
+        providerId: "gp-ready-review",
+        name: "Ready Review Medical",
+        region: "Northland",
+        city: "Whangarei",
+        missingFields: ["website"],
+        reviewReason: "GP record needs stronger corroboration: missing website."
+      }]
+    },
+    googlePlacesCandidates: {
+      candidates: [{
+        candidateId: "places-ready-review",
+        action: "corroborate_existing_provider",
+        type: "gp",
+        name: "Ready Review Medical",
+        phone: "09 123 4567",
+        website: "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/ready-review-medical/",
+        address: "1 Test Street, Whangarei",
+        lat: -35.72,
+        lon: 174.32,
+        possibleProviderIds: ["gp-ready-review"],
+        duplicateSignals: ["phone", "name", "address"],
+        reviewReasons: ["target GP source-corroboration provider: gp-ready-review"]
+      }]
+    }
+  });
+
+  assert.equal(pack.safety.noLiveProviderMutation, true);
+  assert.equal(pack.safety.sourceExcerptRequiredBeforeApply, true);
+  assert.equal(pack.summary.readyForSourceCapture, 1);
+  assert.equal(pack.items[0].priority, "ready_for_source_capture");
+  assert.equal(pack.items[0].bestCandidate.sourceCategory, "healthpoint_gp_listing");
+  assert.equal(pack.items[0].draftCorrectedFields.website, "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/ready-review-medical/");
+  assert.equal(pack.items[0].liveMutationAllowed, false);
+});
+
+test("GP corroboration review pack flags multi-provider Places matches as manual compare", () => {
+  const provider = baseProvider({
+    id: "gp-shared-match",
+    name: "Shared Match Medical",
+    type: "gp",
+    website: "",
+    phone: "09 222 3333",
+    sourceQuality: "third-party public GP listing",
+    importSource: "doctorpricer"
+  });
+  const pack = buildGpCorroborationReviewPack({
+    providers: [provider],
+    gpCorroborationQueue: {
+      tasks: [{
+        providerId: "gp-shared-match",
+        name: "Shared Match Medical",
+        missingFields: ["website"]
+      }]
+    },
+    googlePlacesCandidates: {
+      candidates: [{
+        candidateId: "places-shared-match",
+        action: "corroborate_existing_provider",
+        type: "gp",
+        name: "Shared Match Medical",
+        phone: "09 222 3333",
+        website: "https://sharedmedical.nz",
+        possibleProviderIds: ["gp-shared-match", "gp-other-branch"],
+        duplicateSignals: ["phone", "name"]
+      }]
+    }
+  });
+
+  assert.equal(pack.items[0].priority, "manual_compare_conflict");
+  assert.deepEqual(pack.items[0].bestCandidate.conflictingProviderIds, ["gp-other-branch"]);
+  assert.deepEqual(pack.items[0].draftCorrectedFields, {});
+});
+
+test("GP corroboration review pack does not treat login portals as source evidence", () => {
+  const provider = baseProvider({
+    id: "gp-portal-only",
+    name: "Portal Only Medical",
+    type: "gp",
+    website: "",
+    phone: "09 333 4444",
+    sourceQuality: "third-party public GP listing",
+    importSource: "doctorpricer"
+  });
+  const pack = buildGpCorroborationReviewPack({
+    providers: [provider],
+    gpCorroborationQueue: {
+      tasks: [{ providerId: "gp-portal-only", name: "Portal Only Medical", missingFields: ["website"] }]
+    },
+    googlePlacesCandidates: {
+      candidates: [{
+        candidateId: "places-portal-only",
+        action: "corroborate_existing_provider",
+        type: "gp",
+        name: "Portal Only Medical",
+        phone: "09 333 4444",
+        website: "https://health365.co.nz/SGAccount/LogOn",
+        possibleProviderIds: ["gp-portal-only"],
+        duplicateSignals: ["phone", "name"]
+      }]
+    }
+  });
+
+  assert.equal(pack.items[0].bestCandidate.sourceCategory, "booking_or_login_portal");
+  assert.equal(pack.items[0].priority, "source_lookup_needed");
+  assert.deepEqual(pack.items[0].draftCorrectedFields, {});
+});
+
 test("admin UI can load GP source corroboration tasks as review items", () => {
   const html = fs.readFileSync("admin/index.html", "utf8");
   const js = fs.readFileSync("admin/admin.js", "utf8");
 
   assert.match(html, /<option value="gp">GP source corroboration<\/option>/);
+  assert.match(html, /<option value="gpReviewPack">GP corroboration review pack<\/option>/);
   assert.match(js, /Array\.isArray\(queue\.tasks\) && queue\.summary\?\.reviewGateRequired/);
   assert.match(js, /reviewCategory: "GP source corroboration"/);
+  assert.match(js, /gp-corroboration-review-pack\.json/);
+  assert.match(js, /item\.prefillCorrectedFields/);
   assert.match(js, /practice-owned, Healthpoint, PHO, HPI\/FHIR, or official source/);
   assert.match(js, /Do not infer availability, enrolment, mental-health specialties, cultural support/);
 });

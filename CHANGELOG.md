@@ -49,6 +49,10 @@
   and Markdown report so the auditor filter can split GP corroboration, source
   conflicts, sensitive scope tags, availability, referral, location, directory
   contact, and Google Places discovery work.
+- Added a GP corroboration review pack that ranks exact GP Places/Healthpoint
+  and practice-site leads into ready source-capture, manual compare conflict,
+  and source-lookup-needed buckets. The auditor can load it directly, and login
+  portals are not treated as source evidence.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

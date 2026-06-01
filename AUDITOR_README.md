@@ -46,6 +46,7 @@ npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
 npm run export:gp-corroboration
+npm run export:gp-review-pack
 npm run export:auto-resolution
 npm run export:regional-quality
 ```
@@ -71,6 +72,9 @@ Use the **Queue** selector to choose:
 - **Claim review queue** for one-field-at-a-time checks grouped by batch key.
 - **GP source corroboration** for weak third-party GP records that need stronger
   practice-owned, Healthpoint, PHO, HPI/FHIR, or official source evidence.
+- **GP corroboration review pack** for pre-ranked GP source leads where a
+  likely Healthpoint, practice-site, or clinic-network source has already been
+  found and still needs a human source excerpt.
 - **Google Places candidates** for likely clinic/business leads discovered via
   the official Google Places API. Treat them as leads only until corroborated.
 - **Auto-resolution proposals** for grouped low-risk de-prioritisation and
@@ -91,6 +95,15 @@ Do not use DoctorPricer, search snippets, LinkedIn/social-only pages, blocked
 pages, or name-based inference as approval evidence. Do not infer accepting
 patients, enrolment, mental-health specialties, cultural support, language
 support, or funding eligibility from this queue.
+
+The GP corroboration review pack is the faster GP pathway after Places/source
+enrichment has already found likely URLs. Use **ready for source capture** items
+first. Open the candidate source, confirm the existing provider is the same
+practice, copy a short excerpt showing the practice name and contact details,
+then use any draft corrected fields as a starting point. Items marked **manual
+compare conflict** or **source lookup needed** should not be adjusted until the
+identity/source problem is resolved. Login portals and Google Maps-only links
+are leads only.
 
 In the Google Places candidates queue, each item is a likely business lead from
 the official Places API. It may help you find a public phone, website, address,

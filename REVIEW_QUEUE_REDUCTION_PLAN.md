@@ -115,6 +115,11 @@ This cycle added a separate claim review queue:
   auditor category filter actionable across GP corroboration, source conflicts,
   sensitive scope tags, availability, referral, location, directory/contact, and
   Google Places discovery work.
+- `npm run export:gp-review-pack` now joins GP source-corroboration tasks to
+  Places/Healthpoint/practice-site leads. It found 68 GP items ready for human
+  source-excerpt capture, 18 manual compare conflicts, and 40 items still
+  needing a source lookup. It also filters login portals out of the ready
+  bucket.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -177,7 +182,9 @@ Auto-accept is allowed only when all are true:
 9. Use the auditor console's **GP source corroboration** queue source to review
    weak GP records and capture stronger website/contact evidence before any
    live provider update.
-10. Use the **Filtered batch** helper only for conservative `needs_more_info`
+10. Use the auditor console's **GP corroboration review pack** to start with
+   ready-for-source-capture GP items after Places/source enrichment.
+11. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
-11. Run `npm run export:regional-quality` after each review/apply cycle and use
+12. Run `npm run export:regional-quality` after each review/apply cycle and use
     the high-priority regions to choose the next focused source research pass.

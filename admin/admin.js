@@ -14,6 +14,11 @@ const QUEUE_SOURCES = {
     help: "GP source corroboration: focused checks for DoctorPricer/third-party GP records that need stronger practice-owned, Healthpoint, PHO, HPI, or official source evidence.",
     itemName: "GP source task(s)"
   },
+  gpReviewPack: {
+    url: "../data/gp-corroboration-review-pack.json",
+    help: "GP corroboration review pack: pre-ranked GP source leads from Places/Healthpoint/practice sites. Open the source and capture an excerpt before exporting any adjustment.",
+    itemName: "GP review-pack item(s)"
+  },
   places: {
     url: "../data/discovery/google-places-provider-candidates.json",
     help: "Google Places candidates: official API discovery leads only. Use them to find likely providers, then corroborate with provider-owned, Healthpoint, register, or professional-directory evidence before changing live data.",
@@ -1849,7 +1854,8 @@ function updateDecisionHelp() {
 
 function renderDecision(item) {
   const saved = state.decisions[item.reviewId] || {};
-  const { common, advanced } = splitCommonAndAdvanced(saved.correctedFields || {});
+  const initialCorrectedFields = saved.action ? saved.correctedFields || {} : item.prefillCorrectedFields || {};
+  const { common, advanced } = splitCommonAndAdvanced(initialCorrectedFields);
   els.decisionForm.reset();
   const radio = els.decisionForm.querySelector(`input[name="decision"][value="${saved.action || ""}"]`);
   if (radio) radio.checked = true;

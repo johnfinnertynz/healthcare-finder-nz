@@ -473,7 +473,7 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
   const lat = place.location?.latitude;
   const lon = place.location?.longitude;
   const distanceFromQueryKm = distanceKm(queryItem.center?.latitude, queryItem.center?.longitude, lat, lon);
-  const existingMatches = matchExistingProviders(place, providers);
+  let existingMatches = dedupeExistingProviderMatches(matchExistingProviders(place, providers));
   let discardReason = "";
   if (queryItem.targetProviderId && !existingMatches.some((match) => match.providerId === queryItem.targetProviderId)) {
     const targetProvider = providers.find((provider) => provider.id === queryItem.targetProviderId);
@@ -494,6 +494,7 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
       }
     }
   }
+  existingMatches = dedupeExistingProviderMatches(existingMatches);
   const sourceUrl = place.googleMapsUri || website || "";
   const claims = [
     claim("name", name, place, queryItem, "medium"),

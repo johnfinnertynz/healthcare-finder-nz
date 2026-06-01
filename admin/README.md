@@ -82,6 +82,32 @@ and source-quality fields, but it must not be used to infer availability,
 enrolment, mental-health specialty, cultural support, language support, or
 funding eligibility.
 
+## GP Corroboration Review Pack
+
+After running Google Places or source-enrichment checks for GP records, export
+the ranked review pack:
+
+```bash
+npm run export:gp-review-pack
+```
+
+This writes:
+
+- `data/gp-corroboration-review-pack.json`
+- `data/gp-corroboration-review-pack.csv`
+- `GP_CORROBORATION_REVIEW_PACK.md`
+
+Choose **GP corroboration review pack** from the queue selector. This view
+groups the GP source-corroboration tasks that already have a likely
+Healthpoint, practice-site, or clinic-network lead. It labels each item as
+ready for source capture, manual compare conflict, or source lookup needed.
+
+The pack can pre-fill draft public contact/source fields, but it is not an
+approval. Open the source, capture a short excerpt showing the practice name and
+contact details, then export a reviewed decision before applying anything.
+Login portals and Google Maps-only leads are kept in source-lookup/manual
+review, not treated as source evidence.
+
 ## Google Places Candidates
 
 Run the Google Places exporter when the regional report shows thin local
