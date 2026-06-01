@@ -180,6 +180,11 @@ old excerpts and checks new rows:
 npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing --rate-limit-ms 1000
 ```
 
+Merged capture runs drop stale existing rows by default when a provider/rule/
+target finding no longer appears in the current source-fit audit. That keeps
+the auditor focused on live review work. Use `--keep-stale-existing` only for a
+separate investigation archive, not for the active review queue.
+
 This writes:
 
 - `data/provider-source-fit-evidence-capture.json`

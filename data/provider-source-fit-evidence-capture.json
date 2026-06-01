@@ -1,21 +1,23 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-01T08:14:57.856Z",
+  "generatedAt": "2026-06-01T08:41:59.050Z",
   "safety": {
     "noLiveProviderMutation": true,
     "reviewGatedCorrectionsOnly": true,
     "noAcceptingFromSilence": true,
     "noSensitiveTagAutoApproval": true,
-    "weakOrBlockedSourcesNeedHumanReview": true
+    "weakOrBlockedSourcesNeedHumanReview": true,
+    "staleMergedRowsDroppedByDefault": true
   },
   "input": {
     "sourceFitAudit": "data/provider-source-fit-audit.json",
-    "limit": 200,
+    "limit": null,
     "rule": "",
-    "noNetwork": false,
+    "noNetwork": true,
     "existingCapture": "data/provider-source-fit-evidence-capture.json",
     "skipExisting": true,
-    "mergeExisting": true
+    "mergeExisting": true,
+    "keepStaleExisting": false
   },
   "summary": {
     "findingsConsidered": 227,
@@ -44,11 +46,14 @@
     "eligibleFindingsCaptured": 227,
     "eligibleFindingsRemaining": 0,
     "eligibleCoveragePercent": 100,
-    "newFindingsConsidered": 7,
-    "existingItemsAvailable": 220,
-    "existingItemsSkipped": 220,
-    "existingItemsMerged": 220,
-    "newItemsCaptured": 7,
+    "newFindingsConsidered": 0,
+    "existingItemsAvailable": 227,
+    "existingItemsSkipped": 227,
+    "existingCurrentItemsAvailable": 227,
+    "staleExistingItems": 0,
+    "staleExistingItemsDropped": 0,
+    "existingItemsMerged": 227,
+    "newItemsCaptured": 0,
     "totalItems": 227,
     "batchCount": 29,
     "batches": [

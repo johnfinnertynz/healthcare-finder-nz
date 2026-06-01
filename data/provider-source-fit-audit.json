@@ -1,65 +1,7 @@
 {
-  "generatedAt": "2026-06-01T08:26:57.874Z",
+  "generatedAt": "2026-06-01T08:41:42.648Z",
   "providersScanned": 1214,
   "findings": [
-    {
-      "providerId": "canterbury-mherc",
-      "providerName": "Mental Health Education and Resource Centre",
-      "region": "Canterbury",
-      "city": "Christchurch",
-      "type": "directory",
-      "tags": [
-        "directory",
-        "fit",
-        "cost",
-        "depression",
-        "anxiety"
-      ],
-      "needScope": [],
-      "source": "https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-education-and-resource-centre/",
-      "rule": "directory-treated-direct",
-      "severity": "high",
-      "issue": "Directory record has direct-contact signals and may be treated like a provider.",
-      "suggestedFix": "Remove direct-contact signals from directories and only expose website navigation.",
-      "allowlisted": true,
-      "allowlist": {
-        "id": "canterbury-mherc",
-        "rule": "directory-treated-direct",
-        "reason": "Directory/navigation contact details are retained for manual verification, but the app treats directory records as website-only results rather than direct first contacts.",
-        "reviewedBy": "Codex source-fit audit",
-        "reviewedDate": "2026-05-25",
-        "expiryDate": "2026-08-25"
-      }
-    },
-    {
-      "providerId": "national-family-services-directory",
-      "providerName": "Family Services Directory / 211 Helpline",
-      "region": "National",
-      "city": "Aotearoa New Zealand",
-      "type": "directory",
-      "tags": [
-        "directory",
-        "cost",
-        "housing",
-        "family",
-        "fit"
-      ],
-      "needScope": [],
-      "source": "https://www.justice.govt.nz/family/family-court/help/general-help-and-services-for-you-and-your-whanau/organisations-to-help-you/",
-      "rule": "directory-treated-direct",
-      "severity": "high",
-      "issue": "Directory record has direct-contact signals and may be treated like a provider.",
-      "suggestedFix": "Remove direct-contact signals from directories and only expose website navigation.",
-      "allowlisted": true,
-      "allowlist": {
-        "id": "national-family-services-directory",
-        "rule": "directory-treated-direct",
-        "reason": "211 is a navigation helpline attached to a directory. Keep flagged so it is not mistaken for a mental-health provider; UI must not offer it as a direct email contact.",
-        "reviewedBy": "Codex source-fit audit",
-        "reviewedDate": "2026-05-25",
-        "expiryDate": "2026-08-25"
-      }
-    },
     {
       "providerId": "auckland-auckland-mental-wellness-centre",
       "providerName": "Auckland Mental Wellness Centre",
@@ -2728,29 +2670,6 @@
       "severity": "medium",
       "issue": "Broad tag \"trauma\" is present but source fields do not clearly support it.",
       "suggestedFix": "Remove \"trauma\" or add source-backed specialties/services evidence.",
-      "allowlisted": false
-    },
-    {
-      "providerId": "national-pathways-primary-mental-health",
-      "providerName": "Pathways Primary Mental Health Services",
-      "region": "National",
-      "city": "Auckland, Hauraki, Hamilton, Tauranga, Rotorua, Taupo, Wairarapa, Wellington, Nelson, Christchurch",
-      "type": "public-service",
-      "tags": [
-        "depression",
-        "anxiety",
-        "cost",
-        "gp",
-        "public-service",
-        "directory",
-        "same-day"
-      ],
-      "needScope": [],
-      "source": "https://www.pathways.co.nz/services/primary-mental-health",
-      "rule": "direct-provider-directory-tag-review",
-      "severity": "medium",
-      "issue": "Provider is not typed as a directory but carries a directory tag.",
-      "suggestedFix": "Confirm whether this is a navigator/directory or a direct service; adjust type/tags accordingly.",
       "allowlisted": false
     },
     {
@@ -9563,11 +9482,11 @@
     }
   ],
   "summary": {
-    "total": 361,
-    "high": 2,
-    "medium": 233,
+    "total": 358,
+    "high": 0,
+    "medium": 232,
     "low": 126,
     "highUnallowlisted": 0,
-    "allowlisted": 2
+    "allowlisted": 0
   }
 }

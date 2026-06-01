@@ -705,8 +705,11 @@ availability without a reviewer checking the excerpt.
 `--skip-existing` compares provider ID, audit rule, and target value against
 the existing capture file so repeated bounded runs move on to new findings.
 `--merge-existing` keeps previously captured excerpts and adds the new batch to
-the same output. This is still review-gated; preserving an excerpt does not
-approve the claim.
+the same output. Stale merged rows are dropped by default when the underlying
+source-fit finding no longer exists, so auditors do not spend time on already
+resolved claims. Use `--keep-stale-existing` only when preserving old capture
+rows for investigation. This is still review-gated; preserving an excerpt does
+not approve the claim.
 
 Each source-fit capture row has a batch key in the form
 `source-fit:<status>:<rule>:<target>`. Use the auditor **Batch** filter to work

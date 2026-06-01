@@ -26,7 +26,8 @@ const DEFAULTS = {
   rule: "",
   existingCapture: "",
   skipExisting: false,
-  mergeExisting: false
+  mergeExisting: false,
+  keepStaleExisting: false
 };
 
 const CAPTURE_RULES = new Set([
@@ -77,6 +78,7 @@ function parseArgs(argv = process.argv.slice(2)) {
     else if (arg === "--existing-capture") config.existingCapture = argv[++index];
     else if (arg === "--skip-existing") config.skipExisting = true;
     else if (arg === "--merge-existing") config.mergeExisting = true;
+    else if (arg === "--keep-stale-existing") config.keepStaleExisting = true;
   }
   return config;
 }
@@ -288,9 +290,13 @@ function summarizeItems(items, extra = {}) {
   };
 }
 
-function mergeCaptureItems(existingItems, newItems) {
+function mergeCaptureItems(existingItems, newItems, eligibleIssueKeys = new Set(), options = {}) {
   const merged = new Map();
-  for (const item of existingItems) merged.set(itemIssueKey(item), item);
+  for (const item of existingItems) {
+    const key = itemIssueKey(item);
+    if (!options.keepStaleExisting && eligibleIssueKeys.size && !eligibleIssueKeys.has(key)) continue;
+    merged.set(key, item);
+  }
   for (const item of newItems) merged.set(itemIssueKey(item), item);
   return [...merged.values()];
 }
@@ -509,7 +515,11 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
     });
   }
 
-  const outputItems = (merged.mergeExisting ? mergeCaptureItems(existingItems, items) : items)
+  const currentExistingItems = existingItems.filter((item) => eligibleIssueKeys.has(itemIssueKey(item)));
+  const staleExistingItems = existingItems.filter((item) => !eligibleIssueKeys.has(itemIssueKey(item)));
+  const outputItems = (merged.mergeExisting
+    ? mergeCaptureItems(existingItems, items, eligibleIssueKeys, { keepStaleExisting: merged.keepStaleExisting })
+    : items)
     .map((item) => withBatchMetadata(item));
   const batches = summarizeBatches(outputItems);
   const capturedIssueKeys = new Set(outputItems.map(itemIssueKey).filter((key) => eligibleIssueKeys.has(key)));
@@ -524,7 +534,10 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
     newFindingsConsidered: findings.length,
     existingItemsAvailable: existingItems.length,
     existingItemsSkipped: existingKeys.size,
-    existingItemsMerged: merged.mergeExisting ? existingItems.length : 0,
+    existingCurrentItemsAvailable: currentExistingItems.length,
+    staleExistingItems: staleExistingItems.length,
+    staleExistingItemsDropped: merged.mergeExisting && !merged.keepStaleExisting ? staleExistingItems.length : 0,
+    existingItemsMerged: merged.mergeExisting ? currentExistingItems.length : 0,
     newItemsCaptured: items.length,
     totalItems: outputItems.length,
     batchCount: batches.length,
@@ -539,7 +552,8 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
       reviewGatedCorrectionsOnly: true,
       noAcceptingFromSilence: true,
       noSensitiveTagAutoApproval: true,
-      weakOrBlockedSourcesNeedHumanReview: true
+      weakOrBlockedSourcesNeedHumanReview: true,
+      staleMergedRowsDroppedByDefault: !merged.keepStaleExisting
     },
     input: {
       sourceFitAudit: merged.sourceFitAudit,
@@ -548,7 +562,8 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
       noNetwork: merged.noNetwork,
       existingCapture: merged.existingCapture || merged.jsonOut,
       skipExisting: Boolean(merged.skipExisting),
-      mergeExisting: Boolean(merged.mergeExisting)
+      mergeExisting: Boolean(merged.mergeExisting),
+      keepStaleExisting: Boolean(merged.keepStaleExisting)
     },
     summary,
     items: outputItems
@@ -600,6 +615,7 @@ function writeMarkdown(filePath, output) {
     `- Eligible capture coverage: ${output.summary.eligibleCoveragePercent ?? 100}%`,
     `- New findings checked this run: ${output.summary.newFindingsConsidered ?? output.summary.findingsConsidered}`,
     `- Existing items merged: ${output.summary.existingItemsMerged ?? 0}`,
+    `- Stale existing items dropped: ${output.summary.staleExistingItemsDropped ?? 0}`,
     `- Total items in output: ${output.summary.totalItems ?? output.items.length}`,
     `- Source support found: ${output.summary.sourceSupportFound}`,
     `- Safe removal candidates: ${output.summary.safeRemovalCandidates}`,

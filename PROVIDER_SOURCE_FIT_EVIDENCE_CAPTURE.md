@@ -1,6 +1,6 @@
 # Provider Source-Fit Evidence Capture
 
-Generated: 2026-06-01T08:14:57.856Z
+Generated: 2026-06-01T08:41:59.050Z
 
 This report fetches public source pages for selected source-fit findings and captures short evidence excerpts. It does not change `providers.json`.
 
@@ -11,8 +11,9 @@ This report fetches public source pages for selected source-fit findings and cap
 - Eligible findings captured: 227
 - Eligible findings remaining: 0
 - Eligible capture coverage: 100%
-- New findings checked this run: 7
-- Existing items merged: 220
+- New findings checked this run: 0
+- Existing items merged: 227
+- Stale existing items dropped: 0
 - Total items in output: 227
 - Source support found: 36
 - Safe removal candidates: 64

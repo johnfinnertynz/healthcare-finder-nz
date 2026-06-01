@@ -812,6 +812,10 @@ The helper can also draft `needs_more_info` decisions for non-removal batches
 such as `source_support_found`, blocked, skipped, or failed rows. It will not
 bulk-approve captured excerpts or add new capability claims.
 
+Resumable source-fit capture runs drop stale merged rows by default when the
+underlying audit finding has been fixed. Use `--keep-stale-existing` only for
+investigating old capture rows outside the active auditor queue.
+
 After applying decisions, run:
 
 ```sh

@@ -205,6 +205,17 @@ test("provider source-fit audit passes without unallowlisted high-severity findi
   assert.ok(report.summary.total >= 1, "audit should keep reporting reviewable source-fit findings");
 });
 
+test("directory records are website-only navigation, not direct first-contact providers", () => {
+  const unsafeDirectories = providers
+    .filter((provider) => provider.type === "directory")
+    .filter((provider) => provider.phone || provider.text || provider.email || provider.bookingUrl);
+  const directProvidersTaggedDirectory = providers
+    .filter((provider) => provider.type !== "directory" && provider.tags?.includes("directory"));
+
+  assert.deepEqual(unsafeDirectories.map((provider) => provider.id), []);
+  assert.deepEqual(directProvidersTaggedDirectory.map((provider) => provider.id), []);
+});
+
 test("psychiatrist records separate baseline scope from advertised interests", () => {
   const psychiatrists = providers.filter((provider) => provider.type === "psychiatrist");
   assert.ok(psychiatrists.length > 0);

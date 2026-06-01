@@ -4,21 +4,24 @@ Updated: 2026-06-01
 
 ## Baseline
 
-- Provider-level focused review queue: 775 items after the bounded psychiatry
-  Places/enrichment pass. The increase is intentional: new candidates are
-  review-gated and are not live provider data.
+- Provider-level focused review queue: 798 items after the bounded psychiatry,
+  GP, Places, source-fit, and coordinate review exports. The increase is
+  intentional where new candidates are review-gated and are not live provider
+  data.
 - Focused claim-level review queue: 638 items in 53 batches.
 - Dedicated GP source corroboration queue: 126 tasks.
-- Source-fit findings: 361.
+- Source-fit findings: 358, with 0 high-severity findings and no active
+  allowlist exceptions.
 - Availability findings: 30.
 - Provider validation warnings: 0.
 - Broken links in default link check: 0.
-- Blocked-by-site links in default link check: 1.
+- Blocked-by-site links in the last full default link check: 7.
 - Regional priority report: 18 regions reviewed, 12 high priority, 6 medium
   priority.
-- First bounded source-fit evidence capture: 30 unsupported tag/telehealth
-  findings checked; 6 source-support excerpts found, 4 review-gated safe-removal
-  candidates, 17 human-browser-review items, and 3 skipped/too-large sources.
+- Source-fit evidence capture now covers 227 of 227 eligible unsupported
+  tag/telehealth/support-preference findings. It has 36 source-support excerpts,
+  64 review-gated safe-removal candidates, 110 human-browser-review rows, 3
+  fetch failures, and 14 skipped/too-large sources.
 
 Top provider-level root causes:
 
@@ -44,6 +47,19 @@ Current provider-level review categories:
 | Google Places discovery | 50 |
 | Needs quick human check | 41 |
 | Directory/direct-contact confusion | 34 |
+
+Current provider-level review categories after the directory cleanup:
+
+| Review category | Count |
+| --- | ---: |
+| GP source corroboration | 251 |
+| Location and distance evidence | 126 |
+| Sensitive tag or scope evidence | 124 |
+| Referral pathway review | 81 |
+| Availability review | 77 |
+| Needs quick human check | 59 |
+| Google Places discovery | 47 |
+| Directory/direct-contact confusion | 33 |
 
 ## Claim-Level Reduction Layer
 
@@ -168,6 +184,14 @@ This cycle added a separate claim review queue:
   supports resumable bounded capture. The next pass can keep earlier excerpts
   while checking new provider/rule/target rows instead of re-fetching the same
   first batch.
+- Directory records are now enforced as website-only navigation records:
+  directory phone/email/text/booking fields were removed from the two remaining
+  direct-contact directory exceptions, the source-fit allowlist is empty, and a
+  regression test prevents future imports from adding direct-contact fields to
+  `type: "directory"` records.
+- Resumable source-fit capture now drops stale merged rows by default when the
+  underlying source-fit audit finding has disappeared. This keeps the active
+  auditor queue from retaining already-fixed provider/rule/target rows.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by

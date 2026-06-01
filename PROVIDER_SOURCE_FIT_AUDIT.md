@@ -1,17 +1,15 @@
 # Provider Source-Fit Audit
 
-Generated: 2026-06-01T08:26:57.874Z
+Generated: 2026-06-01T08:41:42.648Z
 
 Providers scanned: 1214
 
-Findings: 361 total, 2 high (0 unallowlisted), 233 medium, 126 low.
+Findings: 358 total, 0 high (0 unallowlisted), 232 medium, 126 low.
 
 High severity findings block CI unless allowlisted in `data/provider-source-fit-allowlist.json`.
 
 | Severity | Provider | Region / city | Type | Issue | Suggested safer fix | Source | Allowlisted |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| high | canterbury-mherc - Mental Health Education and Resource Centre | Canterbury / Christchurch | directory | Directory record has direct-contact signals and may be treated like a provider. | Remove direct-contact signals from directories and only expose website navigation. | https://www.healthpoint.co.nz/mental-health-addictions/mental-health/mental-health-education-and-resource-centre/ | yes: Directory/navigation contact details are retained for manual verification, but the app treats directory records as website-only results rather than direct first contacts. |
-| high | national-family-services-directory - Family Services Directory / 211 Helpline | National / Aotearoa New Zealand | directory | Directory record has direct-contact signals and may be treated like a provider. | Remove direct-contact signals from directories and only expose website navigation. | https://www.justice.govt.nz/family/family-court/help/general-help-and-services-for-you-and-your-whanau/organisations-to-help-you/ | yes: 211 is a navigation helpline attached to a directory. Keep flagged so it is not mistaken for a mental-health provider; UI must not offer it as a direct email contact. |
 | medium | auckland-auckland-mental-wellness-centre - Auckland Mental Wellness Centre | Auckland / Remuera | psychologist | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://aucklandmentalwellness.com/ | no |
 | medium | auckland-auckland-mental-wellness-centre - Auckland Mental Wellness Centre | Auckland / Remuera | psychologist | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://aucklandmentalwellness.com/ | no |
 | medium | auckland-mt-eden-counselling-psychotherapy - Mt Eden Counselling & Psychotherapy | Auckland / Mt Eden | counsellor | Telehealth or online availability is set but source fields do not clearly support remote care. | Remove telehealth/online flags or add a provider-owned source that confirms phone/video/online appointments. | https://www.mtedencounselling.co.nz/ | no |
@@ -110,7 +108,6 @@ High severity findings block CI unless allowlisted in `data/provider-source-fit-
 | medium | national-empath-psychology - Empath Psychology | National / Online | psychologist | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.empathpsychology.co.nz/ | no |
 | medium | national-empath-psychology - Empath Psychology | National / Online | psychologist | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://www.empathpsychology.co.nz/ | no |
 | medium | national-empath-psychology - Empath Psychology | National / Online | psychologist | Broad tag "trauma" is present but source fields do not clearly support it. | Remove "trauma" or add source-backed specialties/services evidence. | https://www.empathpsychology.co.nz/ | no |
-| medium | national-pathways-primary-mental-health - Pathways Primary Mental Health Services | National / Auckland, Hauraki, Hamilton, Tauranga, Rotorua, Taupo, Wairarapa, Wellington, Nelson, Christchurch | public-service | Provider is not typed as a directory but carries a directory tag. | Confirm whether this is a navigator/directory or a direct service; adjust type/tags accordingly. | https://www.pathways.co.nz/services/primary-mental-health | no |
 | medium | national-puawaitanga - Puawaitanga | National / Phone and video | counsellor | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.puawaitanga.nz/ | no |
 | medium | national-puawaitanga - Puawaitanga | National / Phone and video | counsellor | Broad tag "anxiety" is present but source fields do not clearly support it. | Remove "anxiety" or add source-backed specialties/services evidence. | https://www.puawaitanga.nz/ | no |
 | medium | nelson-full-circle-psychology - Full Circle Psychology | Nelson Marlborough Tasman / Nelson | psychologist | Broad tag "depression" is present but source fields do not clearly support it. | Remove "depression" or add source-backed specialties/services evidence. | https://www.fullcirclepsychology.co.nz/contact | no |

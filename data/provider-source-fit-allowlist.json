@@ -1,18 +1,1 @@
-[
-  {
-    "id": "canterbury-mherc",
-    "rule": "directory-treated-direct",
-    "reason": "Directory/navigation contact details are retained for manual verification, but the app treats directory records as website-only results rather than direct first contacts.",
-    "reviewedBy": "Codex source-fit audit",
-    "reviewedDate": "2026-05-25",
-    "expiryDate": "2026-08-25"
-  },
-  {
-    "id": "national-family-services-directory",
-    "rule": "directory-treated-direct",
-    "reason": "211 is a navigation helpline attached to a directory. Keep flagged so it is not mistaken for a mental-health provider; UI must not offer it as a direct email contact.",
-    "reviewedBy": "Codex source-fit audit",
-    "reviewedDate": "2026-05-25",
-    "expiryDate": "2026-08-25"
-  }
-]
+[]

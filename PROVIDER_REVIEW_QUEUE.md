@@ -1,36 +1,34 @@
 # Provider Review Queue
 
-Generated: 2026-06-01T08:27:53.721Z
+Generated: 2026-06-01T08:41:59.086Z
 
 Focused queue: yes.
 
 ## Summary
 
 - Review items: 798
-- Critical: 14
-- High: 475
-- Medium: 163
-- Low: 146
+- Critical: 12
+- High: 474
+- Medium: 164
+- Low: 148
 
 ## By Review Category
 
 | Category | Items |
 | --- | --- |
 | GP source corroboration | 251 |
-| Location and distance evidence | 125 |
+| Location and distance evidence | 126 |
 | Sensitive tag or scope evidence | 124 |
 | Referral pathway review | 81 |
 | Availability review | 77 |
 | Needs quick human check | 59 |
 | Google Places discovery | 47 |
-| Directory/direct-contact confusion | 34 |
+| Directory/direct-contact confusion | 33 |
 
 ## Top Queue Items
 
 | Priority | Severity | Category | Provider | Type | Region / City | Rules | Reasons |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| critical | high | Directory/direct-contact confusion | canterbury-mherc - Mental Health Education and Resource Centre | directory | Canterbury / Christchurch | directory-treated-direct | high: directory-treated-direct; provider details need manual verification |
-| critical | high | Directory/direct-contact confusion | national-family-services-directory - Family Services Directory / 211 Helpline | directory | National / Aotearoa New Zealand | directory-treated-direct | high: directory-treated-direct; provider details need manual verification |
 | critical | high | Referral pathway review | bay-of-plenty-ancora-adult-adhd-psychiatry - AncorA Adult ADHD Clinic | psychiatrist | Bay of Plenty / Tauranga and nationwide telehealth | discovery-suggestion, needs_manual_research, conflict-phone, conflict-tags, conflict-advertisedSpecialties | provider discovery suggestion; conflicting phone, tags, advertisedSpecialties values; extracted from seed source provider_owned; conflicting fields: phone, tags, advertisedSpecialties |
 | critical | high | Referral pathway review | manawatu-eye-openers-psychiatry - Eye-Openers Psychiatry | psychiatrist | Manawatu-Whanganui / Palmerston North | discovery-suggestion, needs_manual_research, conflict-address, conflict-phone, conflict-website, conflict-source, conflict-bookingUrl | provider discovery suggestion; conflicting address, phone, website, source, bookingUrl values; extracted from seed source provider_owned; conflicting fields: address, phone, website, source, bookingUrl |
 | critical | high | Referral pathway review | psychiatry-nz-christmas-seu - Dr Christmas Seu | psychiatrist | National / Telehealth across New Zealand | discovery-suggestion, needs_manual_research, conflict-name, conflict-email, conflict-tags, conflict-advertisedSpecialties | provider discovery suggestion; conflicting name, email, tags, advertisedSpecialties values; extracted from seed source provider_owned; conflicting fields: name, email, tags, advertisedSpecialties |
@@ -109,5 +107,7 @@ Focused queue: yes.
 | high | medium | Availability review | northland-mindme-clinical-psychology - MindMe Clinical Psychology | psychologist | Northland / Mid-North and Whangarei | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
 | high | medium | Availability review | northland-wayfinder-psychology - Wayfinder Psychology | psychologist | Northland / Whangarei | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
 | high | medium | Availability review | tairawhiti-mauri-psychology - Mauri Psychology | psychologist | Tairawhiti / Gisborne | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
+| high | medium | Availability review | taranaki-jade-psychology - Jade Psychology | psychologist | Taranaki / New Plymouth | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
+| high | medium | Availability review | west-coast-internal-growth-holistic-psychology - Internal Growth Holistic Psychology | psychologist | West Coast / Greymouth | availability-watchlist | medium: availability-watchlist; provider details need manual verification; availability needs manual review; low confidence source; verification date is stale or missing; availability watchlist candidate |
 
 Review decisions must be applied with `npm run apply:review`; the public app does not write provider data from the browser.

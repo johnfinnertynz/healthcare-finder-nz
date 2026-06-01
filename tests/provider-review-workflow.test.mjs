@@ -770,6 +770,15 @@ test("source-fit evidence capture can skip and merge existing batches", async ()
         target: "anxiety",
         status: "source_support_found",
         evidenceSummary: "Existing reviewer-checkable anxiety excerpt"
+      },
+      {
+        reviewId: "source-fit-capture:fixed-record:broad-tag-without-source-support:depression",
+        providerId: "fixed-record",
+        providerName: "Fixed Record",
+        rule: "broad-tag-without-source-support",
+        target: "depression",
+        status: "safe_removal_candidate",
+        evidenceSummary: "This old row should disappear once the audit finding is fixed."
       }
     ]
   });
@@ -808,10 +817,13 @@ test("source-fit evidence capture can skip and merge existing batches", async ()
   assert.equal(output.summary.eligibleFindingsCaptured, 2);
   assert.equal(output.summary.eligibleFindingsRemaining, 1);
   assert.equal(output.summary.eligibleCoveragePercent, 66.7);
-  assert.equal(output.summary.existingItemsSkipped, 1);
+  assert.equal(output.summary.existingItemsSkipped, 2);
+  assert.equal(output.summary.staleExistingItems, 1);
+  assert.equal(output.summary.staleExistingItemsDropped, 1);
   assert.equal(output.summary.existingItemsMerged, 1);
   assert.equal(output.summary.totalItems, 2);
   assert.equal(output.items.map((item) => item.providerId).join(","), "already-checked,next-checked");
+  assert.equal(output.items.some((item) => item.providerId === "fixed-record"), false);
   assert.equal(output.items.find((item) => item.providerId === "already-checked").evidenceSummary, "Existing reviewer-checkable anxiety excerpt");
   assert.equal(
     output.items.find((item) => item.providerId === "already-checked").batchKey,
