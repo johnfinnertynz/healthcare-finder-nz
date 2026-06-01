@@ -1,12 +1,12 @@
 # Provider Auto-Resolution Proposals
 
-Generated: 2026-05-31T23:54:12.440Z
+Generated: 2026-06-01T05:48:39.888Z
 
 These proposals are a safety layer for reducing review noise. They do not mutate `providers.json` and they do not approve high-risk healthcare claims.
 
 ## Summary
 
-- Provider-level review items: 675
+- Provider-level review items: 775
 - Claim-level review items: 638
 - Claim batch groups: 53
 - Low-risk claims that can be de-prioritized from manual claim review: 1449

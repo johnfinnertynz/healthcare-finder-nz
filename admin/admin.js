@@ -29,6 +29,11 @@ const QUEUE_SOURCES = {
     help: "Discovery suggestions: review-gated new-provider, existing-provider update, watchlist, and manual-research suggestions built from the evidence graph. Confirm source evidence before exporting any decision.",
     itemName: "discovery suggestion(s)"
   },
+  sourceFitCapture: {
+    url: "../data/provider-source-fit-evidence-capture.json",
+    help: "Source-fit evidence capture: fetched source excerpts for unsupported tag, support-preference, and telehealth findings. Use captured evidence to confirm a claim or review-gated corrections to remove unsupported claims.",
+    itemName: "source-fit capture item(s)"
+  },
   auto: {
     url: "../data/provider-auto-resolution-proposals.json",
     help: "Auto-resolution proposals: advisory-only groups for de-prioritising safe low-risk checks and keeping risky batches review-gated.",

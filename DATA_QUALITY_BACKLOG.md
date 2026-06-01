@@ -16,7 +16,7 @@ manual review burden.
 | Referral pathways | Psychiatrist referral metadata passes audit but still needs ongoing checks | Direct-contact psychiatry recommendations can create dead ends | Keep GP-referral-first unless self-referral is explicit |
 | Address and coordinates | Some non-GP providers have missing address or coordinate evidence | Distance ranking can wrongly imply local access | Geocode only public professional addresses and mark uncertainty honestly |
 | Duplicates/shared practices | Shared domains, phones, and addresses create many conflict groups | Different clinicians at one practice must not be merged | Review as shared-practice batches, not automatic duplicate merges |
-| Claim/root-cause duplication | Provider-level findings can still create repeated field tasks when one root cause affects several stored fields | Inflated queues make auditors spend time on noise instead of risky claims | Keep tuning value-aware claim mapping; next target is source-excerpt capture for high-risk claims |
+| Claim/root-cause duplication | Provider-level findings can still create repeated field tasks when one root cause affects several stored fields | Inflated queues make auditors spend time on noise instead of risky claims | Use source-fit evidence capture to prefill excerpts or conservative removal candidates for unsupported tags |
 | Regional prioritisation | Coverage, GP corroboration, audit, and distance-ranking risks were previously split across several reports | Reviewers could spend time in a large region while a thinner region has no specialist pathway | Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next manual research batch |
 
 ## Queue Reduction Targets
@@ -126,6 +126,10 @@ manual review burden.
   apply:review`. It only accepts approved discovery suggestions with
   `newProviderCandidate`, allowlisted fields, and human-captured source
   evidence; discovery snippets and blocked pages remain rejected.
+- Added a bounded source-fit evidence capture export and auditor queue. The
+  first 30 unsupported tag/telehealth findings produced 6 captured support
+  excerpts, 4 review-gated safe-removal candidates, 17 human-browser-review
+  items, and 3 skipped/too-large source checks without mutating live data.
 
 ## Next Backlog Items
 
@@ -137,7 +141,9 @@ manual review burden.
    captures, and the two high-confidence update-existing GP suggestions.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
-4. Start manual review with the largest unsupported tag batches.
+4. Continue bounded source-fit capture batches for the largest unsupported tag
+   groups, then confirm excerpts or remove unsupported claims through reviewed
+   decisions.
 5. Add source-excerpt capture to more importers so fewer claims are
    `stored-provider-field` only.
 6. Keep adding extractor regression tests whenever generated discovery reports

@@ -71,6 +71,10 @@
   allowlisted provider fields, `newProviderCandidate`, and human-captured source
   evidence; discovery snippets, blocked pages, and Google Places seed text are
   still rejected.
+- Added `npm run export:source-fit-capture` and an auditor **Source-fit evidence
+  capture** queue. The first bounded batch checked 30 unsupported
+  tag/telehealth findings, captured 6 source-support excerpts, and produced 4
+  review-gated safe-removal candidates without mutating live data.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 
@@ -78,7 +82,9 @@ Safety notes:
 
 - This change does not mutate live provider data.
 - Unsupported broad/sensitive tags are still queued for human review when the
-  specific claim value or public text is affected.
+  specific claim value or public text is affected. Source-fit capture can
+  reduce the inspection work, but it does not approve sensitive tags or
+  telehealth automatically.
 - The next data-quality target is working through the GP corroboration queue or
   using the regional priority report to choose the next focused verification
   batch.

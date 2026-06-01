@@ -95,6 +95,10 @@ mark the claim as review-needed. It must not fake evidence text.
 - `npm run export:regional-quality` rolls coverage, weak source, source-fit,
   availability, referral, watchlist, and address/coordinate risks into regional
   priorities for manual research planning.
+- `npm run export:source-fit-capture -- --limit 30` fetches a bounded set of
+  source-fit findings and turns unsupported broad/support/telehealth issues into
+  captured evidence excerpts or review-gated safe-removal candidates. It never
+  mutates live provider data.
 - `npm run export:review` creates the provider-level review queue.
 - `npm run apply:review` applies only reviewed decisions through the controlled
   script.

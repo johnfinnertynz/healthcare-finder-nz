@@ -147,6 +147,33 @@ export a reviewed decision before applying anything. Login portals and Google
 Maps-only leads are kept in source-lookup/manual review, not treated as source
 evidence.
 
+## Source-Fit Evidence Capture
+
+Run a bounded source-fit capture when unsupported broad tags,
+support-preference tags, or telehealth flags create repetitive review work:
+
+```bash
+npm run export:source-fit-capture -- --limit 30 --rate-limit-ms 1000
+```
+
+This writes:
+
+- `data/provider-source-fit-evidence-capture.json`
+- `data/provider-source-fit-evidence-capture.csv`
+- `PROVIDER_SOURCE_FIT_EVIDENCE_CAPTURE.md`
+
+Choose **Source-fit evidence capture** from the queue selector. Each row shows
+the original source-fit finding, the public source URL, any captured short
+excerpt, and prefilled conservative `correctedFields` when the source was
+reachable but did not support the flagged claim.
+
+Use **Adjust** only after checking the source and confirming the correction is a
+downgrade, such as removing an unsupported tag or telehealth flag. Use
+`needs_more_info` for blocked, skipped, failed, unclear, or mismatched sources.
+Captured excerpts are review aids; they are not automatic approval for
+specialties, support-preference tags, telehealth, availability, or referral
+pathways.
+
 ## Google Places Candidates
 
 Run the Google Places exporter when the regional report shows thin local

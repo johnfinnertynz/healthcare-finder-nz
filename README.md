@@ -202,6 +202,21 @@ reviewed decision JSON. Automated source snippets are review aids only; they do
 not prove availability, enrolment, mental-health scope, cultural support,
 funding, or accepting-new-patients status.
 
+Export source-fit evidence capture for unsupported tag, support-preference, or
+telehealth findings:
+
+```sh
+npm run export:source-fit-capture -- --limit 30 --rate-limit-ms 1000
+```
+
+This writes `data/provider-source-fit-evidence-capture.json`,
+`data/provider-source-fit-evidence-capture.csv`, and
+`PROVIDER_SOURCE_FIT_EVIDENCE_CAPTURE.md`. It fetches a bounded set of public
+source pages, captures short excerpts when a flagged claim is supported, and
+creates review-gated safe-removal candidates when a reachable source does not
+support a broad/sensitive tag or telehealth flag. It never updates live provider
+data; the auditor must confirm excerpts or corrections before `apply:review`.
+
 Export regional review priorities:
 
 ```sh
@@ -570,6 +585,7 @@ npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
 npm run export:gp-corroboration
+npm run export:source-fit-capture -- --limit 30
 npm run export:auto-resolution
 npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
 ```

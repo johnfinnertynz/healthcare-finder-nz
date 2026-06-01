@@ -604,6 +604,30 @@ network verification:
 CHECK_PROVIDER_SOURCES=true node tools/check-links.mjs
 ```
 
+For unsupported broad/support/telehealth findings, use a bounded evidence
+capture pass before asking a human to inspect every row:
+
+```sh
+npm run export:source-fit-capture -- --limit 30 --rate-limit-ms 1000
+```
+
+The export writes `data/provider-source-fit-evidence-capture.json`,
+`data/provider-source-fit-evidence-capture.csv`, and
+`PROVIDER_SOURCE_FIT_EVIDENCE_CAPTURE.md`. It may mark a row as:
+
+- `source_support_found`: the source page contains a short excerpt that appears
+  to support the flagged claim. This still requires human confirmation.
+- `safe_removal_candidate`: the source was reachable and no support wording was
+  found. The generated correction only removes unsupported tags or telehealth
+  flags; it does not add new claims.
+- `needs_human_browser_review`, `source_skipped`, or `fetch_failed`: do not
+  infer anything. Open the source manually or leave the item as
+  `needs_more_info`.
+
+This capture layer is designed to reduce review effort, not to bypass review.
+Never use it to approve sensitive tags, telehealth, advertised specialties, or
+availability without a reviewer checking the excerpt.
+
 Some official health and provider sites block automated link checks or rate-limit
 them. Treat `401`, `403`, `429`, and Cloudflare-style `520`-`524` results as
 "manual browser review needed" rather than automatically broken. The checker

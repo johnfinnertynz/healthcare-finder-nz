@@ -16,6 +16,9 @@ Updated: 2026-06-01
 - Blocked-by-site links in default link check: 1.
 - Regional priority report: 18 regions reviewed, 12 high priority, 6 medium
   priority.
+- First bounded source-fit evidence capture: 30 unsupported tag/telehealth
+  findings checked; 6 source-support excerpts found, 4 review-gated safe-removal
+  candidates, 17 human-browser-review items, and 3 skipped/too-large sources.
 
 Top provider-level root causes:
 
@@ -151,6 +154,12 @@ This cycle added a separate claim review queue:
   fields, and human-captured source evidence. Google Places seed text, search
   snippets, LinkedIn-only signals, blocked pages, and missing evidence are
   rejected before `providers.json` changes.
+- `npm run export:source-fit-capture` now fetches bounded source-fit findings
+  and writes `data/provider-source-fit-evidence-capture.json`. It captures
+  excerpts where a source appears to support a flagged broad/support/telehealth
+  claim, and pre-fills conservative removal corrections where a reachable
+  source does not support the claim. The auditor can load this as **Source-fit
+  evidence capture**; all outcomes remain review-gated.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -200,8 +209,8 @@ Auto-accept is allowed only when all are true:
 2. Review the largest unsupported tag batches and remove unsupported tags first.
 3. Run `npm run export:gp-corroboration` and corroborate weak GP records by
    practice-owned or official sources.
-4. Extend source-excerpt capture beyond the GP review pack so future importer
-   claims can move out of manual review faster.
+4. Continue bounded source-fit capture batches so unsupported tag claims either
+   gain reviewer-checkable excerpts or become conservative removal candidates.
 5. Add a reviewed batch-decision generator once the first human claim review
    session proves the workflow.
 6. Use `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` to hide low-risk claim noise and
@@ -222,7 +231,11 @@ Auto-accept is allowed only when all are true:
     review-gated provider suggestions directly after `npm run discover:suggest`.
     Only import a new provider after capturing a provider-owned, Healthpoint,
     official, or professional source excerpt.
-12. Use the **Filtered batch** helper only for conservative `needs_more_info`
+12. Use `npm run export:source-fit-capture -- --limit 30` and the auditor's
+    **Source-fit evidence capture** queue before manually opening every
+    unsupported-tag item. Confirm source-support excerpts or apply conservative
+    tag/telehealth removals through reviewed decisions only.
+13. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
-13. Run `npm run export:regional-quality` after each review/apply cycle and use
+14. Run `npm run export:regional-quality` after each review/apply cycle and use
     the high-priority regions to choose the next focused source research pass.

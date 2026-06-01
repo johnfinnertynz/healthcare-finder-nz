@@ -27,6 +27,7 @@
     "export:gp-corroboration": "node tools/export-gp-source-corroboration-queue.mjs",
     "export:gp-review-pack": "node tools/export-gp-corroboration-review-pack.mjs",
     "export:regional-quality": "node tools/export-regional-data-quality-report.mjs",
+    "export:source-fit-capture": "node tools/export-source-fit-evidence-capture.mjs",
     "draft:claim-batch": "node tools/draft-claim-batch-review-decisions.mjs",
     "export:monitor": "node tools/export-provider-monitor-queue.mjs",
     "monitor:providers": "node tools/recheck-provider-availability.mjs --include-live && node tools/audit-provider-availability.mjs && node tools/export-provider-monitor-queue.mjs",

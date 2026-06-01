@@ -8,6 +8,7 @@ import { buildProviderEvidenceGraph } from "../tools/build-provider-evidence-gra
 import { buildClaimBatchDecisionDraft } from "../tools/draft-claim-batch-review-decisions.mjs";
 import { buildProviderAutoResolutionProposals } from "../tools/export-provider-auto-resolution-proposals.mjs";
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
+import { buildSourceFitEvidenceCapture } from "../tools/export-source-fit-evidence-capture.mjs";
 import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
 import {
   buildGpCorroborationReviewPack,
@@ -490,6 +491,131 @@ test("reviewed new provider import requires explicit candidate flag and human so
   assert.deepEqual(needsMoreInfoCandidate.providers, []);
 });
 
+test("source-fit evidence capture separates supported claims from safe removal candidates", async () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const auditPath = path.join(dir, "source-fit.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "supported-anxiety",
+      name: "Supported Anxiety",
+      source: "https://supported.example.nz",
+      website: "https://supported.example.nz",
+      tags: ["psychologist", "anxiety"]
+    }),
+    baseProvider({
+      id: "unsupported-telehealth",
+      name: "Unsupported Telehealth",
+      source: "https://unsupported.example.nz",
+      website: "https://unsupported.example.nz",
+      tags: ["psychologist", "telehealth", "online"],
+      onlineAvailable: true,
+      phoneSupport: true
+    }),
+    baseProvider({
+      id: "blocked-rainbow",
+      name: "Blocked Rainbow",
+      source: "https://blocked.example.nz",
+      website: "https://blocked.example.nz",
+      tags: ["psychologist", "rainbow"]
+    })
+  ]);
+  writeJson(auditPath, {
+    findings: [
+      {
+        providerId: "supported-anxiety",
+        providerName: "Supported Anxiety",
+        source: "https://supported.example.nz",
+        rule: "broad-tag-without-source-support",
+        severity: "medium",
+        issue: "Broad tag \"anxiety\" is present but source fields do not clearly support it.",
+        suggestedFix: "Remove the tag or add source evidence."
+      },
+      {
+        providerId: "unsupported-telehealth",
+        providerName: "Unsupported Telehealth",
+        source: "https://unsupported.example.nz",
+        rule: "weak-telehealth-evidence",
+        severity: "medium",
+        issue: "Telehealth or online availability is set but source fields do not clearly support remote care.",
+        suggestedFix: "Remove telehealth/online flags or add provider-owned source evidence."
+      },
+      {
+        providerId: "blocked-rainbow",
+        providerName: "Blocked Rainbow",
+        source: "https://blocked.example.nz",
+        rule: "weak-rainbow-evidence",
+        severity: "medium",
+        issue: "rainbow support tag is present but source fields do not clearly support it.",
+        suggestedFix: "Remove the tag or add stronger public source evidence."
+      }
+    ]
+  });
+
+  const output = await buildSourceFitEvidenceCapture({
+    providers: providersPath,
+    sourceFitAudit: auditPath,
+    rateLimitMs: 0,
+    fetcher: async (url) => {
+      if (url.includes("supported")) {
+        return {
+          url,
+          finalUrl: url,
+          capturedAt: "2026-06-01T00:00:00.000Z",
+          ok: true,
+          blocked: false,
+          skipped: false,
+          status: 200,
+          contentType: "text/html",
+          error: "",
+          text: "<html><body>Clinical psychology support for anxiety, panic, and worry.</body></html>",
+          sourceHash: "supported"
+        };
+      }
+      if (url.includes("blocked")) {
+        return {
+          url,
+          finalUrl: url,
+          capturedAt: "2026-06-01T00:00:00.000Z",
+          ok: false,
+          blocked: true,
+          skipped: false,
+          status: 403,
+          contentType: "text/html",
+          error: "blocked-by-site",
+          text: "",
+          sourceHash: ""
+        };
+      }
+      return {
+        url,
+        finalUrl: url,
+        capturedAt: "2026-06-01T00:00:00.000Z",
+        ok: true,
+        blocked: false,
+        skipped: false,
+        status: 200,
+        contentType: "text/html",
+        error: "",
+        text: "<html><body>In-person psychological assessment and therapy.</body></html>",
+        sourceHash: "unsupported"
+      };
+    }
+  });
+
+  const byId = new Map(output.items.map((item) => [item.providerId, item]));
+  assert.equal(output.summary.sourceSupportFound, 1);
+  assert.equal(output.summary.safeRemovalCandidates, 1);
+  assert.equal(output.summary.needsHumanBrowserReview, 1);
+  assert.equal(byId.get("supported-anxiety").status, "source_support_found");
+  assert.match(byId.get("supported-anxiety").evidenceSummary, /anxiety/i);
+  assert.equal(byId.get("unsupported-telehealth").status, "safe_removal_candidate");
+  assert.deepEqual(byId.get("unsupported-telehealth").correctedFields.tags, ["psychologist"]);
+  assert.equal(byId.get("unsupported-telehealth").correctedFields.onlineAvailable, false);
+  assert.equal(byId.get("unsupported-telehealth").correctedFields.phoneSupport, false);
+  assert.equal(byId.get("blocked-rainbow").status, "needs_human_browser_review");
+});
+
 test("admin UI contains no tokens, opens sources externally, and keeps iframe sandboxed", () => {
   const html = fs.readFileSync("admin/index.html", "utf8");
   const js = fs.readFileSync("admin/admin.js", "utf8");
@@ -511,6 +637,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(html, /GP source corroboration/);
   assert.match(html, /Google Places candidates/);
   assert.match(html, /Discovery suggestions/);
+  assert.match(html, /Source-fit evidence capture/);
   assert.match(html, /Auto-resolution proposals/);
   assert.match(html, /Regional priorities/);
   assert.match(html, /Review category/);
@@ -537,6 +664,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /googlePlacesCandidateToItem/);
   assert.match(js, /noClinicalClaimsFromPlacesAlone/);
   assert.match(js, /provider-suggestions\.json/);
+  assert.match(js, /provider-source-fit-evidence-capture\.json/);
   assert.match(js, /providerSuggestionToItem/);
   assert.match(js, /Array\.isArray\(queue\.suggestions\) && queue\.safety\?\.reviewGateRequired/);
   assert.match(js, /Discovery suggestions are proposed records or patches only/);
