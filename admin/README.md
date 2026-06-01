@@ -73,8 +73,12 @@ thin-region psychiatry discovery.
 Treat these as suggestions, not approved data. Open the source links, confirm
 the provider type, contact details, referral path, availability, and any
 support-preference or specialty claims, then export a normal review decision.
-New-provider suggestions still require the controlled apply/import path before
-they can affect public recommendations.
+For a new-provider suggestion, use **Approve** only after you have captured a
+short source excerpt from a provider-owned, Healthpoint, official, or
+professional source. The exported decision includes `newProviderCandidate: true`
+and must be applied with `npm run apply:review`. The apply script rejects
+Google Places seed text, search snippets, LinkedIn-only signals, blocked pages,
+and missing evidence.
 
 ## GP Source Corroboration Queue
 
@@ -269,6 +273,13 @@ with source links, extracted excerpts, confidence values, conflicts, and review
 reasons. Review them like any other queue item. Open the source in a new tab,
 confirm contact details and ranking-sensitive claims, adjust fields if needed,
 then export a decision for the controlled apply script.
+
+For new-provider suggestions, the apply script imports only approved decisions
+with `newProviderCandidate: true`, allowlisted provider fields, and a
+human-captured source excerpt. It fills safe defaults where needed, such as
+verification dates, `not_published` availability, and psychiatrist baseline
+scope metadata. It does not infer accepting availability, self-referral,
+advertised specialties, cultural tags, telehealth, or broad condition tags.
 
 Search-result snippets and public LinkedIn signals are discovery/corroboration
 only. Do not approve specialties, availability, cultural tags, telehealth, or

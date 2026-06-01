@@ -297,7 +297,7 @@ test("adjust cannot add unsupported advertised specialties without evidence", ()
   const provider = baseProvider({
     id: "advertised-specialty-safety",
     type: "psychiatrist",
-    tags: ["psychiatrist"],
+    tags: [],
     advertisedSpecialties: [],
     advertisedSpecialtyEvidence: []
   });
@@ -413,6 +413,83 @@ test("review log records old and new values for adjustments", () => {
   assert.equal(result.events[0].newFields.phone, "09 222 2222");
 });
 
+test("reviewed new provider import requires explicit candidate flag and human source evidence", () => {
+  const correctedFields = {
+    name: "Northland Psychiatry",
+    practiceName: "Northland Psychiatry",
+    type: "psychiatrist",
+    region: "Northland",
+    city: "Whangarei",
+    address: "41 Whau Valley Road, Whangarei",
+    phone: "09 553 3255",
+    website: "https://www.northlandpsychiatry.co.nz/",
+    source: "https://www.northlandpsychiatry.co.nz/",
+    sourceQuality: "provider-owned page reviewed by auditor",
+    confidence: "medium",
+    tags: ["psychiatrist"],
+    needScope: [],
+    fit: "Private psychiatry practice in Whangarei. Ask about referral requirements, availability, fees, and whether this is the right service.",
+    firstStep: "Contact the practice and ask about referral requirements, current availability, fees, and appointment options.",
+    cost: "Private psychiatry fees may apply; ask about current costs and referral requirements.",
+    availabilityStatus: "not_published",
+    availabilityCheckedAt: "2026-06-01",
+    availabilitySource: "https://www.northlandpsychiatry.co.nz/",
+    availabilityNeedsManualReview: true,
+    onlineAvailable: false,
+    phoneSupport: false,
+    inPerson: true
+  };
+  const decision = {
+    providerId: "candidate-northland-psychiatry",
+    action: "approve",
+    newProviderCandidate: true,
+    correctedFields,
+    sourceUrl: "https://www.northlandpsychiatry.co.nz/",
+    sourceExcerpt: "Northland Psychiatry public contact page lists the practice name, Whangarei address, and phone 09 553 3255.",
+    reviewer: "tester",
+    reviewedDate: "2026-06-01"
+  };
+  const accepted = applyReviewDecisions({
+    providers: [],
+    decisions: { decisions: [decision] }
+  });
+  const missingFlag = applyReviewDecisions({
+    providers: [],
+    decisions: { decisions: [{ ...decision, newProviderCandidate: false }] }
+  });
+  const weakEvidence = applyReviewDecisions({
+    providers: [],
+    decisions: { decisions: [{ ...decision, sourceExcerpt: "Seed value from Google Places candidate export: 09 553 3255." }] }
+  });
+  const rejectedCandidate = applyReviewDecisions({
+    providers: [],
+    decisions: { decisions: [{ providerId: "candidate-reject", action: "reject", newProviderCandidate: true, correctedFields: { name: "Bad Candidate" }, reviewer: "tester", reviewedDate: "2026-06-01", sourceExcerpt: "Wrong provider type." }] }
+  });
+  const needsMoreInfoCandidate = applyReviewDecisions({
+    providers: [],
+    decisions: { decisions: [{ providerId: "candidate-more-info", action: "needs_more_info", newProviderCandidate: true, correctedFields: { name: "Unclear Candidate" }, reviewer: "tester", reviewedDate: "2026-06-01" }] }
+  });
+
+  assert.equal(accepted.applied.length, 1);
+  assert.equal(accepted.applied[0].action, "add_new_provider");
+  assert.equal(accepted.providers[0].id, "candidate-northland-psychiatry");
+  assert.equal(accepted.providers[0].type, "psychiatrist");
+  assert.ok(accepted.providers[0].tags.includes("psychiatrist"));
+  assert.equal(accepted.providers[0].referralType, "unknown");
+  assert.equal(accepted.providers[0].referralNeedsManualReview, true);
+  assert.ok(accepted.providers[0].baselineScope.includes("depression/mood disorders"));
+  assert.equal(accepted.events[0].action, "add_new_provider");
+  assert.equal(missingFlag.applied.length, 0);
+  assert.match(missingFlag.errors[0].error, /Provider not found/i);
+  assert.equal(weakEvidence.applied.length, 0);
+  assert.match(weakEvidence.errors[0].error, /human-captured source excerpt/i);
+  assert.equal(rejectedCandidate.applied[0].action, "reject");
+  assert.deepEqual(rejectedCandidate.providers, []);
+  assert.equal(rejectedCandidate.events[0].newFields.rejectedNewProviderCandidate, true);
+  assert.equal(needsMoreInfoCandidate.applied[0].action, "needs_more_info");
+  assert.deepEqual(needsMoreInfoCandidate.providers, []);
+});
+
 test("admin UI contains no tokens, opens sources externally, and keeps iframe sandboxed", () => {
   const html = fs.readFileSync("admin/index.html", "utf8");
   const js = fs.readFileSync("admin/admin.js", "utf8");
@@ -463,6 +540,8 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /providerSuggestionToItem/);
   assert.match(js, /Array\.isArray\(queue\.suggestions\) && queue\.safety\?\.reviewGateRequired/);
   assert.match(js, /Discovery suggestions are proposed records or patches only/);
+  assert.match(js, /newProviderCandidate/);
+  assert.match(js, /new-provider-import/);
   assert.match(js, /regionalPriorityToItem/);
   assert.match(js, /planningOnly/);
   assert.match(js, /do not export provider decisions/i);

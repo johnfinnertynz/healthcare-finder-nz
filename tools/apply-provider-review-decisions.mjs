@@ -2,6 +2,11 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { pathToFileURL } from "node:url";
+import {
+  baselinePsychiatristScope,
+  baselinePsychiatristScopeNote,
+  baselinePsychiatristScopeSource
+} from "./lib/provider-scope.mjs";
 
 export const ALLOWED_CORRECTED_FIELDS = new Set([
   "name",
@@ -67,6 +72,28 @@ const SUPPORT_TAGS = new Set(["maori", "pasifika", "asian", "rainbow"]);
 const TELEHEALTH_TAGS = new Set(["telehealth", "online"]);
 const BROAD_TAGS = new Set(["depression", "anxiety", "trauma", "addiction", "work", "stress", "relationships", "grief"]);
 const AVAILABILITY_STATUSES = new Set(["accepting", "waitlist", "not_accepting", "referrals_paused", "unknown", "not_published"]);
+const PROVIDER_TYPES = new Set(["gp", "counsellor", "psychologist", "psychiatrist", "helpline", "mens-centre", "youth", "addiction", "directory", "public-service"]);
+const PROVIDER_REGIONS = new Set([
+  "Northland",
+  "Auckland",
+  "Waikato",
+  "Bay of Plenty",
+  "Rotorua and Taupo",
+  "Tairawhiti",
+  "Hawke's Bay",
+  "Taranaki",
+  "Manawatu-Whanganui",
+  "Wairarapa",
+  "Wellington",
+  "Nelson Marlborough Tasman",
+  "Canterbury",
+  "South Canterbury",
+  "West Coast",
+  "Otago",
+  "Southland",
+  "National"
+]);
+const PROVIDER_CONFIDENCE = new Set(["high", "medium", "low"]);
 
 function parseArgs(argv = process.argv.slice(2)) {
   const config = {
@@ -276,6 +303,157 @@ function applyCorrectedFields(provider, correctedFields) {
   return { ...provider, ...clone(correctedFields || {}) };
 }
 
+function asArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function isUrl(value) {
+  return /^https?:\/\//i.test(String(value || ""));
+}
+
+function hasUsablePublicContact(provider) {
+  return Boolean(provider.phone || provider.text || provider.email || provider.website || provider.bookingUrl);
+}
+
+function normaliseImportedProviderId(providerId) {
+  const id = String(providerId || "").trim();
+  if (!id) throw new Error("New provider import requires providerId.");
+  if (!/^[a-z0-9][a-z0-9-]{2,}$/.test(id)) throw new Error(`New provider id "${id}" must be a stable lowercase slug.`);
+  return id;
+}
+
+function reviewedSourceExcerpt(decision) {
+  return String(decision.sourceExcerpt || "").trim();
+}
+
+function strongNewProviderEvidence(decision) {
+  const text = reviewedSourceExcerpt(decision);
+  if (text.replace(/\s+/g, "").length < 20) return false;
+  if (/seed value from google places|google places candidate export|search result snippet|linkedin signal|blocked|unreachable|captcha|403|404|timeout/i.test(text)) return false;
+  return true;
+}
+
+function defaultImportedProviderFields(decision, correctedFields) {
+  const reviewedMonth = monthFromDate(decision.reviewedDate);
+  const sourceUrl = decision.sourceUrl || correctedFields.source || correctedFields.website || correctedFields.bookingUrl || "";
+  const type = correctedFields.type || "";
+  const tags = asArray(correctedFields.tags);
+  return {
+    id: normaliseImportedProviderId(decision.providerId),
+    name: "",
+    clinicianName: "",
+    practiceName: "",
+    type,
+    region: "",
+    city: "",
+    address: "",
+    lat: "",
+    lon: "",
+    phone: "",
+    text: "",
+    email: "",
+    website: "",
+    bookingUrl: "",
+    hours: "Ask the provider about current hours.",
+    cost: "Ask the provider about current fees, funding options, and eligibility.",
+    tags: type && !tags.includes(type) ? [type, ...tags] : tags,
+    needScope: [],
+    specialties: [],
+    services: [],
+    patientGroups: [],
+    ageGroups: [],
+    fit: "",
+    firstStep: "Contact the provider and ask about availability, referral requirements, fees, and whether this is the right service.",
+    source: sourceUrl,
+    verified: reviewedMonth,
+    lastVerified: reviewedMonth,
+    confidence: "medium",
+    sourceQuality: "reviewed public source",
+    needsManualVerification: false,
+    availabilityStatus: "not_published",
+    availabilityCheckedAt: decision.reviewedDate || reviewedMonth,
+    availabilityEvidence: "",
+    availabilitySource: sourceUrl,
+    availabilityNeedsManualReview: true,
+    onlineAvailable: false,
+    phoneSupport: false,
+    inPerson: true,
+    crisisOnly: false
+  };
+}
+
+function withPsychiatryDefaults(provider, decision) {
+  if (provider.type !== "psychiatrist") return provider;
+  const reviewedMonth = monthFromDate(decision.reviewedDate);
+  return {
+    ...provider,
+    requiresReferral: typeof provider.requiresReferral === "boolean" ? provider.requiresReferral : false,
+    referralType: provider.referralType || "unknown",
+    referralSourceUrl: provider.referralSourceUrl || decision.sourceUrl || provider.source || provider.website || "",
+    referralSourceExcerpt: provider.referralSourceExcerpt || "Referral requirements are not clearly published in the reviewed source.",
+    referralConfidence: provider.referralConfidence || "low",
+    referralLastChecked: provider.referralLastChecked || reviewedMonth,
+    referralNeedsManualReview: typeof provider.referralNeedsManualReview === "boolean" ? provider.referralNeedsManualReview : true,
+    baselineScope: asArray(provider.baselineScope).length ? provider.baselineScope : [...baselinePsychiatristScope],
+    baselineScopeSource: provider.baselineScopeSource || baselinePsychiatristScopeSource,
+    baselineScopeNote: provider.baselineScopeNote || baselinePsychiatristScopeNote,
+    advertisedSpecialties: asArray(provider.advertisedSpecialties),
+    advertisedSpecialtyEvidence: asArray(provider.advertisedSpecialtyEvidence),
+    specialtyTagsSource: provider.specialtyTagsSource || "no advertised specialties captured yet"
+  };
+}
+
+function makeNewProviderFromDecision(decision, correctedFields) {
+  const provider = withPsychiatryDefaults({
+    ...defaultImportedProviderFields(decision, correctedFields),
+    ...clone(correctedFields || {}),
+    id: normaliseImportedProviderId(decision.providerId)
+  }, decision);
+  if (!provider.availabilitySource) provider.availabilitySource = provider.source || provider.website || decision.sourceUrl || "";
+  if (!provider.source && decision.sourceUrl) provider.source = decision.sourceUrl;
+  if (!provider.website && provider.source && !/healthpoint|register|directory/i.test(provider.sourceQuality || "")) provider.website = provider.source;
+  if (provider.inPerson === true && !provider.address && (provider.onlineAvailable || provider.phoneSupport)) provider.inPerson = false;
+  provider.tags = asArray(provider.tags);
+  if (provider.type && !provider.tags.includes(provider.type)) provider.tags = [provider.type, ...provider.tags];
+  return provider;
+}
+
+function validateNewProviderImport(provider, decision, existingProviders) {
+  if (decision.newProviderCandidate !== true && !explicitApprovals(decision).has("new-provider-import")) {
+    throw new Error("New provider import requires newProviderCandidate true or explicit new-provider-import approval.");
+  }
+  if ((decision.action || decision.reviewDecision) !== "approve") {
+    throw new Error("New provider import requires an approve decision after source review.");
+  }
+  if (existingProviders.some((existing) => existing.id === provider.id)) throw new Error(`Provider id "${provider.id}" already exists.`);
+  if (!PROVIDER_TYPES.has(provider.type)) throw new Error(`${providerLabel(provider)} has invalid type "${provider.type}".`);
+  if (!PROVIDER_REGIONS.has(provider.region)) throw new Error(`${providerLabel(provider)} has invalid region "${provider.region}".`);
+  if (!PROVIDER_CONFIDENCE.has(provider.confidence)) throw new Error(`${providerLabel(provider)} has invalid confidence "${provider.confidence}".`);
+  for (const field of ["name", "city", "fit", "firstStep", "cost", "source", "sourceQuality", "verified", "lastVerified", "availabilityCheckedAt", "availabilitySource"]) {
+    if (!provider[field] || !String(provider[field]).trim()) throw new Error(`${providerLabel(provider)} missing required field "${field}".`);
+  }
+  if (!Array.isArray(provider.tags)) throw new Error(`${providerLabel(provider)} tags must be an array.`);
+  if (!Array.isArray(provider.needScope)) throw new Error(`${providerLabel(provider)} needScope must be an array.`);
+  if (!hasUsablePublicContact(provider)) throw new Error(`${providerLabel(provider)} needs at least one public contact route before import.`);
+  for (const field of ["source", "website", "bookingUrl", "availabilitySource", "referralSourceUrl"]) {
+    if (provider[field] && !isUrl(provider[field])) throw new Error(`${providerLabel(provider)} has invalid ${field}.`);
+  }
+  if (!strongNewProviderEvidence(decision)) {
+    throw new Error(`${providerLabel(provider)} needs a human-captured source excerpt before import; discovery snippets, blocked pages, and Google Places seed text are not enough.`);
+  }
+}
+
+function newProviderCandidateStub(decision, correctedFields = {}) {
+  return {
+    id: String(decision.providerId || "").trim(),
+    name: correctedFields.name || decision.providerName || decision.name || String(decision.providerId || "").trim(),
+    type: correctedFields.type || "",
+    region: correctedFields.region || "",
+    city: correctedFields.city || "",
+    source: decision.sourceUrl || correctedFields.source || correctedFields.website || ""
+  };
+}
+
 function makeWatchlistItem(provider, decision) {
   const checkedDate = decision.reviewedDate || new Date().toISOString().slice(0, 10);
   return {
@@ -374,16 +552,38 @@ export function applyReviewDecisions({
     }
     const index = nextProviders.findIndex((provider) => provider.id === decision.providerId);
     const provider = index >= 0 ? nextProviders[index] : null;
-    if (!provider) {
-      errors.push({ providerId: decision.providerId || "", action, error: "Provider not found in providers.json." });
-      continue;
-    }
 
     try {
       ensureAllowedFields(decision.correctedFields || {}, allowUnsafeFields);
       const correctedFields = clone(decision.correctedFields || {});
       let oldFields = {};
       let newFields = {};
+
+      if (!provider) {
+        const isNewCandidate = decision.newProviderCandidate === true || explicitApprovals(decision).has("new-provider-import");
+        if (!isNewCandidate) {
+          errors.push({ providerId: decision.providerId || "", action, error: "Provider not found in providers.json." });
+          continue;
+        }
+        const candidateStub = newProviderCandidateStub(decision, correctedFields);
+        if (action === "reject" || action === "needs_more_info") {
+          newFields = action === "reject" ? { rejectedNewProviderCandidate: true } : {};
+          events.push(makeLogEvent({ provider: candidateStub, action, decision, oldFields, newFields, correctedFields }));
+          applied.push({ providerId: candidateStub.id, action });
+          continue;
+        }
+        if (action !== "approve") {
+          throw new Error("New provider candidates can only be imported with approve, or recorded as reject/needs_more_info.");
+        }
+        const newProvider = makeNewProviderFromDecision(decision, correctedFields);
+        validateNewProviderImport(newProvider, decision, nextProviders);
+        validateSafety({ ...newProvider, needsManualVerification: true, tags: [], advertisedSpecialties: [] }, newProvider, decision);
+        newFields = clone(newProvider);
+        nextProviders.push(newProvider);
+        events.push(makeLogEvent({ provider: newProvider, action: "add_new_provider", decision, oldFields, newFields, correctedFields }));
+        applied.push({ providerId: newProvider.id, action: "add_new_provider" });
+        continue;
+      }
 
       if (action === "needs_more_info") {
         oldFields = {};

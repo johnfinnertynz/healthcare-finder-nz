@@ -146,6 +146,11 @@ This cycle added a separate claim review queue:
   focused **Discovery suggestions** queue. This lets a reviewer work the 84
   psychiatry suggestions directly without filtering through the full 775-item
   manual review queue.
+- `npm run apply:review` can now import an approved new-provider discovery
+  suggestion when the exported decision has `newProviderCandidate`, allowlisted
+  fields, and human-captured source evidence. Google Places seed text, search
+  snippets, LinkedIn-only signals, blocked pages, and missing evidence are
+  rejected before `providers.json` changes.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -215,6 +220,8 @@ Auto-accept is allowed only when all are true:
    the **Source capture: captured** filter to isolate them.
 11. Use the auditor console's **Discovery suggestions** queue to work the
     review-gated provider suggestions directly after `npm run discover:suggest`.
+    Only import a new provider after capturing a provider-owned, Healthpoint,
+    official, or professional source excerpt.
 12. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
 13. Run `npm run export:regional-quality` after each review/apply cycle and use

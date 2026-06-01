@@ -66,6 +66,11 @@
   `data/discovery/provider-suggestions.json`, so review-gated new-provider and
   existing-provider update suggestions can be worked without filtering the full
   manual review queue.
+- Added a controlled reviewed new-provider import path to `npm run
+  apply:review`. It requires an approved discovery-suggestion decision,
+  allowlisted provider fields, `newProviderCandidate`, and human-captured source
+  evidence; discovery snippets, blocked pages, and Google Places seed text are
+  still rejected.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

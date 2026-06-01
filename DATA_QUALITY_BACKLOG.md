@@ -122,6 +122,10 @@ manual review burden.
 - Added a dedicated **Discovery suggestions** queue source to the auditor so
   review-gated provider suggestions can be worked directly, instead of being
   buried inside the larger manual review queue.
+- Added a controlled reviewed new-provider import path to `npm run
+  apply:review`. It only accepts approved discovery suggestions with
+  `newProviderCandidate`, allowlisted fields, and human-captured source
+  evidence; discovery snippets and blocked pages remain rejected.
 
 ## Next Backlog Items
 
@@ -149,5 +153,5 @@ manual review burden.
    applied.
 10. Review the psychiatry discovery suggestions through the auditor's
     **Discovery suggestions** queue, starting with the add-new Northland
-    Psychiatry lead, then the existing-provider update suggestions that have
-    provider-owned or Healthpoint evidence.
+    Psychiatry lead. Capture a human source excerpt before using the controlled
+    new-provider import path.

@@ -162,6 +162,16 @@ const COMMON_CORRECTION_FIELDS = [
 ];
 
 const COMMON_FIELD_NAMES = new Set(COMMON_CORRECTION_FIELDS.map((config) => config.field));
+const APPLY_CORRECTED_FIELD_NAMES = new Set([
+  ...COMMON_FIELD_NAMES,
+  "coordinatePrecision",
+  "baselineScope",
+  "baselineScopeSource",
+  "baselineScopeNote",
+  "advertisedSpecialties",
+  "advertisedSpecialtyEvidence",
+  "specialtyTagsSource"
+]);
 
 const DECISION_HELP = {
   approve: "Use only when the current record is accurate enough and risky fields have evidence or clear notes.",
@@ -831,6 +841,11 @@ function firstEvidenceExcerpt(sourceEvidence = {}) {
   return "";
 }
 
+function importableCorrectedFields(fields = {}) {
+  return Object.fromEntries(Object.entries(fields || {})
+    .filter(([field]) => APPLY_CORRECTED_FIELD_NAMES.has(field)));
+}
+
 function discoverySuggestionPriority(suggestion = {}, record = {}) {
   const action = suggestion.action || "";
   if (action === "move_to_watchlist") return "high";
@@ -862,9 +877,10 @@ function providerSuggestionToItem(suggestion, index) {
   ]);
   const priority = discoverySuggestionPriority(suggestion, record);
   const category = discoverySuggestionCategory(suggestion, record);
+  const isNewProviderCandidate = suggestion.action === "add_new_provider";
   const correctedFields = suggestion.action === "update_existing_provider"
     ? suggestion.suggestedPatchForExistingProvider || suggestion.suggestedChanges || {}
-    : {};
+    : isNewProviderCandidate ? importableCorrectedFields(record) : {};
   const evidenceExcerpt = firstEvidenceExcerpt(sourceEvidence);
 
   return {
@@ -955,7 +971,8 @@ function providerSuggestionToItem(suggestion, index) {
     ].filter(Boolean).join("\n"),
     currentProvider: null,
     discoverySuggestion: suggestion,
-    newProviderTemplate: suggestion.action === "add_new_provider" ? record : null,
+    newProviderCandidate: isNewProviderCandidate,
+    newProviderTemplate: isNewProviderCandidate ? importableCorrectedFields(record) : null,
     correctedFields,
     prefillCorrectedFields: correctedFields
   };
@@ -1974,6 +1991,12 @@ function commonCorrectionsFromHelper() {
   for (const config of COMMON_CORRECTION_FIELDS) {
     const next = valueFromControl(config);
     if (next === undefined) continue;
+    if (item.newProviderCandidate) {
+      if (next === "" || next === false) continue;
+      if (Array.isArray(next) && !next.length) continue;
+      corrected[config.field] = next;
+      continue;
+    }
     const current = providerValue(item, config.field);
     const currentComparable = config.kind === "list" || config.kind === "checks"
       ? normalizeForCompare(asArray(current))
@@ -2067,6 +2090,8 @@ function formDecision() {
     keptProviderId: data.get("keptProviderId").trim(),
     auditRulesResolved: item.auditRules || [],
     correctedFields,
+    explicitApprovals: item.newProviderCandidate ? ["new-provider-import"] : [],
+    newProviderCandidate: Boolean(item.newProviderCandidate),
     reviewNotes: data.get("reviewNotes").trim()
   };
 }

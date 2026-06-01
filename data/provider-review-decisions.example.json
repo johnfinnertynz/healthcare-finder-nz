@@ -50,6 +50,46 @@
       "auditRulesResolved": [],
       "correctedFields": {},
       "reviewNotes": "Duplicate removed; kept provider id is recorded in the append-only review log."
+    },
+    {
+      "reviewId": "suggestion:suggestion:candidate-example-psychiatry",
+      "providerId": "candidate-example-psychiatry",
+      "action": "approve",
+      "newProviderCandidate": true,
+      "reviewer": "reviewer@example.nz",
+      "reviewedDate": "2026-05-26",
+      "sourceUrl": "https://example.org/new-provider",
+      "sourceExcerpt": "Human-captured excerpt from the provider-owned page showing the provider name, public contact route, and clinic location.",
+      "auditRulesResolved": [
+        "discovery-suggestion"
+      ],
+      "correctedFields": {
+        "name": "Example Psychiatry",
+        "practiceName": "Example Psychiatry",
+        "type": "psychiatrist",
+        "region": "Northland",
+        "city": "Whangarei",
+        "phone": "09 000 0000",
+        "website": "https://example.org/new-provider",
+        "source": "https://example.org/new-provider",
+        "sourceQuality": "provider-owned page reviewed by auditor",
+        "confidence": "medium",
+        "tags": [
+          "psychiatrist"
+        ],
+        "needScope": [],
+        "fit": "Private psychiatry service. Ask about referral requirements, current availability, fees, and whether this is the right service.",
+        "firstStep": "Contact the practice and ask about referral requirements, availability, fees, and appointment options.",
+        "cost": "Private psychiatry fees may apply; ask about current costs and referral requirements.",
+        "availabilityStatus": "not_published",
+        "availabilityCheckedAt": "2026-05-26",
+        "availabilitySource": "https://example.org/new-provider",
+        "availabilityNeedsManualReview": true
+      },
+      "explicitApprovals": [
+        "new-provider-import"
+      ],
+      "reviewNotes": "New-provider import approved from a provider-owned public source. No availability, self-referral, or specialty claims were inferred."
     }
   ]
 }

@@ -694,6 +694,13 @@ source evidence, and no directory-to-direct-provider conversion without a direct
 provider contact source. Every applied decision appends an event to
 `data/provider-review-log.jsonl`.
 
+Reviewed discovery suggestions can add a new provider only through the same
+controlled script. The decision must use `approve`, set `newProviderCandidate:
+true`, include allowlisted provider fields in `correctedFields`, and include a
+human-captured `sourceExcerpt` from a provider-owned, Healthpoint, official, or
+professional source. Google Places seed text, search snippets, LinkedIn-only
+signals, blocked pages, or silence are not enough to import a provider.
+
 After applying decisions, run:
 
 ```sh

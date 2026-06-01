@@ -311,6 +311,16 @@ Supported decisions are `approve`, `adjust`, `reject`, `move_to_watchlist`,
 allowlisted. Unsafe fields are rejected unless an explicit unsafe-field flag is
 used for an exceptional local maintenance task.
 
+New provider imports are allowed only from reviewed discovery suggestions. The
+decision must be `approve`, must include `newProviderCandidate: true` or an
+explicit `new-provider-import` approval, and must include a human-captured
+source excerpt. The apply script rejects Google Places seed text, search-result
+snippets, LinkedIn-only signals, blocked pages, and missing evidence. It fills
+safe defaults such as verification month, `not_published` availability, and
+psychiatrist baseline-scope metadata, but it does not infer accepting
+availability, self-referral, advertised specialties, telehealth, cultural tags,
+or broad condition tags from silence.
+
 Every applied decision appends to `data/provider-review-log.jsonl`. The log is
 the audit trail and should not be rewritten during normal review work.
 
