@@ -202,6 +202,19 @@ reviewed decision JSON. Automated source snippets are review aids only; they do
 not prove availability, enrolment, mental-health scope, cultural support,
 funding, or accepting-new-patients status.
 
+After a human checks captured GP review-pack rows, draft controlled contact-only
+decisions:
+
+```sh
+npm run draft:gp-corroboration -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; public contact/source fields match."
+```
+
+This writes `data/gp-corroboration-decision-draft.json` and
+`GP_CORROBORATION_DECISION_DRAFT.md`. It can only draft public contact/source
+updates such as `website`, `source`, and `sourceQuality`; it cannot approve
+availability, enrolment status, mental-health scope, cultural support, funding,
+or referral claims.
+
 Export source-fit evidence capture for unsupported tag, support-preference, or
 telehealth findings:
 
@@ -601,6 +614,7 @@ npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing
 npm run export:auto-resolution
 npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
 npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."
+npm run draft:gp-corroboration -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; public contact/source fields match."
 ```
 
 This writes:
@@ -672,6 +686,13 @@ drafting `adjust` decisions, so removing several unsupported tags from one
 provider cannot accidentally re-add another removed tag. The helper only
 removes array values or turns unsupported telehealth booleans off; it cannot add
 provider capabilities.
+
+`draft:gp-corroboration` is the matching helper for
+`data/gp-corroboration-review-pack.json`. Use it only after checking captured GP
+source snippets. Adjustment drafts require `--confirmed-human-review` and a
+reviewer, and only update public contact/source fields. Use
+`--decision needs_more_info --status failed` for failed source captures that
+need browser review without changing provider data.
 
 This writes:
 

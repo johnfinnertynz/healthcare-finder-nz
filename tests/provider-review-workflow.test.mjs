@@ -10,6 +10,7 @@ import { buildProviderAutoResolutionProposals } from "../tools/export-provider-a
 import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-review-queue.mjs";
 import { buildSourceFitEvidenceCapture } from "../tools/export-source-fit-evidence-capture.mjs";
 import { buildSourceFitCaptureDecisionDraft } from "../tools/draft-source-fit-capture-decisions.mjs";
+import { buildGpCorroborationDecisionDraft } from "../tools/draft-gp-corroboration-decisions.mjs";
 import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
 import {
   buildGpCorroborationReviewPack,
@@ -1311,6 +1312,153 @@ test("GP corroboration review pack can capture source excerpts without approving
   assert.equal(enriched.items[0].sourceCapture.status, "captured");
   assert.match(enriched.items[0].sourceExcerpt, /Ready Review Medical|09 123 4567/);
   assert.equal(enriched.items[0].liveMutationAllowed, false);
+});
+
+test("GP corroboration decision drafts require human confirmation and contact-only fields", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const packPath = path.join(dir, "gp-pack.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "gp-review",
+      name: "Review GP",
+      type: "gp",
+      tags: ["gp"],
+      website: "",
+      source: "https://doctorpricer.co.nz/",
+      sourceQuality: "third-party public GP listing"
+    }),
+    baseProvider({
+      id: "gp-unsafe",
+      name: "Unsafe GP",
+      type: "gp",
+      tags: ["gp"],
+      website: "",
+      source: "https://doctorpricer.co.nz/",
+      sourceQuality: "third-party public GP listing"
+    })
+  ]);
+  writeJson(packPath, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    items: [
+      {
+        providerId: "gp-review",
+        priority: "ready_for_source_capture",
+        bestCandidate: {
+          website: "https://reviewgp.example.nz",
+          sourceCategory: "practice_or_network_site"
+        },
+        draftCorrectedFields: {
+          website: "https://reviewgp.example.nz",
+          source: "https://reviewgp.example.nz",
+          sourceQuality: "practice or clinic network website; pending human source-excerpt review"
+        },
+        auditRules: ["gp-corroboration-review-pack"],
+        sourceCapture: {
+          status: "captured",
+          finalUrl: "https://reviewgp.example.nz",
+          suggestedSourceExcerpt: "Review GP contact page lists Review GP and phone 09 123 4567."
+        },
+        suggestedSourceExcerpt: "Review GP contact page lists Review GP and phone 09 123 4567."
+      },
+      {
+        providerId: "gp-unsafe",
+        priority: "ready_for_source_capture",
+        bestCandidate: {
+          website: "https://unsafegp.example.nz",
+          sourceCategory: "practice_or_network_site"
+        },
+        draftCorrectedFields: {
+          website: "https://unsafegp.example.nz",
+          availabilityStatus: "accepting"
+        },
+        sourceCapture: {
+          status: "captured",
+          finalUrl: "https://unsafegp.example.nz",
+          suggestedSourceExcerpt: "Unsafe GP contact page lists Unsafe GP."
+        }
+      }
+    ]
+  });
+
+  assert.throws(
+    () => buildGpCorroborationDecisionDraft({
+      pack: packPath,
+      providers: providersPath,
+      decision: "adjust",
+      confirmedHumanReview: false,
+      reviewer: "Reviewer"
+    }),
+    /confirmed-human-review/
+  );
+
+  const draft = buildGpCorroborationDecisionDraft({
+    pack: packPath,
+    providers: providersPath,
+    decision: "adjust",
+    confirmedHumanReview: true,
+    reviewer: "Reviewer"
+  });
+
+  assert.equal(draft.summary.packRowsMatched, 2);
+  assert.equal(draft.summary.decisionsDrafted, 1);
+  assert.equal(draft.summary.skipped, 1);
+  assert.equal(draft.decisions[0].providerId, "gp-review");
+  assert.deepEqual(draft.decisions[0].correctedFields, {
+    website: "https://reviewgp.example.nz",
+    source: "https://reviewgp.example.nz",
+    sourceQuality: "practice or clinic network website; human-reviewed public source"
+  });
+  assert.match(draft.decisions[0].sourceExcerpt, /Review GP contact page/);
+  assert.match(draft.decisions[0].reviewNotes, /No availability/);
+  assert.match(draft.skipped[0].reason, /Unsafe GP corroboration corrected field/);
+});
+
+test("GP corroboration decision drafts can mark failed captures needs_more_info", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const packPath = path.join(dir, "gp-pack.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "gp-failed",
+      name: "Failed GP",
+      type: "gp",
+      tags: ["gp"]
+    })
+  ]);
+  writeJson(packPath, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    items: [
+      {
+        providerId: "gp-failed",
+        priority: "ready_for_source_capture",
+        bestCandidate: {
+          website: "https://failed.example.nz",
+          sourceCategory: "practice_or_network_site"
+        },
+        sourceCapture: {
+          status: "failed",
+          finalUrl: "https://failed.example.nz",
+          error: "timeout"
+        },
+        auditRules: ["gp-corroboration-review-pack"]
+      }
+    ]
+  });
+
+  const draft = buildGpCorroborationDecisionDraft({
+    pack: packPath,
+    providers: providersPath,
+    decision: "needs_more_info",
+    status: "failed",
+    reviewer: "Reviewer",
+    notes: "Needs browser check."
+  });
+
+  assert.equal(draft.summary.decisionsDrafted, 1);
+  assert.equal(draft.decisions[0].action, "needs_more_info");
+  assert.deepEqual(draft.decisions[0].correctedFields, {});
+  assert.match(draft.decisions[0].reviewNotes, /timeout/);
 });
 
 test("GP corroboration review pack flags multi-provider Places matches as manual compare", () => {

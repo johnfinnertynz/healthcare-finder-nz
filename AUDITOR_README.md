@@ -157,6 +157,24 @@ The draft helper only writes `data/provider-claim-batch-decision-draft.json` and
 the draft, then apply it through the normal controlled review script and run the
 validation suite.
 
+For GP corroboration review-pack rows where you have checked the captured source
+excerpt and confirmed the public contact/source fields match, use:
+
+```sh
+npm run draft:gp-corroboration -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; public contact/source fields match."
+```
+
+For failed GP source captures that need manual browser review, use:
+
+```sh
+npm run draft:gp-corroboration -- --decision needs_more_info --status failed --reviewer "Your name" --notes "Needs browser review."
+```
+
+This helper only writes `data/gp-corroboration-decision-draft.json` and
+`GP_CORROBORATION_DECISION_DRAFT.md`. It is contact/source-only: it must not be
+used to approve availability, enrolment, clinical scope, cultural support,
+funding, or referral claims.
+
 The auditor console has a smaller **Filtered batch** helper for conservative
 triage. Narrow the queue first, then use it only when the whole filtered set
 needs more information. It saves `needs_more_info` for unsaved filtered items,

@@ -147,6 +147,23 @@ export a reviewed decision before applying anything. Login portals and Google
 Maps-only leads are kept in source-lookup/manual review, not treated as source
 evidence.
 
+After checking captured GP rows, use the draft helper to create controlled
+contact-only decisions:
+
+```bash
+npm run draft:gp-corroboration -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; public contact/source fields match."
+```
+
+For failed source captures that need browser review, use:
+
+```bash
+npm run draft:gp-corroboration -- --decision needs_more_info --status failed --reviewer "Your name" --notes "Needs manual browser review."
+```
+
+The helper writes `data/gp-corroboration-decision-draft.json` and
+`GP_CORROBORATION_DECISION_DRAFT.md`. It cannot approve availability,
+enrolment, mental-health scope, cultural support, funding, or referral claims.
+
 ## Source-Fit Evidence Capture
 
 Run a bounded source-fit capture when unsupported broad tags,

@@ -90,6 +90,11 @@
   review file has 14 captured support excerpts, 28 review-gated safe-removal
   candidates, 88 human-browser-review rows, 8 skipped sources, and 2 failed
   fetches.
+- Added `npm run draft:gp-corroboration`, a review-gated helper that turns
+  human-confirmed GP corroboration review-pack rows into contact/source-only
+  `adjust` decision drafts. It can also draft `needs_more_info` decisions for
+  failed source captures and cannot approve availability, enrolment, scope,
+  cultural support, funding, or referral claims.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

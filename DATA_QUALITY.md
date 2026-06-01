@@ -409,6 +409,20 @@ queued provider; proximity or the fact that the result came from the target
 query is not enough. If a stale merged result only matches a different provider,
 the Places export drops it rather than showing it as GP corroboration.
 
+After exporting `data/gp-corroboration-review-pack.json` and checking captured
+source excerpts, draft controlled GP contact/source decisions with:
+
+```sh
+npm run draft:gp-corroboration -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; public contact/source fields match."
+```
+
+The helper is deliberately narrow. It only drafts public contact/source updates
+such as `website`, `source`, `sourceQuality`, public phone, address, or
+coordinates. It cannot approve availability, enrolment status, mental-health
+scope, cultural support, funding, or referral claims. For failed source
+captures, use `--decision needs_more_info --status failed` so the row remains a
+manual browser-review task with no live provider changes.
+
 The evidence graph keeps probable provider identities separate. It can match on
 clinician name, practice name, domain, phone, email, address, city/region, and
 known directory URLs. It should not merge two clinicians just because they work

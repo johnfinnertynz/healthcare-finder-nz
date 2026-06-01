@@ -144,6 +144,11 @@ manual review burden.
   findings. It now contains 14 source-support excerpts, 28 review-gated
   safe-removal candidates, 88 human-browser-review rows, 8 skipped sources, and
   2 failed fetches.
+- Added a GP corroboration decision draft helper. After a reviewer checks
+  captured GP source snippets, it can draft contact/source-only `adjust`
+  decisions; failed source captures can be drafted as `needs_more_info`.
+  Availability, enrolment, scope, cultural support, funding, and referral claims
+  remain out of scope.
 
 ## Next Backlog Items
 
@@ -151,8 +156,10 @@ manual review burden.
    the conservative `needs_more_info` batch helper is understandable.
 2. Work through the auditor console's **GP source corroboration** and
    **GP corroboration review pack** queues, starting with the 64 captured GP
-   snippets using the **Source capture: captured** filter, the 4 failed source
-   captures, and the two high-confidence update-existing GP suggestions.
+   snippets using the **Source capture: captured** filter. After checking
+   snippets, use `npm run draft:gp-corroboration`; use
+   `--decision needs_more_info --status failed` for the 4 failed source
+   captures.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 4. Continue resumable source-fit capture batches with
