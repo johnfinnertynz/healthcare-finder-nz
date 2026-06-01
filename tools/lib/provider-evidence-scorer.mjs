@@ -184,20 +184,43 @@ export function identitySignalsFromClaims(claims = []) {
 }
 
 export function identityKeyFromSignals(signals = {}) {
-  const email = signals.emails?.[0];
-  if (email) return `email:${email.toLowerCase()}`;
-  const phone = signals.phones?.[0];
-  if (phone) return `phone:${normaliseComparable(phone)}`;
   const domain = signals.websites?.[0];
   const clinician = signals.clinicianNames?.[0];
   if (clinician && domain) return `clinician-domain:${slugify(clinician)}:${domain}`;
+  const email = signals.emails?.[0];
+  const emailDomainValue = emailDomain(email);
+  if (clinician && emailDomainValue) return `clinician-email-domain:${slugify(clinician)}:${emailDomainValue}`;
+  const phone = signals.phones?.[0];
+  if (clinician && phone) return `clinician-phone:${slugify(clinician)}:${normaliseComparable(phone)}`;
   const practice = signals.practiceNames?.[0] || signals.names?.[0];
-  if (practice && domain) return `practice-domain:${slugify(practice)}:${domain}`;
   if (clinician && practice) return `clinician-practice:${slugify(clinician)}:${slugify(practice)}`;
   const city = signals.cities?.[0] || signals.regions?.[0] || "unknown";
   if (clinician) return `clinician-city:${slugify(clinician)}:${slugify(city)}`;
+  if (email) return `email:${email.toLowerCase()}`;
+  if (phone) return `phone:${normaliseComparable(phone)}`;
+  if (practice && domain) return `practice-domain:${slugify(practice)}:${domain}`;
   if (practice) return `practice-city:${slugify(practice)}:${slugify(city)}`;
   return `candidate:${hashText(JSON.stringify(signals)).slice(0, 16)}`;
+}
+
+function inferredClinicianName(name = "", type = "") {
+  if (!["psychiatrist", "psychologist"].includes(type)) return "";
+  const firstPart = String(name || "").split(/,|\s+-\s+/)[0].trim();
+  if (/^(dr|prof|associate professor|mr|mrs|ms|miss)\b/i.test(firstPart)) return firstPart;
+  if (!/\b(clinic|centre|center|service|services|group|trust|health|psychology|psychiatry|therapy|counselling|counseling|medical|programme|program)\b/i.test(firstPart)
+    && /^[A-Z][A-Za-z'’-]+(?:\s+[A-Z][A-Za-z'’-]+){1,4}$/.test(firstPart)) return firstPart;
+  return "";
+}
+
+function isSharedProfessionalDirectoryDomain(domain = "") {
+  return [
+    "yourhealthinmind.org",
+    "healthpoint.co.nz",
+    "nzccp.co.nz",
+    "psychologytoday.com",
+    "talkingworks.co.nz",
+    "talkingpoint.co.nz"
+  ].includes(String(domain || "").replace(/^www\./, ""));
 }
 
 export function likelySameProvider(existing = {}, signals = {}) {
@@ -207,17 +230,21 @@ export function likelySameProvider(existing = {}, signals = {}) {
   const signalEmailDomains = new Set((signals.emails || []).map(emailDomain).filter(Boolean));
   const existingPhone = normaliseComparable(existing.phone || "");
   const existingName = normaliseComparable(existing.name || "");
-  const existingClinician = normaliseComparable(existing.clinicianName || "");
+  const existingClinician = normaliseComparable(existing.clinicianName || inferredClinicianName(existing.name, existing.type));
   const signalNames = [
     ...(signals.names || []),
     ...(signals.clinicianNames || []),
     ...(signals.practiceNames || [])
   ].map(normaliseComparable);
+  const signalClinicians = (signals.clinicianNames || []).map(normaliseComparable).filter(Boolean);
+
+  if (existingClinician && signalClinicians.length && !signalClinicians.includes(existingClinician)) return false;
 
   if (existing.phone && signalNames.length && (signals.phones || []).some((phone) => normaliseComparable(phone) === existingPhone)) return true;
   if (existing.email && (signals.emails || []).some((email) => email.toLowerCase() === existing.email.toLowerCase())) return true;
   if (existingDomain && signalDomains.has(existingDomain)) {
-    if (!existingClinician || signalNames.includes(existingClinician) || signalNames.includes(existingName)) return true;
+    if (signalNames.includes(existingClinician) || signalNames.includes(existingName)) return true;
+    if (!isSharedProfessionalDirectoryDomain(existingDomain) && !existingClinician && !existingName) return true;
   }
   if (existingEmailDomain && signalEmailDomains.has(existingEmailDomain) && signalNames.some((name) => name && (name === existingName || name === existingClinician))) return true;
   return false;

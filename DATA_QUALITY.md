@@ -368,6 +368,13 @@ business identity, phone, website, address, and coordinates. They must not be
 used alone for condition scope, advertised specialties, availability, referral,
 cost, telehealth, cultural/safety tags, or direct clinical suitability.
 
+Places `queryType` is only the search intent. It is not proof of the provider
+`type`. For example, a result found by a psychiatrist query stays `unknown`
+unless the result name/types, an existing matched provider record, or a stronger
+source explicitly supports psychiatry. Shared directory/register domains,
+shared clinic emails, and shared practice phones are identity signals, not
+merge proof; clinician identity should win before shared contact details.
+
 Google Places candidates are allowed to become discovery seeds. If a candidate
 has a public provider-owned website, `npm run discover:enrich --
 --fetch-seed-sources --max-seed-sources 10 --limit 10` may fetch that website as

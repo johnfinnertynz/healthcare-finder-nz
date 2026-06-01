@@ -514,6 +514,12 @@ names, phone numbers, websites, addresses, and coordinates; they are not enough
 to publish clinical scope, availability, referral, cost, telehealth, or
 support-preference claims.
 
+Places records keep `queryType` separate from confirmed provider `type`. A
+psychiatrist search can discover useful leads, but the tool should only label a
+lead as a psychiatrist when the result itself, an existing provider match, or a
+stronger source supports that type. Ambiguous psychology, counselling, or generic
+health results remain `unknown` for auditor review.
+
 Outputs:
 
 - `data/discovery/provider-candidates.json`

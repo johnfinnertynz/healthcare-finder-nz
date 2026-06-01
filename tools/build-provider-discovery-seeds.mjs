@@ -67,6 +67,15 @@ function providerPriority(provider = {}, reasons = []) {
   return Math.max(1, Math.min(100, score));
 }
 
+function inferClinicianName(name = "", type = "") {
+  if (!["psychiatrist", "psychologist"].includes(type)) return "";
+  const firstPart = String(name || "").split(/,|\s+-\s+/)[0].trim();
+  if (/^(dr|prof|associate professor|mr|mrs|ms|miss)\b/i.test(firstPart)) return firstPart;
+  if (!/\b(clinic|centre|center|service|services|group|trust|health|psychology|psychiatry|therapy|counselling|counseling|medical|programme|program)\b/i.test(firstPart)
+    && /^[A-Z][A-Za-z'’-]+(?:\s+[A-Z][A-Za-z'’-]+){1,4}$/.test(firstPart)) return firstPart;
+  return "";
+}
+
 function providerSeed(provider, reasons = ["existing provider enrichment"]) {
   return {
     seedId: `provider:${provider.id}`,
@@ -76,7 +85,7 @@ function providerSeed(provider, reasons = ["existing provider enrichment"]) {
     type: provider.type || "",
     providerType: provider.type || "",
     knownProviderName: provider.name || "",
-    knownClinicianName: provider.clinicianName || "",
+    knownClinicianName: provider.clinicianName || inferClinicianName(provider.name, provider.type),
     knownPracticeName: provider.practiceName || "",
     knownAddress: provider.address || "",
     knownPhone: provider.phone || "",
@@ -172,8 +181,9 @@ function addGooglePlacesCandidateSeeds(map, placesPayload) {
     const possibleProviderId = candidate.possibleProviderIds?.[0] || "";
     const reviewText = (candidate.reviewReasons || []).join(" ");
     const type = record.type || candidate.type || "";
+    const queryType = candidate.queryType || "";
     const isGpCorroborationLead = type === "gp" && (/GP source corroboration/i.test(reviewText) || /^gp-/.test(possibleProviderId));
-    const basePriority = priorityByType[type] || 65;
+    const basePriority = priorityByType[type] || priorityByType[queryType] || 65;
     addSeed(map, {
       seedId: `google-places:${candidate.candidateId || seedId([candidate.region, candidate.city, candidate.type, candidate.name])}`,
       region: record.region || candidate.region || "",
@@ -181,6 +191,7 @@ function addGooglePlacesCandidateSeeds(map, placesPayload) {
       suburb: "",
       type,
       providerType: type,
+      queryType,
       knownProviderName: record.name || candidate.name || "",
       knownClinicianName: record.clinicianName || "",
       knownPracticeName: record.practiceName || candidate.name || "",
@@ -217,7 +228,7 @@ function addManualSeeds(map, manualSeeds) {
 function applyFilters(seeds, config) {
   let filtered = seeds;
   if (config.region) filtered = filtered.filter((seed) => seed.region === config.region);
-  if (config.type) filtered = filtered.filter((seed) => (seed.providerType || seed.type) === config.type);
+  if (config.type) filtered = filtered.filter((seed) => (seed.providerType || seed.type) === config.type || seed.queryType === config.type);
   filtered = filtered.sort((a, b) => (b.priority || 0) - (a.priority || 0) || a.seedId.localeCompare(b.seedId));
   if (Number.isFinite(config.limit) && config.limit > 0) filtered = filtered.slice(0, config.limit);
   return filtered;

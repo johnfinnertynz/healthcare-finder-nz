@@ -199,8 +199,8 @@ test("candidate identity matching avoids merging different clinicians at the sam
   writeJson(seedFile, {
     generatedAt: "2026-05-26T00:00:00.000Z",
     seeds: [
-      { seedId: "one", knownClinicianName: "Alex One", knownPracticeName: "Shared Clinic", knownWebsite: "https://sharedclinic.nz", providerType: "psychologist", region: "Canterbury", city: "Christchurch", priority: 90 },
-      { seedId: "two", knownClinicianName: "Blair Two", knownPracticeName: "Shared Clinic", knownWebsite: "https://sharedclinic.nz", providerType: "psychologist", region: "Canterbury", city: "Christchurch", priority: 90 }
+      { seedId: "one", knownClinicianName: "Alex One", knownPracticeName: "Shared Clinic", knownWebsite: "https://sharedclinic.nz", knownEmail: "admin@sharedclinic.nz", providerType: "psychologist", region: "Canterbury", city: "Christchurch", priority: 90 },
+      { seedId: "two", knownClinicianName: "Blair Two", knownPracticeName: "Shared Clinic", knownWebsite: "https://sharedclinic.nz", knownEmail: "admin@sharedclinic.nz", providerType: "psychologist", region: "Canterbury", city: "Christchurch", priority: 90 }
     ]
   });
   writeJson(providersPath, []);
@@ -213,6 +213,124 @@ test("candidate identity matching avoids merging different clinicians at the sam
   });
   assert.equal(output.candidates.length, 2);
   assert.deepEqual(output.candidates.map((candidate) => candidate.clinicianNames[0]).sort(), ["Alex One", "Blair Two"]);
+});
+
+test("candidate identity matching treats titled provider names as clinician identities", async () => {
+  const dir = tempDir();
+  const seedFile = path.join(dir, "seeds.json");
+  const providersPath = path.join(dir, "providers.json");
+  writeJson(seedFile, {
+    generatedAt: "2026-05-26T00:00:00.000Z",
+    seeds: [
+      { seedId: "one", knownProviderName: "Dr Alex One", knownPracticeName: "Shared Psychiatry", knownEmail: "info@sharedpsychiatry.nz", providerType: "psychiatrist", region: "Auckland", city: "Auckland", priority: 90 },
+      { seedId: "two", knownProviderName: "Dr Blair Two", knownPracticeName: "Shared Psychiatry", knownEmail: "info@sharedpsychiatry.nz", providerType: "psychiatrist", region: "Auckland", city: "Auckland", priority: 90 }
+    ]
+  });
+  writeJson(providersPath, []);
+  const output = await enrichProviderCandidates({
+    seedFile,
+    providers: providersPath,
+    noNetwork: true,
+    dryRun: true,
+    limit: 2
+  });
+  assert.equal(output.candidates.length, 2);
+  assert.deepEqual(output.candidates.map((candidate) => candidate.clinicianNames[0]).sort(), ["Dr Alex One", "Dr Blair Two"]);
+  assert(output.candidates.every((candidate) => candidate.candidateId.startsWith("clinician-email-domain:")));
+});
+
+test("candidate matching does not match every clinician on a shared register domain", async () => {
+  const dir = tempDir();
+  const seedFile = path.join(dir, "seeds.json");
+  const providersPath = path.join(dir, "providers.json");
+  writeJson(seedFile, {
+    generatedAt: "2026-05-26T00:00:00.000Z",
+    seeds: [
+      {
+        seedId: "one",
+        knownProviderName: "Dr Alex One",
+        knownSourceUrl: "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1/dr-alex-one",
+        knownWebsite: "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1/dr-alex-one",
+        providerType: "psychiatrist",
+        region: "Auckland",
+        city: "Auckland",
+        possibleProviderId: "ranzcp-one",
+        priority: 90
+      }
+    ]
+  });
+  writeJson(providersPath, [
+    {
+      id: "ranzcp-one",
+      name: "Dr Alex One",
+      type: "psychiatrist",
+      source: "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1/dr-alex-one",
+      website: "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/1/dr-alex-one"
+    },
+    {
+      id: "ranzcp-two",
+      name: "Dr Blair Two",
+      type: "psychiatrist",
+      source: "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2/dr-blair-two",
+      website: "https://www.yourhealthinmind.org/find-a-psychiatrist/profile/2/dr-blair-two"
+    }
+  ]);
+  const output = await enrichProviderCandidates({
+    seedFile,
+    providers: providersPath,
+    noNetwork: true,
+    dryRun: true,
+    limit: 1
+  });
+  assert.equal(output.candidates.length, 1);
+  assert.deepEqual(output.candidates[0].possibleProviderIds, ["ranzcp-one"]);
+});
+
+test("candidate matching does not match unprefixed clinicians sharing a practice email", async () => {
+  const dir = tempDir();
+  const seedFile = path.join(dir, "seeds.json");
+  const providersPath = path.join(dir, "providers.json");
+  writeJson(seedFile, {
+    generatedAt: "2026-05-26T00:00:00.000Z",
+    seeds: [
+      {
+        seedId: "wood",
+        knownProviderName: "Dr Deborah Wood",
+        knownEmail: "info@christchurchpsychmed.co.nz",
+        knownWebsite: "https://www.christchurchpsychmed.co.nz/about",
+        providerType: "psychiatrist",
+        region: "Canterbury",
+        city: "Christchurch",
+        possibleProviderId: "deborah",
+        priority: 90
+      }
+    ]
+  });
+  writeJson(providersPath, [
+    {
+      id: "deborah",
+      name: "Dr Deborah Wood",
+      type: "psychiatrist",
+      email: "info@christchurchpsychmed.co.nz",
+      website: "https://www.christchurchpsychmed.co.nz/about"
+    },
+    {
+      id: "amanda",
+      name: "Amanda Baird",
+      type: "psychologist",
+      email: "info@christchurchpsychmed.co.nz",
+      website: "https://www.christchurchpsychmed.co.nz/about"
+    }
+  ]);
+  const output = await enrichProviderCandidates({
+    seedFile,
+    providers: providersPath,
+    noNetwork: true,
+    dryRun: true,
+    limit: 1
+  });
+  assert.equal(output.candidates.length, 1);
+  assert.deepEqual(output.candidates[0].possibleProviderIds, ["deborah"]);
 });
 
 test("broad psychologist and counsellor tags still require source evidence", () => {
@@ -495,6 +613,56 @@ test("Google Places result creates a review-gated candidate with no unsupported 
   assert.deepEqual(candidate.suggestedProviderRecord.tags, []);
   assert.deepEqual(candidate.suggestedProviderRecord.advertisedSpecialties, []);
   assert(candidate.sourceEvidence.contact.some((item) => item.field === "phone"));
+});
+
+test("Google Places psychiatry query does not label psychology-looking results as psychiatrists", () => {
+  const candidate = candidateFromGooglePlace({
+    id: "places/dr-mind",
+    displayName: { text: "Dr. Mind Psychology" },
+    formattedAddress: "3 Diamond Street, Auckland 1021, New Zealand",
+    nationalPhoneNumber: "020 440 8080",
+    websiteUri: "https://www.drmind.co.nz/",
+    businessStatus: "OPERATIONAL",
+    googleMapsUri: "https://maps.google.com/?cid=456",
+    types: ["medical_clinic", "health"]
+  }, {
+    queryId: "places:auckland:psychiatrist",
+    textQuery: "private psychiatrist Auckland Auckland New Zealand",
+    region: "Auckland",
+    city: "Auckland",
+    type: "psychiatrist",
+    reason: "thin psychiatry coverage"
+  }, []);
+  assert.equal(candidate.queryType, "psychiatrist");
+  assert.equal(candidate.type, "unknown");
+  assert.equal(candidate.suggestedProviderRecord.type, "unknown");
+  assert(candidate.reviewReasons.some((reason) => /look like psychologist/i.test(reason)));
+  assert(candidate.claims.some((claimItem) => claimItem.field === "queryType" && claimItem.value === "psychiatrist"));
+});
+
+test("Google Places keeps explicit psychiatry names as review-gated psychiatry leads", () => {
+  const candidate = candidateFromGooglePlace({
+    id: "places/northland-psychiatry",
+    displayName: { text: "Northland Psychiatry" },
+    formattedAddress: "41 Whau Valley Road, Whangarei 0112, New Zealand",
+    nationalPhoneNumber: "09 553 3255",
+    websiteUri: "https://www.northlandpsychiatry.co.nz/",
+    businessStatus: "OPERATIONAL",
+    googleMapsUri: "https://maps.google.com/?cid=789",
+    types: ["medical_clinic", "health"]
+  }, {
+    queryId: "places:northland:psychiatrist",
+    textQuery: "psychiatrist Whangarei Northland New Zealand",
+    region: "Northland",
+    city: "Whangarei",
+    type: "psychiatrist",
+    reason: "thin psychiatry coverage"
+  }, []);
+  assert.equal(candidate.queryType, "psychiatrist");
+  assert.equal(candidate.type, "psychiatrist");
+  assert.equal(candidate.suggestedProviderRecord.referralType, "unknown");
+  assert.equal(candidate.suggestedProviderRecord.referralNeedsManualReview, true);
+  assert(candidate.reviewReasons.some((reason) => /explicitly mention psychiatrist/i.test(reason)));
 });
 
 test("Google Places GP queue candidates keep target provider linkage review-gated", () => {
@@ -888,9 +1056,57 @@ test("Google Places candidates become discovery seeds for source corroboration",
   assert.equal(output.inputs.googlePlacesCandidates, 1);
   assert.equal(seed.region, "Northland");
   assert.equal(seed.providerType, "psychologist");
+  assert.equal(seed.queryType, "psychologist");
   assert.equal(seed.knownWebsite, "https://seedpsych.nz");
   assert.equal(seed.knownSourceUrl, "https://seedpsych.nz");
   assert.match(seed.reason, /corroborate/i);
+});
+
+test("Google Places unknown-type psychiatry leads remain fetchable by query type", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const emptyPath = path.join(dir, "empty.json");
+  const providerSourcesPath = path.join(dir, "provider-sources.json");
+  const placesPath = path.join(dir, "places.json");
+  writeJson(providersPath, []);
+  writeJson(emptyPath, { findings: [], items: [], queue: [] });
+  writeJson(providerSourcesPath, { liveSources: {} });
+  writeJson(placesPath, {
+    version: 1,
+    candidates: [
+      candidateFromGooglePlace({
+        id: "places/dr-mind",
+        displayName: { text: "Dr. Mind Psychology" },
+        formattedAddress: "3 Diamond Street, Auckland 1021, New Zealand",
+        websiteUri: "https://www.drmind.co.nz/",
+        googleMapsUri: "https://maps.google.com/?cid=456",
+        types: ["medical_clinic", "health"]
+      }, {
+        queryId: "places:auckland:psychiatrist",
+        textQuery: "private psychiatrist Auckland Auckland New Zealand",
+        region: "Auckland",
+        city: "Auckland",
+        type: "psychiatrist"
+      }, [])
+    ]
+  });
+  const output = buildProviderDiscoverySeeds({
+    providers: providersPath,
+    providerSources: providerSourcesPath,
+    sourceFitAudit: emptyPath,
+    availabilityAudit: emptyPath,
+    referralAudit: emptyPath,
+    reviewQueue: emptyPath,
+    discoveryQueue: emptyPath,
+    googlePlacesCandidates: placesPath,
+    manualSeeds: path.join(dir, "missing-manual.json"),
+    type: "psychiatrist"
+  });
+  const seed = output.seeds.find((item) => item.seedId.startsWith("google-places:"));
+  assert.ok(seed);
+  assert.equal(seed.providerType, "unknown");
+  assert.equal(seed.queryType, "psychiatrist");
+  assert.equal(seed.knownWebsite, "https://www.drmind.co.nz/");
 });
 
 test("Google Places GP corroboration seeds outrank stale weak GP source records", () => {

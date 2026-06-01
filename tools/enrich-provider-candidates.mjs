@@ -216,9 +216,20 @@ export function buildSnowballQueries(candidate = {}, round = 2) {
     .filter((item) => item.query.length > 4);
 }
 
+function inferClinicianName(name = "", type = "") {
+  if (!["psychiatrist", "psychologist"].includes(type)) return "";
+  const firstPart = String(name || "").split(/,|\s+-\s+/)[0].trim();
+  if (/^(dr|prof|associate professor|mr|mrs|ms|miss)\b/i.test(firstPart)) return firstPart;
+  if (!/\b(clinic|centre|center|service|services|group|trust|health|psychology|psychiatry|therapy|counselling|counseling|medical|programme|program)\b/i.test(firstPart)
+    && /^[A-Z][A-Za-z'’-]+(?:\s+[A-Z][A-Za-z'’-]+){1,4}$/.test(firstPart)) return firstPart;
+  return "";
+}
+
 function seedClaims(seed = {}) {
   const capturedAt = new Date().toISOString();
   const sourceUrl = seed.knownSourceUrl || seed.knownWebsite || "";
+  const providerType = seed.providerType || seed.type || "";
+  const clinicianName = seed.knownClinicianName || inferClinicianName(seed.knownProviderName, providerType);
   const sourceType = /google places/i.test(`${seed.source || ""} ${seed.reason || ""} ${seed.seedId || ""}`)
     ? "google_places"
     : sourceTypeFromUrl(sourceUrl);
@@ -241,7 +252,7 @@ function seedClaims(seed = {}) {
     }));
   };
   add("name", seed.knownProviderName);
-  add("clinicianName", seed.knownClinicianName);
+  add("clinicianName", clinicianName);
   add("practiceName", seed.knownPracticeName);
   add("address", seed.knownAddress);
   add("phone", seed.knownPhone);
@@ -250,7 +261,7 @@ function seedClaims(seed = {}) {
   add("source", seed.knownSourceUrl);
   add("city", seed.city);
   add("region", seed.region);
-  add("type", seed.providerType || seed.type);
+  add("type", providerType);
   return claims;
 }
 
@@ -533,7 +544,7 @@ async function processSeedSources(seed, graph, providers, config, stats, remaini
     stats.seedSourcesChecked += 1;
     if (!fetchResult.ok) {
       stats.seedSourcesSkipped += 1;
-      mergeClaims(graph, [evidenceItem({
+      const failureClaim = evidenceItem({
         field: "source",
         value: url,
         sourceUrl: url,
@@ -543,7 +554,8 @@ async function processSeedSources(seed, graph, providers, config, stats, remaini
         confidence: "low",
         extractor: "seed-source-fetcher",
         needsManualReview: true
-      })], {
+      });
+      mergeClaims(graph, [...seedClaims(seed), failureClaim], {
         seedId: seed.seedId,
         reviewReasons: [`seed source ${fetchResult.error || fetchResult.reason || "fetch failed"}`],
         possibleProviderId: seed.possibleProviderId || ""

@@ -107,6 +107,18 @@ manual review burden.
 - Added an auditor **Source capture** filter and queue badges so captured GP
   snippets can be reviewed separately from blocked, failed, skipped, or
   not-yet-fetched source checks.
+- Ran a bounded Google Places psychiatry discovery batch across eight high
+  priority regions with local psychiatry gaps. The run added review-gated
+  psychiatry leads and refreshed discovery suggestions without mutating
+  `providers.json`.
+- Tightened Places typing so a result from a psychiatrist query is not labelled
+  as a psychiatrist unless the result name/types or an existing matched provider
+  explicitly support it. Psychology/counselling-looking results are kept as
+  `unknown` until stronger source evidence is reviewed.
+- Hardened discovery identity matching so shared clinic emails, shared register
+  domains, and shared practice websites do not merge different clinicians. The
+  latest psychiatry enrichment export has 84 suggestions and zero candidate
+  groups with more than five possible provider IDs.
 
 ## Next Backlog Items
 
@@ -132,3 +144,6 @@ manual review burden.
 9. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.
+10. Review the psychiatry discovery suggestions, starting with the add-new
+    Northland Psychiatry lead, then the existing-provider update suggestions
+    that have provider-owned or Healthpoint evidence.

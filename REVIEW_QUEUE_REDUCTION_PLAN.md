@@ -4,8 +4,8 @@ Updated: 2026-06-01
 
 ## Baseline
 
-- Provider-level focused review queue: 675 items after the full GP Places
-  corroboration pass. The increase is intentional: new candidates are
+- Provider-level focused review queue: 775 items after the bounded psychiatry
+  Places/enrichment pass. The increase is intentional: new candidates are
   review-gated and are not live provider data.
 - Focused claim-level review queue: 638 items in 53 batches.
 - Dedicated GP source corroboration queue: 126 tasks.
@@ -14,7 +14,7 @@ Updated: 2026-06-01
 - Provider validation warnings: 0.
 - Broken links in default link check: 0.
 - Blocked-by-site links in default link check: 1.
-- Regional priority report: 18 regions reviewed, 9 high priority, 9 medium
+- Regional priority report: 18 regions reviewed, 12 high priority, 6 medium
   priority.
 
 Top provider-level root causes:
@@ -33,16 +33,14 @@ Current provider-level review categories:
 
 | Review category | Count |
 | --- | ---: |
-| GP source corroboration | 250 |
+| GP source corroboration | 251 |
 | Location and distance evidence | 130 |
 | Sensitive tag or scope evidence | 111 |
-| Availability review | 53 |
+| Referral pathway review | 81 |
+| Availability review | 77 |
+| Google Places discovery | 50 |
 | Needs quick human check | 41 |
 | Directory/direct-contact confusion | 34 |
-| Discovery source conflict | 31 |
-| Referral pathway review | 20 |
-| Google Places discovery | 3 |
-| Discovery: existing provider update | 2 |
 
 ## Claim-Level Reduction Layer
 
@@ -131,6 +129,19 @@ This cycle added a separate claim review queue:
 - The auditor now includes a **Source capture** filter and source-capture badges
   so the captured GP snippets can be worked separately from blocked, failed,
   skipped, or not-fetched items.
+- A bounded psychiatry discovery pass added 84 review-gated discovery
+  suggestions. This intentionally increased the provider review queue from 675
+  to 775 items because thin-region psychiatry leads are now explicit review
+  work instead of silent gaps. None of these suggestions mutate live provider
+  data.
+- Places result typing is now conservative: `queryType` is stored separately
+  from confirmed/suggested provider `type`, and psychiatry-query results that
+  look like psychology, counselling, generic health, or unknown services stay
+  `unknown` until stronger sources confirm the service type.
+- Discovery identity matching now treats titled and likely clinician names as
+  clinician identities before shared emails, phones, register domains, or
+  practice websites. The latest psychiatry enrichment export has no candidate
+  group with more than five possible provider IDs.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by

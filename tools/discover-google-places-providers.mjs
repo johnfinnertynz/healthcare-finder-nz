@@ -465,6 +465,97 @@ function dedupeExistingProviderMatches(matches = []) {
   return [...byProviderId.values()];
 }
 
+function explicitTypeFromName(name = "", placeTypes = []) {
+  const text = normaliseComparable(`${name} ${(placeTypes || []).join(" ")}`);
+  if (/\bpsychiatr/.test(text)) return "psychiatrist";
+  if (/\bpsycholog/.test(text)) return "psychologist";
+  if (/\bcounsell|\bcounsel|\btherapy\b|\btherapist\b|\bpsychotherapy\b/.test(text)) return "counsellor";
+  if (/\bgp\b|\bgeneral practice\b|\bfamily doctor|\bmedical centre\b|\bmedical center\b|\bdoctors?\b|\bsurgery\b|\bhealth centre\b|\bhealth center\b/.test(text)) return "gp";
+  return "";
+}
+
+function queryTypesFromCandidate(candidate = {}) {
+  const claimTypes = (candidate.claims || [])
+    .filter((claimItem) => ["queryType", "type"].includes(claimItem.field))
+    .filter((claimItem) => claimItem.field === "queryType" || /search query type/i.test(claimItem.excerpt || ""))
+    .map((claimItem) => claimItem.value)
+    .filter(Boolean);
+  return unique([candidate.queryType || "", ...claimTypes].filter(Boolean));
+}
+
+function resolveGooglePlaceProviderType({ name = "", placeTypes = [], queryType = "", existingMatches = [] } = {}) {
+  const matchedProviderTypes = unique((existingMatches || [])
+    .map((match) => match.type)
+    .filter(Boolean));
+  if (matchedProviderTypes.length === 1) {
+    return {
+      type: matchedProviderTypes[0],
+      reason: `existing provider match keeps type as ${matchedProviderTypes[0]}`
+    };
+  }
+
+  const explicitType = explicitTypeFromName(name, placeTypes);
+  if (queryType && explicitType === queryType) {
+    return {
+      type: queryType,
+      reason: `Google Places result name/types explicitly mention ${queryType}`
+    };
+  }
+  if (queryType === "gp" && explicitType === "gp") {
+    return {
+      type: "gp",
+      reason: "Google Places result name/types explicitly mention a GP or medical practice"
+    };
+  }
+  if (queryType && explicitType && explicitType !== queryType) {
+    return {
+      type: "unknown",
+      reason: `Google Places query type was ${queryType}, but the result name/types look like ${explicitType}; confirm provider type from a stronger source`
+    };
+  }
+  if (queryType === "psychiatrist") {
+    return {
+      type: "unknown",
+      reason: "Google Places psychiatry query result does not explicitly show psychiatry; confirm provider type from a stronger source"
+    };
+  }
+  return {
+    type: queryType || "unknown",
+    reason: queryType
+      ? `Search query type was ${queryType}; reviewer must confirm provider type from a stronger source`
+      : "Provider type is unknown until confirmed from a stronger source"
+  };
+}
+
+function withResolvedCandidateType(candidate = {}) {
+  const queryTypes = queryTypesFromCandidate(candidate);
+  const queryType = queryTypes.length === 1 ? queryTypes[0] : candidate.queryType || "";
+  if (!queryType || queryTypes.length > 1) return candidate;
+  const resolution = resolveGooglePlaceProviderType({
+    name: candidate.name,
+    placeTypes: candidate.placeTypes,
+    queryType,
+    existingMatches: candidate.existingProviderMatches
+  });
+  if (!resolution.type || resolution.type === candidate.type) return {
+    ...candidate,
+    queryType
+  };
+  return {
+    ...candidate,
+    type: resolution.type,
+    queryType,
+    suggestedProviderRecord: {
+      ...(candidate.suggestedProviderRecord || {}),
+      type: resolution.type
+    },
+    reviewReasons: unique([
+      ...(candidate.reviewReasons || []),
+      resolution.reason
+    ])
+  };
+}
+
 export function candidateFromGooglePlace(place = {}, queryItem = {}, providers = []) {
   const name = place.displayName?.text || "";
   const phone = place.nationalPhoneNumber || place.internationalPhoneNumber || "";
@@ -495,11 +586,19 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
     }
   }
   existingMatches = dedupeExistingProviderMatches(existingMatches);
+  const typeResolution = resolveGooglePlaceProviderType({
+    name,
+    placeTypes: place.types || [],
+    queryType: queryItem.type || "",
+    existingMatches
+  });
+  const resolvedType = typeResolution.type || "unknown";
   const sourceUrl = place.googleMapsUri || website || "";
   const claims = [
     claim("name", name, place, queryItem, "medium"),
     claim("practiceName", name, place, queryItem, "low"),
-    claim("type", queryItem.type, place, queryItem, "low", `Search query type was ${queryItem.type}; reviewer must confirm provider type from a stronger source.`),
+    claim("queryType", queryItem.type, place, queryItem, "low", `Google Places search query type was ${queryItem.type}; this is discovery context, not source-backed provider type.`),
+    claim("type", resolvedType, place, queryItem, "low", typeResolution.reason),
     claim("region", queryItem.region, place, queryItem, "low"),
     claim("city", queryItem.city, place, queryItem, "low"),
     claim("address", address, place, queryItem, "medium"),
@@ -522,7 +621,7 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
     name,
     clinicianName: "",
     practiceName: name,
-    type: queryItem.type || "",
+    type: resolvedType,
     region: queryItem.region || "",
     city: queryItem.city || "",
     address,
@@ -546,8 +645,8 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
     availabilityEvidence: "",
     availabilitySource: "",
     availabilityNeedsManualReview: true,
-    referralType: queryItem.type === "psychiatrist" ? "unknown" : "",
-    referralNeedsManualReview: queryItem.type === "psychiatrist",
+    referralType: resolvedType === "psychiatrist" ? "unknown" : "",
+    referralNeedsManualReview: queryItem.type === "psychiatrist" || resolvedType === "psychiatrist",
     tags: [],
     needScope: [],
     specialties: [],
@@ -568,7 +667,8 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
     action,
     queryId: queryItem.queryId || "",
     query: queryItem.textQuery || "",
-    type: queryItem.type || "",
+    queryType: queryItem.type || "",
+    type: resolvedType,
     region: queryItem.region || "",
     city: queryItem.city || "",
     name,
@@ -593,6 +693,7 @@ export function candidateFromGooglePlace(place = {}, queryItem = {}, providers =
     reviewReasons: unique([
       "Google Places is a discovery/corroboration source, not enough by itself for live recommendations.",
       "Confirm provider type, services, availability, cost, referral pathway, and support-preference tags from stronger public sources.",
+      typeResolution.reason,
       queryItem.reason || "",
       queryItem.targetProviderId ? `target GP source-corroboration provider: ${queryItem.targetProviderId}` : "",
       distanceFromQueryKm !== "" ? `Google Places result is ${distanceFromQueryKm} km from the query centre.` : "",
@@ -723,11 +824,8 @@ function normaliseGooglePlacesCandidateMatches(candidate = {}) {
 }
 
 function normaliseGooglePlacesCandidateTypeConflict(candidate = {}) {
-  candidate = normaliseGooglePlacesCandidateMatches(candidate);
-  const queryTypes = unique((candidate.claims || [])
-    .filter((claimItem) => claimItem.field === "type")
-    .map((claimItem) => claimItem.value)
-    .filter(Boolean));
+  candidate = withResolvedCandidateType(normaliseGooglePlacesCandidateMatches(candidate));
+  const queryTypes = queryTypesFromCandidate(candidate);
   if (queryTypes.length <= 1) return candidate;
   const matchedProviderTypes = unique((candidate.existingProviderMatches || [])
     .map((match) => match.type)
