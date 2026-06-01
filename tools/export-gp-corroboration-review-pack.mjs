@@ -295,6 +295,15 @@ function selectSourceClaims(claims, item) {
   return (matching.length ? matching : usefulClaims).slice(0, 8);
 }
 
+function suggestedContactExcerpt(claims) {
+  const nameClaim = claims.find((claim) => ["name", "practiceName"].includes(claim.field) && claim.excerpt);
+  const contactClaim = claims.find((claim) => ["phone", "email", "address", "website"].includes(claim.field) && claim.excerpt);
+  if (nameClaim && contactClaim && nameClaim.excerpt !== contactClaim.excerpt) {
+    return compact(`${nameClaim.value}. ${contactClaim.excerpt}`, 520);
+  }
+  return contactClaim?.excerpt || nameClaim?.excerpt || "";
+}
+
 function sourceCaptureSummary(fetchResult, item, claims = []) {
   if (!fetchResult.ok) {
     return {
@@ -311,7 +320,7 @@ function sourceCaptureSummary(fetchResult, item, claims = []) {
   }
 
   const selectedClaims = selectSourceClaims(claims, item);
-  const suggested = selectedClaims.find((claim) => claim.excerpt)?.excerpt || "";
+  const suggested = suggestedContactExcerpt(selectedClaims);
   return {
     status: "captured",
     requestedUrl: fetchResult.url || item.bestCandidate?.sourceUrl || "",

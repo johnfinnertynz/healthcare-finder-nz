@@ -56,6 +56,10 @@
 - Added optional bounded source fetching for the GP corroboration review pack.
   It can prefill short Healthpoint/practice-page excerpts for human auditors,
   while keeping all changes review-gated and preventing live provider mutation.
+- Tightened source-fetch login detection so public provider pages with ordinary
+  login navigation are not falsely treated as blocked. The current GP review
+  pack now has captured snippets for 64 of 68 ready GP source leads; the
+  remaining 4 are marked blocked or failed for human browser review.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

@@ -10,7 +10,7 @@ import { buildProviderSuggestions } from "../tools/build-provider-suggestions.mj
 import { buildRoundOneQueries, buildSnowballQueries, enrichProviderCandidates } from "../tools/enrich-provider-candidates.mjs";
 import { buildGooglePlacesCandidatesFromResults, buildGooglePlacesDiscoveryPlan, buildGooglePlacesPlanFromGpCorroborationQueue, candidateFromGooglePlace, mergeGooglePlacesCandidates } from "../tools/discover-google-places-providers.mjs";
 import { extractProviderEvidence } from "../tools/lib/provider-evidence-extractor.mjs";
-import { fetchPublicSource } from "../tools/lib/source-fetcher.mjs";
+import { fetchPublicSource, isLikelyLoginPage } from "../tools/lib/source-fetcher.mjs";
 import { withPsychiatristScopeMetadata } from "../tools/lib/provider-scope.mjs";
 import {
   confidenceByField,
@@ -380,6 +380,16 @@ test("fetcher records blocked or skipped pages without guessing", async () => {
   assert.equal(result.ok, false);
   assert.equal(result.skipped, true);
   assert.match(result.reason || result.error, /search-result|Search result pages/);
+});
+
+test("login detector does not discard provider pages with ordinary login navigation", () => {
+  const providerPage = "<html><head><title>Archers Medical Centre | Healthpoint</title></head><body><h1>Archers Medical Centre</h1><a href='/account/login'>Log in</a><p>General practice phone 09 444 9324.</p></body></html>";
+  const loginPage = "<html><head><title>Login</title></head><body><h1>Login</h1><form action='/login'><input type='password' name='password'></form></body></html>";
+  const challengePage = "<html><body>Please verify you are human before continuing. recaptcha</body></html>";
+
+  assert.equal(isLikelyLoginPage(providerPage, "https://www.healthpoint.co.nz/gps-accident-urgent-medical-care/gp/archers-medical-centre/"), false);
+  assert.equal(isLikelyLoginPage(loginPage, "https://example.org/login"), true);
+  assert.equal(isLikelyLoginPage(challengePage, "https://example.org/provider"), true);
 });
 
 test("Google Places discovery plan uses high-priority regions without mutating live providers", () => {

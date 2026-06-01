@@ -124,6 +124,10 @@ This cycle added a separate claim review queue:
   can now capture a bounded set of short public source excerpts into the review
   pack. These snippets prefill auditor notes only; they do not approve contact,
   availability, enrolment, scope, cultural support, or funding claims.
+- The source fetcher now distinguishes normal provider pages with login links
+  from real login/challenge pages. A full ready-bucket GP capture fetched 68
+  ready source leads and produced 64 prefilled excerpts, with 4 blocked/failed
+  items left for human browser review.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -189,6 +193,7 @@ Auto-accept is allowed only when all are true:
 10. Use the auditor console's **GP corroboration review pack** to start with
    ready-for-source-capture GP items after Places/source enrichment; rerun it
    with `--fetch-sources` for a small prefilled-excerpt batch when useful.
+   The current export has 64 captured GP snippets ready for confirmation.
 11. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
 12. Run `npm run export:regional-quality` after each review/apply cycle and use

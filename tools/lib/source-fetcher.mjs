@@ -21,8 +21,15 @@ export function shouldNotFetch(url = "") {
 }
 
 export function isLikelyLoginPage(text = "", finalUrl = "") {
-  return /\b(log in|login|sign in|create account|captcha|recaptcha|verify you are human)\b/i.test(text)
-    || /\b(login|signin|auth|account)\b/i.test(finalUrl);
+  const source = String(text || "");
+  const url = String(finalUrl || "");
+  if (/\b(captcha|recaptcha|verify you are human|access denied|checking your browser|enable javascript and cookies)\b/i.test(source)) return true;
+  if (/\b(login|signin|sign-in|logon|auth|account)\b/i.test(url)) return true;
+  if (/<input[^>]+type=["']?password["']?/i.test(source)) return true;
+  if (/<form[^>]+(?:login|signin|sign-in|logon|auth)/i.test(source)) return true;
+  if (/<title[^>]*>\s*(?:log in|login|sign in|create account)\b/i.test(source)) return true;
+  if (/<h1[^>]*>\s*(?:log in|login|sign in|create account)\b/i.test(source)) return true;
+  return false;
 }
 
 async function readLimitedText(response, maxBytes) {

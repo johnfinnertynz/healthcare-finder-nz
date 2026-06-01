@@ -97,14 +97,22 @@ manual review burden.
   pack. It can prefill short public Healthpoint/practice-page snippets for the
   auditor, while keeping every item review-gated and leaving live provider data
   unchanged.
+- Tightened the source fetcher's login/captcha detection so public provider
+  pages that merely include a login navigation link are not discarded as
+  blocked. Login forms, login URLs, and human-verification pages still stay
+  blocked.
+- Ran the GP corroboration review pack across all 68 ready-for-source-capture
+  GP leads. The export now includes prefilled review snippets for 64 of them;
+  4 remain blocked or failed and need human browser review.
 
 ## Next Backlog Items
 
 1. Add reviewed batch-adjust UI only after the first human review session proves
    the conservative `needs_more_info` batch helper is understandable.
 2. Work through the auditor console's **GP source corroboration** and
-   **GP corroboration review pack** queues, starting with the ready-for-source
-   items and the two high-confidence update-existing GP suggestions.
+   **GP corroboration review pack** queues, starting with the 64 captured GP
+   snippets, the 4 failed source captures, and the two high-confidence
+   update-existing GP suggestions.
 3. Tune duplicate/shared-practice false positives, especially shared GP network
    phones/domains.
 4. Start manual review with the largest unsupported tag batches.
