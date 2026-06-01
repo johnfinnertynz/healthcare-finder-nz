@@ -1,6 +1,6 @@
 # Provider Review Queue
 
-Generated: 2026-06-01T07:36:59.119Z
+Generated: 2026-06-01T07:56:31.721Z
 
 Focused queue: yes.
 
@@ -8,8 +8,8 @@ Focused queue: yes.
 
 - Review items: 798
 - Critical: 14
-- High: 474
-- Medium: 164
+- High: 475
+- Medium: 163
 - Low: 146
 
 ## By Review Category
@@ -17,12 +17,12 @@ Focused queue: yes.
 | Category | Items |
 | --- | --- |
 | GP source corroboration | 251 |
+| Location and distance evidence | 125 |
 | Sensitive tag or scope evidence | 124 |
-| Location and distance evidence | 99 |
 | Referral pathway review | 81 |
 | Availability review | 77 |
-| Google Places discovery | 73 |
 | Needs quick human check | 59 |
+| Google Places discovery | 47 |
 | Directory/direct-contact confusion | 34 |
 
 ## Top Queue Items

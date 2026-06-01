@@ -922,6 +922,9 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /regional-data-quality-report\.json/);
   assert.match(js, /google-places-provider-candidates\.json/);
   assert.match(js, /googlePlacesCandidateToItem/);
+  assert.match(js, /coordinate-gap-candidate/);
+  assert.match(js, /linkLiveProvidersToQueueItems/);
+  assert.match(js, /coordinatePrecision/);
   assert.match(js, /noClinicalClaimsFromPlacesAlone/);
   assert.match(js, /provider-suggestions\.json/);
   assert.match(js, /provider-source-fit-evidence-capture\.json/);

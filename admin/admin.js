@@ -21,7 +21,7 @@ const QUEUE_SOURCES = {
   },
   places: {
     url: "../data/discovery/google-places-provider-candidates.json",
-    help: "Google Places candidates: official API discovery leads only. Use them to find likely providers, then corroborate with provider-owned, Healthpoint, register, or professional-directory evidence before changing live data.",
+    help: "Google Places candidates: official API discovery leads only. Use them to find likely providers or coordinate-gap clues, then corroborate with provider-owned, Healthpoint, register, or professional-directory evidence before changing live data.",
     itemName: "Google Places candidate(s)"
   },
   suggestions: {
@@ -77,6 +77,15 @@ const AVAILABILITY_OPTIONS = [
 
 const REFERRAL_OPTIONS = ["gp", "self", "specialist", "unknown"];
 const CONFIDENCE_OPTIONS = ["high", "medium", "low"];
+const COORDINATE_PRECISION_OPTIONS = [
+  "business listing",
+  "address geocode",
+  "street/locality geocode",
+  "locality geocode",
+  "professional directory listing",
+  "official provider export",
+  "coordinate source unspecified"
+];
 const SOURCE_QUALITY_OPTIONS = [
   "provider-owned page",
   "provider-owned or NGO public page",
@@ -131,6 +140,7 @@ const COMMON_CORRECTION_FIELDS = [
   { field: "lat", label: "Latitude", group: "Location", kind: "number" },
   { field: "lon", label: "Longitude", group: "Location", kind: "number" },
   { field: "coordinateSource", label: "Coordinate source", group: "Location", kind: "text" },
+  { field: "coordinatePrecision", label: "Coordinate precision", group: "Location", kind: "select", options: COORDINATE_PRECISION_OPTIONS },
   { field: "coordinateConfidence", label: "Coordinate confidence", group: "Location", kind: "select", options: CONFIDENCE_OPTIONS },
   { field: "phone", label: "Phone", group: "Contact", kind: "text" },
   { field: "text", label: "Text/SMS", group: "Contact", kind: "text" },
@@ -312,6 +322,16 @@ function asArray(value) {
 
 function unique(values) {
   return [...new Set(values.map((value) => String(value || "").trim()).filter(Boolean))];
+}
+
+function googlePlacesCoordinateGapCandidate(candidate = {}) {
+  const text = [
+    candidate.queryId,
+    candidate.reviewPurpose,
+    ...asArray(candidate.reviewReasons),
+    ...asArray(candidate.duplicateSignals)
+  ].join(" ").toLowerCase();
+  return /coordinate-gap/.test(text);
 }
 
 function today() {
@@ -767,6 +787,18 @@ function googlePlacesCandidateToItem(candidate, index) {
     ? "high"
     : candidate.action === "research_new_provider" ? "medium" : "low";
   const evidence = candidate.sourceEvidence || record.sourceEvidence || {};
+  const isCoordinateGap = googlePlacesCoordinateGapCandidate(candidate);
+  const coordinatePrefill = isCoordinateGap
+    ? {
+        address: record.address || candidate.address || "",
+        lat: record.lat ?? candidate.lat ?? "",
+        lon: record.lon ?? candidate.lon ?? "",
+        coordinateSource: record.coordinateSource || "google_places",
+        coordinatePrecision: record.coordinatePrecision || "business listing",
+        coordinateConfidence: record.coordinateConfidence || "medium",
+        geocodeNeedsManualReview: true
+      }
+    : {};
 
   return {
     ...candidate,
@@ -803,19 +835,26 @@ function googlePlacesCandidateToItem(candidate, index) {
     phoneSupport: record.phoneSupport,
     inPerson: record.inPerson,
     crisisOnly: record.crisisOnly,
-    reviewCategory: "Google Places discovery",
-    reviewPriority: priority,
-    auditSeverity: priority,
-    batchKey: candidate.region ? `places:${candidate.region}` : "places",
-    auditRules: unique(["google-places-candidate", candidate.action]),
+    reviewCategory: isCoordinateGap ? "Location and distance evidence" : "Google Places discovery",
+    reviewPriority: isCoordinateGap && priority === "low" ? "medium" : priority,
+    auditSeverity: isCoordinateGap && priority === "low" ? "medium" : priority,
+    batchKey: isCoordinateGap
+      ? candidate.region ? `coordinate-gap:${candidate.region}` : "coordinate-gap"
+      : candidate.region ? `places:${candidate.region}` : "places",
+    auditRules: unique(["google-places-candidate", isCoordinateGap ? "coordinate-gap-candidate" : "", candidate.action]),
     auditFindings: [{
-      rule: "google-places-candidate",
-      severity: priority,
-      issue: "Google Places can identify likely businesses and public contact signals, but it does not prove clinical services, scope, availability, referral pathway, cost, or support-preference suitability.",
-      suggestedFix: "Open the candidate website or another strong source, capture short excerpts, and keep risky claims review-gated."
+      rule: isCoordinateGap ? "coordinate-gap-candidate" : "google-places-candidate",
+      severity: isCoordinateGap && priority === "low" ? "medium" : priority,
+      issue: isCoordinateGap
+        ? "Known provider has a public address but no stored coordinates. Google Places may suggest a business/listing coordinate, but the auditor must confirm it is the same provider or same public clinic location."
+        : "Google Places can identify likely businesses and public contact signals, but it does not prove clinical services, scope, availability, referral pathway, cost, or support-preference suitability.",
+      suggestedFix: isCoordinateGap
+        ? "Confirm the Places result against the stored provider/address, then adjust only location fields such as address, lat, lon, coordinate source, precision, confidence, and manual-review status."
+        : "Open the candidate website or another strong source, capture short excerpts, and keep risky claims review-gated."
     }],
     reviewReasons: unique([
       ...asArray(candidate.reviewReasons),
+      isCoordinateGap ? "Coordinate-gap review: only apply coordinates after confirming the same provider or same public clinic location." : "",
       "Do not infer accepting clients, telehealth, cultural tags, advertised specialties, or psychiatrist self-referral from this listing alone."
     ]),
     sourceEvidence: evidence,
@@ -825,7 +864,9 @@ function googlePlacesCandidateToItem(candidate, index) {
     claimValue: candidate.query || "",
     claimDecision: "review",
     claimRiskLevel: priority,
-    requiredHumanAction: "Corroborate the likely provider with a stronger public source before approving or adjusting live data.",
+    requiredHumanAction: isCoordinateGap
+      ? "Compare the stored provider and address with the Places listing. If it is the same provider or same public clinic location, export an adjust decision for location fields only."
+      : "Corroborate the likely provider with a stronger public source before approving or adjusting live data.",
     publicCardPreviewText: [
       record.name || candidate.name,
       `${record.region || candidate.region || ""}${record.city || candidate.city ? ` / ${record.city || candidate.city}` : ""}`,
@@ -837,7 +878,8 @@ function googlePlacesCandidateToItem(candidate, index) {
     ].filter(Boolean).join("\n"),
     currentProvider: null,
     googlePlacesCandidate: candidate,
-    correctedFields: record
+    correctedFields: isCoordinateGap ? coordinatePrefill : record,
+    prefillCorrectedFields: isCoordinateGap ? coordinatePrefill : undefined
   };
 }
 
@@ -1012,6 +1054,17 @@ function queueItemsFromPayload(queue) {
     ];
   }
   return [];
+}
+
+function linkLiveProvidersToQueueItems() {
+  const byId = new Map(state.providers.map((provider) => [provider.id, provider]));
+  state.items = state.items.map((item) => {
+    if (item.currentProvider || !item.providerId || !byId.has(item.providerId)) return item;
+    return {
+      ...item,
+      currentProvider: byId.get(item.providerId)
+    };
+  });
 }
 
 function decisionsForCurrentQueue() {
@@ -2240,6 +2293,7 @@ async function init() {
     } catch {
       state.providers = [];
     }
+    linkLiveProvidersToQueueItems();
     setOptions();
     filterItems();
   } catch (error) {

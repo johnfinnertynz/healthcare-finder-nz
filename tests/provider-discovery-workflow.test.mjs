@@ -1455,3 +1455,85 @@ test("Google Places candidates feed the auditor review queue without becoming li
   assert(item.sourceEvidence.contact.some((evidence) => evidence.field === "phone"));
   assert.equal(queue.inputs.googlePlacesCandidates, 1);
 });
+
+test("Google Places coordinate-gap candidates become location review tasks", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const placesPath = path.join(dir, "places.json");
+  const emptyAuditPath = path.join(dir, "empty-audit.json");
+  const provider = {
+    id: "coordinate-target",
+    name: "Coordinate Target",
+    type: "public-service",
+    region: "Wellington",
+    city: "Wellington",
+    address: "10 Example Street, Wellington",
+    phone: "04 123 4567",
+    source: "https://example.org/coordinate-target",
+    sourceQuality: "provider-owned page",
+    confidence: "medium",
+    needsManualVerification: true,
+    availabilityStatus: "not_published",
+    availabilityNeedsManualReview: true,
+    tags: [],
+    needScope: []
+  };
+  writeJson(providersPath, [provider]);
+  writeJson(emptyAuditPath, { findings: [], items: [] });
+  writeJson(placesPath, {
+    version: 1,
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    safety: { noLiveProviderMutation: true, reviewGateRequired: true },
+    candidates: [
+      candidateFromGooglePlace({
+        id: "places/coordinate-target",
+        displayName: { text: "Example Street Building" },
+        formattedAddress: "10 Example Street, Wellington 6011, New Zealand",
+        location: { latitude: -41.2924, longitude: 174.7787 },
+        businessStatus: "OPERATIONAL",
+        googleMapsUri: "https://maps.google.com/?cid=321",
+        types: ["point_of_interest"]
+      }, {
+        queryId: "places-coordinate-gap:coordinate-target",
+        textQuery: "Coordinate Target 10 Example Street Wellington New Zealand",
+        region: "Wellington",
+        city: "Wellington",
+        type: "public-service",
+        center: { latitude: -41.2924, longitude: 174.7787 },
+        radiusMeters: 12000,
+        targetProviderId: "coordinate-target",
+        reviewPurpose: "coordinate-gap",
+        reason: "Known provider has a public address but no coordinates"
+      }, [provider])
+    ]
+  });
+  const queue = buildProviderReviewQueue({
+    providers: providersPath,
+    sourceFitAudit: emptyAuditPath,
+    availabilityAudit: emptyAuditPath,
+    referralAudit: emptyAuditPath,
+    watchlist: emptyAuditPath,
+    linkResults: path.join(dir, "missing-link-report.json"),
+    identityScan: path.join(dir, "missing-identity-scan.json"),
+    discoveryQueue: path.join(dir, "missing-discovery.json"),
+    providerSuggestions: path.join(dir, "missing-suggestions.json"),
+    googlePlacesCandidates: placesPath,
+    skipAuditRun: true
+  });
+  const item = queue.items.find((entry) => entry.reviewId.startsWith("places:"));
+  assert.ok(item);
+  assert.equal(item.providerId, "coordinate-target");
+  assert.equal(item.reviewCategory, "Location and distance evidence");
+  assert.equal(item.auditSeverity, "medium");
+  assert.equal(item.auditRules.includes("coordinate-gap-candidate"), true);
+  assert.match(item.reviewReasons.join(" "), /coordinate-gap/i);
+  assert.match(item.suggestedFixes.join(" "), /address\/coordinate metadata/i);
+  assert.match(item.sourceQuality, /Google Places/);
+  assert.equal(item.correctedFields.lat, -41.2924);
+  assert.equal(item.correctedFields.lon, 174.7787);
+  assert.equal(item.correctedFields.coordinateSource, "google_places");
+  assert.equal(item.correctedFields.geocodeNeedsManualReview, true);
+  assert.equal(Object.hasOwn(item.correctedFields, "type"), false);
+  assert.equal(item.googlePlacesCandidate.suggestedProviderRecord, undefined);
+  assert.equal(queue.inputs.googlePlacesCandidates, 1);
+});

@@ -108,6 +108,10 @@
   produced 26 coordinate candidates, skipped vague address records by default,
   and merged them into the auditor review queue without mutating live provider
   data.
+- Improved the auditor handling for those coordinate-gap leads: they now appear
+  as **Location and distance evidence**, use a `coordinate-gap:<region>` batch,
+  pre-fill only location metadata fields, and compare against the live provider
+  row when a target provider ID is present.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

@@ -163,6 +163,11 @@ manual review burden.
   the specific unresolved address records, skipped vague coordinate gaps by
   default, produced 26 review-gated coordinate candidates, and merged them into
   the auditor/provider review queue without mutating live provider rows.
+- Updated the auditor workflow so coordinate-gap candidates are easier to work:
+  filter **Google Places candidates** by **Location and distance evidence** or
+  `coordinate-gap:<region>`, compare against the linked live provider row, and
+  export location-only adjustments after confirming the same provider or public
+  clinic location.
 
 ## Next Backlog Items
 
@@ -189,10 +194,11 @@ manual review burden.
 8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-9. Review the 26 coordinate-gap Google Places candidates in the auditor. Apply
-   coordinate/source updates only when the reviewer confirms the Places result
-   is the same provider or same public clinic location; leave vague town-only
-   and "various venues" records without coordinates.
+9. Review the 26 coordinate-gap Google Places candidates in the auditor using
+   the **Location and distance evidence** category or `coordinate-gap:<region>`
+   batch. Apply coordinate/source updates only when the reviewer confirms the
+   Places result is the same provider or same public clinic location; leave
+   vague town-only and "various venues" records without coordinates.
 10. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.

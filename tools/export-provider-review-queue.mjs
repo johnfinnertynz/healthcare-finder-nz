@@ -840,6 +840,8 @@ function discoverySuggestionItems(providerSuggestions, includeAll) {
 
 function priorityForGooglePlacesCandidate(candidate) {
   let score = 1_100;
+  const text = [candidate.queryId || "", ...(candidate.reviewReasons || []), ...(candidate.duplicateSignals || [])].join(" ").toLowerCase();
+  if (/coordinate-gap/.test(text)) score += 650;
   if (candidate.action === "research_new_provider") score += 1_000;
   if (candidate.action === "corroborate_existing_provider") score += 850;
   if (candidate.type === "psychiatrist") score += 900;
@@ -856,9 +858,13 @@ function reviewCategoryForGooglePlacesCandidate(candidate) {
   const text = [
     candidate.action || "",
     candidate.type || "",
+    candidate.queryId || "",
     ...(candidate.reviewReasons || [])
   ].join(" ").toLowerCase();
 
+  if (/coordinate-gap/.test(text) || candidate.duplicateSignals?.some((signal) => /coordinate-gap/.test(signal))) {
+    return "Location and distance evidence";
+  }
   if (/gp source corroboration|weak gp|weak-gp|source corroboration/.test(text) || candidate.type === "gp") {
     return "GP source corroboration";
   }
@@ -934,9 +940,21 @@ function googlePlacesCandidateItems(placesPayload, includeAll) {
         record.source
       ]);
       const sourceEvidence = candidate.sourceEvidence || record.sourceEvidence || {};
+      const coordinateGap = reviewCategory === "Location and distance evidence"
+        && (candidate.queryId?.includes("coordinate-gap") || candidate.reviewReasons?.some((reason) => /coordinate-gap/i.test(reason)) || candidate.duplicateSignals?.some((signal) => /coordinate-gap/i.test(signal)));
+      const coordinatePrefill = coordinateGap ? {
+        address: record.address || candidate.address || "",
+        lat: record.lat ?? candidate.lat ?? "",
+        lon: record.lon ?? candidate.lon ?? "",
+        coordinateSource: record.coordinateSource || "google_places",
+        coordinatePrecision: record.coordinatePrecision || "business listing",
+        coordinateConfidence: record.coordinateConfidence || "medium",
+        geocodeNeedsManualReview: true
+      } : {};
       const sourceClaim = Object.values(sourceEvidence)
         .flatMap((value) => Array.isArray(value) ? value : typeof value === "object" && value !== null ? Object.values(value).flat() : [])
         .find((claim) => claim?.excerpt);
+      const auditSeverity = candidate.action === "research_new_provider" || coordinateGap ? "medium" : "low";
       const summaryPieces = [
         "Sources: Google Places business listing",
         sourceClaim?.excerpt ? `Evidence: ${compact(sourceClaim.excerpt, 220)}` : "",
@@ -995,13 +1013,18 @@ function googlePlacesCandidateItems(placesPayload, includeAll) {
         phoneSupport: record.phoneSupport,
         inPerson: record.inPerson,
         crisisOnly: record.crisisOnly,
-        auditSeverity: candidate.action === "research_new_provider" ? "medium" : "low",
-        auditRules: unique(["google-places-candidate", candidate.action]),
+        auditSeverity,
+        auditRules: unique(["google-places-candidate", coordinateGap ? "coordinate-gap-candidate" : "", candidate.action]),
         auditIssues: candidate.reviewReasons || [],
-        suggestedFixes: ["Use this as a discovery lead only. Open the provider website or stronger public source, capture excerpts, then approve/adjust/reject through review decisions."],
-        reviewPriority: reviewPriorityFromScore(score, candidate.action === "research_new_provider" ? "medium" : "low"),
+        suggestedFixes: [coordinateGap
+          ? "Confirm the Places result is the same provider or same public clinic location, then adjust only address/coordinate metadata through review decisions."
+          : "Use this as a discovery lead only. Open the provider website or stronger public source, capture excerpts, then approve/adjust/reject through review decisions."],
+        reviewPriority: reviewPriorityFromScore(score, auditSeverity),
         priorityScore: score,
-        reviewReasons: unique(["Google Places discovery candidate", ...(candidate.reviewReasons || [])]),
+        reviewReasons: unique([
+          coordinateGap ? "Google Places coordinate-gap candidate" : "Google Places discovery candidate",
+          ...(candidate.reviewReasons || [])
+        ]),
         sourceUrls,
         sourceEvidence,
         sourceEvidenceSummary: summaryPieces.join(" | "),
@@ -1010,7 +1033,7 @@ function googlePlacesCandidateItems(placesPayload, includeAll) {
         googlePlacesCandidate: compactGooglePlacesCandidate(candidate),
         auditFindings: [],
         reviewDecision: "",
-        correctedFields: record,
+        correctedFields: coordinateGap ? coordinatePrefill : record,
         reviewer: "",
         reviewedDate: "",
         reviewNotes: ""

@@ -240,6 +240,24 @@ register, or a professional directory. Do not approve clinical scope,
 availability, cost, referral pathway, telehealth, or cultural/support tags from
 Google Places alone.
 
+For coordinate-gap work, run the bounded official-API mode:
+
+```bash
+npm run discover:places -- --api-key-file "path/to/google-places-api-key.txt" --coordinate-gap-providers --limit-queries 24 --max-results-per-query 3 --merge-existing
+npm run export:review
+```
+
+Then choose **Google Places candidates** and filter **Review category** to
+**Location and distance evidence**, or filter **Batch** to a
+`coordinate-gap:<region>` batch. These rows are for known providers that have a
+public address but no stored coordinates. The correction form pre-fills only
+location metadata fields where possible. Open the Maps/provider source, confirm
+the result is the same provider or the same public clinic location, then adjust
+only `address`, `lat`, `lon`, `coordinateSource`, `coordinatePrecision`,
+`coordinateConfidence`, and `geocodeNeedsManualReview`. Leave the row as
+`needs_more_info` if the Places listing is a building, an old address, a
+directory, a similarly named provider, or otherwise unclear.
+
 ## Regional Priorities
 
 Run the regional report when deciding where the next review session should
