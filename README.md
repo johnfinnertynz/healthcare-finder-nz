@@ -225,6 +225,9 @@ support a broad/sensitive tag or telehealth flag. It never updates live provider
 data; the auditor must confirm excerpts or corrections before `apply:review`.
 `--skip-existing` prevents re-fetching the same provider/rule/target row, while
 `--merge-existing` preserves previous excerpts and appends the new batch.
+For Māori, Pasifika, Asian, and Rainbow support-preference rows, public identity
+cues push the item to human browser review instead of a safe-removal candidate
+when automated capture cannot find explicit wording.
 
 Export regional review priorities:
 

@@ -617,6 +617,76 @@ test("source-fit evidence capture separates supported claims from safe removal c
   assert.equal(byId.get("blocked-rainbow").status, "needs_human_browser_review");
 });
 
+test("source-fit evidence capture treats support-preference cues conservatively", async () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const auditPath = path.join(dir, "source-fit.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "maori-cue",
+      name: "Ngāti Aroha Hauora",
+      source: "https://cue.example.nz",
+      website: "https://cue.example.nz",
+      tags: ["gp", "maori"]
+    }),
+    baseProvider({
+      id: "maori-source",
+      name: "Community Health",
+      source: "https://source.example.nz",
+      website: "https://source.example.nz",
+      tags: ["gp", "maori"]
+    })
+  ]);
+  writeJson(auditPath, {
+    findings: [
+      {
+        providerId: "maori-cue",
+        providerName: "Ngāti Aroha Hauora",
+        source: "https://cue.example.nz",
+        rule: "weak-maori-evidence",
+        severity: "high",
+        issue: "Māori support tag is present but source fields do not clearly support it."
+      },
+      {
+        providerId: "maori-source",
+        providerName: "Community Health",
+        source: "https://source.example.nz",
+        rule: "weak-maori-evidence",
+        severity: "high",
+        issue: "Māori support tag is present but source fields do not clearly support it."
+      }
+    ]
+  });
+
+  const output = await buildSourceFitEvidenceCapture({
+    providers: providersPath,
+    sourceFitAudit: auditPath,
+    rateLimitMs: 0,
+    fetcher: async (url) => ({
+      url,
+      finalUrl: url,
+      capturedAt: "2026-06-01T00:00:00.000Z",
+      ok: true,
+      blocked: false,
+      skipped: false,
+      status: 200,
+      contentType: "text/html",
+      error: "",
+      text: url.includes("source")
+        ? "<html><body>We are a kaupapa Māori service supporting whānau wellbeing.</body></html>"
+        : "<html><body>General practice appointments and nurse consultations.</body></html>",
+      sourceHash: url.includes("source") ? "source" : "cue"
+    })
+  });
+
+  const byId = new Map(output.items.map((item) => [item.providerId, item]));
+  assert.equal(byId.get("maori-cue").status, "needs_human_browser_review");
+  assert.deepEqual(byId.get("maori-cue").correctedFields, {});
+  assert.ok(byId.get("maori-cue").reviewReasons.some((reason) => /support-preference cues/i.test(reason)));
+  assert.equal(byId.get("maori-source").status, "source_support_found");
+  assert.match(byId.get("maori-source").evidenceSummary, /kaupapa|whānau/i);
+});
+
 test("source-fit evidence capture can skip and merge existing batches", async () => {
   const dir = tempDir();
   const providersPath = path.join(dir, "providers.json");

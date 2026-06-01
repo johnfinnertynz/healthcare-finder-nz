@@ -640,6 +640,12 @@ The export writes `data/provider-source-fit-evidence-capture.json`,
   infer anything. Open the source manually or leave the item as
   `needs_more_info`.
 
+For Māori, Pasifika, Asian, and Rainbow support-preference findings, the capture
+tool is deliberately slower to suggest removals. If the provider's public name,
+practice name, URL, or stored public text contains relevant identity cues but
+the automated fetch misses explicit wording, the row is classified as
+`needs_human_browser_review` rather than `safe_removal_candidate`.
+
 This capture layer is designed to reduce review effort, not to bypass review.
 Never use it to approve sensitive tags, telehealth, advertised specialties, or
 availability without a reviewer checking the excerpt.

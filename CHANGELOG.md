@@ -82,6 +82,14 @@
 - Made source-fit evidence capture resumable with `--skip-existing` and
   `--merge-existing`, so bounded runs can preserve earlier excerpts and move on
   to new unsupported tag/support/telehealth findings without live data changes.
+- Tightened source-fit capture for support-preference tags: if a Māori,
+  Pasifika, Asian, or Rainbow row has public identity cues but the automated
+  fetch misses explicit wording, it now goes to human browser review instead of
+  being labelled a safe-removal candidate.
+- Expanded the source-fit capture export to 140 checked findings. The current
+  review file has 14 captured support excerpts, 28 review-gated safe-removal
+  candidates, 88 human-browser-review rows, 8 skipped sources, and 2 failed
+  fetches.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

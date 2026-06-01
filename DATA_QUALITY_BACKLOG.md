@@ -136,6 +136,14 @@ manual review burden.
 - Made source-fit evidence capture resumable. Repeated bounded runs can now use
   `--skip-existing --merge-existing` to keep earlier excerpts and move on to new
   unsupported tag/support/telehealth findings without mutating live data.
+- Tightened support-preference capture so Māori, Pasifika, Asian, and Rainbow
+  rows with public identity cues are no longer labelled safe-removal candidates
+  just because the automated fetch missed explicit wording. Those now require
+  human browser review.
+- Regenerated the source-fit evidence capture export across the first 140
+  findings. It now contains 14 source-support excerpts, 28 review-gated
+  safe-removal candidates, 88 human-browser-review rows, 8 skipped sources, and
+  2 failed fetches.
 
 ## Next Backlog Items
 

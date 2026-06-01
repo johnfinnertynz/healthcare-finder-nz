@@ -44,11 +44,20 @@ const TAG_PATTERNS = {
   trauma: /\b(trauma|ptsd|post-traumatic|sexual harm|sexual abuse|sensitive claims|emdr)\b/i,
   addiction: /\b(addiction|alcohol|drug|gambling|aod|substance)\b/i,
   work: /\b(work stress|burnout|workplace|employment|return to work|vocational|study stress|housing stress|money stress)\b/i,
-  maori: /\b(maori|kaupapa|whanau|whanau|iwi|marae|tangata whenua|takatapui|ngati)\b/i,
+  maori: /\b(m[aā]ori|kaupapa|wh[aā]nau|iwi|marae|tangata whenua|takat[aā]pui|ng[aā]ti|r[uū]nanga|hap[uū]|te reo|tikanga|mana whenua)\b/i,
   pasifika: /\b(pasifika|pacific|samoan|tongan|cook islands|fijian|vaka|fono)\b/i,
   asian: /\b(asian|chinese|korean|indian|mandarin|cantonese|hindi|japanese|vietnamese|filipino|thai)\b/i,
-  rainbow: /\b(rainbow|lgbt|lgbtq|lgbtqia|gender diverse|transgender|gay|lesbian|bisexual|intersex)\b/i,
+  rainbow: /\b(rainbow|lgbt|lgbtq|lgbtqia|gender diverse|transgender|gay|lesbian|bisexual|intersex|takat[aā]pui)\b/i,
   telehealth: /\b(telehealth|online appointments?|video appointments?|phone appointments?|zoom|remote sessions?|virtual appointments?|online sessions?)\b/i
+};
+
+const SUPPORT_PREFERENCE_TARGETS = new Set(["maori", "pasifika", "asian", "rainbow"]);
+
+const SUPPORT_CUE_PATTERNS = {
+  maori: /\b(m[aā]ori|kaupapa|wh[aā]nau|iwi|marae|tangata whenua|takat[aā]pui|ng[aā]ti|r[uū]nanga|hap[uū]|te reo|tikanga|mana whenua|hauora|tainui|whak[a-zāēīōū]+|taurima)\b/i,
+  pasifika: TAG_PATTERNS.pasifika,
+  asian: TAG_PATTERNS.asian,
+  rainbow: TAG_PATTERNS.rainbow
 };
 
 function parseArgs(argv = process.argv.slice(2)) {
@@ -91,6 +100,24 @@ function unique(values) {
 
 function compact(value, max = 260) {
   return String(value || "").replace(/\s+/g, " ").trim().slice(0, max);
+}
+
+function providerPublicText(provider) {
+  return [
+    provider.name,
+    provider.clinicianName,
+    provider.practiceName,
+    provider.website,
+    provider.source,
+    provider.email,
+    provider.fit,
+    provider.firstStep,
+    provider.cost,
+    asArray(provider.services).join(" "),
+    asArray(provider.specialties).join(" "),
+    asArray(provider.patientGroups).join(" "),
+    asArray(provider.ageGroups).join(" ")
+  ].filter(Boolean).join(" ");
 }
 
 function targetFromFinding(finding) {
@@ -169,6 +196,12 @@ function textEvidence(text, target, sourceUrl, capturedAt) {
   };
 }
 
+function supportPreferenceCueNeedsHumanReview(provider, target) {
+  if (!SUPPORT_PREFERENCE_TARGETS.has(target)) return false;
+  const pattern = SUPPORT_CUE_PATTERNS[target];
+  return Boolean(pattern && pattern.test(providerPublicText(provider)));
+}
+
 function proposedRemoval(provider, target) {
   const correctedFields = {};
   if (target === "telehealth") {
@@ -188,9 +221,10 @@ function proposedRemoval(provider, target) {
   return correctedFields;
 }
 
-function captureStatus({ fetchResult, evidence }) {
+function captureStatus({ fetchResult, evidence, supportPreferenceCue }) {
   if (!fetchResult) return "not_fetched";
   if (fetchResult.ok && evidence.length) return "source_support_found";
+  if (fetchResult.ok && supportPreferenceCue) return "needs_human_browser_review";
   if (fetchResult.ok) return "safe_removal_candidate";
   if (fetchResult.blocked) return "needs_human_browser_review";
   if (fetchResult.skipped) return "source_skipped";
@@ -299,7 +333,8 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
       }
     }
 
-    const status = captureStatus({ fetchResult, evidence });
+    const supportPreferenceCue = supportPreferenceCueNeedsHumanReview(provider, target);
+    const status = captureStatus({ fetchResult, evidence, supportPreferenceCue });
     const correctedFields = status === "safe_removal_candidate" ? proposedRemoval(provider, target) : {};
     items.push({
       reviewId: `source-fit-capture:${provider.id}:${finding.rule}:${target}`,
@@ -330,6 +365,7 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
       sourceUrls: unique([sourceUrl, provider.website, provider.source]),
       sourceType: sourceTypeFromUrl(sourceUrl),
       sourceOwnerType: sourceOwnerTypeFromQuality(provider.sourceQuality, sourceUrl),
+      supportPreferenceCue,
       issue: finding.issue || "",
       suggestedFix: finding.suggestedFix || "",
       auditIssues: [finding.issue || ""].filter(Boolean),
@@ -337,6 +373,7 @@ export async function buildSourceFitEvidenceCapture(config = {}) {
       reviewReasons: unique([
         finding.issue,
         finding.suggestedFix,
+        supportPreferenceCue ? "Provider identity or public fields include support-preference cues; missing automated evidence needs human review before removing this claim." : "",
         status === "safe_removal_candidate" ? "Reachable source did not show wording for the flagged claim." : "",
         status === "source_support_found" ? "Source wording was captured; human reviewer still needs to confirm this claim." : ""
       ]),

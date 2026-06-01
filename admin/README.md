@@ -181,6 +181,13 @@ Captured excerpts are review aids; they are not automatic approval for
 specialties, support-preference tags, telehealth, availability, or referral
 pathways.
 
+For Māori, Pasifika, Asian, and Rainbow support-preference rows, the capture
+tool intentionally avoids over-confident removals. If the provider name, source
+URL, or stored public text has relevant identity cues but the fetch did not find
+clear wording, the item appears as `needs_human_browser_review`. Open the source
+in a browser and either add evidence, leave it as `needs_more_info`, or only
+remove the tag when you are confident the public source does not support it.
+
 For reviewed safe-removal candidates, prefer the source-fit draft helper over
 hand-editing several individual decisions:
 
