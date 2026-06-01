@@ -95,6 +95,12 @@ mark the claim as review-needed. It must not fake evidence text.
 - `npm run export:regional-quality` rolls coverage, weak source, source-fit,
   availability, referral, watchlist, and address/coordinate risks into regional
   priorities for manual research planning.
+- `npm run export:location-review-pack` deduplicates missing-address,
+  missing-coordinate, and coordinate-gap review rows into provider-level
+  location batches.
+- `npm run draft:location-distance` turns human-reviewed location pack rows
+  into address/coordinate-only decision drafts. It must not be used for provider
+  type, scope, availability, referral, cost, telehealth, or support tags.
 - `npm run export:source-fit-capture -- --limit 30` fetches a bounded set of
   source-fit findings and turns unsupported broad/support/telehealth issues into
   captured evidence excerpts or review-gated safe-removal candidates. It never

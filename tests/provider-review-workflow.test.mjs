@@ -11,11 +11,13 @@ import { buildProviderClaimReviewQueue } from "../tools/export-provider-claim-re
 import { buildSourceFitEvidenceCapture } from "../tools/export-source-fit-evidence-capture.mjs";
 import { buildSourceFitCaptureDecisionDraft } from "../tools/draft-source-fit-capture-decisions.mjs";
 import { buildGpCorroborationDecisionDraft } from "../tools/draft-gp-corroboration-decisions.mjs";
+import { buildLocationDistanceDecisionDraft } from "../tools/draft-location-distance-decisions.mjs";
 import { buildGpSourceCorroborationQueue } from "../tools/export-gp-source-corroboration-queue.mjs";
 import {
   buildGpCorroborationReviewPack,
   enrichGpCorroborationReviewPackWithSourceExcerpts
 } from "../tools/export-gp-corroboration-review-pack.mjs";
+import { buildLocationDistanceReviewPack } from "../tools/export-location-distance-review-pack.mjs";
 import { buildRegionalDataQualityReport } from "../tools/export-regional-data-quality-report.mjs";
 import { detectProviderConflicts } from "../tools/detect-provider-conflicts.mjs";
 import { buildProviderMonitorQueue } from "../tools/export-provider-monitor-queue.mjs";
@@ -1011,6 +1013,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(html, /Ongoing monitor queue/);
   assert.match(html, /Claim review queue/);
   assert.match(html, /GP source corroboration/);
+  assert.match(html, /Location\/distance review pack/);
   assert.match(html, /Google Places candidates/);
   assert.match(html, /Discovery suggestions/);
   assert.match(html, /Source-fit evidence capture/);
@@ -1022,6 +1025,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(html, /Save needs_more_info for filtered/);
   assert.match(js, /provider-claim-review-queue\.json/);
   assert.match(js, /gp-source-corroboration-queue\.json/);
+  assert.match(js, /location-distance-review-pack\.json/);
   assert.match(js, /gpTaskToItem/);
   assert.match(js, /Suggested searches/);
   assert.match(js, /DoctorPricer and search snippets are discovery-only/);
@@ -1751,6 +1755,220 @@ test("GP corroboration review pack does not treat login portals as source eviden
   assert.equal(pack.items[0].bestCandidate.sourceCategory, "booking_or_login_portal");
   assert.equal(pack.items[0].priority, "source_lookup_needed");
   assert.deepEqual(pack.items[0].draftCorrectedFields, {});
+});
+
+test("location distance review pack groups coordinate gaps without live mutation", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const queuePath = path.join(dir, "review-queue.json");
+  const placesPath = path.join(dir, "places.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "coord-target",
+      name: "Coordinate Target Psychology",
+      type: "psychologist",
+      region: "Wellington",
+      city: "Wellington",
+      address: "10 Example Street, Wellington",
+      lat: "",
+      lon: "",
+      phone: "04 123 4567",
+      website: "https://coord.example.nz"
+    }),
+    baseProvider({
+      id: "address-target",
+      name: "Address Target Youth",
+      type: "youth",
+      region: "Northland",
+      city: "Whangarei",
+      address: "",
+      lat: "",
+      lon: "",
+      website: "https://address.example.nz"
+    })
+  ]);
+  writeJson(queuePath, {
+    items: [
+      {
+        reviewCategory: "Location and distance evidence",
+        providerId: "coord-target",
+        auditRules: ["missing-coordinates"],
+        reviewReasons: ["address missing coordinates"]
+      },
+      {
+        reviewCategory: "Location and distance evidence",
+        providerId: "address-target",
+        auditRules: ["missing-address"],
+        reviewReasons: ["missing public address"]
+      }
+    ]
+  });
+  writeJson(placesPath, {
+    candidates: [
+      {
+        candidateId: "place-coordinate-target",
+        action: "corroborate_existing_provider",
+        queryId: "places-coordinate-gap:coord-target",
+        type: "psychologist",
+        name: "Coordinate Target Psychology",
+        address: "10 Example Street, Wellington 6011",
+        lat: -41.29,
+        lon: 174.77,
+        phone: "04 123 4567",
+        website: "https://coord.example.nz",
+        googleMapsUri: "https://maps.google.com/?cid=123",
+        possibleProviderIds: ["coord-target"],
+        duplicateSignals: ["phone", "website-domain", "address"],
+        reviewReasons: ["target coordinate-gap provider: coord-target"]
+      }
+    ]
+  });
+
+  const pack = buildLocationDistanceReviewPack({
+    providers: providersPath,
+    reviewQueue: queuePath,
+    googlePlacesCandidates: placesPath
+  });
+
+  assert.equal(pack.summary.total, 2);
+  assert.equal(pack.safety.locationFieldsOnly, true);
+  const coordinateItem = pack.items.find((item) => item.providerId === "coord-target");
+  assert.equal(coordinateItem.priority, "ready_for_location_review");
+  assert.equal(coordinateItem.issueType, "coordinate_gap_candidate");
+  assert.match(coordinateItem.batchKey, /^location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist$/);
+  assert.deepEqual(Object.keys(coordinateItem.draftCorrectedFields).sort(), [
+    "coordinateConfidence",
+    "coordinatePrecision",
+    "coordinateSource",
+    "geocodeNeedsManualReview",
+    "lat",
+    "lon"
+  ].sort());
+  assert.equal(coordinateItem.draftCorrectedFields.coordinateSource, "google_places_candidate_pending_human_review");
+  assert.equal(coordinateItem.liveMutationAllowed, false);
+
+  const addressItem = pack.items.find((item) => item.providerId === "address-target");
+  assert.equal(addressItem.priority, "source_lookup_needed");
+  assert.equal(addressItem.issueType, "missing_address");
+  assert.deepEqual(addressItem.draftCorrectedFields, {});
+});
+
+test("location distance decision drafts require review and only apply location fields", () => {
+  const dir = tempDir();
+  const providersPath = path.join(dir, "providers.json");
+  const packPath = path.join(dir, "location-pack.json");
+  writeJson(providersPath, [
+    baseProvider({
+      id: "coord-target",
+      name: "Coordinate Target Psychology",
+      type: "psychologist",
+      address: "10 Example Street, Wellington",
+      lat: "",
+      lon: "",
+      website: "https://coord.example.nz"
+    }),
+    baseProvider({
+      id: "coord-unsafe",
+      name: "Unsafe Coordinate Target",
+      type: "psychologist",
+      address: "20 Example Street, Wellington",
+      lat: "",
+      lon: ""
+    })
+  ]);
+  writeJson(packPath, {
+    generatedAt: "2026-06-01T00:00:00.000Z",
+    items: [
+      {
+        providerId: "coord-target",
+        issueType: "coordinate_gap_candidate",
+        priority: "ready_for_location_review",
+        batchKey: "location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist",
+        bestCandidate: {
+          googleMapsUri: "https://maps.google.com/?cid=123",
+          matchStrength: "strong_match",
+          matchSignals: ["phone", "website-domain"],
+          address: "10 Example Street, Wellington 6011"
+        },
+        sourceEvidenceSummary: "Google Maps listing shows Coordinate Target Psychology at 10 Example Street, Wellington.",
+        draftCorrectedFields: {
+          lat: -41.29,
+          lon: 174.77,
+          coordinateSource: "google_places_candidate_pending_human_review",
+          coordinatePrecision: "business listing",
+          coordinateConfidence: "medium",
+          geocodeNeedsManualReview: true
+        },
+        auditRules: ["coordinate-gap-candidate"]
+      },
+      {
+        providerId: "coord-unsafe",
+        issueType: "coordinate_gap_candidate",
+        priority: "ready_for_location_review",
+        batchKey: "location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist",
+        bestCandidate: {
+          googleMapsUri: "https://maps.google.com/?cid=456",
+          matchStrength: "strong_match"
+        },
+        sourceEvidenceSummary: "Google Maps listing shows Unsafe Coordinate Target.",
+        draftCorrectedFields: {
+          lat: -41.3,
+          lon: 174.78,
+          phone: "04 999 9999"
+        }
+      }
+    ]
+  });
+
+  assert.throws(
+    () => buildLocationDistanceDecisionDraft({
+      pack: packPath,
+      providers: providersPath,
+      decision: "adjust",
+      confirmedHumanReview: false,
+      reviewer: "Reviewer"
+    }),
+    /confirmed-human-review/
+  );
+
+  const draft = buildLocationDistanceDecisionDraft({
+    pack: packPath,
+    providers: providersPath,
+    decision: "adjust",
+    batchKey: "location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist",
+    confirmedHumanReview: true,
+    reviewer: "Reviewer",
+    notes: "Checked Maps listing against the provider site."
+  });
+
+  assert.equal(draft.summary.packRowsMatched, 2);
+  assert.equal(draft.summary.decisionsDrafted, 1);
+  assert.equal(draft.summary.skipped, 1);
+  assert.equal(draft.decisions[0].providerId, "coord-target");
+  assert.deepEqual(Object.keys(draft.decisions[0].correctedFields).sort(), [
+    "coordinateConfidence",
+    "coordinatePrecision",
+    "coordinateSource",
+    "geocodeNeedsManualReview",
+    "lat",
+    "lon"
+  ].sort());
+  assert.match(draft.decisions[0].correctedFields.coordinateSource, /human-reviewed/);
+  assert.equal(draft.decisions[0].correctedFields.geocodeNeedsManualReview, false);
+  assert.match(draft.decisions[0].reviewNotes, /No provider type/);
+  assert.match(draft.skipped[0].reason, /Unsafe location corrected field/);
+
+  const needsInfo = buildLocationDistanceDecisionDraft({
+    pack: packPath,
+    providers: providersPath,
+    decision: "needs_more_info",
+    providerId: "coord-unsafe",
+    reviewer: "Reviewer",
+    notes: "Needs browser review."
+  });
+  assert.equal(needsInfo.summary.decisionsDrafted, 1);
+  assert.equal(needsInfo.decisions[0].action, "needs_more_info");
+  assert.deepEqual(needsInfo.decisions[0].correctedFields, {});
 });
 
 test("admin UI can load GP source corroboration tasks as review items", () => {

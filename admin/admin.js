@@ -19,6 +19,11 @@ const QUEUE_SOURCES = {
     help: "GP corroboration review pack: pre-ranked GP source leads from Places/Healthpoint/practice sites. Open the source and capture an excerpt before exporting any adjustment.",
     itemName: "GP review-pack item(s)"
   },
+  locationReviewPack: {
+    url: "../data/location-distance-review-pack.json",
+    help: "Location/distance review pack: grouped missing-address and coordinate-gap tasks. Confirm the same public provider or clinic location before exporting address/coordinate-only adjustments.",
+    itemName: "location review-pack item(s)"
+  },
   places: {
     url: "../data/discovery/google-places-provider-candidates.json",
     help: "Google Places candidates: official API discovery leads only. Use them to find likely providers or coordinate-gap clues, then corroborate with provider-owned, Healthpoint, register, or professional-directory evidence before changing live data.",

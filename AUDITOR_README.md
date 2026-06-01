@@ -47,6 +47,7 @@ npm run evidence:conflicts
 npm run export:claims
 npm run export:gp-corroboration
 npm run export:gp-review-pack
+npm run export:location-review-pack
 npm run export:auto-resolution
 npm run export:regional-quality
 ```
@@ -81,6 +82,8 @@ Use the **Queue** selector to choose:
 - **GP corroboration review pack** for pre-ranked GP source leads where a
   likely Healthpoint, practice-site, or clinic-network source has already been
   found and still needs a human source excerpt.
+- **Location/distance review pack** for missing-address, missing-coordinate,
+  and coordinate-gap tasks grouped by provider and batch key.
 - **Google Places candidates** for likely clinic/business leads discovered via
   the official Google Places API. Treat them as leads only until corroborated.
 - **Auto-resolution proposals** for grouped low-risk de-prioritisation and
@@ -121,6 +124,15 @@ or Maps listing, but it is not enough to approve clinical services, accepted
 conditions, availability, referral pathway, telehealth, cost, or cultural/safety
 tags. Open the website or another stronger source, capture a short excerpt, and
 then adjust or leave the item as needing more information.
+
+The Location/distance review pack is the faster pathway for address and
+coordinate work after the manual queue and Google Places coordinate-gap leads
+have been exported. Start with `ready_for_location_review` rows. Open the Maps
+or provider source, confirm the row is the same provider or same public clinic
+location, then use only the location fields. If the row points to a building,
+old address, shared facility, similarly named service, town-only location, or
+"various venues", choose `needs_more_info` instead of adjusting distance
+ranking.
 
 Open `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md` before a long review session. It
 separates low-risk claim noise that can be de-prioritized from high-risk batches
@@ -174,6 +186,26 @@ This helper only writes `data/gp-corroboration-decision-draft.json` and
 `GP_CORROBORATION_DECISION_DRAFT.md`. It is contact/source-only: it must not be
 used to approve availability, enrolment, clinical scope, cultural support,
 funding, or referral claims.
+
+For reviewed location/distance rows where you have confirmed the same provider
+or public clinic location, use:
+
+```sh
+npm run draft:location-distance -- --batch-key "location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist" --confirmed-human-review --reviewer "Your name" --notes "Checked Maps and provider source; location fields match."
+```
+
+For unclear location rows, use:
+
+```sh
+npm run draft:location-distance -- --decision needs_more_info --issue-type missing_address --reviewer "Your name" --notes "Needs public professional address source."
+```
+
+This helper only writes `data/location-distance-decision-draft.json` and
+`LOCATION_DISTANCE_DECISION_DRAFT.md`. It is location-only: it can draft
+`address`, `lat`, `lon`, `coordinateSource`, `coordinatePrecision`,
+`coordinateConfidence`, and `geocodeNeedsManualReview`, but it must not be used
+to approve provider type, availability, referral pathway, clinical scope, cost,
+telehealth, cultural support, or support-preference tags.
 
 The auditor console has a smaller **Filtered batch** helper for conservative
 triage. Narrow the queue first, then use it only when the whole filtered set

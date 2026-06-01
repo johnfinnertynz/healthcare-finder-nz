@@ -215,6 +215,34 @@ updates such as `website`, `source`, and `sourceQuality`; it cannot approve
 availability, enrolment status, mental-health scope, cultural support, funding,
 or referral claims.
 
+For address and distance-ranking work, export the location/distance review
+pack:
+
+```sh
+npm run export:location-review-pack
+```
+
+This writes `data/location-distance-review-pack.json`,
+`data/location-distance-review-pack.csv`, and
+`LOCATION_DISTANCE_REVIEW_PACK.md`. It compresses missing-address,
+missing-coordinate, and Google Places coordinate-gap tasks into provider-level
+batches. It pre-fills only location metadata such as `address`, `lat`, `lon`,
+`coordinateSource`, `coordinatePrecision`, `coordinateConfidence`, and
+`geocodeNeedsManualReview`; it does not approve provider type, clinical scope,
+availability, referral pathway, cost, telehealth, or support-preference tags.
+
+After a reviewer confirms the same public provider or clinic location, draft
+controlled location-only decisions:
+
+```sh
+npm run draft:location-distance -- --batch-key "location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist" --confirmed-human-review --reviewer "Your name" --notes "Checked Maps and provider source; location fields match."
+```
+
+This writes `data/location-distance-decision-draft.json` and
+`LOCATION_DISTANCE_DECISION_DRAFT.md`. Use `--decision needs_more_info` for
+unclear buildings, old addresses, similarly named services, or anything that
+needs browser/phone review before distance ranking changes.
+
 Export source-fit evidence capture for unsupported tag, support-preference, or
 telehealth findings:
 
@@ -646,11 +674,13 @@ npm run evidence:score
 npm run evidence:conflicts
 npm run export:claims
 npm run export:gp-corroboration
+npm run export:location-review-pack
 npm run export:source-fit-capture -- --limit 30 --skip-existing --merge-existing
 npm run export:auto-resolution
 npm run draft:claim-batch -- --batch-key "<batch key>" --decision needs_more_info
 npm run draft:source-fit-capture -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; unsupported claims should be removed."
 npm run draft:gp-corroboration -- --confirmed-human-review --reviewer "Your name" --notes "Checked source; public contact/source fields match."
+npm run draft:location-distance -- --decision needs_more_info --issue-type missing_address --reviewer "Your name" --notes "Needs a public professional address source."
 ```
 
 This writes:
@@ -663,11 +693,14 @@ This writes:
 - `data/provider-claim-review-queue.csv`
 - `data/gp-source-corroboration-queue.json`
 - `data/gp-source-corroboration-queue.csv`
+- `data/location-distance-review-pack.json`
+- `data/location-distance-review-pack.csv`
 - `data/provider-auto-resolution-proposals.json`
 - `data/provider-auto-resolution-proposals.csv`
 - `PROVIDER_EVIDENCE_GRAPH.md`
 - `PROVIDER_CLAIM_REVIEW_QUEUE.md`
 - `GP_SOURCE_CORROBORATION_QUEUE.md`
+- `LOCATION_DISTANCE_REVIEW_PACK.md`
 - `PROVIDER_CONFLICTS.md`
 - `PROVIDER_AUTO_RESOLUTION_PROPOSALS.md`
 
@@ -702,6 +735,13 @@ auditor to check. It still requires human confirmation before any adjustment is
 exported. Use the **Source capture** filter in the auditor to separate captured
 snippets from blocked, failed, skipped, or not-yet-fetched source checks.
 
+The console can load `data/location-distance-review-pack.json` as
+**Location/distance review pack**. This is the focused queue for
+missing-address, missing-coordinate, and coordinate-gap work. It groups rows by
+`location-review:<issue>:<priority>:<match-strength>:<type>` and pre-fills only
+location metadata. A reviewer must confirm the same provider or public clinic
+location before exporting `draft:location-distance` decisions.
+
 For triage, the console has a conservative filtered-batch helper. After a queue
 is narrowed by batch, rule, category, search, region, type, severity,
 availability, or referral status, it can save `needs_more_info` decisions for
@@ -730,6 +770,13 @@ reviewer, and only update public contact/source fields. Use
 `--decision needs_more_info --status failed` for failed source captures that
 need browser review without changing provider data.
 
+`draft:location-distance` is the matching helper for
+`data/location-distance-review-pack.json`. Use it only after confirming a public
+provider address or coordinate source. Adjustment drafts require
+`--confirmed-human-review` and a reviewer, and only update address/coordinate
+metadata. Use `--decision needs_more_info` for unclear buildings, stale
+addresses, shared facilities, or vague locality-only records.
+
 This writes:
 
 - `data/provider-review-queue.json`
@@ -744,9 +791,10 @@ it is a focused queue and does not include every low-risk GP record. Use
 
 Open the local prototype at `admin/index.html` after serving the repo locally.
 The admin console can load the manual review queue, the claim review queue, the
-GP source corroboration queue, the GP corroboration review pack,
-Google Places candidates, discovery suggestions, auto-resolution proposals, or
-the ongoing monitor queue. It can also load **Regional priorities** as a
+GP source corroboration queue, the GP corroboration review pack, the
+location/distance review pack, Google Places candidates, discovery suggestions,
+auto-resolution proposals, or the ongoing monitor queue. It can also load
+**Regional priorities** as a
 planning-only view from
 `data/regional-data-quality-report.json`; that view disables provider-decision
 export and is used to choose the next region or queue to review. The console

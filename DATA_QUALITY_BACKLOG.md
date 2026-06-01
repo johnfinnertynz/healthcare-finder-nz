@@ -179,6 +179,10 @@ manual review burden.
   `coordinate-gap:<region>`, compare against the linked live provider row, and
   export location-only adjustments after confirming the same provider or public
   clinic location.
+- Added a dedicated location/distance review pack and draft helper. The pack
+  deduplicates 126 location queue rows into 104 provider-level tasks, groups
+  them into 25 batches, and lets reviewers draft only address/coordinate
+  metadata after confirmed human review.
 
 ## Next Backlog Items
 
@@ -206,11 +210,11 @@ manual review burden.
 8. Use bounded `discover:places` plus `discover:enrich -- --fetch-seed-sources`
    runs for high-priority thin regions, then send resulting candidates through
    the auditor.
-9. Review the 26 coordinate-gap Google Places candidates in the auditor using
-   the **Location and distance evidence** category or `coordinate-gap:<region>`
-   batch. Apply coordinate/source updates only when the reviewer confirms the
-   Places result is the same provider or same public clinic location; leave
-   vague town-only and "various venues" records without coordinates.
+9. Review the **Location/distance review pack**, starting with the 8
+   `ready_for_location_review` rows. Use `npm run draft:location-distance`
+   only after confirming the same provider or same public clinic location;
+   leave vague town-only, "various venues", old-address, and shared-building
+   rows as `needs_more_info`.
 10. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.

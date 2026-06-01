@@ -153,6 +153,12 @@ This cycle added a separate claim review queue:
   helper accepts the same `--batch-key`, so reviewers can process captured
   Healthpoint rows separately from captured practice-site rows, blocked rows,
   and manual-compare conflicts without mixing risk levels.
+- Location and distance evidence now has a dedicated review pack via
+  `npm run export:location-review-pack`. It deduplicates 126 location queue
+  rows into 104 provider-level tasks, groups them into 25 batch keys, and keeps
+  Google Places coordinate-gap clues location-only. The matching
+  `npm run draft:location-distance` helper can draft only address and
+  coordinate metadata after confirmed human review.
 - A bounded psychiatry discovery pass added 84 review-gated discovery
   suggestions. This intentionally increased the provider review queue from 675
   to 775 items because thin-region psychiatry leads are now explicit review

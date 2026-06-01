@@ -1,6 +1,6 @@
 # Google Places Provider Candidates
 
-Generated: 2026-06-01T07:36:21.033Z
+Generated: 2026-06-01T09:20:53.448Z
 
 This report uses the official Google Places Text Search API, where configured, as a discovery and corroboration aid. It does not update `providers.json` and it must not be treated as proof of services, availability, referral pathway, cost, telehealth, or cultural safety.
 
@@ -12,7 +12,7 @@ This report uses the official Google Places Text Search API, where configured, a
 - Places returned: 29
 - New candidates in this run: 26
 - Candidates found: 204
-- Existing candidates merged: 181
+- Existing candidates merged: 204
 - Coordinate gap mode: yes
 - GP corroboration queue source: not used
 - API errors: 0

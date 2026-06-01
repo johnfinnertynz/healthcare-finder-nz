@@ -447,6 +447,28 @@ candidates stay tied to the target provider ID, but they are still review
 items. A reviewer must confirm that the Places result is the same professional
 provider or same public clinic location before applying coordinates.
 
+For focused address and distance-ranking work, export the location/distance
+review pack:
+
+```sh
+npm run export:location-review-pack
+```
+
+The pack deduplicates missing-address, missing-coordinate, and coordinate-gap
+tasks by provider, then groups them with batch keys like
+`location-review:<issue>:<priority>:<match-strength>:<type>`. Draft decisions
+must go through:
+
+```sh
+npm run draft:location-distance -- --confirmed-human-review --reviewer "Your name"
+```
+
+This helper can only draft `address`, `lat`, `lon`, `coordinateSource`,
+`coordinatePrecision`, `coordinateConfidence`, and
+`geocodeNeedsManualReview`. Google Places remains a location corroboration clue
+only; it must not approve provider type, scope, availability, referral, cost,
+telehealth, cultural support, or support-preference tags.
+
 After exporting `data/gp-corroboration-review-pack.json` and checking captured
 source excerpts, draft controlled GP contact/source decisions with:
 

@@ -124,6 +124,14 @@
   as **Location and distance evidence**, use a `coordinate-gap:<region>` batch,
   pre-fill only location metadata fields, and compare against the live provider
   row when a target provider ID is present.
+- Added a dedicated location/distance review pack and auditor queue source.
+  The pack deduplicates missing-address, missing-coordinate, and coordinate-gap
+  work by provider, groups 104 current tasks into 25 batch keys, and keeps
+  Google Places as location corroboration only.
+- Added `npm run draft:location-distance`, a confirmed-human-review helper
+  that can draft only public address and coordinate metadata decisions. It
+  cannot approve provider type, clinical scope, availability, referral, cost,
+  telehealth, cultural support, or support-preference tags.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

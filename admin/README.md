@@ -292,6 +292,53 @@ only `address`, `lat`, `lon`, `coordinateSource`, `coordinatePrecision`,
 `needs_more_info` if the Places listing is a building, an old address, a
 directory, a similarly named provider, or otherwise unclear.
 
+## Location/Distance Review Pack
+
+After exporting the manual review queue and any Google Places coordinate-gap
+leads, build the focused location pack:
+
+```bash
+npm run export:location-review-pack
+```
+
+This writes:
+
+- `data/location-distance-review-pack.json`
+- `data/location-distance-review-pack.csv`
+- `LOCATION_DISTANCE_REVIEW_PACK.md`
+
+Choose **Location/distance review pack** from the queue selector. This view
+deduplicates location work by provider and groups it with batch keys such as:
+
+```text
+location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist
+location-review:missing_address:source_lookup_needed:no_candidate:public-service
+```
+
+Use the pack for address and distance-ranking work only. If a row has a
+candidate, open the Maps/provider source and confirm it is the same provider or
+the same public clinic location. If a row has no candidate, find a public
+professional address source or leave it as `needs_more_info`.
+
+After review, draft location-only decisions:
+
+```bash
+npm run draft:location-distance -- --batch-key "location-review:coordinate_gap_candidate:ready_for_location_review:strong_match:psychologist" --confirmed-human-review --reviewer "Your name" --notes "Checked Maps and provider source; location fields match."
+```
+
+For unclear rows:
+
+```bash
+npm run draft:location-distance -- --decision needs_more_info --issue-type missing_address --reviewer "Your name" --notes "Needs public address source."
+```
+
+The helper writes `data/location-distance-decision-draft.json` and
+`LOCATION_DISTANCE_DECISION_DRAFT.md`. It can only draft `address`, `lat`,
+`lon`, `coordinateSource`, `coordinatePrecision`, `coordinateConfidence`, and
+`geocodeNeedsManualReview`. It cannot approve provider type, availability,
+referral pathway, clinical scope, cost, telehealth, cultural support, or
+support-preference tags.
+
 ## Regional Priorities
 
 Run the regional report when deciding where the next review session should
@@ -314,9 +361,9 @@ gaps, recommended actions, and sample records to inspect.
 Use this view to decide which region and queue to work next. It disables
 provider-decision export because a regional priority is not itself a provider
 record. After choosing an action, switch to **Manual review queue**, **Claim
-review queue**, **GP source corroboration**, **Google Places candidates**, or
-**Ongoing monitor queue** and
-filter by the same region or provider ID before saving review decisions.
+review queue**, **GP source corroboration**, **Location/distance review pack**,
+**Google Places candidates**, or **Ongoing monitor queue** and filter by the
+same region or provider ID before saving review decisions.
 
 ## Claim Review Queue
 
