@@ -142,6 +142,10 @@ This cycle added a separate claim review queue:
   clinician identities before shared emails, phones, register domains, or
   practice websites. The latest psychiatry enrichment export has no candidate
   group with more than five possible provider IDs.
+- The auditor can now load `data/discovery/provider-suggestions.json` as a
+  focused **Discovery suggestions** queue. This lets a reviewer work the 84
+  psychiatry suggestions directly without filtering through the full 775-item
+  manual review queue.
 
 This does not reduce the provider-level queue count yet because no reviewed
 decisions were applied to live data. It does reduce the manual review burden by
@@ -209,7 +213,9 @@ Auto-accept is allowed only when all are true:
    with `--fetch-sources` for a small prefilled-excerpt batch when useful.
    The current export has 64 captured GP snippets ready for confirmation; use
    the **Source capture: captured** filter to isolate them.
-11. Use the **Filtered batch** helper only for conservative `needs_more_info`
+11. Use the auditor console's **Discovery suggestions** queue to work the
+    review-gated provider suggestions directly after `npm run discover:suggest`.
+12. Use the **Filtered batch** helper only for conservative `needs_more_info`
     triage, then export decisions and run the controlled apply/validation path.
-12. Run `npm run export:regional-quality` after each review/apply cycle and use
+13. Run `npm run export:regional-quality` after each review/apply cycle and use
     the high-priority regions to choose the next focused source research pass.

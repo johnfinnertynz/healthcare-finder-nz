@@ -433,6 +433,7 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(html, /Claim review queue/);
   assert.match(html, /GP source corroboration/);
   assert.match(html, /Google Places candidates/);
+  assert.match(html, /Discovery suggestions/);
   assert.match(html, /Auto-resolution proposals/);
   assert.match(html, /Regional priorities/);
   assert.match(html, /Review category/);
@@ -458,6 +459,10 @@ test("admin UI contains no tokens, opens sources externally, and keeps iframe sa
   assert.match(js, /google-places-provider-candidates\.json/);
   assert.match(js, /googlePlacesCandidateToItem/);
   assert.match(js, /noClinicalClaimsFromPlacesAlone/);
+  assert.match(js, /provider-suggestions\.json/);
+  assert.match(js, /providerSuggestionToItem/);
+  assert.match(js, /Array\.isArray\(queue\.suggestions\) && queue\.safety\?\.reviewGateRequired/);
+  assert.match(js, /Discovery suggestions are proposed records or patches only/);
   assert.match(js, /regionalPriorityToItem/);
   assert.match(js, /planningOnly/);
   assert.match(js, /do not export provider decisions/i);

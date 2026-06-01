@@ -51,6 +51,31 @@ queue to the ongoing monitor queue. Monitor items are still human review tasks:
 do not change live provider data until a reviewer confirms the evidence and
 exports/applies a decision.
 
+## Discovery Suggestions Queue
+
+After running the discovery/enrichment flow, build review-gated suggestions:
+
+```bash
+npm run discover:suggest
+```
+
+This writes:
+
+- `data/discovery/provider-suggestions.json`
+- `data/discovery/provider-suggestions.csv`
+- `PROVIDER_DISCOVERY_SUGGESTIONS.md`
+
+Choose **Discovery suggestions** from the queue selector to inspect only the
+proposed new-provider, existing-provider update, watchlist, and manual-research
+items. This is useful after a focused Places/source-enrichment batch, such as
+thin-region psychiatry discovery.
+
+Treat these as suggestions, not approved data. Open the source links, confirm
+the provider type, contact details, referral path, availability, and any
+support-preference or specialty claims, then export a normal review decision.
+New-provider suggestions still require the controlled apply/import path before
+they can affect public recommendations.
+
 ## GP Source Corroboration Queue
 
 Run the GP source queue when DoctorPricer or other third-party GP records need

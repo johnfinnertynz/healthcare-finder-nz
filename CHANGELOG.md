@@ -62,6 +62,10 @@
   remaining 4 are marked blocked or failed for human browser review.
 - Added an auditor **Source capture** filter and queue badges for captured,
   blocked, failed, skipped, not-fetched, and prefilled source evidence states.
+- Added a dedicated auditor **Discovery suggestions** queue for
+  `data/discovery/provider-suggestions.json`, so review-gated new-provider and
+  existing-provider update suggestions can be worked without filtering the full
+  manual review queue.
 - Regenerated evidence graph, claim queue, provider review queue, monitor queue,
   source-fit, availability, referral, and regional data-quality reports.
 

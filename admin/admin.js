@@ -24,6 +24,11 @@ const QUEUE_SOURCES = {
     help: "Google Places candidates: official API discovery leads only. Use them to find likely providers, then corroborate with provider-owned, Healthpoint, register, or professional-directory evidence before changing live data.",
     itemName: "Google Places candidate(s)"
   },
+  suggestions: {
+    url: "../data/discovery/provider-suggestions.json",
+    help: "Discovery suggestions: review-gated new-provider, existing-provider update, watchlist, and manual-research suggestions built from the evidence graph. Confirm source evidence before exporting any decision.",
+    itemName: "discovery suggestion(s)"
+  },
   auto: {
     url: "../data/provider-auto-resolution-proposals.json",
     help: "Auto-resolution proposals: advisory-only groups for de-prioritising safe low-risk checks and keeping risky batches review-gated.",
@@ -813,10 +818,156 @@ function googlePlacesCandidateToItem(candidate, index) {
   };
 }
 
+function firstEvidenceExcerpt(sourceEvidence = {}) {
+  for (const value of Object.values(sourceEvidence || {})) {
+    const claims = Array.isArray(value)
+      ? value
+      : typeof value === "object" && value !== null
+        ? Object.values(value).flat()
+        : [];
+    const claim = claims.find((item) => item?.excerpt);
+    if (claim) return claim.excerpt;
+  }
+  return "";
+}
+
+function discoverySuggestionPriority(suggestion = {}, record = {}) {
+  const action = suggestion.action || "";
+  if (action === "move_to_watchlist") return "high";
+  if (suggestion.conflicts?.length) return "high";
+  if ((record.type || suggestion.type) === "psychiatrist") return "high";
+  if (action === "add_new_provider" || action === "update_existing_provider") return "medium";
+  return "low";
+}
+
+function discoverySuggestionCategory(suggestion = {}, record = {}) {
+  const type = record.type || suggestion.type || "";
+  const action = suggestion.action || "";
+  if (action === "move_to_watchlist") return "Availability review";
+  if (type === "psychiatrist") return "Referral pathway review";
+  if (action === "add_new_provider") return "Discovery: new provider candidate";
+  if (action === "update_existing_provider") return "Discovery: existing provider update";
+  if (suggestion.conflicts?.length) return "Discovery source conflict";
+  return "Discovery suggestion";
+}
+
+function providerSuggestionToItem(suggestion, index) {
+  const record = suggestion.suggestedProviderRecord || {};
+  const sourceEvidence = suggestion.sourceEvidence || record.sourceEvidence || {};
+  const sourceUrls = unique([
+    ...asArray(suggestion.sourceUrlsUsed),
+    record.website,
+    record.source,
+    record.bookingUrl
+  ]);
+  const priority = discoverySuggestionPriority(suggestion, record);
+  const category = discoverySuggestionCategory(suggestion, record);
+  const correctedFields = suggestion.action === "update_existing_provider"
+    ? suggestion.suggestedPatchForExistingProvider || suggestion.suggestedChanges || {}
+    : {};
+  const evidenceExcerpt = firstEvidenceExcerpt(sourceEvidence);
+
+  return {
+    ...suggestion,
+    reviewId: `suggestion:${suggestion.suggestionId || suggestion.candidateId || index + 1}`,
+    providerId: suggestion.existingProviderId || record.id || suggestion.candidateId || "",
+    name: record.name || suggestion.name || "",
+    clinicianName: record.clinicianName || "",
+    practiceName: record.practiceName || "",
+    type: record.type || suggestion.type || "",
+    region: record.region || suggestion.region || "",
+    city: record.city || suggestion.city || "",
+    address: record.address || "",
+    lat: record.lat ?? "",
+    lon: record.lon ?? "",
+    phone: record.phone || "",
+    text: record.text || "",
+    email: record.email || "",
+    website: record.website || "",
+    bookingUrl: record.bookingUrl || "",
+    source: record.source || sourceUrls[0] || "",
+    sourceQuality: record.sourceQuality || suggestion.sourceSummary || "",
+    confidence: suggestion.confidence || record.confidence || "low",
+    needsManualVerification: true,
+    availabilityStatus: record.availabilityStatus || "not_published",
+    availabilityCheckedAt: record.availabilityCheckedAt || "",
+    availabilityEvidence: record.availabilityEvidence || "",
+    availabilitySource: record.availabilitySource || "",
+    availabilityNeedsManualReview: true,
+    requiresReferral: record.requiresReferral,
+    referralType: record.referralType || "",
+    referralSourceUrl: record.referralSourceUrl || "",
+    referralSourceExcerpt: record.referralSourceExcerpt || "",
+    referralConfidence: record.referralConfidence || "",
+    referralLastChecked: record.referralLastChecked || "",
+    referralNeedsManualReview: (record.type || suggestion.type) === "psychiatrist" || Boolean(record.referralNeedsManualReview),
+    tags: asArray(record.tags),
+    needScope: asArray(record.needScope),
+    baselineScope: asArray(record.baselineScope),
+    advertisedSpecialties: asArray(record.advertisedSpecialties),
+    specialties: asArray(record.specialties),
+    services: asArray(record.services),
+    patientGroups: asArray(record.patientGroups),
+    ageGroups: asArray(record.ageGroups),
+    onlineAvailable: record.onlineAvailable,
+    phoneSupport: record.phoneSupport,
+    inPerson: record.inPerson,
+    crisisOnly: record.crisisOnly,
+    reviewCategory: category,
+    reviewPriority: priority,
+    auditSeverity: priority,
+    batchKey: `${category}:${record.region || suggestion.region || "unknown"}`,
+    auditRules: unique([
+      "discovery-suggestion",
+      suggestion.action || "",
+      ...asArray(suggestion.conflicts).map((conflict) => `conflict-${conflict.field || "field"}`)
+    ]),
+    auditFindings: [{
+      rule: "discovery-suggestion",
+      severity: priority,
+      issue: "Discovery suggestions are proposed records or patches only. They require human source review and controlled apply before public recommendations change.",
+      suggestedFix: "Open the source, confirm fields and risky claims, then export an approve, adjust, reject, watchlist, duplicate, or needs_more_info decision."
+    }],
+    reviewReasons: unique([
+      `Suggested action: ${suggestion.action || "needs_manual_research"}.`,
+      suggestion.sourceSummary ? `Sources: ${suggestion.sourceSummary}.` : "",
+      ...asArray(suggestion.reviewReasons),
+      "Do not approve availability, self-referral, cultural tags, telehealth, or advertised specialties without explicit source evidence."
+    ]),
+    sourceEvidence,
+    sourceEvidenceSummary: evidenceExcerpt,
+    sourceUrls,
+    claimId: suggestion.suggestionId || suggestion.candidateId || "",
+    claimField: "discoverySuggestion",
+    claimValue: suggestion.action || "",
+    claimDecision: "review",
+    claimRiskLevel: priority,
+    requiredHumanAction: "Open the source URL, compare against stored fields and evidence, then export a reviewed decision. New-provider suggestions still need controlled import support before they can be live.",
+    publicCardPreviewText: [
+      record.name || suggestion.name,
+      `${record.region || suggestion.region || ""}${record.city || suggestion.city ? ` / ${record.city || suggestion.city}` : ""}`,
+      `Suggested action: ${suggestion.action || "needs_manual_research"}`,
+      record.address,
+      record.phone ? `Phone: ${record.phone}` : "",
+      record.email ? `Email: ${record.email}` : "",
+      record.website ? `Website: ${record.website}` : "",
+      evidenceExcerpt ? `Evidence: ${evidenceExcerpt}` : "Evidence excerpt still needs review."
+    ].filter(Boolean).join("\n"),
+    currentProvider: null,
+    discoverySuggestion: suggestion,
+    newProviderTemplate: suggestion.action === "add_new_provider" ? record : null,
+    correctedFields,
+    prefillCorrectedFields: correctedFields
+  };
+}
+
 function queueItemsFromPayload(queue) {
   if (Array.isArray(queue.items)) return queue.items;
   if (Array.isArray(queue.candidates) && queue.safety?.noClinicalClaimsFromPlacesAlone) {
     return queue.candidates.map((candidate, index) => googlePlacesCandidateToItem(candidate, index));
+  }
+  if (Array.isArray(queue.suggestions) && queue.safety?.reviewGateRequired) {
+    return queue.suggestions.map((suggestion, index) => providerSuggestionToItem(suggestion, index));
   }
   if (Array.isArray(queue.regions) && queue.safety?.noLiveProviderMutation) {
     return queue.regions.map((region, index) => regionalPriorityToItem(region, index));
@@ -2059,7 +2210,7 @@ async function init() {
     state.providers = [];
     state.filtered = [];
     renderQueue();
-    els.queueSummary.textContent = `${error.message}. Run npm run export:review, npm run export:claims, npm run export:gp-corroboration, npm run export:regional-quality, or npm run export:monitor for the selected queue.`;
+    els.queueSummary.textContent = `${error.message}. Run npm run export:review, npm run export:claims, npm run export:gp-corroboration, npm run discover:suggest, npm run export:regional-quality, or npm run export:monitor for the selected queue.`;
   }
 }
 

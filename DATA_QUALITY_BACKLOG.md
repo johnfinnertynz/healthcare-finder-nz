@@ -119,6 +119,9 @@ manual review burden.
   domains, and shared practice websites do not merge different clinicians. The
   latest psychiatry enrichment export has 84 suggestions and zero candidate
   groups with more than five possible provider IDs.
+- Added a dedicated **Discovery suggestions** queue source to the auditor so
+  review-gated provider suggestions can be worked directly, instead of being
+  buried inside the larger manual review queue.
 
 ## Next Backlog Items
 
@@ -144,6 +147,7 @@ manual review burden.
 9. Use `REGIONAL_DATA_QUALITY_REPORT.md` to choose the next thin-region or
    weak-source verification batch, then refresh the report after decisions are
    applied.
-10. Review the psychiatry discovery suggestions, starting with the add-new
-    Northland Psychiatry lead, then the existing-provider update suggestions
-    that have provider-owned or Healthpoint evidence.
+10. Review the psychiatry discovery suggestions through the auditor's
+    **Discovery suggestions** queue, starting with the add-new Northland
+    Psychiatry lead, then the existing-provider update suggestions that have
+    provider-owned or Healthpoint evidence.

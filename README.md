@@ -651,8 +651,9 @@ it is a focused queue and does not include every low-risk GP record. Use
 Open the local prototype at `admin/index.html` after serving the repo locally.
 The admin console can load the manual review queue, the claim review queue, the
 GP source corroboration queue, the GP corroboration review pack,
-auto-resolution proposals, or the ongoing monitor queue. It can also load
-**Regional priorities** as a planning-only view from
+Google Places candidates, discovery suggestions, auto-resolution proposals, or
+the ongoing monitor queue. It can also load **Regional priorities** as a
+planning-only view from
 `data/regional-data-quality-report.json`; that view disables provider-decision
 export and is used to choose the next region or queue to review. The console
 lets a reviewer inspect evidence and exports review decisions. It does not
